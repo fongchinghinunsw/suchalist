@@ -11,17 +11,21 @@ import Button from './base/Button';
 import Text from './base/Text';
 import TextInput from './base/form/TextInput';
 import DropdownInput from './base/form/DropdownInput';
-import {Option} from 'react-native-paper-dropdown';
+import {DropDownPropsInterface} from 'react-native-paper-dropdown';
 
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  recurrenceType: z.nativeEnum(RecurrenceType).optional(),
+  recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
 
 type Schema = z.infer<typeof schema>;
 
-const RECURRENCE_OPTIONS: Option[] = [
+const RECURRENCE_OPTIONS: DropDownPropsInterface['list'] = [
+  {
+    label: 'No Repeat',
+    value: '',
+  },
   {
     label: 'Daily',
     value: RecurrenceType.DAILY,
@@ -49,6 +53,9 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
     formState: {isValid},
   } = useForm<Schema>({
     schema,
+    defaultValues: {
+      recurrenceType: '',
+    },
   });
 
   const [showDatePicker, setShowDatePicker] = useState(false);

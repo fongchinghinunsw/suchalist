@@ -5729,21 +5729,10 @@ react-native-is-edge-to-edge@1.1.7:
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.7.tgz#28947688f9fafd584e73a4f935ea9603bd9b1939"
   integrity sha512-EH6i7E8epJGIcu7KpfXYXiV2JFIYITtq+rVS8uEb+92naMRBdxhTuS8Wn2Q7j9sqyO0B+Xbaaf9VdipIAmGW4w==
 
-react-native-paper-dropdown@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-paper-dropdown/-/react-native-paper-dropdown-2.3.1.tgz#02220c29ed8f326624be91e25bfbbbe676c66321"
-  integrity sha512-IvcHTucAV5+fiX2IVMiVdBDKT6KHxycW0o9QzZe7bpmeZWmuCajHDnwG3OSBGlXhUxrrM3TC0/HJZHwORWGgQg==
-  dependencies:
-    react-native-paper "^5.12.3"
-
-react-native-paper@^5.12.3:
-  version "5.13.5"
-  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.13.5.tgz#e5c2e3ca444da59c214296af8bd1622928dc1204"
-  integrity sha512-aaUVy7bzv9PGTMB2+bfrGwX5D9bjQFPjPemOyUjHZxka/xgFozIyDjtLPUIaYZ5LcvJhXH4zhc/S6N+zpdIwrQ==
-  dependencies:
-    "@callstack/react-theme-provider" "^3.0.9"
-    color "^3.1.2"
-    use-latest-callback "^0.2.3"
+react-native-paper-dropdown@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dropdown/-/react-native-paper-dropdown-1.0.7.tgz#64fe004b05b73ca5c781873d800ac5062b35bdc9"
+  integrity sha512-St0rZFw5sC7mbXtFCOGsyEa0fIBaG6Cfz78RsjFNzTj+rKd1i9qlDY2O7eOa2zAUEnFlL+C7FXdXUY9RUNELNw==
 
 react-native-paper@^5.13.4:
   version "5.13.4"
