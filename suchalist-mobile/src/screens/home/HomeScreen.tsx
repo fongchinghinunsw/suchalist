@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ImageBackground,
   NativeScrollEvent,
@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import AddTaskDrawer from '../../components/AddTaskDrawer';
+import AddTaskForm from '../../components/AddTaskForm';
 import TaskItemList from '../../components/TaskItemList';
 import {RootState} from '../../stores';
 import {Task, tasksActions} from '../../stores/tasks';
@@ -21,6 +21,8 @@ import {isAppOutdated} from '../../services/suchalist-service';
 import {AnimatedFAB} from 'react-native-paper';
 import Icon from '@react-native-vector-icons/ionicons';
 import FAB from './FAB';
+import BottomSheet from '../../components/base/BottomSheet';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
 // import FAB from './FAB';
 
 const backgroundImage = require('../../assets/images/golden-gate-bridge.jpg');
@@ -33,8 +35,6 @@ export default function HomeScreen() {
   const styles = getStyles(theme);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-  const {registerDrawer, showDrawer, hideDrawer} = useDrawer();
 
   const addTask = useCallback(
     (task: Task) => {
@@ -56,10 +56,7 @@ export default function HomeScreen() {
 
   const [isFABExtended, setIsFABExtended] = useState(false);
 
-  useEffect(() => {
-    registerDrawer('addTask', () => AddTaskDrawer);
-  }, [registerDrawer]);
-
+  // FAB
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentScrollPosition =
       Math.floor(event?.nativeEvent.contentOffset?.y) ?? 0;
@@ -67,11 +64,20 @@ export default function HomeScreen() {
     setIsFABExtended(currentScrollPosition <= 0);
   };
 
-  const onPressFAB = () =>
-    showDrawer('addTask', {
-      onAddTask: addTask,
-      onClose: hideDrawer,
-    });
+  const onPressFAB = () => {
+    // showDrawer('addTask', {
+    //   onAddTask: addTask,
+    //   onClose: hideDrawer,
+    // });
+    bottomSheetModalRef.current?.present();
+  };
+
+  // Bottom Sheet
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const hideAddTaskForm = () => {
+    bottomSheetModalRef.current?.close();
+  };
 
   return (
     <ImageBackground
@@ -87,11 +93,7 @@ export default function HomeScreen() {
             setIsCompleted={setIsCompleted}
             onEndReached={() => console.log('reached')}
             showAddTaskDrawer={(defaultDate: Date) =>
-              showDrawer('addTask', {
-                defaultDate,
-                onAddTask: addTask,
-                onClose: hideDrawer,
-              })
+              console.log({defaultDate})
             }
             onTaskItemPress={(task: Task) =>
               navigation.push('TaskDetails', {task})
@@ -100,6 +102,9 @@ export default function HomeScreen() {
           />
         </View>
 
+        <BottomSheet ref={bottomSheetModalRef}>
+          <AddTaskForm onAddTask={addTask} onClose={hideAddTaskForm} />
+        </BottomSheet>
         <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
       </View>
     </ImageBackground>

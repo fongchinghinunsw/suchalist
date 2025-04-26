@@ -12,7 +12,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import type {Props as AddTaskDrawerProps} from '../components/AddTaskDrawer';
+import type {Props as AddTaskDrawerProps} from '../components/AddTaskForm';
 
 type DrawerComponent<K extends DrawerKey> = React.ComponentType<
   DrawerConfiguration[K]

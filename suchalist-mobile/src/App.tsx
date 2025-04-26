@@ -17,6 +17,8 @@ import {PaperProvider} from 'react-native-paper';
 import store, {persistor} from './stores';
 import {Provider as ReduxStoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 PushNotification.createChannel(
   {
@@ -40,11 +42,15 @@ export default function App(): React.JSX.Element {
     <ReduxStoreProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider>
-          <DrawerProvider>
-            <NavigationContainer>
-              <RootStack />
-            </NavigationContainer>
-          </DrawerProvider>
+          <GestureHandlerRootView>
+            <BottomSheetModalProvider>
+              <DrawerProvider>
+                <NavigationContainer>
+                  <RootStack />
+                </NavigationContainer>
+              </DrawerProvider>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
         </PaperProvider>
       </PersistGate>
     </ReduxStoreProvider>

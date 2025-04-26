@@ -3,18 +3,21 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
 import React, {useState} from 'react';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {Keyboard, Platform, StyleSheet, TouchableOpacity} from 'react-native';
+import * as z from 'zod';
+import {getColor} from '../constants/styles';
+import useForm from '../hooks/useForm';
 import {getTaskId, RecurrenceType, Task} from '../stores/tasks';
 import Button from './base/Button';
 import Text from './base/Text';
-import {getColor} from '../constants/styles';
+import TextInput from './base/form/TextInput';
+
+const schema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+});
+
+type Schema = z.infer<typeof schema>;
 
 export type Props = {
   defaultDate?: Date;
@@ -22,12 +25,14 @@ export type Props = {
   onClose: () => void;
 };
 
-export default function AddTaskDrawer({
-  defaultDate,
-  onAddTask,
-  onClose,
-}: Props) {
-  const [newTitle, setNewTitle] = useState('');
+export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
+  const {
+    control,
+    handleSubmit,
+    formState: {isValid, isLoading},
+  } = useForm<Schema>({
+    schema,
+  });
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(defaultDate ?? new Date());
@@ -47,15 +52,17 @@ export default function AddTaskDrawer({
     }
   };
 
-  const handleAdd = () => {
-    if (!newTitle || !selectedDate) {
+  const handleAdd = (data: Schema) => {
+    if (!isValid) {
       return;
     }
 
-    const newTaskId = getTaskId(newTitle);
+    const {title} = data;
+
+    const newTaskId = getTaskId(title);
     const newTask: Task = {
       id: newTaskId,
-      title: newTitle,
+      title,
       date: selectedDate.toISOString(),
       isCompleted: false,
       recurrence: recurrence
@@ -67,22 +74,17 @@ export default function AddTaskDrawer({
     };
 
     onAddTask(newTask);
-    setNewTitle('');
     setSelectedDate(new Date());
     closeDrawer();
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'position' : undefined}
-      style={styles.drawerContent}>
+    // <KeyboardAvoidingView
+    //   behavior={Platform.OS === 'ios' ? 'position' : undefined}
+    //   style={styles.drawerContent}>
+    <>
       <Text style={styles.drawerTitle}>New Task</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Title"
-        value={newTitle}
-        onChangeText={setNewTitle}
-      />
+      <TextInput name="title" label="Title" control={control} />
       <TouchableOpacity
         style={styles.input}
         onPress={() => setShowDatePicker(true)}>
@@ -112,10 +114,11 @@ export default function AddTaskDrawer({
         <Picker.Item label="Every month" value={RecurrenceType.MONTHLY} />
       </Picker>
 
-      <Button mode="contained" onPress={handleAdd}>
+      <Button mode="contained" onPress={handleSubmit(handleAdd)}>
         Add Task
       </Button>
-    </KeyboardAvoidingView>
+    </>
+    // </KeyboardAvoidingView>
   );
 }
 
@@ -124,19 +127,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
-  drawer: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-  },
   drawerContent: {
-    flex: 1,
     padding: 16,
     paddingBottom: 32,
   },
