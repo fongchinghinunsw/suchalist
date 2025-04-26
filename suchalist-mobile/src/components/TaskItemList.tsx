@@ -4,6 +4,8 @@ import {
   StyleSheet,
   View,
   SectionListRenderItem,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
 } from 'react-native';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import TaskItem from './TaskItem';
@@ -21,6 +23,7 @@ type Props = {
   onEndReached: () => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
+  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 
 export default function TaskItemList({
@@ -29,6 +32,7 @@ export default function TaskItemList({
   onEndReached,
   showAddTaskDrawer,
   onTaskItemPress,
+  onScroll,
 }: Props) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
@@ -66,6 +70,7 @@ export default function TaskItemList({
 
   return (
     <SectionList
+      onScroll={onScroll}
       sections={sections}
       keyExtractor={item => item.id}
       renderSectionHeader={({section: {title}}) => (

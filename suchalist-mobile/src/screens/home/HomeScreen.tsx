@@ -1,9 +1,9 @@
-import Icon from '@react-native-vector-icons/ionicons';
-import {useCallback, useEffect} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
   ImageBackground,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   StyleSheet,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,6 +17,11 @@ import {useDrawer} from '../../hooks/useDrawer';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigations/RootStack';
+import {isAppOutdated} from '../../services/suchalist-service';
+import {AnimatedFAB} from 'react-native-paper';
+import Icon from '@react-native-vector-icons/ionicons';
+import FAB from './FAB';
+// import FAB from './FAB';
 
 const backgroundImage = require('../../assets/images/golden-gate-bridge.jpg');
 
@@ -45,11 +50,28 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(tasksActions.removePastFinishedTasks());
+
+    isAppOutdated();
   }, [dispatch]);
+
+  const [isFABExtended, setIsFABExtended] = useState(false);
 
   useEffect(() => {
     registerDrawer('addTask', () => AddTaskDrawer);
   }, [registerDrawer]);
+
+  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const currentScrollPosition =
+      Math.floor(event?.nativeEvent.contentOffset?.y) ?? 0;
+
+    setIsFABExtended(currentScrollPosition <= 0);
+  };
+
+  const onPressFAB = () =>
+    showDrawer('addTask', {
+      onAddTask: addTask,
+      onClose: hideDrawer,
+    });
 
   return (
     <ImageBackground
@@ -74,20 +96,11 @@ export default function HomeScreen() {
             onTaskItemPress={(task: Task) =>
               navigation.push('TaskDetails', {task})
             }
+            onScroll={onScroll}
           />
         </View>
 
-        {/* Floating Plus Button */}
-        <TouchableOpacity
-          style={styles.fab}
-          onPress={() =>
-            showDrawer('addTask', {
-              onAddTask: addTask,
-              onClose: hideDrawer,
-            })
-          }>
-          <Icon name="add-outline" size={24} color="#fff" />
-        </TouchableOpacity>
+        <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
       </View>
     </ImageBackground>
   );
