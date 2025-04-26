@@ -2,7 +2,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import {useState} from 'react';
-import {Platform, StyleSheet, Switch, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../stores';
@@ -12,6 +12,7 @@ import {
 } from '../../stores/notification';
 import Button from '../../components/base/Button';
 import Text from '../../components/base/Text';
+import Switch from '../../components/base/form/Switch';
 
 export default function DailyReminderSection() {
   const dispatch = useDispatch();
