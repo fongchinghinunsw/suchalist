@@ -6,6 +6,10 @@ import {
 } from 'react-native-paper';
 import {HookFormFieldProps} from '../../../hooks/useForm';
 import {JSX} from 'react';
+import {getColor} from '../../../constants/styles';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../stores';
+import {Theme} from '../../../stores/theme';
 
 interface Props extends TextInputProps, HookFormFieldProps {
   name: string;
@@ -20,6 +24,8 @@ export default function TextInput({
   style,
   ...otherProps
 }: Props): JSX.Element {
+  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+
   return (
     <Controller
       name={name}
@@ -32,6 +38,9 @@ export default function TextInput({
           value={value}
           onChangeText={onChange}
           onBlur={onBlur}
+          cursorColor={getColor(theme, 400)}
+          activeOutlineColor={getColor(theme, 400)}
+          selectionColor={getColor(theme, 400)}
           style={{...styles.input, ...style}}
           {...otherProps}
         />

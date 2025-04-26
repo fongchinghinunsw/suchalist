@@ -1,7 +1,6 @@
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import {Picker} from '@react-native-picker/picker';
 import React, {useState} from 'react';
 import {Keyboard, Platform, StyleSheet, TouchableOpacity} from 'react-native';
 import * as z from 'zod';
@@ -11,13 +10,31 @@ import {getTaskId, RecurrenceType, Task} from '../stores/tasks';
 import Button from './base/Button';
 import Text from './base/Text';
 import TextInput from './base/form/TextInput';
+import DropdownInput from './base/form/DropdownInput';
+import {Option} from 'react-native-paper-dropdown';
 
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
+  recurrenceType: z.nativeEnum(RecurrenceType).optional(),
 });
 
 type Schema = z.infer<typeof schema>;
+
+const RECURRENCE_OPTIONS: Option[] = [
+  {
+    label: 'Daily',
+    value: RecurrenceType.DAILY,
+  },
+  {
+    label: 'Weekly',
+    value: RecurrenceType.WEEKLY,
+  },
+  {
+    label: 'Monthly',
+    value: RecurrenceType.MONTHLY,
+  },
+];
 
 export type Props = {
   defaultDate?: Date;
@@ -29,7 +46,7 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
   const {
     control,
     handleSubmit,
-    formState: {isValid, isLoading},
+    formState: {isValid},
   } = useForm<Schema>({
     schema,
   });
@@ -37,7 +54,7 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(defaultDate ?? new Date());
 
-  const [recurrence, setRecurrence] = useState<RecurrenceType | undefined>();
+  // const [recurrence, setRecurrence] = useState<RecurrenceType | undefined>();
 
   const closeDrawer = () => {
     Keyboard.dismiss();
@@ -57,7 +74,7 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
       return;
     }
 
-    const {title} = data;
+    const {title, recurrenceType} = data;
 
     const newTaskId = getTaskId(title);
     const newTask: Task = {
@@ -65,9 +82,9 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
       title,
       date: selectedDate.toISOString(),
       isCompleted: false,
-      recurrence: recurrence
+      recurrence: recurrenceType
         ? {
-            type: recurrence,
+            type: recurrenceType,
             originalParentId: newTaskId,
           }
         : undefined,
@@ -104,7 +121,7 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
         />
       )}
 
-      <Picker
+      {/* <Picker
         selectedValue={recurrence}
         onValueChange={itemValue => setRecurrence(itemValue)}
         style={styles.input}>
@@ -112,7 +129,15 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
         <Picker.Item label="Every day" value={RecurrenceType.DAILY} />
         <Picker.Item label="Every week" value={RecurrenceType.WEEKLY} />
         <Picker.Item label="Every month" value={RecurrenceType.MONTHLY} />
-      </Picker>
+      </Picker> */}
+
+      <DropdownInput
+        name="recurrenceType"
+        label="Repeat"
+        placeholder="Repeat"
+        control={control}
+        options={RECURRENCE_OPTIONS}
+      />
 
       <Button mode="contained" onPress={handleSubmit(handleAdd)}>
         Add Task
