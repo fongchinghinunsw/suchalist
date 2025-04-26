@@ -1,3 +1,6 @@
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ImageBackground,
@@ -8,21 +11,15 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from '../../components/AddTaskForm';
+import BottomSheet from '../../components/base/BottomSheet';
 import TaskItemList from '../../components/TaskItemList';
+import {getColor} from '../../constants/styles';
+import {RootStackParamList} from '../../navigations/RootStack';
+import {isAppOutdated} from '../../services/suchalist-service';
 import {RootState} from '../../stores';
 import {Task, tasksActions} from '../../stores/tasks';
 import {Theme} from '../../stores/theme';
-import {getColor} from '../../constants/styles';
-import {useDrawer} from '../../hooks/useDrawer';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../navigations/RootStack';
-import {isAppOutdated} from '../../services/suchalist-service';
-import {AnimatedFAB} from 'react-native-paper';
-import Icon from '@react-native-vector-icons/ionicons';
 import FAB from './FAB';
-import BottomSheet from '../../components/base/BottomSheet';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
 // import FAB from './FAB';
 
 const backgroundImage = require('../../assets/images/golden-gate-bridge.jpg');

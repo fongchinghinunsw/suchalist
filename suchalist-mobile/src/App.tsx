@@ -7,18 +7,17 @@
 
 import React from 'react';
 
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
-import RootStack from './navigations/RootStack';
-import {DrawerProvider} from './hooks/useDrawer';
-import PushNotification, {Importance} from 'react-native-push-notification';
-import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
 import {Platform} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {PaperProvider} from 'react-native-paper';
-import store, {persistor} from './stores';
+import PushNotification, {Importance} from 'react-native-push-notification';
 import {Provider as ReduxStoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import RootStack from './navigations/RootStack';
+import store, {persistor} from './stores';
+import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
 
 PushNotification.createChannel(
   {
@@ -44,11 +43,9 @@ export default function App(): React.JSX.Element {
         <PaperProvider>
           <GestureHandlerRootView>
             <BottomSheetModalProvider>
-              <DrawerProvider>
-                <NavigationContainer>
-                  <RootStack />
-                </NavigationContainer>
-              </DrawerProvider>
+              <NavigationContainer>
+                <RootStack />
+              </NavigationContainer>
             </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </PaperProvider>
