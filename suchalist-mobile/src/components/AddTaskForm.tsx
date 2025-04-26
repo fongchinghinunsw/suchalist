@@ -2,16 +2,17 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import React, {useState} from 'react';
-import {Keyboard, Platform, StyleSheet, TouchableOpacity} from 'react-native';
+import {Keyboard, Platform, StyleSheet, View} from 'react-native';
+import {Modal, Portal} from 'react-native-paper';
+import {DropDownPropsInterface} from 'react-native-paper-dropdown';
 import * as z from 'zod';
 import {getColor} from '../constants/styles';
 import useForm from '../hooks/useForm';
 import {getTaskId, RecurrenceType, Task} from '../stores/tasks';
 import Button from './base/Button';
 import Text from './base/Text';
-import TextInput from './base/form/TextInput';
 import DropdownInput from './base/form/DropdownInput';
-import {DropDownPropsInterface} from 'react-native-paper-dropdown';
+import TextInput from './base/form/TextInput';
 
 const schema = z.object({
   title: z.string(),
@@ -61,8 +62,6 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(defaultDate ?? new Date());
 
-  // const [recurrence, setRecurrence] = useState<RecurrenceType | undefined>();
-
   const closeDrawer = () => {
     Keyboard.dismiss();
     setShowDatePicker(false);
@@ -70,11 +69,12 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
   };
 
   const handleDateChange = (_: DateTimePickerEvent, date?: Date) => {
-    setShowDatePicker(false);
     if (date) {
       setSelectedDate(date);
     }
   };
+
+  const onConfirmDateTime = () => setShowDatePicker(false);
 
   const handleAdd = (data: Schema) => {
     if (!isValid) {
@@ -102,41 +102,58 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
     closeDrawer();
   };
 
+  // datetime model
+  // const [visible, setVisible] = React.useState(false);
+
+  // const showModal = () => setVisible(true);
+  // const hideModal = () => setVisible(false);
+
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === 'ios' ? 'position' : undefined}
-    //   style={styles.drawerContent}>
-    <>
+    <View style={styles.container}>
       <Text style={styles.drawerTitle}>New Task</Text>
       <TextInput name="title" label="Title" control={control} />
-      <TouchableOpacity
-        style={styles.input}
-        onPress={() => setShowDatePicker(true)}>
-        <Text>
-          {selectedDate ? selectedDate.toLocaleDateString() : 'Select Date'}
-        </Text>
-      </TouchableOpacity>
+
+      <TextInput
+        name="datetime"
+        label="Time"
+        editable={false}
+        control={control}
+        onPress={() => setShowDatePicker(true)}
+        value={selectedDate ? selectedDate.toLocaleDateString() : undefined}
+      />
 
       {/* TODO: Add theme color */}
-      {showDatePicker && (
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display={Platform.OS === 'ios' ? 'inline' : 'default'}
-          onChange={handleDateChange}
-          minimumDate={new Date()}
-        />
-      )}
-
-      {/* <Picker
-        selectedValue={recurrence}
-        onValueChange={itemValue => setRecurrence(itemValue)}
-        style={styles.input}>
-        <Picker.Item label="Does not repeat" value={undefined} />
-        <Picker.Item label="Every day" value={RecurrenceType.DAILY} />
-        <Picker.Item label="Every week" value={RecurrenceType.WEEKLY} />
-        <Picker.Item label="Every month" value={RecurrenceType.MONTHLY} />
-      </Picker> */}
+      {showDatePicker &&
+        (Platform.OS === 'android' ? (
+          <DateTimePicker
+            value={selectedDate}
+            mode="datetime"
+            display="default"
+            onChange={handleDateChange}
+            minimumDate={new Date()}
+          />
+        ) : (
+          <Portal>
+            <Modal
+              visible={showDatePicker}
+              onDismiss={() => setShowDatePicker(false)}
+              contentContainerStyle={styles.addTaskModal}>
+              <DateTimePicker
+                value={selectedDate}
+                mode="datetime"
+                display="inline"
+                onChange={handleDateChange}
+                minimumDate={new Date()}
+              />
+              <Button
+                mode="outlined"
+                style={styles.confirmDateTimeButton}
+                onPress={onConfirmDateTime}>
+                Confirm
+              </Button>
+            </Modal>
+          </Portal>
+        ))}
 
       <DropdownInput
         name="recurrenceType"
@@ -146,15 +163,21 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
         options={RECURRENCE_OPTIONS}
       />
 
-      <Button mode="contained" onPress={handleSubmit(handleAdd)}>
+      <Button
+        mode="contained"
+        style={styles.addTaskButton}
+        onPress={handleSubmit(handleAdd)}>
         Add Task
       </Button>
-    </>
-    // </KeyboardAvoidingView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 10,
+  },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.3)',
@@ -169,21 +192,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 12,
-  },
-  addButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-    paddingVertical: 10,
+  addTaskModal: {
+    backgroundColor: '#FFF',
+    marginHorizontal: 20,
+    padding: 20,
+    borderRadius: 16,
     alignItems: 'center',
   },
-  addButtonText: {
-    color: '#fff',
-    fontWeight: '600',
+  confirmDateTimeButton: {
+    marginTop: 20,
+  },
+  addTaskButton: {
+    marginTop: 10,
   },
 });
