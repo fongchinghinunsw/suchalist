@@ -1,4 +1,5 @@
 import DateTimePicker, {
+  DateTimePickerAndroid,
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import React, {useState} from 'react';
@@ -62,13 +63,34 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(defaultDate ?? new Date());
 
-  const closeDrawer = () => {
-    Keyboard.dismiss();
-    setShowDatePicker(false);
-    onClose();
-  };
+  const onShowDatePicker = Platform.select({
+    ios: () => {
+      setShowDatePicker(true);
+    },
+    android: () => {
+      DateTimePickerAndroid.open({
+        mode: 'date',
+        value: new Date(),
+        onChange: handleDateChange,
+      });
+    },
+  });
+
+  const closeDrawer = Platform.select({
+    ios: () => {
+      Keyboard.dismiss();
+      setShowDatePicker(false);
+      onClose();
+    },
+    android: () => {
+      Keyboard.dismiss();
+      DateTimePickerAndroid.dismiss('date');
+      onClose();
+    },
+  });
 
   const handleDateChange = (_: DateTimePickerEvent, date?: Date) => {
+    console.log({date});
     if (date) {
       setSelectedDate(date);
     }
@@ -99,14 +121,8 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
 
     onAddTask(newTask);
     setSelectedDate(new Date());
-    closeDrawer();
+    closeDrawer?.();
   };
-
-  // datetime model
-  // const [visible, setVisible] = React.useState(false);
-
-  // const showModal = () => setVisible(true);
-  // const hideModal = () => setVisible(false);
 
   return (
     <View style={styles.container}>
@@ -116,44 +132,33 @@ export default function AddTaskForm({defaultDate, onAddTask, onClose}: Props) {
       <TextInput
         name="datetime"
         label="Time"
-        editable={false}
+        editable={Platform.OS === 'android' ? true : false}
         control={control}
-        onPress={() => setShowDatePicker(true)}
+        onPress={onShowDatePicker}
         value={selectedDate ? selectedDate.toLocaleDateString() : undefined}
       />
 
-      {/* TODO: Add theme color */}
-      {showDatePicker &&
-        (Platform.OS === 'android' ? (
-          <DateTimePicker
-            value={selectedDate}
-            mode="datetime"
-            display="default"
-            onChange={handleDateChange}
-            minimumDate={new Date()}
-          />
-        ) : (
-          <Portal>
-            <Modal
-              visible={showDatePicker}
-              onDismiss={() => setShowDatePicker(false)}
-              contentContainerStyle={styles.addTaskModal}>
-              <DateTimePicker
-                value={selectedDate}
-                mode="datetime"
-                display="inline"
-                onChange={handleDateChange}
-                minimumDate={new Date()}
-              />
-              <Button
-                mode="outlined"
-                style={styles.confirmDateTimeButton}
-                onPress={onConfirmDateTime}>
-                Confirm
-              </Button>
-            </Modal>
-          </Portal>
-        ))}
+      {Platform.OS === 'ios' && (
+        <Portal>
+          <Modal
+            visible={showDatePicker}
+            onDismiss={() => setShowDatePicker(false)}
+            contentContainerStyle={styles.addTaskModal}>
+            <DateTimePicker
+              value={selectedDate}
+              mode="datetime"
+              display="inline"
+              onChange={handleDateChange}
+            />
+            <Button
+              mode="outlined"
+              style={styles.confirmDateTimeButton}
+              onPress={onConfirmDateTime}>
+              Confirm
+            </Button>
+          </Modal>
+        </Portal>
+      )}
 
       <DropdownInput
         name="recurrenceType"
