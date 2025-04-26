@@ -54,9 +54,16 @@ export default function HomeScreen() {
     isAppOutdated();
   }, [dispatch]);
 
-  const [isFABExtended, setIsFABExtended] = useState(false);
+  const [defaultDate, setDefaultDate] = useState<Date | undefined>(undefined);
+
+  const onAddTaskForDate = (defaultDate: Date) => {
+    setDefaultDate(defaultDate);
+    bottomSheetModalRef.current?.present();
+  };
 
   // FAB
+  const [isFABExtended, setIsFABExtended] = useState(false);
+
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentScrollPosition =
       Math.floor(event?.nativeEvent.contentOffset?.y) ?? 0;
@@ -65,10 +72,7 @@ export default function HomeScreen() {
   };
 
   const onPressFAB = () => {
-    // showDrawer('addTask', {
-    //   onAddTask: addTask,
-    //   onClose: hideDrawer,
-    // });
+    setDefaultDate(undefined);
     bottomSheetModalRef.current?.present();
   };
 
@@ -93,7 +97,7 @@ export default function HomeScreen() {
             setIsCompleted={setIsCompleted}
             onEndReached={() => console.log('reached')}
             showAddTaskDrawer={(defaultDate: Date) =>
-              console.log({defaultDate})
+              onAddTaskForDate(defaultDate)
             }
             onTaskItemPress={(task: Task) =>
               navigation.push('TaskDetails', {task})
@@ -103,8 +107,13 @@ export default function HomeScreen() {
         </View>
 
         <BottomSheet ref={bottomSheetModalRef}>
-          <AddTaskForm onAddTask={addTask} onClose={hideAddTaskForm} />
+          <AddTaskForm
+            defaultDate={defaultDate}
+            onAddTask={addTask}
+            onClose={hideAddTaskForm}
+          />
         </BottomSheet>
+
         <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
       </View>
     </ImageBackground>

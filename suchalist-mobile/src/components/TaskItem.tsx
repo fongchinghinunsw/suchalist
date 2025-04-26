@@ -70,7 +70,7 @@ const getStyle = (theme: Theme) => {
       justifyContent: 'space-between',
       padding: 12,
       marginVertical: 6,
-      backgroundColor: getColor(theme, 200),
+      backgroundColor: '#FFF',
       borderColor: getColor(theme, 400),
       borderWidth: 2,
       borderRadius: 10,
