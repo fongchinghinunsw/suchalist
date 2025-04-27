@@ -7,7 +7,7 @@ import {Task} from '@/stores/tasks';
 import {useSelector} from 'react-redux';
 import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';
-import Text from './base/Text';
+import Text from '../base/Text';
 
 SoundPlayer.loadSoundFile('ding', 'mp3');
 

@@ -15,7 +15,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '@/stores';
 import {getColor} from '@/constants/styles';
 import Icon from '@react-native-vector-icons/ionicons';
-import Text from './base/Text';
+import Text from '../base/Text';
 
 type Props = {
   tasks: Task[];

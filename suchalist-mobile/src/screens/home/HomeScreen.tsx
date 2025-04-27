@@ -12,7 +12,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import BottomSheet from '@/components/base/BottomSheet';
-import TaskItemList from '@/components/TaskItemList';
+import TaskItemList from '@/components/task/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {isAppOutdated} from '@/services/suchalist-service';
