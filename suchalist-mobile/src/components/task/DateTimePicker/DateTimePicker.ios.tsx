@@ -2,81 +2,101 @@ import Button from '@/components/base/Button';
 import {getColor} from '@/constants/styles';
 import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {Controller} from 'react-hook-form';
 import {StyleSheet} from 'react-native';
 import {Modal, Portal} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {Props} from './common';
 import {useState} from 'react';
+import TextInput from '@/components/base/form/TextInput';
+import {formatDate} from '@/utils/format';
 
-export default function DateTimePickerIOS({
+export default function DateTimePicker({
   name,
   value,
-  iosOptions = {
-    mode: 'datetime',
-    display: 'default',
-    isVisible: false,
-  },
+  iosOptions = {},
   control,
   onConfirm,
   onDismiss,
 }: Props) {
-  const {mode, display, isVisible} = iosOptions;
+  const {mode = 'datetime', display = 'default'} = iosOptions;
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
+  const [isVisible, setIsVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
+
+  const onShowPicker = () => setIsVisible(true);
+
+  const onDismissPicker = () => setIsVisible(false);
 
   const onConfirmClick = () => {
     onConfirm(selectedValue);
-    onDismiss();
+    onDismissPicker();
+    onDismiss?.();
   };
 
-  return (
-    <Portal>
-      <Modal
-        visible={isVisible}
-        onDismiss={onDismiss}
-        contentContainerStyle={styles.container}>
-        <Controller
-          name={name}
-          control={control}
-          render={() => {
-            console.log({value});
-            return (
-              <DateTimePicker
-                mode={mode}
-                display={display}
-                value={value}
-                onChange={(event, date?: Date) => {
-                  switch (event.type) {
-                    case 'set':
-                      if (date) {
-                        setSelectedValue(date);
-                      }
-                      return;
-                    case 'dismissed':
-                      onDismiss();
-                      return;
-                    case 'neutralButtonPressed':
-                      return;
-                  }
-                }}
-                accentColor={getColor(theme, 500)}
-              />
-            );
-          }}
-        />
+  const onModalDismiss = () => {
+    onDismissPicker();
+    onDismiss?.();
+  };
 
-        <Button
-          mode="outlined"
-          style={styles.confirmButton}
-          onPress={onConfirmClick}>
-          Confirm
-        </Button>
-      </Modal>
-    </Portal>
+  const dateTimeDisplay = formatDate(value, mode);
+
+  return (
+    <>
+      <TextInput
+        name="datetime"
+        label="Date / Time"
+        editable={false}
+        control={control}
+        value={dateTimeDisplay}
+        onPress={onShowPicker}
+      />
+      <Portal>
+        <Modal
+          visible={isVisible}
+          onDismiss={onModalDismiss}
+          contentContainerStyle={styles.container}>
+          <Controller
+            name={name}
+            control={control}
+            render={() => {
+              console.log({value});
+              return (
+                <RNDateTimePicker
+                  mode={mode}
+                  display={display}
+                  value={value}
+                  onChange={(event, date?: Date) => {
+                    switch (event.type) {
+                      case 'set':
+                        if (date) {
+                          setSelectedValue(date);
+                        }
+                        return;
+                      case 'dismissed':
+                        return;
+                      case 'neutralButtonPressed':
+                        return;
+                    }
+                  }}
+                  accentColor={getColor(theme, 500)}
+                />
+              );
+            }}
+          />
+
+          <Button
+            mode="outlined"
+            style={styles.confirmButton}
+            onPress={onConfirmClick}>
+            Confirm
+          </Button>
+        </Modal>
+      </Portal>
+    </>
   );
 }
 

@@ -9,23 +9,24 @@ import {Props} from './common';
 export default function DateTimePicker({
   name,
   value,
-  androidOptions = {
-    mode: 'date',
-    dateDisplay: 'default',
-    timeDisplay: 'default',
-  },
+  androidOptions = {},
   control,
   onConfirm,
   onDismiss,
 }: Props) {
-  const {mode, dateDisplay, timeDisplay} = androidOptions;
+  const {
+    mode = 'date',
+    dateDisplay = 'default',
+    timeDisplay = 'default',
+  } = androidOptions;
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
-
-  const showDatePicker = mode === 'date';
-  const showTimePicker = mode === 'time';
+  console.log({mode});
+  const showDatePicker = mode === 'date' || mode === 'datetime';
+  const showTimePicker = mode === 'time' || mode === 'datetime';
 
   const onShowDatePicker = () => {
+    console.log('onShowDatePicker');
     DateTimePickerAndroid.open({
       mode: 'date',
       display: dateDisplay,
@@ -39,7 +40,7 @@ export default function DateTimePicker({
             }
             return;
           case 'dismissed':
-            onDismiss();
+            onDismiss?.();
             return;
           case 'neutralButtonPressed':
             return;
@@ -49,6 +50,7 @@ export default function DateTimePicker({
   };
 
   const onShowTimePicker = () => {
+    console.log('onShowTimePicker');
     DateTimePickerAndroid.open({
       mode: 'time',
       display: timeDisplay,
@@ -62,7 +64,7 @@ export default function DateTimePicker({
             }
             return;
           case 'dismissed':
-            onDismiss();
+            onDismiss?.();
             return;
           case 'neutralButtonPressed':
             return;
