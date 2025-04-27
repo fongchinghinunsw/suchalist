@@ -69,6 +69,8 @@ export default function AddTaskForm({
     onClose();
   };
 
+  const mode = isAllDayValue ? 'date' : 'datetime';
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>New Task</Text>
@@ -78,10 +80,10 @@ export default function AddTaskForm({
         name="datetime"
         value={selectedDatetimeValue}
         androidOptions={{
-          mode: isAllDayValue ? 'date' : 'datetime',
+          mode,
         }}
         iosOptions={{
-          mode: 'datetime',
+          mode,
           display: 'inline',
         }}
         control={control}

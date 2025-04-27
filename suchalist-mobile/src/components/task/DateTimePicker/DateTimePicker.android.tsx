@@ -5,6 +5,7 @@ import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {Pressable} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Props} from './common';
+import {getColor} from '@/constants/styles';
 
 export default function DateTimePicker({
   name,
@@ -31,6 +32,9 @@ export default function DateTimePicker({
       mode: 'date',
       display: dateDisplay,
       value,
+      style: {
+        backgroundColor: getColor(theme, 600),
+      },
       onChange: (event, date?: Date) => {
         console.log('onShowDatePicker', {date, value});
         switch (event.type) {

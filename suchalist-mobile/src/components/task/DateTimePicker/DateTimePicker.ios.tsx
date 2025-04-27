@@ -42,13 +42,16 @@ export default function DateTimePicker({
     onDismiss?.();
   };
 
+  console.log({mode});
+  const dateTimeLabel =
+    mode === 'datetime' ? 'Date / Time' : mode === 'date' ? 'Date' : 'Time';
   const dateTimeDisplay = formatDate(value, mode);
 
   return (
     <>
       <TextInput
         name="datetime"
-        label="Date / Time"
+        label={dateTimeLabel}
         editable={false}
         control={control}
         value={dateTimeDisplay}
