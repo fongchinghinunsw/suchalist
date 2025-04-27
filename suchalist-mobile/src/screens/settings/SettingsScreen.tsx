@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import Divider from '../../components/base/Divider';
-import DailyReminderSection from './DailyReminderSection';
+import Divider from '@/components/base/Divider';
+import DailyReminderSection from './components/DailyReminderSection';
 import ThemeSection from './ThemeSection';
 
 export default function SettingsScreen() {

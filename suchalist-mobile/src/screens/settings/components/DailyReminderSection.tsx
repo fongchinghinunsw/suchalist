@@ -6,15 +6,15 @@ import {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../stores';
+import {RootState} from '@/stores';
 import {
   DAILY_REMINDER_CHANNEL_ID,
   notificationActions,
-} from '../../../stores/notification';
-import Button from '../../../components/base/Button';
-import Text from '../../../components/base/Text';
-import Switch from '../../../components/base/form/Switch';
-import useForm from '../../../hooks/useForm';
+} from '@/stores/notification';
+import Button from '@/components/base/Button';
+import Text from '@/components/base/Text';
+import Switch from '@/components/base/form/Switch';
+import useForm from '@/hooks/useForm';
 
 export const schema = z.object({
   time: z.date(),

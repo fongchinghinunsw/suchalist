@@ -1,8 +1,8 @@
 import * as z from 'zod';
-import {RecurrenceType, Task} from '../../../../stores/tasks';
+import {RecurrenceType, Task} from '@/stores/tasks';
 import {DropDownPropsInterface} from 'react-native-paper-dropdown';
 import {StyleSheet} from 'react-native';
-import {getColor} from '../../../../constants/styles';
+import {getColor} from '@/constants/styles';
 
 export const addTaskFormSchema = z.object({
   title: z.string(),

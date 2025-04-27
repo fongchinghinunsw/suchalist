@@ -2,11 +2,11 @@ import SoundPlayer from 'react-native-sound-player';
 import Icon from '@react-native-vector-icons/entypo';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {getColor} from '../constants/styles';
-import {Task} from '../stores/tasks';
+import {getColor} from '@/constants/styles';
+import {Task} from '@/stores/tasks';
 import {useSelector} from 'react-redux';
-import {RootState} from '../stores';
-import {Theme} from '../stores/theme';
+import {RootState} from '@/stores';
+import {Theme} from '@/stores/theme';
 import Text from './base/Text';
 
 SoundPlayer.loadSoundFile('ding', 'mp3');

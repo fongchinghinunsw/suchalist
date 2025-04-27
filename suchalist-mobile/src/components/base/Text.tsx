@@ -1,8 +1,8 @@
 import {useSelector} from 'react-redux';
-import {RootState} from '../../stores';
-import {Theme} from '../../stores/theme';
+import {RootState} from '@/stores';
+import {Theme} from '@/stores/theme';
 import {StyleSheet, Text as ReactNativeText, TextProps} from 'react-native';
-import {getColor, Shade} from '../../constants/styles';
+import {getColor, Shade} from '@/constants/styles';
 
 type TextSize =
   | 'xxlarge'

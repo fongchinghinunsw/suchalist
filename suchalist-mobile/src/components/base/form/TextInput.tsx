@@ -4,12 +4,12 @@ import {
   TextInput as PaperTextInput,
   type TextInputProps,
 } from 'react-native-paper';
-import {HookFormFieldProps} from '../../../hooks/useForm';
+import {HookFormFieldProps} from '@/hooks/useForm';
 import {JSX} from 'react';
-import {getColor} from '../../../constants/styles';
+import {getColor} from '@/constants/styles';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../../stores';
-import {Theme} from '../../../stores/theme';
+import {RootState} from '@/stores';
+import {Theme} from '@/stores/theme';
 
 interface Props extends TextInputProps, HookFormFieldProps {
   name: string;

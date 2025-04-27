@@ -3,10 +3,10 @@ import {Controller} from 'react-hook-form';
 import {StyleSheet} from 'react-native';
 import {Modal, Portal} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {getColor} from '../../../constants/styles';
-import {HookFormFieldProps} from '../../../hooks/useForm';
-import {RootState} from '../../../stores';
-import {Theme} from '../../../stores/theme';
+import {getColor} from '@/constants/styles';
+import {HookFormFieldProps} from '@/hooks/useForm';
+import {RootState} from '@/stores';
+import {Theme} from '@/stores/theme';
 import Button from '../Button';
 
 interface Props extends HookFormFieldProps {

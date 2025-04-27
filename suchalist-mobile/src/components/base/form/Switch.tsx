@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {Switch as PaperSwitch} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../../stores';
-import {Theme} from '../../../stores/theme';
-import {getColor} from '../../../constants/styles';
-import {HookFormFieldProps} from '../../../hooks/useForm';
+import {RootState} from '@/stores';
+import {Theme} from '@/stores/theme';
+import {getColor} from '@/constants/styles';
+import {HookFormFieldProps} from '@/hooks/useForm';
 import {Controller} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
 import Text from '../Text';

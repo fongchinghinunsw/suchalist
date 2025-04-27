@@ -1,9 +1,9 @@
 import {StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
-import ColorBox from '../../components/ColorBox';
-import {getColor, THEMES} from '../../constants/styles';
-import {Theme, themeActions} from '../../stores/theme';
-import Text from '../../components/base/Text';
+import ColorBox from '@/components/ColorBox';
+import {getColor, THEMES} from '@/constants/styles';
+import {Theme, themeActions} from '@/stores/theme';
+import Text from '@/components/base/Text';
 
 export default function ThemeSection() {
   const dispatch = useDispatch();

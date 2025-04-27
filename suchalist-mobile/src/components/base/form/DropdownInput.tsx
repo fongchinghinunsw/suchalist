@@ -3,12 +3,12 @@ import {Controller} from 'react-hook-form';
 import PaperDropdown, {
   DropDownPropsInterface,
 } from 'react-native-paper-dropdown';
-import {HookFormFieldProps} from '../../../hooks/useForm';
+import {HookFormFieldProps} from '@/hooks/useForm';
 import {useSelector} from 'react-redux';
-import {Theme} from '../../../stores/theme';
-import {RootState} from '../../../stores';
+import {Theme} from '@/stores/theme';
+import {RootState} from '@/stores';
 import {StyleSheet} from 'react-native';
-import {getColor} from '../../../constants/styles';
+import {getColor} from '@/constants/styles';
 
 interface Props extends HookFormFieldProps {
   name: string;

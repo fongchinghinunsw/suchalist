@@ -2,9 +2,9 @@ import Icon from '@react-native-vector-icons/ionicons';
 import {StyleSheet} from 'react-native';
 import {AnimatedFAB} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../../stores';
-import {getColor} from '../../../constants/styles';
-import {Theme} from '../../../stores/theme';
+import {RootState} from '@/stores';
+import {getColor} from '@/constants/styles';
+import {Theme} from '@/stores/theme';
 
 type Props = {
   label: string;

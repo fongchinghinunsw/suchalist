@@ -11,17 +11,17 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
-import BottomSheet from '../../components/base/BottomSheet';
-import TaskItemList from '../../components/TaskItemList';
-import {getColor} from '../../constants/styles';
-import {RootStackParamList} from '../../navigations/RootStack';
-import {isAppOutdated} from '../../services/suchalist-service';
-import {RootState} from '../../stores';
-import {Task, tasksActions} from '../../stores/tasks';
-import {Theme} from '../../stores/theme';
+import BottomSheet from '@/components/base/BottomSheet';
+import TaskItemList from '@/components/TaskItemList';
+import {getColor} from '@/constants/styles';
+import {RootStackParamList} from '@/navigations/RootStack';
+import {isAppOutdated} from '@/services/suchalist-service';
+import {RootState} from '@/stores';
+import {Task, tasksActions} from '@/stores/tasks';
+import {Theme} from '@/stores/theme';
 import FAB from './components/FAB';
 
-const backgroundImage = require('../../assets/images/golden-gate-bridge.jpg');
+const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
 export default function HomeScreen() {
   const tasks = useSelector<RootState, Task[]>(state => state.tasks.tasks);

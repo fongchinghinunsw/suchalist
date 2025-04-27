@@ -2,12 +2,12 @@ import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import React from 'react';
 import {Keyboard, Pressable, View} from 'react-native';
 
-import Button from '../../../../components/base/Button';
-import Text from '../../../../components/base/Text';
-import DropdownInput from '../../../../components/base/form/DropdownInput';
-import TextInput from '../../../../components/base/form/TextInput';
-import useForm from '../../../../hooks/useForm';
-import {getTaskId, Task} from '../../../../stores/tasks';
+import Button from '@/components/base/Button';
+import Text from '@/components/base/Text';
+import DropdownInput from '@/components/base/form/DropdownInput';
+import TextInput from '@/components/base/form/TextInput';
+import useForm from '@/hooks/useForm';
+import {getTaskId, Task} from '@/stores/tasks';
 import {
   AddTaskFormProps,
   AddTaskFormSchema,
@@ -15,7 +15,7 @@ import {
   RECURRENCE_OPTIONS,
   styles,
 } from './common';
-import Switch from '../../../../components/base/form/Switch';
+import Switch from '@/components/base/form/Switch';
 
 export default function AddTaskForm({
   defaultDate,

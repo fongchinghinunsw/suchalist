@@ -1,12 +1,12 @@
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StyleSheet, View} from 'react-native';
 import * as z from 'zod';
-import Button from '../../components/base/Button';
-import TextInput from '../../components/base/form/TextInput';
-import useForm from '../../hooks/useForm';
-import {RootStackParamList} from '../../navigations/RootStack';
+import Button from '@/components/base/Button';
+import TextInput from '@/components/base/form/TextInput';
+import useForm from '@/hooks/useForm';
+import {RootStackParamList} from '@/navigations/RootStack';
 import {useDispatch} from 'react-redux';
-import {tasksActions} from '../../stores/tasks';
+import {tasksActions} from '@/stores/tasks';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 const schema = z.object({

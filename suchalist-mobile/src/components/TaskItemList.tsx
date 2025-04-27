@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import TaskItem from './TaskItem';
-import {Task} from '../stores/tasks';
-import {Theme} from '../stores/theme';
+import {Task} from '@/stores/tasks';
+import {Theme} from '@/stores/theme';
 import {useSelector} from 'react-redux';
-import {RootState} from '../stores';
-import {getColor} from '../constants/styles';
+import {RootState} from '@/stores';
+import {getColor} from '@/constants/styles';
 import Icon from '@react-native-vector-icons/ionicons';
 import Text from './base/Text';
 

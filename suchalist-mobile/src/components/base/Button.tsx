@@ -2,9 +2,9 @@ import React from 'react';
 import {Button as PaperButton} from 'react-native-paper';
 import {Props as PaperButtonProps} from 'react-native-paper/lib/typescript/components/Button/Button';
 import {useSelector} from 'react-redux';
-import {getColor} from '../../constants/styles';
-import {RootState} from '../../stores';
-import {Theme} from '../../stores/theme';
+import {getColor} from '@/constants/styles';
+import {RootState} from '@/stores';
+import {Theme} from '@/stores/theme';
 import {UnreachableError} from './UnreachableError';
 
 type ButtonTone = 'danger';
