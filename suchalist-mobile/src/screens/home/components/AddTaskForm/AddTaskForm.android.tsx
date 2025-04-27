@@ -46,7 +46,9 @@ export default function AddTaskForm({
     DateTimePickerAndroid.open({
       mode: 'date',
       value: watch('datetime') ?? new Date(),
-      onChange: (_, date?: Date) => {
+      onChange: (event, date?: Date) => {
+        console.log(event.type);
+        console.log({date, selectedDatetimeValue});
         if (date) {
           setValue('datetime', date);
         }
