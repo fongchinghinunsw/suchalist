@@ -12,7 +12,6 @@ import Button from '../Button';
 interface Props extends HookFormFieldProps {
   name: string;
   label: string;
-  selectedDate: Date;
   isVisible: boolean;
   onConfirm: () => void;
   onDismiss: () => void;
@@ -36,15 +35,22 @@ export default function DateTimePickerIOS({
         <Controller
           name={name}
           control={control}
-          render={({field: {onChange, value}}) => (
-            <DateTimePicker
-              value={value}
-              mode="datetime"
-              display="inline"
-              onChange={onChange}
-              accentColor={getColor(theme, 500)}
-            />
-          )}
+          render={({field: {onChange, value}}) => {
+            console.log({value});
+            return (
+              <DateTimePicker
+                value={value}
+                mode="datetime"
+                display="inline"
+                onChange={(_, date) => {
+                  if (date) {
+                    onChange(date);
+                  }
+                }}
+                accentColor={getColor(theme, 500)}
+              />
+            );
+          }}
         />
 
         <Button
