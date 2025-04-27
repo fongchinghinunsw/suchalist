@@ -12,6 +12,7 @@ import Button from '../Button';
 interface Props extends HookFormFieldProps {
   name: string;
   mode: 'datetime' | 'date' | 'time';
+  display: 'inline' | 'spinner';
   isVisible: boolean;
   onConfirm: () => void;
   onDismiss: () => void;
@@ -20,6 +21,7 @@ interface Props extends HookFormFieldProps {
 export default function DateTimePickerIOS({
   name,
   mode,
+  display,
   isVisible,
   control,
   onConfirm,
@@ -42,7 +44,7 @@ export default function DateTimePickerIOS({
               <DateTimePicker
                 value={value}
                 mode={mode}
-                display="inline"
+                display={display}
                 onChange={(_, date) => {
                   if (date) {
                     onChange(date);

@@ -1,20 +1,16 @@
-import * as z from 'zod';
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
-import {useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import PushNotification from 'react-native-push-notification';
-import {useDispatch, useSelector} from 'react-redux';
+import Text from '@/components/base/Text';
+import useForm from '@/hooks/useForm';
 import {RootState} from '@/stores';
 import {
   DAILY_REMINDER_CHANNEL_ID,
   notificationActions,
 } from '@/stores/notification';
-import Button from '@/components/base/Button';
-import Text from '@/components/base/Text';
-import Switch from '@/components/base/form/Switch';
-import useForm from '@/hooks/useForm';
+import {Platform, StyleSheet} from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import {useDispatch, useSelector} from 'react-redux';
+import * as z from 'zod';
+import TimeSectionIOS from './TimeSection.ios';
+import TimeSectionAndroid from './TimeSection.android';
 
 export const schema = z.object({
   time: z.date(),
@@ -30,7 +26,7 @@ export default function DailyReminderSection() {
     state => state.notification.dailyReminder.datetime,
   );
   const datetime = new Date(datetimeString);
-  const localizedDatetime = datetime.toLocaleTimeString([], {
+  const localizedTime = datetime.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -39,7 +35,7 @@ export default function DailyReminderSection() {
     state => state.notification.dailyReminder.isEnabled,
   );
 
-  const {control} = useForm<Schema>({
+  const {control, watch, setValue} = useForm<Schema>({
     schema,
     defaultValues: {
       time: datetime ?? new Date(),
@@ -47,22 +43,22 @@ export default function DailyReminderSection() {
     },
   });
 
-  const [showTimePicker, setShowTimePicker] = useState(false);
+  const timeValue = watch('time');
 
-  const handleDateChange = (event: DateTimePickerEvent, time?: Date) => {
-    setShowTimePicker(false);
-    if (event.type === 'dismissed') {
-      return;
-    }
+  const onConfirmTimeIOS = () => {
+    scheduleDailyReminder(timeValue);
+  };
 
-    if (time) {
-      dispatch(notificationActions.setDailyReminder(time.toISOString()));
-      scheduleDailyReminder(time);
-    }
+  const onTimeChangeAndroid = (date: Date) => {
+    console.log('onTimeChange', {date});
+    setValue('time', date);
+
+    scheduleDailyReminder(date);
   };
 
   const toggleReminder = (value: boolean) => {
     if (value) {
+      console.log({value});
       dispatch(notificationActions.setDailyReminder(datetimeString));
     } else {
       dispatch(notificationActions.disableDailyReminder());
@@ -82,8 +78,10 @@ export default function DailyReminderSection() {
     if (reminderTime <= now) {
       reminderTime.setDate(reminderTime.getDate() + 1);
     }
+
     dispatch(notificationActions.setDailyReminder(reminderTime.toISOString()));
 
+    console.log('Scheduled', {reminderTime});
     PushNotification.localNotificationSchedule({
       channelId: DAILY_REMINDER_CHANNEL_ID,
       id: 1,
@@ -93,13 +91,32 @@ export default function DailyReminderSection() {
       repeatType: 'day',
       allowWhileIdle: true,
     });
-
-    console.log('Scheduled for:', reminderTime.toISOString());
   };
 
   const cancelReminder = () => {
+    console.log('cancelReminder');
     PushNotification.cancelLocalNotification('1');
   };
+
+  const TimeSection = Platform.select({
+    ios: (
+      <TimeSectionIOS
+        localizedTime={localizedTime}
+        control={control}
+        onToggleEnableReminder={toggleReminder}
+        onConfirmTime={onConfirmTimeIOS}
+      />
+    ),
+    android: (
+      <TimeSectionAndroid
+        time={datetime}
+        localizedTime={localizedTime}
+        control={control}
+        onToggleEnableReminder={toggleReminder}
+        onTimeChange={onTimeChangeAndroid}
+      />
+    ),
+  });
 
   return (
     <>
@@ -110,30 +127,7 @@ export default function DailyReminderSection() {
         Set a reminder to remind you about your TODOs.
       </Text>
 
-      <View style={styles.reminderRow}>
-        <Switch
-          name="toggleDailyReminder"
-          label={localizedDatetime}
-          control={control}
-          onClick={toggleReminder}
-        />
-      </View>
-
-      <Button
-        mode="contained"
-        style={styles.changTimeButton}
-        onPress={() => setShowTimePicker(true)}>
-        Change Time
-      </Button>
-
-      {showTimePicker && (
-        <DateTimePicker
-          value={datetime}
-          mode="time"
-          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          onChange={handleDateChange}
-        />
-      )}
+      {TimeSection}
     </>
   );
 }
@@ -144,21 +138,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   description: {
-    marginBottom: 12,
-  },
-  appThemeChoices: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  boxWrapper: {
-    marginRight: 12,
-    marginBottom: 12,
-  },
-  reminderRow: {
-    marginBottom: 12,
-  },
-  changTimeButton: {
-    alignSelf: 'flex-start',
     marginBottom: 12,
   },
 });

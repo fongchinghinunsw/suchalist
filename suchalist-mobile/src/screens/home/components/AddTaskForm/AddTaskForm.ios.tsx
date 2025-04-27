@@ -105,6 +105,7 @@ export default function AddTaskForm({
         name="datetime"
         control={control}
         mode={dateTimePickerMode}
+        display="inline"
         isVisible={showDateTimePicker}
         onConfirm={onDismissDateTimePicker}
         onDismiss={onDismissDateTimePicker}
