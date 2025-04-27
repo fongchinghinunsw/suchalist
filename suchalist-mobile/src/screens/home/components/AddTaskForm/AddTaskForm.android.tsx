@@ -15,6 +15,7 @@ import {
   RECURRENCE_OPTIONS,
   styles,
 } from './common';
+import Switch from '../../../../components/base/form/Switch';
 
 export default function AddTaskForm({
   defaultDate,
@@ -30,15 +31,18 @@ export default function AddTaskForm({
   } = useForm<AddTaskFormSchema>({
     schema: addTaskFormSchema,
     defaultValues: {
+      isAllDay: true,
       datetime: defaultDate ?? new Date(),
       recurrenceType: '',
     },
   });
 
-  const selectedDatetime = watch('datetime');
+  const selectedDatetimeValue = watch('datetime');
+  const isAllDayValue = watch('isAllDay');
+
+  const showTimePicker = !isAllDayValue;
 
   const onShowDatePicker = () => {
-    console.log('onShowDatePicker');
     DateTimePickerAndroid.open({
       mode: 'date',
       value: watch('datetime') ?? new Date(),
@@ -78,13 +82,18 @@ export default function AddTaskForm({
   };
 
   const onSubmit = (data: AddTaskFormSchema) => {
-    const {title, datetime, recurrenceType} = data;
+    const {title, datetime, isAllDay, recurrenceType} = data;
+
+    if (isAllDay) {
+      datetime.setHours(0, 0, 0, 0);
+    }
 
     const newTaskId = getTaskId(title);
     const newTask: Task = {
       id: newTaskId,
       title,
       date: datetime.toISOString(),
+      isAllDay,
       isCompleted: false,
       recurrence: recurrenceType
         ? {
@@ -93,7 +102,7 @@ export default function AddTaskForm({
           }
         : undefined,
     };
-    console.log({newTask});
+
     onAddTask(newTask);
     closeForm();
   };
@@ -103,25 +112,29 @@ export default function AddTaskForm({
       <Text style={styles.title}>New Task</Text>
       <TextInput name="title" label="Title" control={control} />
 
+      <Switch name="isAllDay" label="All-day" control={control} />
+
       <Pressable onPress={onShowDatePicker}>
         <TextInput
           name="datetime"
           label="Date"
           editable={false}
           control={control}
-          value={selectedDatetime.toLocaleDateString()}
+          value={selectedDatetimeValue.toLocaleDateString()}
         />
       </Pressable>
 
-      <Pressable onPress={onShowTimePicker}>
-        <TextInput
-          name="datetime"
-          label="Time"
-          editable={false}
-          control={control}
-          value={selectedDatetime.toLocaleTimeString()}
-        />
-      </Pressable>
+      {showTimePicker && (
+        <Pressable onPress={onShowTimePicker}>
+          <TextInput
+            name="datetime"
+            label="Time"
+            editable={false}
+            control={control}
+            value={selectedDatetimeValue.toLocaleTimeString()}
+          />
+        </Pressable>
+      )}
 
       <DropdownInput
         name="recurrenceType"

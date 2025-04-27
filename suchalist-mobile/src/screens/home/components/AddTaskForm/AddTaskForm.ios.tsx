@@ -14,6 +14,7 @@ import {
   RECURRENCE_OPTIONS,
   styles,
 } from './common';
+import Switch from '../../../../components/base/form/Switch';
 
 export default function AddTaskForm({
   defaultDate,
@@ -28,12 +29,16 @@ export default function AddTaskForm({
   } = useForm<AddTaskFormSchema>({
     schema: addTaskFormSchema,
     defaultValues: {
+      isAllDay: true,
       datetime: defaultDate ?? new Date(),
       recurrenceType: '',
     },
   });
 
-  const selectedDatetime = watch('datetime');
+  const selectedDatetimeValue = watch('datetime');
+  const isAllDayValue = watch('isAllDay');
+
+  const dateTimePickerMode = isAllDayValue ? 'date' : 'datetime';
 
   const [showDateTimePicker, setShowDateTimePicker] = useState(false);
 
@@ -52,13 +57,18 @@ export default function AddTaskForm({
   };
 
   const onSubmit = (data: AddTaskFormSchema) => {
-    const {title, datetime, recurrenceType} = data;
+    const {title, datetime, isAllDay, recurrenceType} = data;
+
+    if (isAllDay) {
+      datetime.setHours(0, 0, 0, 0);
+    }
 
     const newTaskId = getTaskId(title);
     const newTask: Task = {
       id: newTaskId,
       title,
       date: datetime.toISOString(),
+      isAllDay,
       isCompleted: false,
       recurrence: recurrenceType
         ? {
@@ -72,23 +82,29 @@ export default function AddTaskForm({
     closeForm();
   };
 
+  const selectedDatetimeDisplay = isAllDayValue
+    ? selectedDatetimeValue.toDateString()
+    : selectedDatetimeValue.toLocaleString();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>New Task</Text>
       <TextInput name="title" label="Title" control={control} />
+
+      <Switch name="isAllDay" label="All-day" control={control} />
 
       <TextInput
         name="datetime"
         label="Time"
         editable={false}
         control={control}
-        value={selectedDatetime.toLocaleString()}
+        value={selectedDatetimeDisplay}
         onPress={onShowDateTimePicker}
       />
       <DateTimePickerIOS
         name="datetime"
-        label="Time"
         control={control}
+        mode={dateTimePickerMode}
         isVisible={showDateTimePicker}
         onConfirm={onDismissDateTimePicker}
         onDismiss={onDismissDateTimePicker}

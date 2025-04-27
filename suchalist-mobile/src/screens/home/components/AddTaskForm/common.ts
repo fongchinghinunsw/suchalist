@@ -6,6 +6,7 @@ import {getColor} from '../../../../constants/styles';
 
 export const addTaskFormSchema = z.object({
   title: z.string(),
+  isAllDay: z.boolean(),
   datetime: z.date(),
   recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });

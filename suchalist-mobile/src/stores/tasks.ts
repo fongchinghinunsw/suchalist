@@ -9,7 +9,8 @@ export enum RecurrenceType {
 export type Task = {
   id: string;
   title: string;
-  date: string;
+  date: string; // ISO String
+  isAllDay: boolean;
   isCompleted: boolean;
   recurrence?: {
     type: RecurrenceType;
@@ -22,72 +23,56 @@ const initialTasks: Task[] = [
     id: '1',
     title: '1:1',
     date: new Date(2025, 3, 5).toISOString(),
+    isAllDay: true,
     isCompleted: true,
   },
   {
     id: '2',
     title: 'Buy apple',
     date: new Date(2025, 3, 5).toISOString(),
+    isAllDay: true,
     isCompleted: true,
   },
   {
     id: '3',
     title: 'Talk to Jake, then talk with David about the project progress',
     date: new Date(2025, 3, 5).toISOString(),
+    isAllDay: false,
     isCompleted: false,
   },
   {
     id: '4',
     title: 'Go on date with Jason',
     date: new Date(2025, 3, 6).toISOString(),
+    isAllDay: true,
     isCompleted: true,
-  },
-  {
-    id: '5',
-    title: 'Coding with Cody',
-    date: new Date(2025, 3, 9).toISOString(),
-    isCompleted: false,
-  },
-  {
-    id: '6',
-    title: 'Coding with Elsa',
-    date: new Date(2025, 3, 9).toISOString(),
-    isCompleted: false,
   },
   {
     id: '7',
     title: 'Coding with Sassy',
     date: new Date(2025, 3, 9).toISOString(),
+    isAllDay: false,
     isCompleted: true,
   },
   {
     id: '8',
     title: 'Coding with Cindy',
     date: new Date(2025, 3, 9).toISOString(),
-    isCompleted: false,
-  },
-  {
-    id: '9',
-    title: 'Coding with Jimmy',
-    date: new Date(2025, 3, 10).toISOString(),
-    isCompleted: false,
-  },
-  {
-    id: '10',
-    title: 'Coding with Jason',
-    date: new Date(2025, 3, 10).toISOString(),
+    isAllDay: true,
     isCompleted: false,
   },
   {
     id: '11',
     title: 'Shopping in South Village',
     date: new Date(2025, 3, 13).toISOString(),
+    isAllDay: false,
     isCompleted: false,
   },
   {
     id: '12',
     title: 'Testing my app',
     date: new Date(2026, 4, 10).toISOString(),
+    isAllDay: true,
     isCompleted: true,
   },
 ];

@@ -1,3 +1,4 @@
+import * as z from 'zod';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
@@ -5,14 +6,22 @@ import {useState} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../stores';
+import {RootState} from '../../../stores';
 import {
   DAILY_REMINDER_CHANNEL_ID,
   notificationActions,
-} from '../../stores/notification';
-import Button from '../../components/base/Button';
-import Text from '../../components/base/Text';
-import Switch from '../../components/base/form/Switch';
+} from '../../../stores/notification';
+import Button from '../../../components/base/Button';
+import Text from '../../../components/base/Text';
+import Switch from '../../../components/base/form/Switch';
+import useForm from '../../../hooks/useForm';
+
+export const schema = z.object({
+  time: z.date(),
+  isEnabled: z.boolean(),
+});
+
+export type Schema = z.infer<typeof schema>;
 
 export default function DailyReminderSection() {
   const dispatch = useDispatch();
@@ -29,6 +38,14 @@ export default function DailyReminderSection() {
   const isEnabled = useSelector<RootState, boolean>(
     state => state.notification.dailyReminder.isEnabled,
   );
+
+  const {control} = useForm<Schema>({
+    schema,
+    defaultValues: {
+      time: datetime ?? new Date(),
+      isEnabled,
+    },
+  });
 
   const [showTimePicker, setShowTimePicker] = useState(false);
 
@@ -94,10 +111,12 @@ export default function DailyReminderSection() {
       </Text>
 
       <View style={styles.reminderRow}>
-        <Text tone="neutral" style={styles.reminderLabel}>
-          {localizedDatetime}
-        </Text>
-        <Switch value={isEnabled} onValueChange={toggleReminder} />
+        <Switch
+          name="toggleDailyReminder"
+          label={localizedDatetime}
+          control={control}
+          onClick={toggleReminder}
+        />
       </View>
 
       <Button
@@ -136,13 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   reminderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     marginBottom: 12,
-  },
-  reminderLabel: {
-    fontWeight: '500',
   },
   changTimeButton: {
     alignSelf: 'flex-start',
