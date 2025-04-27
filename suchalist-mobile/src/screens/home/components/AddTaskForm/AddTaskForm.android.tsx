@@ -1,6 +1,6 @@
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import React from 'react';
-import {Keyboard, View} from 'react-native';
+import {Keyboard, Pressable, View} from 'react-native';
 
 import Button from '../../../../components/base/Button';
 import Text from '../../../../components/base/Text';
@@ -38,6 +38,7 @@ export default function AddTaskForm({
   const selectedDatetime = watch('datetime');
 
   const onShowDatePicker = () => {
+    console.log('onShowDatePicker');
     DateTimePickerAndroid.open({
       mode: 'date',
       value: watch('datetime') ?? new Date(),
@@ -93,8 +94,8 @@ export default function AddTaskForm({
         : undefined,
     };
     console.log({newTask});
-    // onAddTask(newTask);
-    // closeForm();
+    onAddTask(newTask);
+    closeForm();
   };
 
   return (
@@ -102,22 +103,25 @@ export default function AddTaskForm({
       <Text style={styles.title}>New Task</Text>
       <TextInput name="title" label="Title" control={control} />
 
-      <TextInput
-        name="datetime"
-        label="Date"
-        editable={false}
-        control={control}
-        onPress={onShowDatePicker}
-        value={selectedDatetime.toLocaleDateString()}
-      />
-      <TextInput
-        name="datetime"
-        label="Time"
-        editable={false}
-        control={control}
-        onPress={onShowTimePicker}
-        value={selectedDatetime.toLocaleTimeString()}
-      />
+      <Pressable onPress={onShowDatePicker}>
+        <TextInput
+          name="datetime"
+          label="Date"
+          editable={false}
+          control={control}
+          value={selectedDatetime.toLocaleDateString()}
+        />
+      </Pressable>
+
+      <Pressable onPress={onShowTimePicker}>
+        <TextInput
+          name="datetime"
+          label="Time"
+          editable={false}
+          control={control}
+          value={selectedDatetime.toLocaleTimeString()}
+        />
+      </Pressable>
 
       <DropdownInput
         name="recurrenceType"

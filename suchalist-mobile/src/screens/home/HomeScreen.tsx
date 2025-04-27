@@ -52,8 +52,8 @@ export default function HomeScreen() {
 
   const [defaultDate, setDefaultDate] = useState<Date | undefined>(undefined);
 
-  const onAddTaskForDate = (defaultDate: Date) => {
-    setDefaultDate(defaultDate);
+  const onAddTaskForDate = (date: Date) => {
+    setDefaultDate(date);
     bottomSheetModalRef.current?.present();
   };
 
@@ -92,9 +92,7 @@ export default function HomeScreen() {
             tasks={tasks}
             setIsCompleted={setIsCompleted}
             onEndReached={() => console.log('reached')}
-            showAddTaskDrawer={(defaultDate: Date) =>
-              onAddTaskForDate(defaultDate)
-            }
+            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
             onTaskItemPress={(task: Task) =>
               navigation.push('TaskDetails', {task})
             }
