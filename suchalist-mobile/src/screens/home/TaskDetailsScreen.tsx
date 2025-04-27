@@ -8,10 +8,12 @@ import {RootStackParamList} from '@/navigations/RootStack';
 import {useDispatch} from 'react-redux';
 import {tasksActions} from '@/stores/tasks';
 import {StackNavigationProp} from '@react-navigation/stack';
+import Switch from '@/components/base/form/Switch';
 
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
+  isAllDay: z.boolean(),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -60,6 +62,7 @@ export default function TaskDetailsScreen() {
         multiline={true}
         control={control}
       />
+      <Switch name="isAllDay" label="All-day" control={control} />
       <Button
         mode="contained"
         disabled={isSaveTaskButtonDisabled}
