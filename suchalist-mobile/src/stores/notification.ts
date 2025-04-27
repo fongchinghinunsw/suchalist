@@ -20,6 +20,7 @@ const notificationSlice = createSlice({
   reducers: {
     setDailyReminder(state, action: PayloadAction<string>) {
       state.dailyReminder.isEnabled = true;
+      console.log('isEnabled', state.dailyReminder.isEnabled);
       state.dailyReminder.datetime = action.payload;
     },
     disableDailyReminder(state) {

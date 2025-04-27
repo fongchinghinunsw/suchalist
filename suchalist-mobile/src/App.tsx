@@ -18,6 +18,7 @@ PushNotification.createChannel(
     channelName: 'Daily Reminder',
     soundName: 'default',
     importance: Importance.HIGH,
+    vibrate: true,
   },
   created => console.log(`Channel created: ${created}`), // true the first time, false later
 );

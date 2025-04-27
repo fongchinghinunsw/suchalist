@@ -34,6 +34,7 @@ export default function DailyReminderSection() {
   const isEnabled = useSelector<RootState, boolean>(
     state => state.notification.dailyReminder.isEnabled,
   );
+  console.log({isEnabled});
 
   const {control, watch, setValue} = useForm<Schema>({
     schema,
@@ -58,9 +59,10 @@ export default function DailyReminderSection() {
 
   const toggleReminder = (value: boolean) => {
     if (value) {
-      console.log({value});
+      console.log('toggleReminder', {value});
       dispatch(notificationActions.setDailyReminder(datetimeString));
     } else {
+      console.log('untoggleReminder');
       dispatch(notificationActions.disableDailyReminder());
       cancelReminder();
     }
@@ -84,7 +86,7 @@ export default function DailyReminderSection() {
     console.log('Scheduled', {reminderTime});
     PushNotification.localNotificationSchedule({
       channelId: DAILY_REMINDER_CHANNEL_ID,
-      id: 1,
+      id: '1',
       title: 'Daily Reminder',
       message: "Don't forget your TODOs today and plan for your next day!",
       date: reminderTime,

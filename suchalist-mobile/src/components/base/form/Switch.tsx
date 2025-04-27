@@ -34,17 +34,20 @@ export default function Switch({
       <Controller
         name={name}
         control={control}
-        render={({field: {onChange, value}}) => (
-          <PaperSwitch
-            value={value}
-            onValueChange={isEnabled => {
-              onChange(isEnabled);
-              onClick?.(isEnabled);
-            }}
-            color={getColor(theme, 500)}
-            {...otherProps}
-          />
-        )}
+        render={({field: {onChange, value}}) => {
+          console.log('Inside Switch:', value);
+          return (
+            <PaperSwitch
+              value={value}
+              onValueChange={isEnabled => {
+                onChange(isEnabled);
+                onClick?.(isEnabled);
+              }}
+              color={getColor(theme, 500)}
+              {...otherProps}
+            />
+          );
+        }}
       />
     </View>
   );
