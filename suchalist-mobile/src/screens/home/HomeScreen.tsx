@@ -17,7 +17,7 @@ import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {isAppOutdated} from '@/services/suchalist-service';
 import {RootState} from '@/stores';
-import {Task, tasksActions} from '@/stores/tasks';
+import {NewTask, Task, tasksActions} from '@/stores/tasks';
 import {Theme} from '@/stores/theme';
 import FAB from './components/FAB';
 
@@ -33,7 +33,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const addTask = useCallback(
-    (task: Task) => {
+    (task: NewTask) => {
       dispatch(tasksActions.addTask(task));
     },
     [dispatch],
@@ -64,7 +64,6 @@ export default function HomeScreen() {
     const currentScrollPosition =
       Math.floor(event?.nativeEvent.contentOffset?.y) ?? 0;
 
-    console.log({currentScrollPosition});
     setIsFABExtended(currentScrollPosition <= 0);
   };
 

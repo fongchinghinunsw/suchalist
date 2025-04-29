@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {v4 as uuidv4} from 'uuid';
 
 export enum RecurrenceType {
   DAILY = 'DAILY',
@@ -18,63 +19,69 @@ export type Task = {
   };
 };
 
+export type NewTask = Omit<Task, 'id' | 'isCompleted' | 'recurrence'> & {
+  recurrence?: {
+    type: RecurrenceType;
+  };
+};
+
 const initialTasks: Task[] = [
-  {
-    id: '1',
-    title: '1:1',
-    date: new Date(2025, 3, 5).toISOString(),
-    isAllDay: true,
-    isCompleted: true,
-  },
-  {
-    id: '2',
-    title: 'Buy apple',
-    date: new Date(2025, 3, 5).toISOString(),
-    isAllDay: true,
-    isCompleted: true,
-  },
-  {
-    id: '3',
-    title: 'Talk to Jake, then talk with David about the project progress',
-    date: new Date(2025, 3, 5).toISOString(),
-    isAllDay: false,
-    isCompleted: false,
-  },
-  {
-    id: '4',
-    title: 'Go on date with Jason',
-    date: new Date(2025, 3, 6).toISOString(),
-    isAllDay: true,
-    isCompleted: true,
-  },
-  {
-    id: '7',
-    title: 'Coding with Sassy',
-    date: new Date(2025, 3, 9).toISOString(),
-    isAllDay: false,
-    isCompleted: true,
-  },
-  {
-    id: '8',
-    title: 'Coding with Cindy',
-    date: new Date(2025, 3, 9).toISOString(),
-    isAllDay: true,
-    isCompleted: false,
-  },
-  {
-    id: '11',
-    title: 'Shopping in South Village',
-    date: new Date(2025, 3, 13).toISOString(),
-    isAllDay: false,
-    isCompleted: false,
-  },
-  {
-    id: '12',
-    title: 'Testing my app',
-    date: new Date(2026, 4, 10).toISOString(),
-    isAllDay: true,
-    isCompleted: true,
-  },
+  // {
+  //   id: '1',
+  //   title: '1:1',
+  //   date: new Date(2025, 3, 5).toISOString(),
+  //   isAllDay: true,
+  //   isCompleted: true,
+  // },
+  // {
+  //   id: '2',
+  //   title: 'Buy apple',
+  //   date: new Date(2025, 3, 5).toISOString(),
+  //   isAllDay: true,
+  //   isCompleted: true,
+  // },
+  // {
+  //   id: '3',
+  //   title: 'Talk to Jake, then talk with David about the project progress',
+  //   date: new Date(2025, 3, 5).toISOString(),
+  //   isAllDay: false,
+  //   isCompleted: false,
+  // },
+  // {
+  //   id: '4',
+  //   title: 'Go on date with Jason',
+  //   date: new Date(2025, 3, 6).toISOString(),
+  //   isAllDay: true,
+  //   isCompleted: true,
+  // },
+  // {
+  //   id: '7',
+  //   title: 'Coding with Sassy',
+  //   date: new Date(2025, 3, 9).toISOString(),
+  //   isAllDay: false,
+  //   isCompleted: true,
+  // },
+  // {
+  //   id: '8',
+  //   title: 'Coding with Cindy',
+  //   date: new Date(2025, 3, 9).toISOString(),
+  //   isAllDay: true,
+  //   isCompleted: false,
+  // },
+  // {
+  //   id: '11',
+  //   title: 'Shopping in South Village',
+  //   date: new Date(2025, 3, 13).toISOString(),
+  //   isAllDay: false,
+  //   isCompleted: false,
+  // },
+  // {
+  //   id: '12',
+  //   title: 'Testing my app',
+  //   date: new Date(2026, 4, 10).toISOString(),
+  //   isAllDay: true,
+  //   isCompleted: true,
+  // },
 ];
 
 const initialTasksState = {
@@ -85,8 +92,22 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState: initialTasksState,
   reducers: {
-    addTask(state, action: PayloadAction<Task>) {
-      const newTask = action.payload;
+    addTask(state, action: PayloadAction<NewTask>) {
+      const {recurrence} = action.payload;
+
+      const taskId = uuidv4();
+      const newTask: Task = {
+        ...action.payload,
+        id: taskId,
+        isCompleted: false,
+        recurrence:
+          recurrence === undefined
+            ? undefined
+            : {
+                ...recurrence,
+                originalParentId: taskId,
+              },
+      };
       const index = state.tasks.findIndex(
         task =>
           new Date(task.date).getTime() > new Date(newTask.date).getTime(),

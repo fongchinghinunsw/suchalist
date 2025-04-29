@@ -9,10 +9,13 @@ import {useDispatch} from 'react-redux';
 import {tasksActions} from '@/stores/tasks';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Switch from '@/components/base/form/Switch';
+import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
+import {useEffect} from 'react';
 
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
+  datetime: z.date(),
   isAllDay: z.boolean(),
 });
 
@@ -27,22 +30,51 @@ export default function TaskDetailsScreen() {
   const dispatch = useDispatch();
 
   const {
+    watch,
     control,
     handleSubmit,
+    setValue,
+    trigger,
+    getValues,
     formState: {isValid, isLoading},
   } = useForm<Schema>({
     schema,
-    defaultValues: task,
+    defaultValues: {
+      title: task.title,
+      description: '',
+      datetime: new Date(task.date),
+      isAllDay: task.isAllDay,
+    },
   });
 
+  useEffect(() => {
+    console.log({values: getValues()});
+    trigger(); // triggers all form validations when component is mounted
+  }, [getValues, trigger]);
+
   const onSaveTask = (data: Schema) => {
-    dispatch(tasksActions.editTask({...data, id: task.id}));
+    const {title, datetime, isAllDay} = data;
+    dispatch(
+      tasksActions.editTask({
+        id: task.id,
+        title,
+        date: datetime.toISOString(),
+        isAllDay,
+      }),
+    );
   };
 
   const onDeleteTask = (id: string) => {
     dispatch(tasksActions.removeTask(id));
     navigation.goBack();
   };
+
+  const selectedDatetimeValue = watch('datetime');
+  const isAllDayValue = watch('isAllDay');
+
+  const onDateTimePickerConfirm = (date: Date) => setValue('datetime', date);
+
+  const mode = isAllDayValue ? 'date' : 'datetime';
 
   const isSaveTaskButtonDisabled = !isValid || isLoading;
   console.log({isValid, isLoading});
@@ -63,6 +95,19 @@ export default function TaskDetailsScreen() {
         control={control}
       />
       <Switch name="isAllDay" label="All-day" control={control} />
+      <DateTimePicker
+        name="datetime"
+        value={selectedDatetimeValue}
+        androidOptions={{
+          mode,
+        }}
+        iosOptions={{
+          mode,
+          display: 'inline',
+        }}
+        control={control}
+        onConfirm={onDateTimePickerConfirm}
+      />
       <Button
         mode="contained"
         disabled={isSaveTaskButtonDisabled}

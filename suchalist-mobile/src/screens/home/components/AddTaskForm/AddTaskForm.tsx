@@ -8,7 +8,6 @@ import Switch from '@/components/base/form/Switch';
 import TextInput from '@/components/base/form/TextInput';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
-import {getTaskId, Task} from '@/stores/tasks';
 import {
   AddTaskFormProps,
   AddTaskFormSchema,
@@ -49,22 +48,16 @@ export default function AddTaskForm({
       datetime.setHours(0, 0, 0, 0);
     }
 
-    const newTaskId = getTaskId(title);
-    const newTask: Task = {
-      id: newTaskId,
+    onAddTask({
       title,
       date: datetime.toISOString(),
       isAllDay,
-      isCompleted: false,
       recurrence: recurrenceType
         ? {
             type: recurrenceType,
-            originalParentId: newTaskId,
           }
         : undefined,
-    };
-
-    onAddTask(newTask);
+    });
     Keyboard.dismiss();
     onClose();
   };

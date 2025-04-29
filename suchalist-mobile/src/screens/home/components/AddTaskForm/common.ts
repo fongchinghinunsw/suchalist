@@ -1,8 +1,8 @@
-import * as z from 'zod';
-import {RecurrenceType, Task} from '@/stores/tasks';
-import {DropDownPropsInterface} from 'react-native-paper-dropdown';
-import {StyleSheet} from 'react-native';
 import {getColor} from '@/constants/styles';
+import {NewTask, RecurrenceType} from '@/stores/tasks';
+import {StyleSheet} from 'react-native';
+import {DropDownPropsInterface} from 'react-native-paper-dropdown';
+import * as z from 'zod';
 
 export const addTaskFormSchema = z.object({
   title: z.string(),
@@ -15,7 +15,7 @@ export type AddTaskFormSchema = z.infer<typeof addTaskFormSchema>;
 
 export type AddTaskFormProps = {
   defaultDate?: Date;
-  onAddTask: (task: Task) => void;
+  onAddTask: (task: NewTask) => void;
   onClose: () => void;
 };
 

@@ -11,7 +11,7 @@ export const formatDate = (date: Date, format: DateFormat) => {
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
-        hour12: true, // or false for 24-hour format
+        hour12: true,
       });
     case 'date':
       return date.toLocaleDateString(undefined, {
