@@ -10,6 +10,7 @@ import {getColor} from '@/constants/styles';
 export default function DateTimePicker({
   name,
   value,
+  isTextInputVisible = true,
   androidOptions = {},
   control,
   onConfirm,
@@ -23,8 +24,10 @@ export default function DateTimePicker({
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
   console.log({mode});
-  const showDatePicker = mode === 'date' || mode === 'datetime';
-  const showTimePicker = mode === 'time' || mode === 'datetime';
+  const showDatePicker =
+    (mode === 'date' || mode === 'datetime') && isTextInputVisible;
+  const showTimePicker =
+    (mode === 'time' || mode === 'datetime') && isTextInputVisible;
 
   const onShowDatePicker = () => {
     console.log('onShowDatePicker');

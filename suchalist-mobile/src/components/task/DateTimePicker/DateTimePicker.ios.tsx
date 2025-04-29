@@ -15,6 +15,7 @@ import {formatDate} from '@/utils/format';
 export default function DateTimePicker({
   name,
   value,
+  isTextInputVisible = true,
   iosOptions = {},
   control,
   onConfirm,
@@ -49,14 +50,16 @@ export default function DateTimePicker({
 
   return (
     <>
-      <TextInput
-        name="datetime"
-        label={dateTimeLabel}
-        editable={false}
-        control={control}
-        value={dateTimeDisplay}
-        onPress={onShowPicker}
-      />
+      {isTextInputVisible && (
+        <TextInput
+          name={name}
+          label={dateTimeLabel}
+          editable={false}
+          control={control}
+          value={dateTimeDisplay}
+          onPress={onShowPicker}
+        />
+      )}
       <Portal>
         <Modal
           visible={isVisible}
