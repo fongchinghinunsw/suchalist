@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import SideDrawer from './SideDrawer';
-import TaskDetailsScreen from '../screens/home/TaskDetailsScreen';
+import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';
 import {useSelector} from 'react-redux';
 import {RootState} from '../stores';
 import {Theme} from '../stores/theme';
