@@ -26,6 +26,12 @@ export type NewTask = Omit<Task, 'id' | 'isCompleted' | 'recurrence'> & {
   };
 };
 
+export type EditTask = Omit<Task, 'isCompleted' | 'recurrence'> & {
+  recurrence?: {
+    type: RecurrenceType;
+  };
+};
+
 const initialTasks: Task[] = [
   // {
   //   id: '1',
@@ -127,7 +133,9 @@ const tasksSlice = createSlice({
 
       state.tasks.splice(index, 1);
     },
-    editTask(state, action: PayloadAction<Partial<Task>>) {
+    editTask(state, action: PayloadAction<EditTask>) {
+      const {recurrence} = action.payload;
+
       const index = state.tasks.findIndex(
         task => task.id === action.payload.id,
       );
@@ -143,6 +151,13 @@ const tasksSlice = createSlice({
       state.tasks[index] = {
         ...state.tasks[index],
         ...action.payload,
+        recurrence:
+          recurrence === undefined
+            ? undefined
+            : {
+                ...recurrence,
+                originalParentId: state.tasks[index].id,
+              },
       };
     },
     setIsCompleted(

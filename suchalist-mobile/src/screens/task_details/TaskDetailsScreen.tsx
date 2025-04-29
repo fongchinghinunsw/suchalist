@@ -6,17 +6,20 @@ import TextInput from '@/components/base/form/TextInput';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {useDispatch} from 'react-redux';
-import {tasksActions} from '@/stores/tasks';
+import {RecurrenceType, tasksActions} from '@/stores/tasks';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Switch from '@/components/base/form/Switch';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import {useEffect} from 'react';
+import DropdownInput from '@/components/base/form/DropdownInput';
+import {RECURRENCE_OPTIONS} from '../home/components/AddTaskForm/common';
 
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  datetime: z.date(),
   isAllDay: z.boolean(),
+  datetime: z.date(),
+  recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -42,8 +45,9 @@ export default function TaskDetailsScreen() {
     defaultValues: {
       title: task.title,
       description: task.description,
-      datetime: new Date(task.date),
       isAllDay: task.isAllDay,
+      datetime: new Date(task.date),
+      recurrenceType: task.recurrence?.type ?? '',
     },
   });
 
@@ -53,14 +57,20 @@ export default function TaskDetailsScreen() {
   }, [getValues, trigger]);
 
   const onSaveTask = (data: Schema) => {
-    const {title, description, datetime, isAllDay} = data;
+    const {title, description, isAllDay, datetime, recurrenceType} = data;
     dispatch(
       tasksActions.editTask({
         id: task.id,
         title,
         description,
-        date: datetime.toISOString(),
         isAllDay,
+        date: datetime.toISOString(),
+        recurrence:
+          recurrenceType === undefined || recurrenceType === ''
+            ? undefined
+            : {
+                type: recurrenceType,
+              },
       }),
     );
   };
@@ -108,6 +118,13 @@ export default function TaskDetailsScreen() {
         }}
         control={control}
         onConfirm={onDateTimePickerConfirm}
+      />
+      <DropdownInput
+        name="recurrenceType"
+        label="Repeat"
+        placeholder="Repeat"
+        control={control}
+        options={RECURRENCE_OPTIONS}
       />
       <Button
         mode="contained"
