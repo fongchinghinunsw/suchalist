@@ -58,12 +58,13 @@ export default function HomeScreen() {
   };
 
   // FAB
-  const [isFABExtended, setIsFABExtended] = useState(false);
+  const [isFABExtended, setIsFABExtended] = useState(true);
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const currentScrollPosition =
       Math.floor(event?.nativeEvent.contentOffset?.y) ?? 0;
 
+    console.log({currentScrollPosition});
     setIsFABExtended(currentScrollPosition <= 0);
   };
 

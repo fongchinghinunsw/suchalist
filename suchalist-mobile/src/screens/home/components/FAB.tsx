@@ -6,6 +6,8 @@ import {RootState} from '@/stores';
 import {getColor} from '@/constants/styles';
 import {Theme} from '@/stores/theme';
 
+const FabIcon = () => <Icon name="add-outline" size={24} color="#fff" />;
+
 type Props = {
   label: string;
   isExtended: boolean;
@@ -18,7 +20,7 @@ export default function FAB({label, isExtended, onPress}: Props) {
 
   return (
     <AnimatedFAB
-      icon={() => <Icon name="add-outline" size={24} color="#fff" />}
+      icon={FabIcon}
       label={label}
       extended={isExtended}
       onPress={onPress}
