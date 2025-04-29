@@ -41,7 +41,7 @@ export default function TaskDetailsScreen() {
     schema,
     defaultValues: {
       title: task.title,
-      description: '',
+      description: task.description,
       datetime: new Date(task.date),
       isAllDay: task.isAllDay,
     },
@@ -53,11 +53,12 @@ export default function TaskDetailsScreen() {
   }, [getValues, trigger]);
 
   const onSaveTask = (data: Schema) => {
-    const {title, datetime, isAllDay} = data;
+    const {title, description, datetime, isAllDay} = data;
     dispatch(
       tasksActions.editTask({
         id: task.id,
         title,
+        description,
         date: datetime.toISOString(),
         isAllDay,
       }),

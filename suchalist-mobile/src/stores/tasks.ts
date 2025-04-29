@@ -10,6 +10,7 @@ export enum RecurrenceType {
 export type Task = {
   id: string;
   title: string;
+  description?: string;
   date: string; // ISO String
   isAllDay: boolean;
   isCompleted: boolean;
