@@ -1,5 +1,7 @@
 import React from 'react';
 
+import store, {persistor} from '@/stores';
+import {DAILY_REMINDER_CHANNEL_ID} from '@/stores/notification';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import {Platform} from 'react-native';
@@ -9,8 +11,6 @@ import PushNotification, {Importance} from 'react-native-push-notification';
 import {Provider as ReduxStoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import RootStack from './navigations/RootStack';
-import store, {persistor} from '@/stores';
-import {DAILY_REMINDER_CHANNEL_ID} from '@/stores/notification';
 
 PushNotification.createChannel(
   {

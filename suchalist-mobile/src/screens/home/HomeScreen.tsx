@@ -1,3 +1,10 @@
+import BottomSheet from '@/components/base/BottomSheet';
+import TaskItemList from '@/components/task/TaskItemList';
+import {getColor} from '@/constants/styles';
+import {RootStackParamList} from '@/navigations/RootStack';
+import {RootState} from '@/stores';
+import {NewTask, Task, tasksActions} from '@/stores/tasks';
+import {Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -11,16 +18,9 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
-import BottomSheet from '@/components/base/BottomSheet';
-import TaskItemList from '@/components/task/TaskItemList';
-import {getColor} from '@/constants/styles';
-import {RootStackParamList} from '@/navigations/RootStack';
-import {isAppOutdated} from '@/services/suchalist-service';
-import {RootState} from '@/stores';
-import {NewTask, Task, tasksActions} from '@/stores/tasks';
-import {Theme} from '@/stores/theme';
-import FAB from './components/FAB';
 import EmptyTaskMessage from './components/EmptyTaskMessage';
+import FAB from './components/FAB';
+import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -47,8 +47,6 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(tasksActions.removePastFinishedTasks());
-
-    isAppOutdated();
   }, [dispatch]);
 
   const [defaultDate, setDefaultDate] = useState<Date | undefined>(undefined);
@@ -85,6 +83,8 @@ export default function HomeScreen() {
       source={backgroundImage}
       resizeMode="cover"
       style={styles.background}>
+      <ForceAppUpdateModal />
+
       <View style={styles.overlay} />
 
       <View style={styles.container}>

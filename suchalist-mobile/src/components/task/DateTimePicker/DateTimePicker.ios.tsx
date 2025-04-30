@@ -1,16 +1,16 @@
 import Button from '@/components/base/Button';
+import TextInput from '@/components/base/form/TextInput';
 import {getColor} from '@/constants/styles';
 import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';
+import {formatDate} from '@/utils/format';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import {useState} from 'react';
 import {Controller} from 'react-hook-form';
 import {StyleSheet} from 'react-native';
 import {Modal, Portal} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {Props} from './common';
-import {useState} from 'react';
-import TextInput from '@/components/base/form/TextInput';
-import {formatDate} from '@/utils/format';
 
 export default function DateTimePicker({
   name,
