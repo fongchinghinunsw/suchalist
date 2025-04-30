@@ -34,7 +34,7 @@ export default function App(): React.JSX.Element {
   return (
     <ReduxStoreProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <PaperProvider>
+        <PaperProvider theme={{dark: false}}>
           <GestureHandlerRootView>
             <BottomSheetModalProvider>
               <NavigationContainer>
