@@ -20,6 +20,7 @@ import {RootState} from '@/stores';
 import {NewTask, Task, tasksActions} from '@/stores/tasks';
 import {Theme} from '@/stores/theme';
 import FAB from './components/FAB';
+import EmptyTaskMessage from './components/EmptyTaskMessage';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -88,16 +89,20 @@ export default function HomeScreen() {
 
       <View style={styles.container}>
         <View style={styles.tasksListContainer}>
-          <TaskItemList
-            tasks={tasks}
-            setIsCompleted={setIsCompleted}
-            onEndReached={() => console.log('reached')}
-            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-            onTaskItemPress={(task: Task) =>
-              navigation.push('TaskDetails', {task})
-            }
-            onScroll={onScroll}
-          />
+          {tasks.length > 0 ? (
+            <TaskItemList
+              tasks={tasks}
+              setIsCompleted={setIsCompleted}
+              onEndReached={() => console.log('reached')}
+              showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+              onTaskItemPress={(task: Task) =>
+                navigation.push('TaskDetails', {task})
+              }
+              onScroll={onScroll}
+            />
+          ) : (
+            <EmptyTaskMessage />
+          )}
         </View>
 
         <BottomSheet ref={bottomSheetModalRef}>
@@ -125,7 +130,7 @@ const getStyles = (theme: Theme) => {
     },
     overlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      backgroundColor: 'rgba(255, 255, 255, 0.7)',
     },
     tasksListContainer: {
       flex: 1,
