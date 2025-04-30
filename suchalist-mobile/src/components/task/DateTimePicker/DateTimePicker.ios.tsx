@@ -24,6 +24,7 @@ export default function DateTimePicker({
   const {mode = 'datetime', display = 'default'} = iosOptions;
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const styles = getStyles(theme);
 
   const [isVisible, setIsVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
@@ -43,7 +44,6 @@ export default function DateTimePicker({
     onDismiss?.();
   };
 
-  console.log({mode});
   const dateTimeLabel =
     mode === 'datetime' ? 'Date / Time' : mode === 'date' ? 'Date' : 'Time';
   const dateTimeDisplay = formatDate(value, mode);
@@ -88,7 +88,7 @@ export default function DateTimePicker({
                         return;
                     }
                   }}
-                  accentColor={getColor(theme, 500)}
+                  accentColor={getColor(theme, 600)}
                 />
               );
             }}
@@ -106,15 +106,17 @@ export default function DateTimePicker({
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFF',
-    marginHorizontal: 20,
-    padding: 20,
-    borderRadius: 16,
-    alignItems: 'center',
-  },
-  confirmButton: {
-    marginTop: 20,
-  },
-});
+const getStyles = (theme: Theme) => {
+  return StyleSheet.create({
+    container: {
+      backgroundColor: getColor(theme, 400),
+      marginHorizontal: 20,
+      padding: 20,
+      borderRadius: 16,
+      alignItems: 'center',
+    },
+    confirmButton: {
+      marginTop: 20,
+    },
+  });
+};
