@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {v4 as uuidv4} from 'uuid';
+import uuid from 'react-native-uuid';
 
 export enum RecurrenceType {
   DAILY = 'DAILY',
@@ -102,7 +102,9 @@ const tasksSlice = createSlice({
     addTask(state, action: PayloadAction<NewTask>) {
       const {recurrence} = action.payload;
 
-      const taskId = uuidv4();
+      console.log('hi');
+      const taskId = uuid.v4();
+      console.log('hieee', taskId);
       const newTask: Task = {
         ...action.payload,
         id: taskId,
@@ -115,6 +117,8 @@ const tasksSlice = createSlice({
                 originalParentId: taskId,
               },
       };
+      console.log({newTask});
+
       const index = state.tasks.findIndex(
         task =>
           new Date(task.date).getTime() > new Date(newTask.date).getTime(),
