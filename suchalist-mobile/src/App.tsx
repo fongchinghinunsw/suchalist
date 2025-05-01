@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import store, {persistor} from '@/stores';
 import {DAILY_REMINDER_CHANNEL_ID} from '@/stores/notification';
@@ -6,6 +6,7 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import {Platform} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import SplashScreen from 'react-native-splash-screen';
 import {PaperProvider} from 'react-native-paper';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import {Provider as ReduxStoreProvider} from 'react-redux';
@@ -31,6 +32,10 @@ PushNotification.configure({
 });
 
 export default function App(): React.JSX.Element {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <ReduxStoreProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
