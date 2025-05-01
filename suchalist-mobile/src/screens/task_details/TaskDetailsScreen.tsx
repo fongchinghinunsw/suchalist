@@ -131,13 +131,13 @@ export default function TaskDetailsScreen() {
         disabled={isSaveTaskButtonDisabled}
         loading={isLoading}
         onPress={handleSubmit(onSaveTask)}>
-        Save Task
+        Save your task
       </Button>
       <Button
         mode="contained"
         tone="danger"
         onPress={() => onDeleteTask(task.id)}>
-        Delete Task
+        Delete your task
       </Button>
     </View>
   );
