@@ -4,11 +4,11 @@ import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootState} from '@/stores';
 import {
-  DAILY_REMINDER_CHANNEL_ID,
+  // DAILY_REMINDER_CHANNEL_ID,
   notificationActions,
 } from '@/stores/notification';
 import {StyleSheet} from 'react-native';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
 import * as z from 'zod';
 
@@ -79,20 +79,20 @@ export default function DailyReminderSection() {
 
     dispatch(notificationActions.setDailyReminder(reminderTime.toISOString()));
 
-    PushNotification.localNotificationSchedule({
-      channelId: DAILY_REMINDER_CHANNEL_ID,
-      id: '1',
-      title: 'Daily Reminder',
-      message: "Don't forget your TODOs today and plan for your next day!",
-      date: reminderTime,
-      repeatType: 'day',
-      allowWhileIdle: true,
-    });
+    // PushNotification.localNotificationSchedule({
+    //   channelId: DAILY_REMINDER_CHANNEL_ID,
+    //   id: '1',
+    //   title: 'Daily Reminder',
+    //   message: "Don't forget your TODOs today and plan for your next day!",
+    //   date: reminderTime,
+    //   repeatType: 'day',
+    //   allowWhileIdle: true,
+    // });
   };
 
   const cancelReminder = () => {
-    console.log('cancelReminder');
-    PushNotification.cancelLocalNotification('1');
+    // console.log('cancelReminder');
+    // PushNotification.cancelLocalNotification('1');
   };
 
   return (
