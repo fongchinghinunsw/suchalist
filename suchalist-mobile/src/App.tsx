@@ -1,38 +1,33 @@
 import React, {useEffect} from 'react';
 
 import store, {persistor} from '@/stores';
-// import {DAILY_REMINDER_CHANNEL_ID} from '@/stores/notification';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import SplashScreen from 'react-native-splash-screen';
 import {PaperProvider} from 'react-native-paper';
-// import PushNotification, {Importance} from 'react-native-push-notification';
+import notifee, {AndroidImportance} from '@notifee/react-native';
 import {Provider as ReduxStoreProvider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import RootStack from './navigations/RootStack';
-
-// PushNotification.createChannel(
-//   {
-//     channelId: DAILY_REMINDER_CHANNEL_ID,
-//     channelName: 'Daily Reminder',
-//     soundName: 'default',
-//     importance: Importance.HIGH,
-//     vibrate: true,
-//   },
-//   created => console.log(`Channel created: ${created}`), // true the first time, false later
-// );
-
-// PushNotification.configure({
-//   onNotification: function (notification) {
-//     console.log('NOTIFICATION:', notification);
-//   },
-//   requestPermissions: Platform.OS === 'ios',
-// });
+import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
+import {Platform} from 'react-native';
 
 export default function App(): React.JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
+
+    if (Platform.OS === 'ios') {
+      notifee.requestPermission();
+    } else if (Platform.OS === 'android') {
+      notifee.createChannel({
+        id: DAILY_REMINDER_CHANNEL_ID,
+        name: 'Daily Reminder',
+        importance: AndroidImportance.HIGH,
+        sound: 'default',
+        vibration: true,
+      });
+    }
   }, []);
 
   return (

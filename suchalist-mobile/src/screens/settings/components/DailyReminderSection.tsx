@@ -4,11 +4,15 @@ import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootState} from '@/stores';
 import {
-  // DAILY_REMINDER_CHANNEL_ID,
+  DAILY_REMINDER_CHANNEL_ID,
   notificationActions,
 } from '@/stores/notification';
 import {StyleSheet} from 'react-native';
-// import PushNotification from 'react-native-push-notification';
+import notifee, {
+  RepeatFrequency,
+  TimestampTrigger,
+  TriggerType,
+} from '@notifee/react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import * as z from 'zod';
 
@@ -64,7 +68,7 @@ export default function DailyReminderSection() {
     }
   };
 
-  const scheduleDailyReminder = (time: Date) => {
+  const scheduleDailyReminder = async (time: Date) => {
     const hour = time.getHours();
     const minute = time.getMinutes();
     const now = new Date();
@@ -79,20 +83,31 @@ export default function DailyReminderSection() {
 
     dispatch(notificationActions.setDailyReminder(reminderTime.toISOString()));
 
-    // PushNotification.localNotificationSchedule({
-    //   channelId: DAILY_REMINDER_CHANNEL_ID,
-    //   id: '1',
-    //   title: 'Daily Reminder',
-    //   message: "Don't forget your TODOs today and plan for your next day!",
-    //   date: reminderTime,
-    //   repeatType: 'day',
-    //   allowWhileIdle: true,
-    // });
+    const trigger: TimestampTrigger = {
+      type: TriggerType.TIMESTAMP,
+      timestamp: reminderTime.getTime(), // Milliseconds
+      repeatFrequency: RepeatFrequency.DAILY,
+      alarmManager: true, // Ensure it works reliably in Doze mode
+    };
+
+    await notifee.createTriggerNotification(
+      {
+        id: 'daily-reminder',
+        title: 'Daily Reminder',
+        body: "Don't forget your TODOs today and plan for your next day!",
+        android: {
+          channelId: DAILY_REMINDER_CHANNEL_ID,
+          pressAction: {
+            id: 'default',
+          },
+        },
+      },
+      trigger,
+    );
   };
 
-  const cancelReminder = () => {
-    // console.log('cancelReminder');
-    // PushNotification.cancelLocalNotification('1');
+  const cancelReminder = async () => {
+    await notifee.cancelNotification('daily-reminder');
   };
 
   return (
