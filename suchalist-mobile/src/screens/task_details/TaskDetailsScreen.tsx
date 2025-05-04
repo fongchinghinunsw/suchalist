@@ -5,7 +5,6 @@ import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {tasksActions} from '@/stores/tasks/tasks';
-import {RecurrenceType} from '@/stores/tasks/types';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect} from 'react';
@@ -18,7 +17,7 @@ const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
   datetime: z.date(),
-  recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
+  // recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -45,7 +44,7 @@ export default function TaskDetailsScreen() {
       title: task.title,
       description: task.description,
       datetime: new Date(task.dueDate),
-      recurrenceType: task.recurrence?.type ?? '',
+      // recurrenceType: task.recurrence?.type ?? '',
     },
   });
 
@@ -55,19 +54,19 @@ export default function TaskDetailsScreen() {
   }, [getValues, trigger]);
 
   const onSaveTask = (data: Schema) => {
-    const {title, description, datetime, recurrenceType} = data;
+    const {title, description, datetime} = data;
     dispatch(
       tasksActions.editTask({
         id: task.id,
         title,
         description,
         dueDate: datetime.toISOString(),
-        recurrence:
-          recurrenceType === undefined || recurrenceType === ''
-            ? undefined
-            : {
-                type: recurrenceType,
-              },
+        // recurrence:
+        //   recurrenceType === undefined || recurrenceType === ''
+        //     ? undefined
+        //     : {
+        //         type: recurrenceType,
+        //       },
       }),
     );
   };

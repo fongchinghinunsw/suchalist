@@ -1,12 +1,11 @@
-import SoundPlayer from 'react-native-sound-player';
-import Icon from '@react-native-vector-icons/entypo';
+import {getColor} from '@/constants/styles';
+import {RootState} from '@/stores';
+import {Task} from '@/stores/tasks/types';
+import {Theme} from '@/stores/theme';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {getColor} from '@/constants/styles';
-import {Task} from '@/stores/tasks/types';
+import SoundPlayer from 'react-native-sound-player';
 import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
 import Text from '../base/Text';
 
 SoundPlayer.loadSoundFile('ding', 'mp3');
@@ -18,7 +17,7 @@ type Props = {
 };
 
 export default function TaskItem({task, setIsCompleted, onPress}: Props) {
-  const {id, title, isCompleted, recurrence} = task;
+  const {id, title, isCompleted} = task;
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
   const styles = getStyle(theme);
@@ -46,9 +45,9 @@ export default function TaskItem({task, setIsCompleted, onPress}: Props) {
         style={[styles.title, isCompleted && styles.titleCompleted]}>
         {title}
       </Text>
-      {recurrence && (
+      {/* {recurrence && (
         <Icon name="cycle" size={18} color={getColor(theme, 600)} />
-      )}
+      )} */}
       <View style={styles.checkbox}>
         <BouncyCheckbox
           isChecked={isCompleted}

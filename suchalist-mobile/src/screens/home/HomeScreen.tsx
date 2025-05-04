@@ -45,11 +45,11 @@ export default function HomeScreen() {
 
   const setIsCompleted = (id: string, isCompleted: boolean) => {
     dispatch(tasksActions.setIsCompleted({id, isCompleted}));
-    dispatch(tasksActions.removePastFinishedTasks());
+    // dispatch(tasksActions.removePastFinishedTasks());
   };
 
   useEffect(() => {
-    dispatch(tasksActions.removePastFinishedTasks());
+    // dispatch(tasksActions.removePastFinishedTasks());
   }, [dispatch]);
 
   const [defaultDate, setDefaultDate] = useState<Date | undefined>(undefined);
