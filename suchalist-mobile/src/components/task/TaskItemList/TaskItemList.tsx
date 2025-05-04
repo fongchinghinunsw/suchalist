@@ -52,7 +52,7 @@ export default function TaskItemList({
   };
 
   return (
-    <ScrollView>
+    <ScrollView onScroll={onScroll}>
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
         setIsCompleted={setIsCompleted}
