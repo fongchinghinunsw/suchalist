@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {FAKE_TASKS} from './fakes';
 import {EditTask, NewTask, Task} from './types';
-import {getTaskId} from './utils';
+import {getId} from './utils';
 
 const initialTasks: Task[] = FAKE_TASKS;
 
@@ -15,7 +15,7 @@ const tasksSlice = createSlice({
   reducers: {
     addTask(state, action: PayloadAction<NewTask>) {
       // const {recurrence} = action.payload;
-      const taskId = getTaskId();
+      const taskId = getId();
 
       const now = new Date().toISOString();
       const newTask: Task = {

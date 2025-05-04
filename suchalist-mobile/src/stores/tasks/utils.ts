@@ -64,7 +64,7 @@ import {Task, TaskWithDueDate} from './types';
 //   return newTasks;
 // };
 
-export const getTaskId = () => {
+export const getId = () => {
   return uuid.v4();
 };
 

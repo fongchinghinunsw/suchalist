@@ -1,16 +1,16 @@
 import BottomSheet from '@/components/base/BottomSheet';
+import AddTaskItem from '@/components/task/AddTaskItem';
 import TaskItemList from '@/components/task/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';
 import {tasksActions} from '@/stores/tasks/tasks';
-import {NewTask} from '@/stores/tasks/types';
-import {Task} from '@/stores/tasks/types';
+import {NewTask, Task} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {
   ImageBackground,
   NativeScrollEvent,
@@ -23,7 +23,6 @@ import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import EmptyTaskMessage from './components/EmptyTaskMessage';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
-import AddTaskItem from '@/components/task/AddTaskItem';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -48,9 +47,9 @@ export default function HomeScreen() {
     // dispatch(tasksActions.removePastFinishedTasks());
   };
 
-  useEffect(() => {
-    // dispatch(tasksActions.removePastFinishedTasks());
-  }, [dispatch]);
+  // useEffect(() => {
+  // dispatch(tasksActions.removePastFinishedTasks());
+  // }, [dispatch]);
 
   const [defaultDate, setDefaultDate] = useState<Date | undefined>(undefined);
 

@@ -1,32 +1,47 @@
-import {Task} from './types';
+import {Task, TaskList} from './types';
+import {getId} from './utils';
 
 export const FAKE_TASKS: Task[] = [
   {
-    id: 'no1',
-    title: 'No due date item 1',
+    id: getId(),
+    title: 'Deliver the pizza',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    title: 'Update Suchalist',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    title: 'Watch Big Bang Theory',
+    dueDate: new Date(2025, 3, 5).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    title: 'Pay for mortgage',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: true,
     createdAt: new Date(2025, 3, 5).toISOString(),
     updatedAt: new Date(2025, 3, 5).toISOString(),
   },
   {
-    id: 'no2',
-    title: 'No due date item 2',
+    id: getId(),
+    title: '1:1 with Dave',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: true,
     createdAt: new Date(2025, 3, 5).toISOString(),
     updatedAt: new Date(2025, 3, 5).toISOString(),
   },
   {
-    id: '1',
-    title: '1:1',
-    dueDate: new Date(2025, 3, 5).toISOString(),
-    isCompleted: true,
-    createdAt: new Date(2025, 3, 5).toISOString(),
-    updatedAt: new Date(2025, 3, 5).toISOString(),
-  },
-  {
-    id: '2',
+    id: getId(),
     title: 'Buy apple',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: true,
@@ -34,7 +49,7 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 3, 5).toISOString(),
   },
   {
-    id: '3',
+    id: getId(),
     title: 'Talk to Jake, then talk with David about the project progress',
     dueDate: new Date(2025, 4, 12).toISOString(),
     isCompleted: false,
@@ -42,7 +57,7 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 4, 12).toISOString(),
   },
   {
-    id: '4',
+    id: getId(),
     title: 'Go on date with Jason',
     dueDate: new Date(2025, 6, 6).toISOString(),
     isCompleted: true,
@@ -50,7 +65,7 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 6, 6).toISOString(),
   },
   {
-    id: '7',
+    id: getId(),
     title: 'Coding with Sassy',
     dueDate: new Date(2025, 6, 9).toISOString(),
     isCompleted: true,
@@ -58,7 +73,7 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 6, 9).toISOString(),
   },
   {
-    id: '8',
+    id: getId(),
     title: 'Coding with Cindy',
     dueDate: new Date(2025, 6, 9).toISOString(),
     isCompleted: false,
@@ -66,7 +81,7 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 6, 9).toISOString(),
   },
   {
-    id: '11',
+    id: getId(),
     title: 'Shopping in South Village',
     dueDate: new Date(2025, 3, 13).toISOString(),
     isCompleted: false,
@@ -74,7 +89,7 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 3, 13).toISOString(),
   },
   {
-    id: '12',
+    id: getId(),
     title: 'Testing my app',
     dueDate: new Date(2025, 8, 10).toISOString(),
     isCompleted: true,
@@ -82,3 +97,11 @@ export const FAKE_TASKS: Task[] = [
     updatedAt: new Date(2025, 8, 10).toISOString(),
   },
 ];
+
+export const TASK_LIST_1: TaskList = {
+  id: getId(),
+  title: 'Default',
+  tasks: FAKE_TASKS,
+  createdAt: new Date(2025, 2, 10).toISOString(),
+  updatedAt: new Date(2025, 2, 10).toISOString(),
+};
