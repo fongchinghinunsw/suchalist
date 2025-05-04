@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
-import EmptyTaskMessage from './components/EmptyTaskMessage';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 
@@ -92,19 +91,15 @@ export default function HomeScreen() {
       <View style={styles.container}>
         <View style={styles.tasksListContainer}>
           <AddTaskItem />
-          {tasks.length > 0 ? (
-            <TaskItemList
-              tasks={tasks}
-              setIsCompleted={setIsCompleted}
-              showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-              onTaskItemPress={(task: Task) =>
-                navigation.push('TaskDetails', {task})
-              }
-              onScroll={onScroll}
-            />
-          ) : (
-            <EmptyTaskMessage />
-          )}
+          <TaskItemList
+            tasks={tasks}
+            setIsCompleted={setIsCompleted}
+            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+            onTaskItemPress={(task: Task) =>
+              navigation.push('TaskDetails', {task})
+            }
+            onScroll={onScroll}
+          />
         </View>
 
         <BottomSheet ref={bottomSheetModalRef}>
