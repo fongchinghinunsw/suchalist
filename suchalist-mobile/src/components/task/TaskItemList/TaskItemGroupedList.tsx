@@ -54,7 +54,7 @@ export default function TaskItemGroupedList({
   );
 
   return (
-    <>
+    <View>
       {sections.map(section => {
         const {title, data} = section;
         return (
@@ -79,7 +79,7 @@ export default function TaskItemGroupedList({
           </View>
         );
       })}
-    </>
+    </View>
   );
 }
 

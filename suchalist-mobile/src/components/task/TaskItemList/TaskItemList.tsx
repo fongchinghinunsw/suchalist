@@ -1,11 +1,17 @@
-import Text from '@/components/base/Text';
 import {Task, TaskWithDueDate} from '@/stores/tasks/types';
 import {isTaskWithDueDate} from '@/stores/tasks/utils';
 import React from 'react';
-import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  StyleSheet,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import CompletedTaskItemList from './CompletedTaskItemList';
 import TaskItemGroupedList from './TaskItemGroupedList';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
+import Divider from '@/components/base/Divider';
+import AddTaskItem from '../AddTaskItem';
 
 type Props = {
   tasks: Task[];
@@ -41,7 +47,8 @@ export default function TaskItemList({
   });
 
   return (
-    <ScrollView onScroll={onScroll}>
+    <ScrollView contentContainerStyle={styles.container} onScroll={onScroll}>
+      <AddTaskItem />
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
         setIsCompleted={setIsCompleted}
@@ -53,8 +60,8 @@ export default function TaskItemList({
         onTaskItemPress={onTaskItemPress}
         showAddTaskDrawer={showAddTaskDrawer}
       />
-      <Text>==========</Text>
-      <TaskItemUngroupedList
+      <Divider />
+      <CompletedTaskItemList
         tasks={completedTasks}
         setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
@@ -62,3 +69,10 @@ export default function TaskItemList({
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    gap: 8,
+  },
+});
