@@ -1,6 +1,6 @@
 import BottomSheet from '@/components/base/BottomSheet';
 import AddTaskItem from '@/components/task/AddTaskItem';
-import TaskItemList from '@/components/task/TaskItemList';
+import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';

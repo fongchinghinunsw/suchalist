@@ -100,7 +100,7 @@ export default function TaskDetailsScreen() {
       />
       <DateTimePicker
         name="dueDate"
-        value={watchDueDateValue}
+        value={watchDueDateValue ?? new Date()}
         androidOptions={{
           mode,
         }}

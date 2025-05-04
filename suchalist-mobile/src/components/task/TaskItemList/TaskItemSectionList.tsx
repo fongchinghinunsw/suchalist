@@ -1,25 +1,25 @@
-import React, {useMemo} from 'react';
-import {
-  SectionList,
-  StyleSheet,
-  View,
-  SectionListRenderItem,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-} from 'react-native';
-import Animated, {LinearTransition} from 'react-native-reanimated';
-import TaskItem from './TaskItem';
+import Text from '@/components/base/Text';
+import {RootState} from '@/stores';
 import {Task, TaskWithDueDate} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
+import React, {useMemo} from 'react';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  SectionList,
+  SectionListRenderItem,
+  StyleSheet,
+  View,
+} from 'react-native';
+import Animated, {LinearTransition} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {getColor} from '@/constants/styles';
+import TaskItem from '../TaskItem';
 import Icon from '@react-native-vector-icons/ionicons';
-import Text from '../base/Text';
-import {isTaskWithDueDate} from '@/stores/tasks/utils';
+import {getColor} from '@/constants/styles';
+import {sortTasks} from '@/utils/task/sort';
 
 type Props = {
-  tasks: Task[];
+  tasks: TaskWithDueDate[];
   setIsCompleted: (id: string, isCompleted: boolean) => void;
   onEndReached: () => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
@@ -27,7 +27,7 @@ type Props = {
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 
-export default function TaskItemList({
+export default function TaskItemSectionList({
   tasks,
   setIsCompleted,
   onEndReached,
@@ -37,12 +37,10 @@ export default function TaskItemList({
 }: Props) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
-  const tasksWithDueDate = tasks.filter(isTaskWithDueDate);
-
   const sections = useMemo(() => {
     const grouped: Record<string, TaskWithDueDate[]> = {};
 
-    tasksWithDueDate.forEach(task => {
+    tasks.forEach(task => {
       const date = new Date(task.dueDate).toDateString();
       if (!grouped[date]) {
         grouped[date] = [];
@@ -50,16 +48,11 @@ export default function TaskItemList({
       grouped[date].push(task);
     });
 
-    return Object.entries(grouped).map(([date, data]) => ({
+    return Object.entries(grouped).map(([date, groupedTasks]) => ({
       title: date,
-      data: data.slice().sort((a, b) => {
-        if (a.isCompleted === b.isCompleted) {
-          return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
-        }
-        return a.isCompleted ? -1 : 1;
-      }),
+      data: sortTasks(groupedTasks),
     }));
-  }, [tasksWithDueDate]);
+  }, [tasks]);
 
   const renderItem: SectionListRenderItem<Task> = ({item}) => (
     <Animated.View layout={LinearTransition}>
