@@ -4,7 +4,6 @@ import {Keyboard, View} from 'react-native';
 import Button from '@/components/base/Button';
 import Text from '@/components/base/Text';
 import DropdownInput from '@/components/base/form/DropdownInput';
-import Switch from '@/components/base/form/Switch';
 import TextInput from '@/components/base/form/TextInput';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
@@ -30,28 +29,21 @@ export default function AddTaskForm({
   } = useForm<AddTaskFormSchema>({
     schema: addTaskFormSchema,
     defaultValues: {
-      isAllDay: true,
       datetime: defaultDate ?? new Date(),
       recurrenceType: '',
     },
   });
 
   const selectedDatetimeValue = watch('datetime');
-  const isAllDayValue = watch('isAllDay');
 
   const onDateTimePickerConfirm = (date: Date) => setValue('datetime', date);
 
   const onSubmit = (data: AddTaskFormSchema) => {
-    const {title, datetime, isAllDay, recurrenceType} = data;
-
-    if (isAllDay) {
-      datetime.setHours(0, 0, 0, 0);
-    }
+    const {title, datetime, recurrenceType} = data;
 
     onAddTask({
       title,
       date: datetime.toISOString(),
-      isAllDay,
       recurrence: recurrenceType
         ? {
             type: recurrenceType,
@@ -62,13 +54,12 @@ export default function AddTaskForm({
     onClose();
   };
 
-  const mode = isAllDayValue ? 'date' : 'datetime';
+  const mode = 'date';
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>New Task</Text>
       <TextInput name="title" label="Title" control={control} />
-      <Switch name="isAllDay" label="All-day" control={control} />
       <DateTimePicker
         name="datetime"
         value={selectedDatetimeValue}

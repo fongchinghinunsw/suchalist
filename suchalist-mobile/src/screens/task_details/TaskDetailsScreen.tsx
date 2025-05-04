@@ -1,23 +1,21 @@
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {StyleSheet, View} from 'react-native';
-import * as z from 'zod';
 import Button from '@/components/base/Button';
+import DropdownInput from '@/components/base/form/DropdownInput';
 import TextInput from '@/components/base/form/TextInput';
+import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';
-import {useDispatch} from 'react-redux';
 import {RecurrenceType, tasksActions} from '@/stores/tasks';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import Switch from '@/components/base/form/Switch';
-import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import {useEffect} from 'react';
-import DropdownInput from '@/components/base/form/DropdownInput';
+import {StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import * as z from 'zod';
 import {RECURRENCE_OPTIONS} from '../home/components/AddTaskForm/common';
 
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  isAllDay: z.boolean(),
   datetime: z.date(),
   recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
@@ -45,7 +43,6 @@ export default function TaskDetailsScreen() {
     defaultValues: {
       title: task.title,
       description: task.description,
-      isAllDay: task.isAllDay,
       datetime: new Date(task.date),
       recurrenceType: task.recurrence?.type ?? '',
     },
@@ -57,13 +54,12 @@ export default function TaskDetailsScreen() {
   }, [getValues, trigger]);
 
   const onSaveTask = (data: Schema) => {
-    const {title, description, isAllDay, datetime, recurrenceType} = data;
+    const {title, description, datetime, recurrenceType} = data;
     dispatch(
       tasksActions.editTask({
         id: task.id,
         title,
         description,
-        isAllDay,
         date: datetime.toISOString(),
         recurrence:
           recurrenceType === undefined || recurrenceType === ''
@@ -81,11 +77,10 @@ export default function TaskDetailsScreen() {
   };
 
   const selectedDatetimeValue = watch('datetime');
-  const isAllDayValue = watch('isAllDay');
 
   const onDateTimePickerConfirm = (date: Date) => setValue('datetime', date);
 
-  const mode = isAllDayValue ? 'date' : 'datetime';
+  const mode = 'date';
 
   const isSaveTaskButtonDisabled = !isValid || isLoading;
   console.log({isValid, isLoading});
@@ -105,7 +100,6 @@ export default function TaskDetailsScreen() {
         multiline={true}
         control={control}
       />
-      <Switch name="isAllDay" label="All-day" control={control} />
       <DateTimePicker
         name="datetime"
         value={selectedDatetimeValue}
