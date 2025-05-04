@@ -10,7 +10,7 @@ export const sortTasks = (tasks: Task[]) => {
       if (a.isCompleted === b.isCompleted) {
         return new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime();
       }
-      return a.isCompleted ? -1 : 1;
+      return a.isCompleted ? 1 : -1;
     }
 
     // Only a is missing date: push it to top
