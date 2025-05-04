@@ -34,19 +34,21 @@ const tasksSlice = createSlice({
       };
       console.log({newTask});
 
-      // const index = state.tasks.findIndex(
-      //   task =>
-      //     new Date(task.dueDate).getTime() >
-      //     new Date(newTask.dueDate).getTime(),
-      // );
+      const index = state.tasks.findIndex(task => {
+        if (newTask.dueDate == null) {
+          return task.dueDate !== undefined;
+        } else {
+          if (task.dueDate == null) {
+            return false;
+          }
 
-      // if (index === -1) {
-      //   const tasks = mayBeCreateNextNRecurringTasks(newTask, [], 4);
-      //   state.tasks.push(...[newTask, ...tasks]);
-      //   // console.log('addTask', state.tasks);
-      // } else {
-      //   state.tasks.splice(index, 0, newTask);
-      // }
+          return (
+            new Date(task.dueDate).getTime() >
+            new Date(newTask.dueDate).getTime()
+          );
+        }
+      });
+      state.tasks.splice(index === -1 ? 0 : index, 0, newTask);
     },
     removeTask(state, action: PayloadAction<string>) {
       const index = state.tasks.findIndex(task => task.id === action.payload);
