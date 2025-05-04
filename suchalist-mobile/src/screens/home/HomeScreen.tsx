@@ -96,7 +96,6 @@ export default function HomeScreen() {
             <TaskItemList
               tasks={tasks}
               setIsCompleted={setIsCompleted}
-              onEndReached={() => console.log('reached')}
               showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
               onTaskItemPress={(task: Task) =>
                 navigation.push('TaskDetails', {task})

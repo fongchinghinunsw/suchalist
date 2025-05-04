@@ -10,7 +10,6 @@ import TaskItemUngroupedList from './TaskItemUngroupedList';
 type Props = {
   tasks: Task[];
   setIsCompleted: (id: string, isCompleted: boolean) => void;
-  onEndReached: () => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -19,7 +18,6 @@ type Props = {
 export default function TaskItemList({
   tasks,
   setIsCompleted,
-  onEndReached,
   showAddTaskDrawer,
   onTaskItemPress,
   onScroll,
@@ -42,15 +40,6 @@ export default function TaskItemList({
     tasksWithoutDueDate.push(task);
   });
 
-  const expandableListProps = {
-    tasks: tasksWithDueDate,
-    setIsCompleted,
-    onEndReached,
-    showAddTaskDrawer,
-    onTaskItemPress,
-    onScroll,
-  };
-
   return (
     <ScrollView onScroll={onScroll}>
       <TaskItemUngroupedList
@@ -58,8 +47,12 @@ export default function TaskItemList({
         setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
       />
-      {/* <TaskItemSectionList {...expandableListProps} /> */}
-      <TaskItemGroupedList {...expandableListProps} />
+      <TaskItemGroupedList
+        tasks={tasksWithDueDate}
+        setIsCompleted={setIsCompleted}
+        onTaskItemPress={onTaskItemPress}
+        showAddTaskDrawer={showAddTaskDrawer}
+      />
       <Text>==========</Text>
       <TaskItemUngroupedList
         tasks={completedTasks}
