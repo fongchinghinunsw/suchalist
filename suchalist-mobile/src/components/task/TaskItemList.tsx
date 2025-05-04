@@ -40,7 +40,7 @@ export default function TaskItemList({
     const grouped: Record<string, Task[]> = {};
 
     tasks.forEach(task => {
-      const date = new Date(task.date).toDateString();
+      const date = new Date(task.dueDate).toDateString();
       if (!grouped[date]) {
         grouped[date] = [];
       }
@@ -51,7 +51,7 @@ export default function TaskItemList({
       title: date,
       data: data.slice().sort((a, b) => {
         if (a.isCompleted === b.isCompleted) {
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
+          return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
         }
         return a.isCompleted ? -1 : 1;
       }),

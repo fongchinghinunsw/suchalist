@@ -43,7 +43,7 @@ export default function TaskDetailsScreen() {
     defaultValues: {
       title: task.title,
       description: task.description,
-      datetime: new Date(task.date),
+      datetime: new Date(task.dueDate),
       recurrenceType: task.recurrence?.type ?? '',
     },
   });
@@ -60,7 +60,7 @@ export default function TaskDetailsScreen() {
         id: task.id,
         title,
         description,
-        date: datetime.toISOString(),
+        dueDate: datetime.toISOString(),
         recurrence:
           recurrenceType === undefined || recurrenceType === ''
             ? undefined
