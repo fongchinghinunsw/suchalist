@@ -21,6 +21,7 @@ import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import EmptyTaskMessage from './components/EmptyTaskMessage';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
+import AddTaskItem from '@/components/task/AddTaskItem';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -89,6 +90,7 @@ export default function HomeScreen() {
 
       <View style={styles.container}>
         <View style={styles.tasksListContainer}>
+          <AddTaskItem />
           {tasks.length > 0 ? (
             <TaskItemList
               tasks={tasks}
