@@ -24,22 +24,23 @@ export default function AddTaskItem({onAddTask}: Props) {
   const [title, setTitle] = useState('');
 
   const onTitleChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    const text = e.nativeEvent.text.trim();
-    if (text.length > 0) {
-      setTitle(e.nativeEvent.text);
-      console.log(e.nativeEvent.text);
+    const text = e.nativeEvent.text;
+    setTitle(text);
+  };
+
+  const onPress = () => {
+    if (title.length > 0) {
+      onAddTask({title: title.trim()});
+      setTitle('');
+      console.log({title});
     }
   };
+  console.log('outside', {title});
 
   return (
     <View style={styles.container}>
-      <Icon
-        name="add-outline"
-        size={24}
-        color="#fff"
-        onPress={() => onAddTask({title})}
-      />
-      <TextInput onChange={onTitleChange} style={styles.input} />
+      <Icon name="add-outline" size={24} color="#fff" onPress={onPress} />
+      <TextInput value={title} onChange={onTitleChange} style={styles.input} />
     </View>
   );
 }
