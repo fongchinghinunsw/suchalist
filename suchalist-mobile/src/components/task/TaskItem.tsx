@@ -69,7 +69,6 @@ const getStyle = (theme: Theme) => {
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: 12,
-      marginVertical: 6,
       backgroundColor: '#FFF',
       borderColor: getColor(theme, 400),
       borderWidth: 2,
