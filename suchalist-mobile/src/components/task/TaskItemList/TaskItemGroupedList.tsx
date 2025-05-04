@@ -2,38 +2,27 @@ import Text from '@/components/base/Text';
 import {RootState} from '@/stores';
 import {Task, TaskWithDueDate} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
-import React, {useMemo} from 'react';
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  SectionList,
-  SectionListRenderItem,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {useMemo} from 'react';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import TaskItem from '../TaskItem';
+import {StyleSheet, View} from 'react-native';
 import Icon from '@react-native-vector-icons/ionicons';
 import {getColor} from '@/constants/styles';
-import {sortTasks} from '@/utils/task/sort';
+import {styles as commonStyles} from './common';
 
 type Props = {
   tasks: TaskWithDueDate[];
   setIsCompleted: (id: string, isCompleted: boolean) => void;
-  onEndReached: () => void;
-  showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
-  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  showAddTaskDrawer: (defaultDate: Date) => void;
 };
 
-export default function TaskItemSectionList({
+export default function TaskItemGroupedList({
   tasks,
   setIsCompleted,
-  onEndReached,
-  showAddTaskDrawer,
   onTaskItemPress,
-  onScroll,
+  showAddTaskDrawer,
 }: Props) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
@@ -50,14 +39,14 @@ export default function TaskItemSectionList({
 
     return Object.entries(grouped).map(([date, groupedTasks]) => ({
       title: date,
-      data: sortTasks(groupedTasks),
+      data: groupedTasks,
     }));
   }, [tasks]);
 
-  const renderItem: SectionListRenderItem<Task> = ({item}) => (
-    <Animated.View layout={LinearTransition}>
+  const renderItem = (task: TaskWithDueDate) => (
+    <Animated.View key={task.id} layout={LinearTransition}>
       <TaskItem
-        task={item}
+        task={task}
         setIsCompleted={setIsCompleted}
         onPress={onTaskItemPress}
       />
@@ -65,33 +54,37 @@ export default function TaskItemSectionList({
   );
 
   return (
-    <SectionList
-      onScroll={onScroll}
-      sections={sections}
-      keyExtractor={item => item.id}
-      renderSectionHeader={({section: {title}}) => (
-        <View style={styles.header}>
-          <Text shade={800} style={styles.headerText}>
-            {title}
-          </Text>
-          <Icon
-            name="add"
-            size={20}
-            color="blue"
-            style={{color: getColor(theme, 500)}}
-            onPress={() => showAddTaskDrawer(new Date(title))}
-          />
-        </View>
-      )}
-      renderItem={renderItem}
-      onEndReached={onEndReached}
-      onEndReachedThreshold={0.4}
-    />
+    <>
+      {sections.map(section => {
+        const {title, data} = section;
+        return (
+          <View key={section.title}>
+            <View style={styles.headerContainer}>
+              <Text shade={800} style={styles.headerText}>
+                {section.title}
+              </Text>
+              <Icon
+                name="add"
+                size={20}
+                color="blue"
+                style={{color: getColor(theme, 500)}}
+                onPress={() => showAddTaskDrawer(new Date(title))}
+              />
+            </View>
+            <View style={commonStyles.container}>
+              {data.map(task => {
+                return renderItem(task);
+              })}
+            </View>
+          </View>
+        );
+      })}
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
+  headerContainer: {
     paddingVertical: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',

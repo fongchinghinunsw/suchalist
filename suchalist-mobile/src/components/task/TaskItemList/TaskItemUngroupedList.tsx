@@ -4,6 +4,7 @@ import React from 'react';
 import {View} from 'react-native';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import TaskItem from '../TaskItem';
+import {styles} from './common';
 
 type Props = {
   tasks: Task[];
@@ -11,7 +12,7 @@ type Props = {
   onTaskItemPress: (task: Task) => void;
 };
 
-export default function TaskItemFlatList({
+export default function TaskItemUngroupedList({
   tasks,
   setIsCompleted,
   onTaskItemPress,
@@ -19,7 +20,7 @@ export default function TaskItemFlatList({
   const sortedTasks = sortTasks(tasks);
 
   return (
-    <View>
+    <View style={styles.container}>
       {sortedTasks.map(task => (
         <Animated.View key={task.id} layout={LinearTransition}>
           <TaskItem

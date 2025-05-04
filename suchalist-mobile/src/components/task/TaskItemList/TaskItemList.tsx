@@ -1,9 +1,11 @@
+import Text from '@/components/base/Text';
 import {Task, TaskWithDueDate} from '@/stores/tasks/types';
 import {isTaskWithDueDate} from '@/stores/tasks/utils';
 import React from 'react';
 import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
-import TaskItemPlainList from './TaskItemPlainList';
-import TaskItemSectionList from './TaskItemSectionList';
+import {ScrollView} from 'react-native-gesture-handler';
+import TaskItemGroupedList from './TaskItemGroupedList';
+import TaskItemUngroupedList from './TaskItemUngroupedList';
 
 type Props = {
   tasks: Task[];
@@ -22,23 +24,23 @@ export default function TaskItemList({
   onTaskItemPress,
   onScroll,
 }: Props) {
+  const completedTasks: Task[] = [];
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
 
   tasks.forEach(task => {
+    if (task.isCompleted) {
+      completedTasks.push(task);
+      return;
+    }
+
     if (isTaskWithDueDate(task)) {
       tasksWithDueDate.push(task);
-    } else {
-      tasksWithoutDueDate.push(task);
+      return;
     }
-  });
 
-  const plainListProps = {
-    tasks: tasksWithoutDueDate,
-    setIsCompleted,
-    showAddTaskDrawer,
-    onTaskItemPress,
-  };
+    tasksWithoutDueDate.push(task);
+  });
 
   const expandableListProps = {
     tasks: tasksWithDueDate,
@@ -50,9 +52,20 @@ export default function TaskItemList({
   };
 
   return (
-    <>
-      <TaskItemPlainList {...plainListProps} />
-      <TaskItemSectionList {...expandableListProps} />
-    </>
+    <ScrollView>
+      <TaskItemUngroupedList
+        tasks={tasksWithoutDueDate}
+        setIsCompleted={setIsCompleted}
+        onTaskItemPress={onTaskItemPress}
+      />
+      {/* <TaskItemSectionList {...expandableListProps} /> */}
+      <TaskItemGroupedList {...expandableListProps} />
+      <Text>==========</Text>
+      <TaskItemUngroupedList
+        tasks={completedTasks}
+        setIsCompleted={setIsCompleted}
+        onTaskItemPress={onTaskItemPress}
+      />
+    </ScrollView>
   );
 }
