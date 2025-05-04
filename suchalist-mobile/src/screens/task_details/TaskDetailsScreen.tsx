@@ -4,7 +4,7 @@ import TextInput from '@/components/base/form/TextInput';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';
-import {RecurrenceType, tasksActions} from '@/stores/tasks';
+import {RecurrenceType, tasksActions} from '@/stores/tasks/tasks';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect} from 'react';

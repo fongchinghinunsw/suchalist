@@ -3,7 +3,7 @@ import Icon from '@react-native-vector-icons/entypo';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {getColor} from '@/constants/styles';
-import {Task} from '@/stores/tasks';
+import {Task} from '@/stores/tasks/tasks';
 import {useSelector} from 'react-redux';
 import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';

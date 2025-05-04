@@ -3,7 +3,7 @@ import TaskItemList from '@/components/task/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';
-import {NewTask, Task, tasksActions} from '@/stores/tasks';
+import {NewTask, Task, tasksActions} from '@/stores/tasks/tasks';
 import {Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';

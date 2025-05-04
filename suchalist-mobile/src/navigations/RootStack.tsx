@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../stores';
 import {Theme} from '../stores/theme';
 import {getColor} from '../constants/styles';
-import {Task} from '../stores/tasks';
+import {Task} from '../stores/tasks/tasks';
 
 export type RootStackParamList = {
   Home: undefined;

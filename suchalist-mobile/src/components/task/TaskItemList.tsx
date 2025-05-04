@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import TaskItem from './TaskItem';
-import {Task} from '@/stores/tasks';
+import {Task} from '@/stores/tasks/tasks';
 import {Theme} from '@/stores/theme';
 import {useSelector} from 'react-redux';
 import {RootState} from '@/stores';
