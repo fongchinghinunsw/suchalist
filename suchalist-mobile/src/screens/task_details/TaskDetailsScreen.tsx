@@ -1,5 +1,4 @@
 import Button from '@/components/base/Button';
-import DropdownInput from '@/components/base/form/DropdownInput';
 import TextInput from '@/components/base/form/TextInput';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
@@ -11,7 +10,6 @@ import {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import * as z from 'zod';
-import {RECURRENCE_OPTIONS} from '../home/components/AddTaskForm/common';
 
 const schema = z.object({
   title: z.string(),
@@ -113,13 +111,13 @@ export default function TaskDetailsScreen() {
         control={control}
         onConfirm={onDateTimePickerConfirm}
       />
-      <DropdownInput
+      {/* <DropdownInput
         name="recurrenceType"
         label="Repeat"
         placeholder="Repeat"
         control={control}
         options={RECURRENCE_OPTIONS}
-      />
+      /> */}
       <Button
         mode="contained"
         disabled={isSaveTaskButtonDisabled}
