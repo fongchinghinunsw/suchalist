@@ -18,6 +18,7 @@ type Props = {
   setIsCompleted: (id: string, isCompleted: boolean) => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
+  onAddTask: (task: {title: string}) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 
@@ -26,6 +27,7 @@ export default function TaskItemList({
   setIsCompleted,
   showAddTaskDrawer,
   onTaskItemPress,
+  onAddTask,
   onScroll,
 }: Props) {
   const completedTasks: Task[] = [];
@@ -48,7 +50,7 @@ export default function TaskItemList({
 
   return (
     <ScrollView contentContainerStyle={styles.container} onScroll={onScroll}>
-      <AddTaskItem />
+      <AddTaskItem onAddTask={onAddTask} />
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
         setIsCompleted={setIsCompleted}

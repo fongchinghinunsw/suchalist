@@ -96,6 +96,7 @@ export default function HomeScreen() {
             onTaskItemPress={(task: Task) =>
               navigation.push('TaskDetails', {task})
             }
+            onAddTask={addTask}
             onScroll={onScroll}
           />
         </View>
