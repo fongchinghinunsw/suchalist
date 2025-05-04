@@ -1,5 +1,6 @@
 import {getColor} from '@/constants/styles';
-import {NewTask, RecurrenceType} from '@/stores/tasks/tasks';
+import {NewTask} from '@/stores/tasks/types';
+import {RecurrenceType} from '@/stores/tasks/types';
 import {StyleSheet} from 'react-native';
 import {DropDownPropsInterface} from 'react-native-paper-dropdown';
 import * as z from 'zod';
