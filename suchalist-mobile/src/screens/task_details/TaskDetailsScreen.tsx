@@ -16,7 +16,7 @@ import {RECURRENCE_OPTIONS} from '../home/components/AddTaskForm/common';
 const schema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  datetime: z.date(),
+  dueDate: z.date(),
   // recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
 
@@ -43,7 +43,7 @@ export default function TaskDetailsScreen() {
     defaultValues: {
       title: task.title,
       description: task.description,
-      datetime: new Date(task.dueDate),
+      dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
       // recurrenceType: task.recurrence?.type ?? '',
     },
   });
@@ -54,13 +54,13 @@ export default function TaskDetailsScreen() {
   }, [getValues, trigger]);
 
   const onSaveTask = (data: Schema) => {
-    const {title, description, datetime} = data;
+    const {title, description, dueDate} = data;
     dispatch(
       tasksActions.editTask({
         id: task.id,
         title,
         description,
-        dueDate: datetime.toISOString(),
+        dueDate: dueDate.toISOString(),
         // recurrence:
         //   recurrenceType === undefined || recurrenceType === ''
         //     ? undefined
@@ -76,9 +76,9 @@ export default function TaskDetailsScreen() {
     navigation.goBack();
   };
 
-  const selectedDatetimeValue = watch('datetime');
+  const watchDueDateValue = watch('dueDate');
 
-  const onDateTimePickerConfirm = (date: Date) => setValue('datetime', date);
+  const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
 
   const mode = 'date';
 
@@ -101,8 +101,8 @@ export default function TaskDetailsScreen() {
         control={control}
       />
       <DateTimePicker
-        name="datetime"
-        value={selectedDatetimeValue}
+        name="dueDate"
+        value={watchDueDateValue}
         androidOptions={{
           mode,
         }}

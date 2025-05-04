@@ -8,7 +8,7 @@ export type Task = {
   id: string;
   title: string;
   description?: string;
-  dueDate: string;
+  dueDate?: string;
   isCompleted: boolean;
   //   recurrence?: {
   //     type: RecurrenceType;
