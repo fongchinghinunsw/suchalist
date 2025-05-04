@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import TaskItem from './TaskItem';
-import {Task} from '@/stores/tasks/types';
+import {Task, TaskWithDueDate} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
 import {useSelector} from 'react-redux';
 import {RootState} from '@/stores';
 import {getColor} from '@/constants/styles';
 import Icon from '@react-native-vector-icons/ionicons';
 import Text from '../base/Text';
+import {isTaskWithDueDate} from '@/stores/tasks/utils';
 
 type Props = {
   tasks: Task[];
@@ -36,10 +37,12 @@ export default function TaskItemList({
 }: Props) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
-  const sections = useMemo(() => {
-    const grouped: Record<string, Task[]> = {};
+  const tasksWithDueDate = tasks.filter(isTaskWithDueDate);
 
-    tasks.forEach(task => {
+  const sections = useMemo(() => {
+    const grouped: Record<string, TaskWithDueDate[]> = {};
+
+    tasksWithDueDate.forEach(task => {
       const date = new Date(task.dueDate).toDateString();
       if (!grouped[date]) {
         grouped[date] = [];
@@ -56,7 +59,7 @@ export default function TaskItemList({
         return a.isCompleted ? -1 : 1;
       }),
     }));
-  }, [tasks]);
+  }, [tasksWithDueDate]);
 
   const renderItem: SectionListRenderItem<Task> = ({item}) => (
     <Animated.View layout={LinearTransition}>

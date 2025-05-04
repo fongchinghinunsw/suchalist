@@ -26,6 +26,8 @@ export type TaskList = {
   updatedAt: string;
 };
 
+export type TaskWithDueDate = Task & {dueDate: string};
+
 export type NewTask = Omit<
   Task,
   'id' | 'isCompleted' | 'createdAt' | 'updatedAt'

@@ -1,4 +1,5 @@
 import uuid from 'react-native-uuid';
+import {Task, TaskWithDueDate} from './types';
 
 // export const mayBeCreateNextNRecurringTasks = (
 //   task: Task,
@@ -66,3 +67,7 @@ import uuid from 'react-native-uuid';
 export const getTaskId = () => {
   return uuid.v4();
 };
+
+export function isTaskWithDueDate(task: Task): task is TaskWithDueDate {
+  return task.dueDate !== undefined;
+}
