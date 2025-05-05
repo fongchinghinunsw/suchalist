@@ -1,11 +1,16 @@
-import {Task} from '@/stores/tasks/types';
-import TaskItemUngroupedList from './TaskItemUngroupedList';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {Theme} from '@/stores/theme';
-import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
 import {getColor} from '@/constants/styles';
+import {RootState} from '@/stores';
+import {Task} from '@/stores/tasks/types';
+import {Theme} from '@/stores/theme';
 import {useState} from 'react';
+import {Pressable, StyleSheet, Text} from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
+import TaskItemUngroupedList from './TaskItemUngroupedList';
 
 type Props = {
   tasks: Task[];
@@ -19,17 +24,41 @@ export default function CompletedTaskItemList(props: Props) {
 
   const [isTasksVisible, setIsTasksVisible] = useState(false);
 
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{scale: scale.value}],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.9, {
+      damping: 1,
+      stiffness: 25,
+    });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, {
+      damping: 1,
+      stiffness: 25,
+    });
+  };
+
   const toggleTasks = () => {
     setIsTasksVisible(!isTasksVisible);
   };
 
   return (
     <>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button} onPress={toggleTasks}>
+      <Animated.View style={[styles.buttonContainer, animatedStyle]}>
+        <Pressable
+          style={styles.button}
+          onPress={toggleTasks}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}>
           <Text style={styles.buttonText}>Show Completed Tasks</Text>
         </Pressable>
-      </View>
+      </Animated.View>
       {isTasksVisible && <TaskItemUngroupedList {...props} />}
     </>
   );
