@@ -13,7 +13,7 @@ import * as z from 'zod';
 
 const schema = z.object({
   title: z.string(),
-  description: z.string().optional(),
+  note: z.string().optional(),
   dueDate: z.date(),
   // recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
@@ -40,7 +40,7 @@ export default function TaskDetailsScreen() {
     schema,
     defaultValues: {
       title: task.title,
-      description: task.description,
+      note: task.note,
       dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
       // recurrenceType: task.recurrence?.type ?? '',
     },
@@ -52,12 +52,12 @@ export default function TaskDetailsScreen() {
   }, [getValues, trigger]);
 
   const onSaveTask = (data: Schema) => {
-    const {title, description, dueDate} = data;
+    const {title, note, dueDate} = data;
     dispatch(
       tasksActions.editTask({
         id: task.id,
         title,
-        description,
+        note,
         dueDate: dueDate.toISOString(),
         // recurrence:
         //   recurrenceType === undefined || recurrenceType === ''
@@ -92,8 +92,8 @@ export default function TaskDetailsScreen() {
         control={control}
       />
       <TextInput
-        name="description"
-        label="Description"
+        name="note"
+        label="Note"
         autoCapitalize="none"
         multiline={true}
         control={control}
