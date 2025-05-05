@@ -40,6 +40,13 @@ export default function HomeScreen() {
     [dispatch],
   );
 
+  const removeTask = useCallback(
+    (id: string) => {
+      dispatch(tasksActions.removeTask(id));
+    },
+    [dispatch],
+  );
+
   const setIsCompleted = (id: string, isCompleted: boolean) => {
     dispatch(tasksActions.setIsCompleted({id, isCompleted}));
     // dispatch(tasksActions.removePastFinishedTasks());
@@ -97,6 +104,7 @@ export default function HomeScreen() {
               navigation.push('TaskDetails', {task})
             }
             onAddTask={addTask}
+            onRemoveTask={removeTask}
             onScroll={onScroll}
           />
         </View>

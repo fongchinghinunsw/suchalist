@@ -10,12 +10,14 @@ type Props = {
   tasks: Task[];
   setIsCompleted: (id: string, isCompleted: boolean) => void;
   onTaskItemPress: (task: Task) => void;
+  onRemoveTask: (id: string) => void;
 };
 
 export default function TaskItemUngroupedList({
   tasks,
   setIsCompleted,
   onTaskItemPress,
+  onRemoveTask,
 }: Props) {
   const sortedTasks = sortTasks(tasks);
 
@@ -27,6 +29,7 @@ export default function TaskItemUngroupedList({
             task={task}
             setIsCompleted={setIsCompleted}
             onPress={onTaskItemPress}
+            onRemoveTask={onRemoveTask}
           />
         </Animated.View>
       ))}

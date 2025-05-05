@@ -16,6 +16,7 @@ type Props = {
   setIsCompleted: (id: string, isCompleted: boolean) => void;
   onTaskItemPress: (task: Task) => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
+  onRemoveTask: (id: string) => void;
 };
 
 export default function TaskItemGroupedList({
@@ -23,6 +24,7 @@ export default function TaskItemGroupedList({
   setIsCompleted,
   onTaskItemPress,
   showAddTaskDrawer,
+  onRemoveTask,
 }: Props) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
@@ -49,6 +51,7 @@ export default function TaskItemGroupedList({
         task={task}
         setIsCompleted={setIsCompleted}
         onPress={onTaskItemPress}
+        onRemoveTask={onRemoveTask}
       />
     </Animated.View>
   );

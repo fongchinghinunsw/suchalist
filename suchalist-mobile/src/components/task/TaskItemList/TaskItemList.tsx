@@ -19,6 +19,7 @@ type Props = {
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onAddTask: (task: {title: string}) => void;
+  onRemoveTask: (id: string) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 
@@ -28,6 +29,7 @@ export default function TaskItemList({
   showAddTaskDrawer,
   onTaskItemPress,
   onAddTask,
+  onRemoveTask,
   onScroll,
 }: Props) {
   const completedTasks: Task[] = [];
@@ -55,18 +57,21 @@ export default function TaskItemList({
         tasks={tasksWithoutDueDate}
         setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
+        onRemoveTask={onRemoveTask}
       />
       <TaskItemGroupedList
         tasks={tasksWithDueDate}
         setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
         showAddTaskDrawer={showAddTaskDrawer}
+        onRemoveTask={onRemoveTask}
       />
       <Divider />
       <CompletedTaskItemList
         tasks={completedTasks}
         setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
+        onRemoveTask={onRemoveTask}
       />
     </ScrollView>
   );
