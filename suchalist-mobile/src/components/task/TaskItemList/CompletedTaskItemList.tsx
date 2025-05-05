@@ -32,15 +32,17 @@ export default function CompletedTaskItemList(props: Props) {
 
   const handlePressIn = () => {
     scale.value = withSpring(0.9, {
-      damping: 1,
-      stiffness: 25,
+      stiffness: 400,
+      damping: 30,
+      mass: 0.4,
     });
   };
 
   const handlePressOut = () => {
     scale.value = withSpring(1, {
-      damping: 1,
-      stiffness: 25,
+      stiffness: 400,
+      damping: 30,
+      mass: 0.4,
     });
   };
 
