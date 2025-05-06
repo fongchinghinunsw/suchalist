@@ -17,6 +17,7 @@ export default function SideDrawer() {
     <DrawerNavigator.Navigator
       initialRouteName="Home"
       screenOptions={{
+        swipeEnabled: false,
         drawerType: 'front',
         drawerActiveBackgroundColor: backgroundColor,
         drawerActiveTintColor: textColor,
