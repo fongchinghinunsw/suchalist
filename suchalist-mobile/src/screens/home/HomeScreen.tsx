@@ -3,7 +3,7 @@ import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';
-import {tasksActions} from '@/stores/tasks/tasks';
+import {selectCurrentTasks, tasksActions} from '@/stores/tasks/tasks';
 import {NewTask, Task} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
@@ -25,7 +25,7 @@ import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
 export default function HomeScreen() {
-  const tasks = useSelector<RootState, Task[]>(state => state.tasks.tasks);
+  const tasks = useSelector(selectCurrentTasks);
   const dispatch = useDispatch();
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);

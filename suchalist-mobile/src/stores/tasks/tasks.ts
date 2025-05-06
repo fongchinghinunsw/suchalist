@@ -1,12 +1,27 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {FAKE_TASKS} from './fakes';
-import {EditTask, NewTask, Task} from './types';
+import {
+  DEFAULT_LIST,
+  DEFAULT_LIST_ID,
+  GROCERY_LIST,
+  GROCERY_LIST_ID,
+} from './fakes';
+import {EditTask, NewTask, Task, TaskList} from './types';
 import {getId} from './utils';
+import {RootState} from '..';
 
-const initialTasks: Task[] = FAKE_TASKS;
+type TasksState = {
+  currentTaskListId: string;
+  listsMap: {
+    [listId: string]: TaskList;
+  };
+};
 
-const initialTasksState = {
-  tasks: initialTasks,
+const initialTasksState: TasksState = {
+  currentTaskListId: DEFAULT_LIST_ID,
+  listsMap: {
+    [DEFAULT_LIST_ID]: DEFAULT_LIST,
+    [GROCERY_LIST_ID]: GROCERY_LIST,
+  },
 };
 
 const tasksSlice = createSlice({
@@ -14,13 +29,15 @@ const tasksSlice = createSlice({
   initialState: initialTasksState,
   reducers: {
     addTask(state, action: PayloadAction<NewTask>) {
-      // const {recurrence} = action.payload;
+      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+
       const taskId = getId();
 
       const now = new Date().toISOString();
       const newTask: Task = {
         ...action.payload,
         id: taskId,
+        taskListId: state.currentTaskListId,
         isCompleted: false,
         createdAt: now,
         updatedAt: now,
@@ -34,7 +51,7 @@ const tasksSlice = createSlice({
       };
       console.log({newTask});
 
-      const index = state.tasks.findIndex(task => {
+      const index = currentTasks.findIndex(task => {
         if (newTask.dueDate == null) {
           return task.dueDate !== undefined;
         } else {
@@ -48,28 +65,38 @@ const tasksSlice = createSlice({
           );
         }
       });
-      state.tasks.splice(index === -1 ? 0 : index, 0, newTask);
+      currentTasks.splice(index === -1 ? 0 : index, 0, newTask);
     },
     removeTask(state, action: PayloadAction<string>) {
-      const index = state.tasks.findIndex(task => task.id === action.payload);
+      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
 
-      state.tasks.splice(index, 1);
+      const index = currentTasks.findIndex(task => task.id === action.payload);
+
+      currentTasks.splice(index, 1);
     },
-    editTask(state, action: PayloadAction<EditTask>) {
+    editTask(
+      state,
+      action: PayloadAction<{
+        id: string;
+        task: EditTask;
+      }>,
+    ) {
+      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+
       const now = new Date().toISOString();
 
-      const index = state.tasks.findIndex(
+      const index = currentTasks.findIndex(
         task => task.id === action.payload.id,
       );
 
-      console.log('hi', {
-        ...state.tasks[index],
-        ...action.payload,
+      console.log('editing task', {
+        ...currentTasks[index],
+        ...action.payload.task,
       });
 
-      state.tasks[index] = {
-        ...state.tasks[index],
-        ...action.payload,
+      currentTasks[index] = {
+        ...currentTasks[index],
+        ...action.payload.task,
         updatedAt: now,
         // recurrence:
         //   recurrence === undefined
@@ -87,11 +114,13 @@ const tasksSlice = createSlice({
         isCompleted: boolean;
       }>,
     ) {
-      const index = state.tasks.findIndex(
+      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+
+      const index = currentTasks.findIndex(
         task => task.id === action.payload.id,
       );
       if (index !== -1) {
-        state.tasks[index].isCompleted = action.payload.isCompleted;
+        currentTasks[index].isCompleted = action.payload.isCompleted;
 
         // const tasks = mayBeCreateNextNRecurringTasks(
         //   state.tasks[index],
@@ -99,7 +128,7 @@ const tasksSlice = createSlice({
         //   4,
         // );
         // state.tasks.push(...tasks);
-        state.tasks.sort();
+        currentTasks.sort();
         // console.log('setIsCompleted', state.tasks);
       }
     },
@@ -113,6 +142,9 @@ const tasksSlice = createSlice({
     // },
   },
 });
+
+export const selectCurrentTasks = (state: RootState): Task[] =>
+  state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
 
 export const tasksActions = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;

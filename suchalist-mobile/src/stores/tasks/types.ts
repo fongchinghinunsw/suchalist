@@ -6,6 +6,7 @@
 
 export type Task = {
   id: string;
+  taskListId: string;
   title: string;
   note?: string;
   dueDate?: string;
@@ -28,17 +29,6 @@ export type TaskList = {
 
 export type TaskWithDueDate = Task & {dueDate: string};
 
-export type NewTask = Omit<
-  Task,
-  'id' | 'isCompleted' | 'createdAt' | 'updatedAt'
-> & {
-  //   recurrence?: {
-  //     type: RecurrenceType;
-  //   };
-};
+export type NewTask = Pick<Task, 'title' | 'note' | 'dueDate'>;
 
-export type EditTask = Omit<Task, 'isCompleted' | 'createdAt' | 'updatedAt'> & {
-  //   recurrence?: {
-  //     type: RecurrenceType;
-  //   };
-};
+export type EditTask = Pick<Task, 'title' | 'note' | 'dueDate'>;

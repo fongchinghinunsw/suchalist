@@ -56,15 +56,17 @@ export default function TaskDetailsScreen() {
     dispatch(
       tasksActions.editTask({
         id: task.id,
-        title,
-        note,
-        dueDate: dueDate.toISOString(),
-        // recurrence:
-        //   recurrenceType === undefined || recurrenceType === ''
-        //     ? undefined
-        //     : {
-        //         type: recurrenceType,
-        //       },
+        task: {
+          title,
+          note,
+          dueDate: dueDate.toISOString(),
+          // recurrence:
+          //   recurrenceType === undefined || recurrenceType === ''
+          //     ? undefined
+          //     : {
+          //         type: recurrenceType,
+          //       },
+        },
       }),
     );
   };

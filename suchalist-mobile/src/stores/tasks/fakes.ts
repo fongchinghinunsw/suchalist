@@ -1,9 +1,12 @@
 import {Task, TaskList} from './types';
 import {getId} from './utils';
 
-export const FAKE_TASKS: Task[] = [
+export const DEFAULT_LIST_ID = getId();
+
+export const DEFAULT_TASKS: Task[] = [
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Deliver the pizza',
     isCompleted: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
@@ -11,6 +14,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Update Suchalist',
     isCompleted: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
@@ -18,6 +22,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Watch Big Bang Theory',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: false,
@@ -26,6 +31,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Pay for mortgage',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: true,
@@ -34,6 +40,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: '1:1 with Dave',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: true,
@@ -42,6 +49,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Buy apple',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: true,
@@ -50,6 +58,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Talk to Jake, then talk with David about the project progress',
     dueDate: new Date(2025, 4, 12).toISOString(),
     isCompleted: false,
@@ -58,6 +67,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Go on date with Jason',
     dueDate: new Date(2025, 6, 6).toISOString(),
     isCompleted: true,
@@ -66,6 +76,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Coding with Sassy',
     dueDate: new Date(2025, 6, 9).toISOString(),
     isCompleted: true,
@@ -74,6 +85,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Coding with Cindy',
     dueDate: new Date(2025, 6, 9).toISOString(),
     isCompleted: false,
@@ -82,6 +94,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Shopping in South Village',
     dueDate: new Date(2025, 3, 13).toISOString(),
     isCompleted: false,
@@ -90,6 +103,7 @@ export const FAKE_TASKS: Task[] = [
   },
   {
     id: getId(),
+    taskListId: DEFAULT_LIST_ID,
     title: 'Testing my app',
     dueDate: new Date(2025, 8, 10).toISOString(),
     isCompleted: true,
@@ -98,10 +112,75 @@ export const FAKE_TASKS: Task[] = [
   },
 ];
 
-export const TASK_LIST_1: TaskList = {
-  id: getId(),
+export const DEFAULT_LIST: TaskList = {
+  id: DEFAULT_LIST_ID,
   title: 'Default',
-  tasks: FAKE_TASKS,
+  tasks: DEFAULT_TASKS,
+  createdAt: new Date(2025, 3, 5).toISOString(),
+  updatedAt: new Date(2025, 3, 5).toISOString(),
+};
+
+export const GROCERY_LIST_ID = getId();
+
+export const GROCERY_TASKS: Task[] = [
+  {
+    id: getId(),
+    taskListId: GROCERY_LIST_ID,
+    title: 'Orange',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: GROCERY_LIST_ID,
+    title: 'Fish',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: GROCERY_LIST_ID,
+    title: 'Apple',
+    dueDate: new Date(2025, 3, 7).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: GROCERY_LIST_ID,
+    title: 'Cornliflower',
+    dueDate: new Date(2025, 3, 8).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: GROCERY_LIST_ID,
+    title: 'Cornliflower',
+    dueDate: new Date(2025, 3, 8).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: GROCERY_LIST_ID,
+    title: 'Cornliflower',
+    dueDate: new Date(2025, 3, 10).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+];
+
+export const GROCERY_LIST: TaskList = {
+  id: GROCERY_LIST_ID,
+  title: 'Grocery',
+  tasks: GROCERY_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString(),
 };
