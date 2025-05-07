@@ -143,7 +143,7 @@ const tasksSlice = createSlice({
   },
 });
 
-export const selectLists = (): TaskList[] => [DEFAULT_LIST, GROCERY_LIST];
+export const selectTasksLists = (): TaskList[] => [DEFAULT_LIST, GROCERY_LIST];
 
 export const selectCurrentTasks = (state: RootState): Task[] =>
   state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];

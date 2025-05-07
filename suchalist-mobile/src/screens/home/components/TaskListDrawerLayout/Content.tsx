@@ -1,17 +1,21 @@
 import {getColor} from '@/constants/styles';
+import {TaskList} from '@/stores/tasks/types';
 import {selectTheme} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import React, {RefObject} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {DrawerLayoutMethods} from 'react-native-gesture-handler/ReanimatedDrawerLayout';
 import {useSelector} from 'react-redux';
+import TaskLists from './TaskLists';
 
 export const Content = ({
   drawerRef,
+  taskLists,
 }: {
   drawerRef: RefObject<DrawerLayoutMethods | null>;
+  taskLists: TaskList[];
 }) => {
   const theme = useSelector(selectTheme);
 
@@ -21,7 +25,7 @@ export const Content = ({
 
   return (
     <View style={styles.drawerContainer}>
-      <Text>Lorem ipsum</Text>
+      <TaskLists taskLists={taskLists} />
       <GestureDetector gesture={tapGesture}>
         <View style={styles.button}>
           <Icon name="chevron-forward-outline" color={getColor(theme, 400)} />
