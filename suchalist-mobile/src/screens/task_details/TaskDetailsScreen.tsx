@@ -1,12 +1,13 @@
 import Button from '@/components/base/Button';
 import TextInput from '@/components/base/form/TextInput';
+import DeleteTaskModal from '@/components/modal/DeleteTaskModel';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {tasksActions} from '@/stores/tasks/tasks';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import * as z from 'zod';
@@ -23,6 +24,9 @@ type Schema = z.infer<typeof schema>;
 export default function TaskDetailsScreen() {
   const route = useRoute<RouteProp<RootStackParamList, 'TaskDetails'>>();
   const {task} = route.params;
+
+  const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
+    useState(false);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -71,8 +75,13 @@ export default function TaskDetailsScreen() {
     );
   };
 
+  const toggleDeleteTaskModal = () => {
+    setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
+  };
+
   const onDeleteTask = (id: string) => {
     dispatch(tasksActions.removeTask(id));
+    setIsDeleteTaskModalVisible(false);
     navigation.goBack();
   };
 
@@ -130,9 +139,16 @@ export default function TaskDetailsScreen() {
       <Button
         mode="contained"
         tone="danger"
-        onPress={() => onDeleteTask(task.id)}>
+        onPress={() => toggleDeleteTaskModal()}>
         Delete your task
       </Button>
+
+      <DeleteTaskModal
+        taskName={task.title}
+        isVisible={isDeleteTaskModalVisible}
+        onConfirm={() => onDeleteTask(task.id)}
+        onCancel={toggleDeleteTaskModal}
+      />
     </View>
   );
 }
