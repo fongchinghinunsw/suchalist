@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
+import SoundPlayer from 'react-native-sound-player';
 
 type Props = {
   tasks: Task[];
@@ -48,6 +49,15 @@ export default function CompletedTaskItemList(props: Props) {
   };
 
   const toggleTasks = () => {
+    try {
+      SoundPlayer.loadSoundFile('bubble_pop', 'mp3');
+      SoundPlayer.setVolume(0.3);
+      SoundPlayer.seek(0);
+      SoundPlayer.play();
+    } catch (e) {
+      console.log('cannot play the sound file', e);
+    }
+
     setIsTasksVisible(!isTasksVisible);
   };
 

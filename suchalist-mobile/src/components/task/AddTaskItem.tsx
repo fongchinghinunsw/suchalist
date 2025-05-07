@@ -12,6 +12,7 @@ import {RootState} from '@/stores';
 import {getColor} from '@/constants/styles';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
+import SoundPlayer from 'react-native-sound-player';
 
 type Props = {
   onAddTask: (task: {title: string}) => void;
@@ -30,6 +31,13 @@ export default function AddTaskItem({onAddTask}: Props) {
 
   const onPress = () => {
     if (title.length > 0) {
+      try {
+        SoundPlayer.loadSoundFile('pop', 'mp3');
+        SoundPlayer.seek(0);
+        SoundPlayer.play();
+      } catch (e) {
+        console.log('cannot play the sound file', e);
+      }
       onAddTask({title: title.trim()});
       setTitle('');
       console.log({title});

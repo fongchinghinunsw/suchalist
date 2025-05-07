@@ -14,8 +14,6 @@ import Reanimated, {
 import Text from '../base/Text';
 import Icon from '@react-native-vector-icons/ionicons';
 
-SoundPlayer.loadSoundFile('ding', 'mp3');
-
 type Props = {
   task: Task;
   setIsCompleted: (id: string, isCompleted: boolean) => void;
@@ -38,10 +36,18 @@ export default function TaskItem({
     setIsCompleted(id, isChecked);
 
     if (!isChecked) {
+      try {
+        SoundPlayer.loadSoundFile('pop', 'mp3');
+        SoundPlayer.seek(0);
+        SoundPlayer.play();
+      } catch (e) {
+        console.log('cannot play the sound file', e);
+      }
       return;
     }
 
     try {
+      SoundPlayer.loadSoundFile('ding', 'mp3');
       SoundPlayer.seek(0);
       SoundPlayer.play();
     } catch (e) {
