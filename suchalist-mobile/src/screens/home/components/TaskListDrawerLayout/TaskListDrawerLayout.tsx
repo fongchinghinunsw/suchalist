@@ -7,6 +7,7 @@ import ReanimatedDrawerLayout, {
 } from 'react-native-gesture-handler/ReanimatedDrawerLayout';
 import {Content} from './Content';
 import {TaskList} from '@/stores/tasks/types';
+import {useWindowDimensions} from 'react-native';
 
 type Props = {
   taskLists: TaskList[];
@@ -15,6 +16,8 @@ type Props = {
 
 export default function TaskListDrawerLayout({taskLists, children}: Props) {
   const drawerRef = useRef<DrawerLayoutMethods>(null);
+
+  const {width} = useWindowDimensions();
 
   const horizontalSwipeGesture = Gesture.Pan()
     .onUpdate(e => {
@@ -35,6 +38,7 @@ export default function TaskListDrawerLayout({taskLists, children}: Props) {
         )}
         drawerPosition={DrawerPosition.LEFT}
         drawerType={DrawerType.FRONT}
+        drawerWidth={width * 0.8}
         edgeWidth={0}>
         {children}
       </ReanimatedDrawerLayout>
