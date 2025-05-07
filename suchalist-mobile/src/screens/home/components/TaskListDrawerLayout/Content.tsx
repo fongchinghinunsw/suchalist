@@ -38,18 +38,19 @@ export const Content = ({
 const styles = StyleSheet.create({
   drawerContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'pink',
+    backgroundColor: '#FFF',
   },
   button: {
     position: 'absolute',
+    top: '45%',
     right: -18,
     paddingVertical: 10,
     paddingHorizontal: 2,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
-    borderWidth: 1,
+    borderRightWidth: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'grey',
     backgroundColor: '#FFF',
   },

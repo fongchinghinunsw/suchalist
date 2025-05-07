@@ -1,5 +1,5 @@
 import {TaskList} from '@/stores/tasks/types';
-import {Text} from 'react-native';
+import TaskListItem from './TaskListItem';
 
 type Props = {
   taskLists: TaskList[];
@@ -7,6 +7,6 @@ type Props = {
 
 export default function TaskLists({taskLists}: Props) {
   return taskLists.map(taskList => {
-    return <Text key={taskList.id}>{taskList.title}</Text>;
+    return <TaskListItem key={taskList.id} taskList={taskList} />;
   });
 }
