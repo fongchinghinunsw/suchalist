@@ -27,6 +27,7 @@ import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 import {DrawerPage} from './components/TaskListDrawer/TaskListDrawer';
+import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -93,50 +94,64 @@ export default function HomeScreen() {
     bottomSheetModalRef.current?.close();
   };
 
+  const horizontalSwipeGesture = Gesture.Pan()
+    .onUpdate(e => {
+      if (
+        Math.abs(e.translationX) > Math.abs(e.translationY) &&
+        e.translationX > 20
+      ) {
+        // Horizontal right swipe
+        drawerRef.current?.openDrawer();
+      }
+    })
+    .runOnJS(true);
+
   return (
     <ImageBackground
       source={backgroundImage}
       resizeMode="cover"
       style={styles.background}>
-      <ReanimatedDrawerLayout
-        ref={drawerRef}
-        renderNavigationView={() => <DrawerPage drawerRef={drawerRef} />}
-        drawerPosition={DrawerPosition.LEFT}
-        drawerType={DrawerType.FRONT}
-        edgeWidth={10000}>
-        <ForceAppUpdateModal />
+      <GestureDetector gesture={horizontalSwipeGesture}>
+        <ReanimatedDrawerLayout
+          ref={drawerRef}
+          renderNavigationView={() => <DrawerPage drawerRef={drawerRef} />}
+          drawerPosition={DrawerPosition.LEFT}
+          drawerType={DrawerType.FRONT}
+          edgeWidth={0}>
+          <ForceAppUpdateModal />
 
-        <View style={styles.overlay} />
+          <View style={styles.overlay} />
 
-        <View style={styles.container}>
-          <View style={styles.tasksListContainer}>
-            <TaskItemList
-              tasks={tasks}
-              setIsCompleted={setIsCompleted}
-              showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-              onTaskItemPress={(task: Task) =>
-                navigation.push('TaskDetails', {task})
-              }
-              onAddTask={addTask}
-              onRemoveTask={removeTask}
-              onScroll={onScroll}
+          <View style={styles.container}>
+            <View style={styles.tasksListContainer}>
+              <TaskItemList
+                tasks={tasks}
+                setIsCompleted={setIsCompleted}
+                showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+                onTaskItemPress={(task: Task) =>
+                  navigation.push('TaskDetails', {task})
+                }
+                onAddTask={addTask}
+                onRemoveTask={removeTask}
+                onScroll={onScroll}
+              />
+            </View>
+
+            <BottomSheet ref={bottomSheetModalRef}>
+              <AddTaskForm
+                defaultDate={defaultDate}
+                onAddTask={addTask}
+                onClose={hideAddTaskForm}
+              />
+            </BottomSheet>
+            <FAB
+              label="Add Task"
+              isExtended={isFABExtended}
+              onPress={onPressFAB}
             />
           </View>
-
-          <BottomSheet ref={bottomSheetModalRef}>
-            <AddTaskForm
-              defaultDate={defaultDate}
-              onAddTask={addTask}
-              onClose={hideAddTaskForm}
-            />
-          </BottomSheet>
-          <FAB
-            label="Add Task"
-            isExtended={isFABExtended}
-            onPress={onPressFAB}
-          />
-        </View>
-      </ReanimatedDrawerLayout>
+        </ReanimatedDrawerLayout>
+      </GestureDetector>
     </ImageBackground>
   );
 }
