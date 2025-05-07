@@ -8,7 +8,7 @@ import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {DrawerLayoutMethods} from 'react-native-gesture-handler/ReanimatedDrawerLayout';
 import {useSelector} from 'react-redux';
 
-export const DrawerPage = ({
+export const Content = ({
   drawerRef,
 }: {
   drawerRef: RefObject<DrawerLayoutMethods | null>;
