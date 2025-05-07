@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '.';
 
 export type Theme = 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
 
@@ -15,6 +16,8 @@ const themeSlice = createSlice({
     },
   },
 });
+
+export const selectTheme = (state: RootState): Theme => state.theme.theme;
 
 export const themeActions = themeSlice.actions;
 export const themeReducer = themeSlice.reducer;

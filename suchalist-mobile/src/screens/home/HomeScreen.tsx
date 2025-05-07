@@ -17,14 +17,22 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import ReanimatedDrawerLayout, {
+  DrawerLayoutMethods,
+  DrawerPosition,
+  DrawerType,
+} from 'react-native-gesture-handler/ReanimatedDrawerLayout';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
+import {DrawerPage} from './components/TaskListDrawer/TaskListDrawer';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
 export default function HomeScreen() {
+  const drawerRef = useRef<DrawerLayoutMethods>(null);
+
   const tasks = useSelector(selectCurrentTasks);
   const dispatch = useDispatch();
 
@@ -90,35 +98,45 @@ export default function HomeScreen() {
       source={backgroundImage}
       resizeMode="cover"
       style={styles.background}>
-      <ForceAppUpdateModal />
+      <ReanimatedDrawerLayout
+        ref={drawerRef}
+        renderNavigationView={() => <DrawerPage drawerRef={drawerRef} />}
+        drawerPosition={DrawerPosition.LEFT}
+        drawerType={DrawerType.FRONT}
+        edgeWidth={10000}>
+        <ForceAppUpdateModal />
 
-      <View style={styles.overlay} />
+        <View style={styles.overlay} />
 
-      <View style={styles.container}>
-        <View style={styles.tasksListContainer}>
-          <TaskItemList
-            tasks={tasks}
-            setIsCompleted={setIsCompleted}
-            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-            onTaskItemPress={(task: Task) =>
-              navigation.push('TaskDetails', {task})
-            }
-            onAddTask={addTask}
-            onRemoveTask={removeTask}
-            onScroll={onScroll}
+        <View style={styles.container}>
+          <View style={styles.tasksListContainer}>
+            <TaskItemList
+              tasks={tasks}
+              setIsCompleted={setIsCompleted}
+              showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+              onTaskItemPress={(task: Task) =>
+                navigation.push('TaskDetails', {task})
+              }
+              onAddTask={addTask}
+              onRemoveTask={removeTask}
+              onScroll={onScroll}
+            />
+          </View>
+
+          <BottomSheet ref={bottomSheetModalRef}>
+            <AddTaskForm
+              defaultDate={defaultDate}
+              onAddTask={addTask}
+              onClose={hideAddTaskForm}
+            />
+          </BottomSheet>
+          <FAB
+            label="Add Task"
+            isExtended={isFABExtended}
+            onPress={onPressFAB}
           />
         </View>
-
-        <BottomSheet ref={bottomSheetModalRef}>
-          <AddTaskForm
-            defaultDate={defaultDate}
-            onAddTask={addTask}
-            onClose={hideAddTaskForm}
-          />
-        </BottomSheet>
-
-        <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
-      </View>
+      </ReanimatedDrawerLayout>
     </ImageBackground>
   );
 }

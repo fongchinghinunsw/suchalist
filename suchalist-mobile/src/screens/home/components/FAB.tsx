@@ -1,10 +1,9 @@
+import {getColor} from '@/constants/styles';
+import {selectTheme, Theme} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import {StyleSheet} from 'react-native';
 import {AnimatedFAB} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {getColor} from '@/constants/styles';
-import {Theme} from '@/stores/theme';
 
 const FabIcon = () => <Icon name="add-outline" size={24} color="#fff" />;
 
@@ -15,7 +14,7 @@ type Props = {
 };
 
 export default function FAB({label, isExtended, onPress}: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
 
   return (
