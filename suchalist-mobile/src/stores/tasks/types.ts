@@ -27,6 +27,14 @@ export type TaskList = {
   updatedAt: string;
 };
 
+export type TaskListFolder = {
+  id: string;
+  title: string;
+  taskLists: TaskList[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type TaskWithDueDate = Task & {dueDate: string};
 
 export type NewTask = Pick<Task, 'title' | 'note' | 'dueDate'>;

@@ -27,7 +27,7 @@ export default function DateTimePicker({
   const styles = getStyles(theme);
 
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value);
+  const [selectedValue, setSelectedValue] = useState(value ?? new Date());
 
   const onShowPicker = () => setIsVisible(true);
 
@@ -46,7 +46,7 @@ export default function DateTimePicker({
 
   const dateTimeLabel =
     mode === 'datetime' ? 'Date / Time' : mode === 'date' ? 'Date' : 'Time';
-  const dateTimeDisplay = formatDate(value, mode);
+  const dateTimeDisplay = value !== undefined ? formatDate(value, mode) : '';
 
   return (
     <>
@@ -74,7 +74,7 @@ export default function DateTimePicker({
                 <RNDateTimePicker
                   mode={mode}
                   display={display}
-                  value={value}
+                  value={selectedValue}
                   onChange={(event, date?: Date) => {
                     switch (event.type) {
                       case 'set':

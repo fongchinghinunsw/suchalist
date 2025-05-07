@@ -14,7 +14,7 @@ import * as z from 'zod';
 const schema = z.object({
   title: z.string(),
   note: z.string().optional(),
-  dueDate: z.date(),
+  dueDate: z.date().optional(),
   // recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
 
@@ -59,7 +59,7 @@ export default function TaskDetailsScreen() {
         task: {
           title,
           note,
-          dueDate: dueDate.toISOString(),
+          dueDate: dueDate?.toISOString(),
           // recurrence:
           //   recurrenceType === undefined || recurrenceType === ''
           //     ? undefined
@@ -102,7 +102,7 @@ export default function TaskDetailsScreen() {
       />
       <DateTimePicker
         name="dueDate"
-        value={watchDueDateValue ?? new Date()}
+        value={watchDueDateValue}
         androidOptions={{
           mode,
         }}

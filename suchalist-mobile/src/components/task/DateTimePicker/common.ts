@@ -2,7 +2,7 @@ import {HookFormFieldProps} from '@/hooks/useForm';
 
 export interface Props extends HookFormFieldProps {
   name: string;
-  value: Date;
+  value: Date | undefined;
   isTextInputVisible?: boolean;
   androidOptions?: {
     mode?: 'datetime' | 'date' | 'time';
