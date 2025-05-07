@@ -1,18 +1,21 @@
 import Text from '@/components/base/Text';
 import {TaskList} from '@/stores/tasks/types';
 import Icon from '@react-native-vector-icons/ionicons';
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 
 type Props = {
   taskList: TaskList;
+  onPress: (taskListId: string) => void;
 };
 
-export default function TaskListItem({taskList: {title}}: Props) {
+export default function TaskListItem({taskList: {id, title}, onPress}: Props) {
   return (
-    <Animated.View style={styles.container}>
-      <Icon name="list-outline" size={16} />
-      <Text size="large">{title}</Text>
+    <Animated.View>
+      <Pressable style={styles.container} onPress={() => onPress(id)}>
+        <Icon name="list-outline" size={16} />
+        <Text size="large">{title}</Text>
+      </Pressable>
     </Animated.View>
   );
 }

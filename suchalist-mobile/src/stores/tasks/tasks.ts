@@ -28,6 +28,9 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState: initialTasksState,
   reducers: {
+    setCurrentTaskListId(state, action: PayloadAction<string>) {
+      state.currentTaskListId = action.payload;
+    },
     addTask(state, action: PayloadAction<NewTask>) {
       const currentTasks = state.listsMap[state.currentTaskListId].tasks;
 
@@ -145,8 +148,12 @@ const tasksSlice = createSlice({
 
 export const selectTasksLists = (): TaskList[] => [DEFAULT_LIST, GROCERY_LIST];
 
-export const selectCurrentTasks = (state: RootState): Task[] =>
-  state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
+export const selectCurrentTasks = (state: RootState): Task[] => {
+  console.log('id', state.tasks.currentTaskListId);
+  console.log(state.tasks.listsMap);
+  console.log(state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks);
+  return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
+};
 
 export const tasksActions = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;

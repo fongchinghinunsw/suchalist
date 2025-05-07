@@ -7,8 +7,9 @@ import {StyleSheet, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
 import {DrawerLayoutMethods} from 'react-native-gesture-handler/ReanimatedDrawerLayout';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import TaskLists from './TaskLists';
+import {tasksActions} from '@/stores/tasks/tasks';
 
 export const Content = ({
   drawerRef,
@@ -18,6 +19,12 @@ export const Content = ({
   taskLists: TaskList[];
 }) => {
   const theme = useSelector(selectTheme);
+  const dispatch = useDispatch();
+
+  const onPress = (taskListId: string) => {
+    console.log('onPress', taskListId);
+    dispatch(tasksActions.setCurrentTaskListId(taskListId));
+  };
 
   const tapGesture = Gesture.Tap()
     .runOnJS(true)
@@ -25,7 +32,7 @@ export const Content = ({
 
   return (
     <View style={styles.drawerContainer}>
-      <TaskLists taskLists={taskLists} />
+      <TaskLists taskLists={taskLists} onPress={onPress} />
       <GestureDetector gesture={tapGesture}>
         <View style={styles.button}>
           <Icon name="chevron-forward-outline" color={getColor(theme, 400)} />
