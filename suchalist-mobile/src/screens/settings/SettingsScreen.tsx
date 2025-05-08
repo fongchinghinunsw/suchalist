@@ -2,6 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import Divider from '@/components/base/Divider';
 import DailyReminderSection from './components/DailyReminderSection';
 import ThemeSection from './components/ThemeSection';
+import BackgroundPickerSection from './components/BackgroundPickerSection';
 
 export default function SettingsScreen() {
   return (
@@ -9,6 +10,8 @@ export default function SettingsScreen() {
       <ThemeSection />
       <Divider />
       <DailyReminderSection />
+      <Divider />
+      <BackgroundPickerSection />
       <Divider />
     </View>
   );
