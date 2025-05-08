@@ -1,11 +1,11 @@
 import Text from '@/components/base/Text';
-import {TaskList} from '@/stores/tasks/types';
+import {ListResource} from '@/stores/tasks/types';
 import Icon from '@react-native-vector-icons/ionicons';
 import {Pressable, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 
 type Props = {
-  taskList: TaskList;
+  taskList: ListResource;
   onPress: (taskListId: string) => void;
 };
 

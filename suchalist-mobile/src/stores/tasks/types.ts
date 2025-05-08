@@ -30,10 +30,16 @@ export type TaskList = {
 export type TaskListFolder = {
   id: string;
   title: string;
-  taskLists: TaskList[];
+  taskLists: Pick<TaskList, 'id' | 'title'>[];
   createdAt: string;
   updatedAt: string;
 };
+
+export type ListResource = Pick<TaskList, 'id' | 'title'> & {type: 'LIST'};
+
+export type FolderResource = TaskListFolder & {type: 'FOLDER'};
+
+export type Resource = ListResource | FolderResource;
 
 export type TaskWithDueDate = Task & {dueDate: string};
 

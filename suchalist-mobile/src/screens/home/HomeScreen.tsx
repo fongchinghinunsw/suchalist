@@ -3,11 +3,7 @@ import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';
-import {
-  selectCurrentTasks,
-  selectTasksLists,
-  tasksActions,
-} from '@/stores/tasks/tasks';
+import {selectCurrentTasks, tasksActions} from '@/stores/tasks/tasks';
 import {NewTask, Task} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
@@ -31,7 +27,6 @@ import TaskListDrawerLayout from './components/TaskListDrawerLayout/TaskListDraw
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
 export default function HomeScreen() {
-  const taskLists = useSelector(selectTasksLists);
   const tasks = useSelector(selectCurrentTasks);
   const dispatch = useDispatch();
 
@@ -92,7 +87,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <TaskListDrawerLayout taskLists={taskLists}>
+    <TaskListDrawerLayout>
       <ImageBackground
         source={backgroundImage}
         resizeMode="cover"

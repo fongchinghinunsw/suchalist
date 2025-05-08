@@ -1,4 +1,4 @@
-import {Task, TaskList} from './types';
+import {Resource, Task, TaskList, TaskListFolder} from './types';
 import {getId} from './utils';
 
 export const DEFAULT_LIST_ID = getId();
@@ -184,3 +184,78 @@ export const GROCERY_LIST: TaskList = {
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString(),
 };
+
+export const EXERCISE_LIST_ID = getId();
+
+export const EXERCISE_TASKS: Task[] = [
+  {
+    id: getId(),
+    taskListId: EXERCISE_LIST_ID,
+    title: 'Jogging',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: EXERCISE_LIST_ID,
+    title: 'Running',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: EXERCISE_LIST_ID,
+    title: 'Ping Pong',
+    dueDate: new Date(2025, 3, 7).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: EXERCISE_LIST_ID,
+    title: 'Basketball',
+    dueDate: new Date(2025, 3, 8).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: EXERCISE_LIST_ID,
+    title: 'Football',
+    dueDate: new Date(2025, 3, 8).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+];
+
+export const EXERCISE_LIST: TaskList = {
+  id: EXERCISE_LIST_ID,
+  title: 'Exercise',
+  tasks: EXERCISE_TASKS,
+  createdAt: new Date(2025, 2, 10).toISOString(),
+  updatedAt: new Date(2025, 2, 10).toISOString(),
+};
+
+export const FOLDER_2024: TaskListFolder = {
+  id: getId(),
+  title: '2024',
+  taskLists: [EXERCISE_LIST, GROCERY_LIST],
+  createdAt: new Date(2025, 2, 10).toISOString(),
+  updatedAt: new Date(2025, 2, 10).toISOString(),
+};
+
+export const RESOURCES: Resource[] = [
+  {
+    type: 'FOLDER',
+    ...FOLDER_2024,
+  },
+  {
+    type: 'LIST',
+    ...DEFAULT_LIST,
+  },
+];

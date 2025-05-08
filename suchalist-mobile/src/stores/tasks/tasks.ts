@@ -2,10 +2,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
   DEFAULT_LIST,
   DEFAULT_LIST_ID,
+  EXERCISE_LIST,
+  EXERCISE_LIST_ID,
   GROCERY_LIST,
   GROCERY_LIST_ID,
+  RESOURCES,
 } from './fakes';
-import {EditTask, NewTask, Task, TaskList} from './types';
+import {EditTask, NewTask, Resource, Task, TaskList} from './types';
 import {getId} from './utils';
 import {RootState} from '..';
 
@@ -14,6 +17,7 @@ type TasksState = {
   listsMap: {
     [listId: string]: TaskList;
   };
+  resources: Resource[];
 };
 
 const initialTasksState: TasksState = {
@@ -21,7 +25,9 @@ const initialTasksState: TasksState = {
   listsMap: {
     [DEFAULT_LIST_ID]: DEFAULT_LIST,
     [GROCERY_LIST_ID]: GROCERY_LIST,
+    [EXERCISE_LIST_ID]: EXERCISE_LIST,
   },
+  resources: RESOURCES,
 };
 
 const tasksSlice = createSlice({
@@ -146,14 +152,12 @@ const tasksSlice = createSlice({
   },
 });
 
-export const selectTasksLists = (): TaskList[] => [DEFAULT_LIST, GROCERY_LIST];
-
 export const selectCurrentTasks = (state: RootState): Task[] => {
-  console.log('id', state.tasks.currentTaskListId);
-  console.log(state.tasks.listsMap);
-  console.log(state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks);
   return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
+
+export const selectResources = (state: RootState): Resource[] =>
+  state.tasks.resources;
 
 export const tasksActions = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;

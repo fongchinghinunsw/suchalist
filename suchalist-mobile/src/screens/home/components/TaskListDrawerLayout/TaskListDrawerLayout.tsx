@@ -1,21 +1,23 @@
 import {JSX, useRef} from 'react';
+import {useWindowDimensions} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import ReanimatedDrawerLayout, {
   DrawerLayoutMethods,
   DrawerPosition,
   DrawerType,
 } from 'react-native-gesture-handler/ReanimatedDrawerLayout';
+import {useSelector} from 'react-redux';
 import {Content} from './Content';
-import {TaskList} from '@/stores/tasks/types';
-import {useWindowDimensions} from 'react-native';
+import {selectResources} from '@/stores/tasks/tasks';
 
 type Props = {
-  taskLists: TaskList[];
   children: JSX.Element;
 };
 
-export default function TaskListDrawerLayout({taskLists, children}: Props) {
+export default function TaskListDrawerLayout({children}: Props) {
   const drawerRef = useRef<DrawerLayoutMethods>(null);
+
+  const resources = useSelector(selectResources);
 
   const {width} = useWindowDimensions();
 
@@ -34,7 +36,7 @@ export default function TaskListDrawerLayout({taskLists, children}: Props) {
       <ReanimatedDrawerLayout
         ref={drawerRef}
         renderNavigationView={() => (
-          <Content drawerRef={drawerRef} taskLists={taskLists} />
+          <Content drawerRef={drawerRef} resources={resources} />
         )}
         drawerPosition={DrawerPosition.LEFT}
         drawerType={DrawerType.FRONT}
