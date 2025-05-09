@@ -63,6 +63,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photos to let you choose a background image</string>
+	<string>$(PRODUCT_NAME) need access to your photos to let you choose a background image</string>
 </dict>
 </plist>

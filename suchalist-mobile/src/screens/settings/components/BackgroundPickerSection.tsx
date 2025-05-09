@@ -4,9 +4,17 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 export default function BackgroundPickerSection() {
   const onOpenBackgroundPicker = async () => {
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-    });
+    console.log('onOpenBackgroundPicker');
+    const result = await launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 1,
+      },
+      res => {
+        console.log({res});
+      },
+    );
+    console.log('hey');
     console.log({result});
   };
   return (
