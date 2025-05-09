@@ -1,21 +1,27 @@
+import {tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import React, {useRef, useState} from 'react';
-import {
-  Dimensions,
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
+import Modal from 'react-native-modal';
+import {useDispatch} from 'react-redux';
 
 export default function AddEntity() {
+  const dispatch = useDispatch();
+
   const [visible, setVisible] = useState(false);
   const [popupPos, setPopupPos] = useState({top: 0, right: 0});
   const buttonRef = useRef<View>(null);
   const {width: screenWidth} = Dimensions.get('window');
 
   const popupHeight = 100;
+
+  const onAddList = () => {
+    dispatch(tasksActions.addList('list1'));
+  };
+
+  const onAddFolder = () => {
+    dispatch(tasksActions.addList('folder1'));
+  };
 
   const toggleOptions = () => {
     console.log('toggle');
@@ -34,7 +40,12 @@ export default function AddEntity() {
         <Icon name="add-outline" size={24} color="#fff" />
       </Pressable>
 
-      <Modal transparent animationType="none" visible={visible}>
+      <Modal
+        isVisible={visible}
+        backdropColor="transparent"
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        onBackdropPress={toggleOptions}>
         <View
           style={[
             styles.popup,
