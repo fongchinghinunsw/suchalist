@@ -17,9 +17,14 @@ export type Task = {
   //   };
   createdAt: string;
   updatedAt: string;
+  finishedAt?: string;
 };
 
-export type TaskList = {
+export type FinishedTask = Task & {
+  finishedAt: string;
+};
+
+export type List = {
   id: string;
   title: string;
   tasks: Task[];
@@ -27,17 +32,17 @@ export type TaskList = {
   updatedAt: string;
 };
 
-export type TaskListFolder = {
+export type Folder = {
   id: string;
   title: string;
-  taskLists: Pick<TaskList, 'id' | 'title'>[];
+  taskLists: Pick<List, 'id' | 'title'>[];
   createdAt: string;
   updatedAt: string;
 };
 
-export type ListResource = Pick<TaskList, 'id' | 'title'> & {type: 'LIST'};
+export type ListResource = Pick<List, 'id' | 'title'> & {type: 'LIST'};
 
-export type FolderResource = TaskListFolder & {type: 'FOLDER'};
+export type FolderResource = Folder & {type: 'FOLDER'};
 
 export type Resource = ListResource | FolderResource;
 

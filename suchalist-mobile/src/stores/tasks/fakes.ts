@@ -1,4 +1,4 @@
-import {Resource, Task, TaskList, TaskListFolder} from './types';
+import {Resource, Task, List, Folder} from './types';
 import {getId} from './utils';
 
 export const DEFAULT_LIST_ID = getId();
@@ -112,7 +112,7 @@ export const DEFAULT_TASKS: Task[] = [
   },
 ];
 
-export const DEFAULT_LIST: TaskList = {
+export const DEFAULT_LIST: List = {
   id: DEFAULT_LIST_ID,
   title: 'Default',
   tasks: DEFAULT_TASKS,
@@ -177,7 +177,7 @@ export const GROCERY_TASKS: Task[] = [
   },
 ];
 
-export const GROCERY_LIST: TaskList = {
+export const GROCERY_LIST: List = {
   id: GROCERY_LIST_ID,
   title: 'Grocery',
   tasks: GROCERY_TASKS,
@@ -233,7 +233,7 @@ export const EXERCISE_TASKS: Task[] = [
   },
 ];
 
-export const EXERCISE_LIST: TaskList = {
+export const EXERCISE_LIST: List = {
   id: EXERCISE_LIST_ID,
   title: 'Exercise',
   tasks: EXERCISE_TASKS,
@@ -241,7 +241,7 @@ export const EXERCISE_LIST: TaskList = {
   updatedAt: new Date(2025, 2, 10).toISOString(),
 };
 
-export const FOLDER_2024: TaskListFolder = {
+export const FOLDER_2024: Folder = {
   id: getId(),
   title: '2024',
   taskLists: [EXERCISE_LIST, GROCERY_LIST],

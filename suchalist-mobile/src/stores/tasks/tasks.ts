@@ -8,14 +8,14 @@ import {
   GROCERY_LIST_ID,
   RESOURCES,
 } from './fakes';
-import {EditTask, NewTask, Resource, Task, TaskList} from './types';
+import {EditTask, NewTask, Resource, Task, List} from './types';
 import {getId} from './utils';
 import {RootState} from '..';
 
 type TasksState = {
   currentTaskListId: string;
   listsMap: {
-    [listId: string]: TaskList;
+    [listId: string]: List;
   };
   resources: Resource[];
 };
