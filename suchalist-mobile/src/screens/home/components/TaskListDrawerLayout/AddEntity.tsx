@@ -1,27 +1,28 @@
 import Icon from '@react-native-vector-icons/ionicons';
 import React, {useRef, useState} from 'react';
-import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 export default function AddEntity() {
   const [visible, setVisible] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);
-  const [popupPos, setPopupPos] = useState({top: 0, left: 0});
+  const [popupPos, setPopupPos] = useState({top: 0, right: 0});
   const buttonRef = useRef<View>(null);
+  const {width: screenWidth} = Dimensions.get('window');
 
-  const options = ['Option A', 'Option B'];
   const popupHeight = 100;
-
-  const onSelect = (value: string) => {
-    setSelected(value);
-    setVisible(false);
-  };
 
   const toggleOptions = () => {
     console.log('toggle');
     buttonRef.current?.measureInWindow((x, y, width, height) => {
       console.log({x, y, width, height});
       let top = y - popupHeight;
-      setPopupPos({top, left: x - width});
+      setPopupPos({top, right: screenWidth - x - width});
       setVisible(true);
     });
     setVisible(!visible);
@@ -39,7 +40,7 @@ export default function AddEntity() {
             styles.popup,
             {
               top: popupPos.top,
-              left: popupPos.left,
+              right: popupPos.right,
             },
           ]}>
           <Pressable style={styles.option}>
