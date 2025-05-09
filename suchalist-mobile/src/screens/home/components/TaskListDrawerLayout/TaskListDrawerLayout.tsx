@@ -8,7 +8,7 @@ import ReanimatedDrawerLayout, {
 } from 'react-native-gesture-handler/ReanimatedDrawerLayout';
 import {useSelector} from 'react-redux';
 import {Content} from './Content';
-import {selectResources} from '@/stores/tasks/tasks';
+import {selectHeaders} from '@/stores/tasks/tasks';
 
 type Props = {
   children: JSX.Element;
@@ -17,7 +17,7 @@ type Props = {
 export default function TaskListDrawerLayout({children}: Props) {
   const drawerRef = useRef<DrawerLayoutMethods>(null);
 
-  const resources = useSelector(selectResources);
+  const headers = useSelector(selectHeaders);
 
   const {width} = useWindowDimensions();
 
@@ -36,7 +36,7 @@ export default function TaskListDrawerLayout({children}: Props) {
       <ReanimatedDrawerLayout
         ref={drawerRef}
         renderNavigationView={() => (
-          <Content drawerRef={drawerRef} resources={resources} />
+          <Content drawerRef={drawerRef} headers={headers} />
         )}
         drawerPosition={DrawerPosition.LEFT}
         drawerType={DrawerType.FRONT}

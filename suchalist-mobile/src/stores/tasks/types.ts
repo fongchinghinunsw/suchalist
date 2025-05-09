@@ -35,16 +35,10 @@ export type List = {
 export type Folder = {
   id: string;
   title: string;
-  taskLists: Pick<List, 'id' | 'title'>[];
+  lists: string[];
   createdAt: string;
   updatedAt: string;
 };
-
-export type ListResource = Pick<List, 'id' | 'title'> & {type: 'LIST'};
-
-export type FolderResource = Folder & {type: 'FOLDER'};
-
-export type Resource = ListResource | FolderResource;
 
 export type TaskWithDueDate = Task & {dueDate: string};
 

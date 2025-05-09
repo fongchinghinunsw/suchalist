@@ -1,18 +1,22 @@
 import Text from '@/components/base/Text';
-import {FolderResource} from '@/stores/tasks/types';
 import Icon from '@react-native-vector-icons/ionicons';
 import {Pressable, StyleSheet, View} from 'react-native';
 import Animated from 'react-native-reanimated';
+import {FolderHeader} from './types';
+import {useSelector} from 'react-redux';
+import {selectListsMap} from '@/stores/tasks/tasks';
 
 type Props = {
-  taskFolder: FolderResource;
+  folderHeader: FolderHeader;
   onPress: (taskListId: string) => void;
 };
 
 export default function TaskFolderItem({
-  taskFolder: {title, taskLists},
+  folderHeader: {title, lists},
   onPress,
 }: Props) {
+  const listsMap = useSelector(selectListsMap);
+
   const onToggleListItem = () => {
     console.log('toggle');
   };
@@ -24,14 +28,15 @@ export default function TaskFolderItem({
         <Text size="large">{title}</Text>
       </Pressable>
       <View style={styles.listsContainer}>
-        {taskLists.map(list => {
+        {lists.map(list => {
+          const listItem = listsMap[list];
           return (
             <Pressable
-              key={list.id}
+              key={listItem.id}
               style={styles.container}
-              onPress={() => onPress(list.id)}>
+              onPress={() => onPress(listItem.id)}>
               <Icon name="list-outline" size={16} />
-              <Text size="large">{list.title}</Text>
+              <Text size="large">{listItem.title}</Text>
             </Pressable>
           );
         })}

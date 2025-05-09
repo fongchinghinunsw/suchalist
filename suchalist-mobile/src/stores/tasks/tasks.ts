@@ -6,18 +6,21 @@ import {
   EXERCISE_LIST_ID,
   GROCERY_LIST,
   GROCERY_LIST_ID,
-  RESOURCES,
+  HEADERS,
 } from './fakes';
-import {EditTask, NewTask, Resource, Task, List} from './types';
+import {EditTask, NewTask, Task, List} from './types';
 import {getId} from './utils';
 import {RootState} from '..';
+import {Header} from '@/screens/home/components/TaskListDrawerLayout/types';
+
+type ListsMap = {
+  [listId: string]: List;
+};
 
 type TasksState = {
   currentTaskListId: string;
-  listsMap: {
-    [listId: string]: List;
-  };
-  resources: Resource[];
+  listsMap: ListsMap;
+  headers: Header[];
 };
 
 const initialTasksState: TasksState = {
@@ -27,7 +30,7 @@ const initialTasksState: TasksState = {
     [GROCERY_LIST_ID]: GROCERY_LIST,
     [EXERCISE_LIST_ID]: EXERCISE_LIST,
   },
-  resources: RESOURCES,
+  headers: HEADERS,
 };
 
 const tasksSlice = createSlice({
@@ -156,8 +159,12 @@ export const selectCurrentTasks = (state: RootState): Task[] => {
   return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
 
-export const selectResources = (state: RootState): Resource[] =>
-  state.tasks.resources;
+export const selectListsMap = (state: RootState): ListsMap => {
+  return state.tasks.listsMap;
+};
+
+export const selectHeaders = (state: RootState): Header[] =>
+  state.tasks.headers;
 
 export const tasksActions = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;

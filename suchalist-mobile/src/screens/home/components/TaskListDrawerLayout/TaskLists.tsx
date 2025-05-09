@@ -1,35 +1,30 @@
 import {UnreachableError} from '@/components/base/UnreachableError';
-import {Resource} from '@/stores/tasks/types';
 import TaskFolderItem from './TaskFolderItem';
 import TaskListItem from './TaskListItem';
+import {Header} from './types';
 
 type Props = {
-  resources: Resource[];
+  headers: Header[];
   onPress: (taskListId: string) => void;
 };
 
-export default function TaskLists({resources, onPress}: Props) {
-  console.log({resources});
-  return resources.map(resource => {
-    switch (resource.type) {
+export default function TaskLists({headers, onPress}: Props) {
+  return headers.map(header => {
+    switch (header.type) {
       case 'FOLDER':
         return (
           <TaskFolderItem
-            key={resource.id}
-            taskFolder={resource}
+            key={header.id}
+            folderHeader={header}
             onPress={onPress}
           />
         );
       case 'LIST':
         return (
-          <TaskListItem
-            key={resource.id}
-            taskList={resource}
-            onPress={onPress}
-          />
+          <TaskListItem key={header.id} listHeader={header} onPress={onPress} />
         );
       default:
-        throw new UnreachableError(resource);
+        throw new UnreachableError(header);
     }
   });
 }

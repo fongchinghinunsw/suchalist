@@ -1,5 +1,4 @@
 import {getColor} from '@/constants/styles';
-import {Resource} from '@/stores/tasks/types';
 import {selectTheme} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import React, {RefObject} from 'react';
@@ -10,20 +9,20 @@ import {tasksActions} from '@/stores/tasks/tasks';
 import {DrawerLayoutMethods} from 'react-native-gesture-handler/ReanimatedDrawerLayout';
 import {useDispatch, useSelector} from 'react-redux';
 import TaskLists from './TaskLists';
+import {Header} from './types';
 
 export const Content = ({
   drawerRef,
-  resources,
+  headers,
 }: {
   drawerRef: RefObject<DrawerLayoutMethods | null>;
-  resources: Resource[];
+  headers: Header[];
 }) => {
   const theme = useSelector(selectTheme);
 
   const dispatch = useDispatch();
 
   const onPress = (taskListId: string) => {
-    console.log('onPress', taskListId);
     dispatch(tasksActions.setCurrentTaskListId(taskListId));
     drawerRef.current?.closeDrawer();
   };
@@ -34,7 +33,7 @@ export const Content = ({
 
   return (
     <View style={styles.drawerContainer}>
-      <TaskLists resources={resources} onPress={onPress} />
+      <TaskLists headers={headers} onPress={onPress} />
       <GestureDetector gesture={tapGesture}>
         <View style={styles.button}>
           <Icon name="chevron-forward-outline" color={getColor(theme, 400)} />

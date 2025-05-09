@@ -1,4 +1,5 @@
-import {Resource, Task, List, Folder} from './types';
+import {Header} from '@/screens/home/components/TaskListDrawerLayout/types';
+import {Task, List, Folder} from './types';
 import {getId} from './utils';
 
 export const DEFAULT_LIST_ID = getId();
@@ -244,12 +245,12 @@ export const EXERCISE_LIST: List = {
 export const FOLDER_2024: Folder = {
   id: getId(),
   title: '2024',
-  taskLists: [EXERCISE_LIST, GROCERY_LIST],
+  lists: [EXERCISE_LIST_ID, GROCERY_LIST_ID],
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString(),
 };
 
-export const RESOURCES: Resource[] = [
+export const HEADERS: Header[] = [
   {
     type: 'FOLDER',
     ...FOLDER_2024,
