@@ -1,17 +1,26 @@
 import {tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import React, {useRef, useState} from 'react';
-import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 
 export default function AddEntity() {
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
 
   const [visible, setVisible] = useState(false);
-  const [popupPos, setPopupPos] = useState({top: 0, right: 0});
+  const [popupPos, setPopupPos] = useState({bottom: 0, right: 0});
   const buttonRef = useRef<View>(null);
-  const {width: screenWidth} = Dimensions.get('window');
+  const {width: screenWidth, height: screenHeight} = useWindowDimensions();
 
   const popupHeight = 100;
 
@@ -25,17 +34,19 @@ export default function AddEntity() {
 
   const toggleOptions = () => {
     console.log('toggle');
-    buttonRef.current?.measureInWindow((x, y, width, height) => {
-      console.log({x, y, width, height});
-      let top = y - popupHeight;
-      setPopupPos({top, right: screenWidth - x - width});
+    buttonRef.current?.measureInWindow((x, y, width) => {
+      const bottom = screenHeight - y + 6;
+      const right = screenWidth - x - width;
+      console.log({insets});
+
+      setPopupPos({bottom, right});
       setVisible(true);
     });
     setVisible(!visible);
   };
 
   return (
-    <View style={styles.container}>
+    <>
       <Pressable ref={buttonRef} style={styles.button} onPress={toggleOptions}>
         <Icon name="add-outline" size={24} color="#fff" />
       </Pressable>
@@ -45,15 +56,15 @@ export default function AddEntity() {
         backdropColor="transparent"
         animationIn="fadeIn"
         animationOut="fadeOut"
+        style={[
+          styles.popup,
+          {
+            bottom: popupPos.bottom,
+            right: popupPos.right,
+          },
+        ]}
         onBackdropPress={toggleOptions}>
-        <View
-          style={[
-            styles.popup,
-            {
-              top: popupPos.top,
-              right: popupPos.right,
-            },
-          ]}>
+        <View>
           <Pressable style={styles.option}>
             <Icon name="list-outline" />
             <Text>Add List</Text>
@@ -64,17 +75,15 @@ export default function AddEntity() {
           </Pressable>
         </View>
       </Modal>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    bottom: 32,
-    right: 32,
-    position: 'absolute',
-  },
   button: {
+    position: 'absolute',
+    bottom: 24,
+    right: 16,
     padding: 12,
     backgroundColor: '#0080ff',
     borderRadius: 8,
@@ -86,6 +95,7 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     borderWidth: 1,
     padding: 8,
+    margin: 0,
   },
   option: {
     flexDirection: 'row',
