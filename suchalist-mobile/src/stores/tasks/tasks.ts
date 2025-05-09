@@ -144,6 +144,36 @@ const tasksSlice = createSlice({
         // console.log('setIsCompleted', state.tasks);
       }
     },
+    addList(state, action: PayloadAction<string>) {
+      const listId = getId();
+      const title = action.payload;
+      const now = new Date().toISOString();
+
+      state.listsMap[listId] = {
+        id: listId,
+        title,
+        tasks: [],
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      state.headers.push({
+        type: 'LIST',
+        id: listId,
+        title,
+      });
+    },
+    addFolder(state, action: PayloadAction<string>) {
+      const folderId = getId();
+      const title = action.payload;
+
+      state.headers.push({
+        type: 'FOLDER',
+        id: folderId,
+        title,
+        lists: [],
+      });
+    },
     // removePastFinishedTasks(state) {
     //   const today = new Date();
     //   today.setHours(0, 0, 0, 0);
