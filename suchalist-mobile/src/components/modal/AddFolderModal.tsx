@@ -3,43 +3,47 @@ import * as z from 'zod';
 import TextInput from '../base/form/TextInput';
 import Modal from '../base/Modal';
 
-export const addListSchema = z.object({
+export const addFolderSchema = z.object({
   title: z.string().min(1),
 });
 
-export type AddListSchema = z.infer<typeof addListSchema>;
+export type AddFolderSchema = z.infer<typeof addFolderSchema>;
 
 type Props = {
   isVisible: boolean;
-  onAddList: (title: string) => void;
+  onAddFolder: (title: string) => void;
   onCancel: () => void;
 };
 
-export default function AddListModal({isVisible, onAddList, onCancel}: Props) {
+export default function AddListModal({
+  isVisible,
+  onAddFolder,
+  onCancel,
+}: Props) {
   const {
     control,
     handleSubmit,
     setValue,
     formState: {isValid},
-  } = useForm<AddListSchema>({
-    schema: addListSchema,
+  } = useForm<AddFolderSchema>({
+    schema: addFolderSchema,
     defaultValues: {
       title: '',
     },
   });
 
-  const onConfirm = (data: AddListSchema) => {
-    onAddList(data.title);
+  const onConfirm = (data: AddFolderSchema) => {
+    onAddFolder(data.title);
     setValue('title', '');
   };
 
   return (
     <Modal
-      title="Add a new list"
+      title="Add a new folder"
       content={
         <TextInput
           name="title"
-          label="List Title"
+          label="Folder Title"
           mode="outlined"
           autoCapitalize="none"
           control={control}
@@ -47,7 +51,7 @@ export default function AddListModal({isVisible, onAddList, onCancel}: Props) {
       }
       isVisible={isVisible}
       primaryButton={{
-        label: 'Add List',
+        label: 'Add Folder',
         disabled: !isValid,
         onClick: handleSubmit(onConfirm),
       }}

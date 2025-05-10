@@ -41,7 +41,6 @@ export default function TextInput({
   };
 
   if (control) {
-    console.log('hi');
     return (
       <Controller
         name={name}

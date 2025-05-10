@@ -1,3 +1,4 @@
+import AddFolderModal from '@/components/modal/AddFolderModal';
 import AddListModal from '@/components/modal/AddListModal';
 import {tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
@@ -29,6 +30,7 @@ export default function AddEntity() {
 
   const onAddList = (title: string) => {
     dispatch(tasksActions.addList(title));
+    toggleAddListModal();
   };
 
   const toggleAddListModal = () => {
@@ -36,8 +38,9 @@ export default function AddEntity() {
     setIsAddListModalVisible(!isAddListModalVisible);
   };
 
-  const onAddFolder = () => {
-    dispatch(tasksActions.addList('folder1'));
+  const onAddFolder = (title: string) => {
+    dispatch(tasksActions.addFolder(title));
+    toggleAddFolderModal();
   };
 
   const toggleAddFolderModal = () => {
@@ -104,6 +107,12 @@ export default function AddEntity() {
         isVisible={isAddListModalVisible}
         onAddList={onAddList}
         onCancel={toggleAddListModal}
+      />
+
+      <AddFolderModal
+        isVisible={isAddFolderModalVisible}
+        onAddFolder={onAddFolder}
+        onCancel={toggleAddFolderModal}
       />
     </>
   );
