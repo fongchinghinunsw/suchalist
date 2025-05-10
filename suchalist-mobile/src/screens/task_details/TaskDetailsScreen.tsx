@@ -1,6 +1,6 @@
 import Button from '@/components/base/Button';
 import TextInput from '@/components/base/form/TextInput';
-import DeleteTaskModal from '@/components/modal/DeleteTaskModel';
+import DeleteTaskModal from '@/components/modal/DeleteTaskModal';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';

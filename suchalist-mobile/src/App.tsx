@@ -12,6 +12,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import RootStack from './navigations/RootStack';
 import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
 import {Platform} from 'react-native';
+import {MenuProvider} from 'react-native-popup-menu';
 
 export default function App(): React.JSX.Element {
   useEffect(() => {
@@ -34,13 +35,15 @@ export default function App(): React.JSX.Element {
     <ReduxStoreProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={{dark: false}}>
-          <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-              <NavigationContainer>
-                <RootStack />
-              </NavigationContainer>
-            </BottomSheetModalProvider>
-          </GestureHandlerRootView>
+          <MenuProvider>
+            <GestureHandlerRootView>
+              <BottomSheetModalProvider>
+                <NavigationContainer>
+                  <RootStack />
+                </NavigationContainer>
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+          </MenuProvider>
         </PaperProvider>
       </PersistGate>
     </ReduxStoreProvider>

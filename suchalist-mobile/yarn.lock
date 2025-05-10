@@ -5852,6 +5852,11 @@ react-native-paper@^5.13.4:
     color "^3.1.2"
     use-latest-callback "^0.2.3"
 
+react-native-popup-menu@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.17.0.tgz#1be30b01949cd4eee4e4da63c9dc55b269c8c342"
+  integrity sha512-K5luomGiJwYsKL1R3CLEdRpXCBArJ6/aoKef+q0RsiCRV17bhQA0lkBt9cMxV+lw9HPJ9YOdntuVDvqpmB39qg==
+
 react-native-reanimated@^3.17.4:
   version "3.17.4"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.17.4.tgz#a8c95ea7c2a089b6ca8f513c7bbff4e450986c7c"

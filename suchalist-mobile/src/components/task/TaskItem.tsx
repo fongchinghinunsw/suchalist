@@ -14,7 +14,7 @@ import Reanimated, {
 import SoundPlayer from 'react-native-sound-player';
 import {useSelector} from 'react-redux';
 import Text from '../base/Text';
-import DeleteTaskModal from '../modal/DeleteTaskModel';
+import DeleteTaskModal from '../modal/DeleteTaskModal';
 
 type Props = {
   task: Task;
