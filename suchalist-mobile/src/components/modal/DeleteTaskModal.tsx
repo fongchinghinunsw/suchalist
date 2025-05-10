@@ -17,7 +17,7 @@ export default function DeleteTaskModal({
   return (
     <Modal
       title={`${taskName} will be deleted forever.`}
-      description="You will not be able to undo this action."
+      content="You will not be able to undo this action."
       isVisible={isVisible}
       primaryButton={{
         label: 'Delete Task',

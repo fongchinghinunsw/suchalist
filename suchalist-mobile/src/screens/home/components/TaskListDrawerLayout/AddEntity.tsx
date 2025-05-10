@@ -1,4 +1,3 @@
-import Modal from '@/components/base/Modal';
 import AddListModal from '@/components/modal/AddListModal';
 import {tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
@@ -10,7 +9,6 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import RNModal from 'react-native-modal';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -29,11 +27,12 @@ export default function AddEntity() {
   const buttonRef = useRef<View>(null);
   const {width: screenWidth, height: screenHeight} = useWindowDimensions();
 
-  const onAddList = () => {
-    dispatch(tasksActions.addList('list1'));
+  const onAddList = (title: string) => {
+    dispatch(tasksActions.addList(title));
   };
 
   const toggleAddListModal = () => {
+    setIsMenuVisible(false);
     setIsAddListModalVisible(!isAddListModalVisible);
   };
 
@@ -42,6 +41,7 @@ export default function AddEntity() {
   };
 
   const toggleAddFolderModal = () => {
+    setIsMenuVisible(false);
     setIsAddFolderModalVisible(!isAddFolderModalVisible);
   };
 
@@ -67,36 +67,42 @@ export default function AddEntity() {
       </Pressable>
 
       {isMenuVisible && (
-        <Animated.View
-          entering={FadeIn}
-          exiting={FadeOut}
-          // isVisible={isMenuVisible}
-          // backdropColor="transparent"
-          // animationIn="fadeIn"
-          // animationOut="fadeOut"
-          style={[
-            styles.popup,
-            {
-              bottom: popupPos.bottom,
-              right: popupPos.right,
-            },
-          ]}>
-          <View>
-            <Pressable style={styles.option} onPress={toggleAddListModal}>
-              <Icon name="list-outline" />
-              <Text>Add List</Text>
-            </Pressable>
-            <Pressable style={styles.option} onPress={toggleAddFolderModal}>
-              <Icon name="folder-open-outline" />
-              <Text>Add Folder</Text>
-            </Pressable>
-          </View>
-        </Animated.View>
+        <>
+          {/* Backdrop */}
+          <Animated.View style={StyleSheet.absoluteFill}>
+            <Pressable
+              onPress={() => setIsMenuVisible(false)}
+              style={styles.backdrop}
+            />
+          </Animated.View>
+
+          <Animated.View
+            entering={FadeIn}
+            exiting={FadeOut}
+            style={[
+              styles.popup,
+              {
+                bottom: popupPos.bottom,
+                right: popupPos.right,
+              },
+            ]}>
+            <View>
+              <Pressable style={styles.option} onPress={toggleAddListModal}>
+                <Icon name="list-outline" />
+                <Text>Add List</Text>
+              </Pressable>
+              <Pressable style={styles.option} onPress={toggleAddFolderModal}>
+                <Icon name="folder-open-outline" />
+                <Text>Add Folder</Text>
+              </Pressable>
+            </View>
+          </Animated.View>
+        </>
       )}
 
       <AddListModal
         isVisible={isAddListModalVisible}
-        onConfirm={onAddList}
+        onAddList={onAddList}
         onCancel={toggleAddListModal}
       />
     </>
@@ -111,6 +117,13 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#0080ff',
     borderRadius: 8,
+  },
+  backdrop: {
+    flex: 1,
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   popup: {
     position: 'absolute',

@@ -1,16 +1,18 @@
+import {ReactNode} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import RNModal from 'react-native-modal';
-import Text from '../base/Text';
 import Button from '../base/Button';
+import Text from '../base/Text';
 
 type Props = {
   title: string;
-  description: string;
+  content: string | ReactNode;
   isVisible: boolean;
   primaryButton: {
     label: string;
-    onClick: () => void;
+    disabled?: boolean;
     style?: ViewStyle;
+    onClick: () => void;
   };
   secondaryButton?: {
     label: string;
@@ -22,12 +24,18 @@ type Props = {
 
 export default function Modal({
   title,
-  description,
+  content,
   isVisible,
   primaryButton,
   secondaryButton,
   onDismiss,
 }: Props) {
+  const Content =
+    typeof content === 'string' ? (
+      <Text style={styles.content}>{content}</Text>
+    ) : (
+      content
+    );
   return (
     <RNModal
       isVisible={isVisible}
@@ -39,7 +47,7 @@ export default function Modal({
           <Text size="large" style={styles.title}>
             {title}
           </Text>
-          <Text style={styles.description}>{description}</Text>
+          {Content}
         </View>
         <View style={styles.buttonContainer}>
           {secondaryButton && (
@@ -52,6 +60,7 @@ export default function Modal({
           )}
           <Button
             mode="contained"
+            disabled={primaryButton.disabled}
             style={primaryButton.style}
             onPress={primaryButton.onClick}>
             {primaryButton.label}
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 800,
   },
-  description: {
+  content: {
     color: '#000',
   },
   buttonContainer: {
