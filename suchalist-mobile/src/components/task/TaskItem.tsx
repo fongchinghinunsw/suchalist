@@ -1,18 +1,20 @@
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import {getColor} from '@/constants/styles';
 import {RootState} from '@/stores';
 import {Task} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
+import Icon from '@react-native-vector-icons/ionicons';
+import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import SoundPlayer from 'react-native-sound-player';
-import {useSelector} from 'react-redux';
+import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import Reanimated, {
   SharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import SoundPlayer from 'react-native-sound-player';
+import {useSelector} from 'react-redux';
 import Text from '../base/Text';
-import Icon from '@react-native-vector-icons/ionicons';
+import DeleteTaskModal from '../modal/DeleteTaskModel';
 
 type Props = {
   task: Task;
@@ -29,8 +31,20 @@ export default function TaskItem({
 }: Props) {
   const {id, title, isCompleted} = task;
 
+  const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
+    useState(false);
+
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
   const styles = getStyle(theme);
+
+  const toggleDeleteTaskModal = () => {
+    setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
+  };
+
+  const onDeleteTask = (taskId: string) => {
+    onRemoveTask(taskId);
+    setIsDeleteTaskModalVisible(false);
+  };
 
   const handlePress = (isChecked: boolean) => {
     setIsCompleted(id, isChecked);
@@ -56,43 +70,55 @@ export default function TaskItem({
   };
 
   return (
-    <Swipeable
-      containerStyle={styles.swipeable}
-      renderRightActions={(progress, drag) =>
-        RightAction({progress, drag, onRemoveTask: () => onRemoveTask(task.id)})
-      }
-      overshootRight={false}>
-      <Pressable style={styles.pressable} onPress={() => onPress(task)}>
-        <Text
-          shade={700}
-          numberOfLines={1}
-          style={[styles.title, isCompleted && styles.titleCompleted]}>
-          {title}
-        </Text>
-        {/* {recurrence && (
+    <>
+      <Swipeable
+        containerStyle={styles.swipeable}
+        renderRightActions={(progress, drag) =>
+          RightAction({
+            progress,
+            drag,
+            onPressDeleteTask: toggleDeleteTaskModal,
+          })
+        }
+        overshootRight={false}>
+        <Pressable style={styles.pressable} onPress={() => onPress(task)}>
+          <Text
+            shade={700}
+            numberOfLines={1}
+            style={[styles.title, isCompleted && styles.titleCompleted]}>
+            {title}
+          </Text>
+          {/* {recurrence && (
         <Icon name="cycle" size={18} color={getColor(theme, 600)} />
       )} */}
-        <View style={styles.checkbox}>
-          <BouncyCheckbox
-            isChecked={isCompleted}
-            iconStyle={styles.checkboxIcon}
-            innerIconStyle={styles.checkboxInnerIcon}
-            fillColor={getColor(theme, 400)}
-            onPress={(isChecked: boolean) => handlePress(isChecked)}
-          />
-        </View>
-      </Pressable>
-    </Swipeable>
+          <View style={styles.checkbox}>
+            <BouncyCheckbox
+              isChecked={isCompleted}
+              iconStyle={styles.checkboxIcon}
+              innerIconStyle={styles.checkboxInnerIcon}
+              fillColor={getColor(theme, 400)}
+              onPress={(isChecked: boolean) => handlePress(isChecked)}
+            />
+          </View>
+        </Pressable>
+      </Swipeable>
+      <DeleteTaskModal
+        taskName={task.title}
+        isVisible={isDeleteTaskModalVisible}
+        onConfirm={() => onDeleteTask(task.id)}
+        onCancel={toggleDeleteTaskModal}
+      />
+    </>
   );
 }
 
 type RightActionProps = {
   progress: SharedValue<number>;
   drag: SharedValue<number>;
-  onRemoveTask: () => void;
+  onPressDeleteTask: () => void;
 };
 
-function RightAction({drag, onRemoveTask}: RightActionProps) {
+function RightAction({drag, onPressDeleteTask}: RightActionProps) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
   const styles = getStyle(theme);
 
@@ -104,7 +130,7 @@ function RightAction({drag, onRemoveTask}: RightActionProps) {
 
   return (
     <Reanimated.View style={styleAnimation}>
-      <Pressable style={styles.rightAction} onPress={onRemoveTask}>
+      <Pressable style={styles.rightAction} onPress={onPressDeleteTask}>
         <Icon name="trash-outline" color="#FFF" size={24} />
       </Pressable>
     </Reanimated.View>
