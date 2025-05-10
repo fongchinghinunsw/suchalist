@@ -88,9 +88,6 @@ export default function TaskItem({
             style={[styles.title, isCompleted && styles.titleCompleted]}>
             {title}
           </Text>
-          {/* {recurrence && (
-        <Icon name="cycle" size={18} color={getColor(theme, 600)} />
-      )} */}
           <View style={styles.checkbox}>
             <BouncyCheckbox
               isChecked={isCompleted}
