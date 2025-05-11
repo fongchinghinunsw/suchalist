@@ -31,11 +31,12 @@ export default function TaskFolderItem({
   return (
     <Animated.View>
       <Pressable style={styles.container} onPress={onToggleListItem}>
-        <View style={styles.innerContainer}>
-          <View style={styles.titleContainer}>
-            <Icon name="folder-open-outline" size={16} />
-            <Text size="large">{title}</Text>
-          </View>
+        <View style={styles.titleContainer}>
+          <Icon name="folder-open-outline" size={16} />
+          <Text size="large">{title}</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <Icon name="ellipsis-horizontal-outline" size={16} />
           <Icon name={folderItemIconName} size={16} />
         </View>
       </Pressable>
@@ -61,14 +62,17 @@ export default function TaskFolderItem({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
-  },
-  innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 12,
   },
   titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
