@@ -1,28 +1,34 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import SideDrawer from './SideDrawer';
-import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';
-import {useSelector} from 'react-redux';
-import {RootState} from '../stores';
-import {Theme} from '../stores/theme';
-import {getColor} from '../constants/styles';
+import {useNavigationTheme} from '@/hooks/useNavigationTheme';
+import MockHomeScreen, {
+  renderHeaderRight,
+} from '@/screens/mock-home/MockHomeScreen';
 import {Task} from '@/stores/tasks/types';
+import {createStackNavigator} from '@react-navigation/stack';
+import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';
+import SideDrawer from './SideDrawer';
 
 export type RootStackParamList = {
   Home: undefined;
   TaskDetails: {
     task: Task;
   };
+  MockHome: {
+    onDone: () => void;
+  };
 };
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
-  const textColor = getColor(theme, 900);
-  const backgroundColor = getColor(theme, 400);
+  const {textColor, backgroundColor} = useNavigationTheme();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor,
+        },
+      }}>
       <Stack.Screen
         name="Home"
         component={SideDrawer}
@@ -43,6 +49,22 @@ export default function RootStack() {
             color: textColor,
           },
         }}
+      />
+      <Stack.Screen
+        name="MockHome"
+        component={MockHomeScreen}
+        options={({route}) => ({
+          headerTintColor: textColor,
+          headerTitleStyle: {
+            color: textColor,
+          },
+          headerBackTitleStyle: {
+            color: textColor,
+          },
+          headerLeft: () => null,
+          headerTitle: 'Home',
+          headerRight: () => renderHeaderRight(route.params.onDone),
+        })}
       />
     </Stack.Navigator>
   );

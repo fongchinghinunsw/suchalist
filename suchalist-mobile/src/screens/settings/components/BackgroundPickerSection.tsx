@@ -1,8 +1,14 @@
+import Button from '@/components/base/Button';
 import Text from '@/components/base/Text';
+import {RootStackParamList} from '@/navigations/RootStack';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {Pressable, StyleSheet} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 export default function BackgroundPickerSection() {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   const onOpenBackgroundPicker = async () => {
     console.log('onOpenBackgroundPicker');
     const result = await launchImageLibrary(
@@ -29,6 +35,17 @@ export default function BackgroundPickerSection() {
         style={styles.backgroundPicker}
         onPress={onOpenBackgroundPicker}
       />
+      <Button
+        mode="contained"
+        onPress={() =>
+          navigation.push('MockHome', {
+            onDone: () => {
+              navigation.pop();
+            },
+          })
+        }>
+        Change Background
+      </Button>
     </>
   );
 }

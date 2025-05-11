@@ -5980,6 +5980,11 @@ readable-stream@^3.4.0:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
+reanimated-color-picker@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/reanimated-color-picker/-/reanimated-color-picker-4.0.1.tgz#0a8f988ae456776f6e1e0f284064290b18b1591c"
+  integrity sha512-blZ6k/H+2lofyHGNdHZXsWMC5sQbvFAZg6aovs47v4h0SJcqoyrX4wUDR7RQylPGdWGlAPZz/TiJWcG0FMYQag==
+
 redux-persist@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"

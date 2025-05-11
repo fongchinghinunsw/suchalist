@@ -2,7 +2,7 @@ import {Header} from '@/screens/home/components/TaskListDrawerLayout/types';
 import {Task, List, Folder} from './types';
 import {getId} from './utils';
 
-export const DEFAULT_LIST_ID = getId();
+export const DEFAULT_LIST_ID = 'DEFAULT';
 
 export const DEFAULT_TASKS: Task[] = [
   {
