@@ -1,6 +1,11 @@
 import Text from '@/components/base/Text';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
-import {ImageBackground, Pressable, StyleSheet} from 'react-native';
+import {
+  ImageBackground,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import {TASKS} from './fake';
 import BackgroundImagePicker from './BackgroundImagePicker';
 import {useState} from 'react';
@@ -16,7 +21,8 @@ const images = [
 ];
 
 export default function MockHomeScreen() {
-  const [selectedImage, setSelectedImage] = useState(backgroundImage);
+  const [selectedImage, setSelectedImage] =
+    useState<ImageSourcePropType>(backgroundImage);
 
   const onSelectImage = (image: any) => {
     setSelectedImage(image);

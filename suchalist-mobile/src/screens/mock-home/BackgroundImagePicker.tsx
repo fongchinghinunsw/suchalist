@@ -1,10 +1,16 @@
-import {Image, Pressable, StyleSheet, useWindowDimensions} from 'react-native';
+import {
+  Image,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 
 type Props = {
-  images: any[];
-  selectedImage: any;
-  onSelectImage: (image: any) => void;
+  images: ImageSourcePropType[];
+  selectedImage: ImageSourcePropType;
+  onSelectImage: (image: ImageSourcePropType) => void;
 };
 
 export default function BackgroundImagePicker({
@@ -31,7 +37,6 @@ export default function BackgroundImagePicker({
             key={index}
             style={[
               styles.imageWrapper,
-              //   {marginBottom: bottom},
               isSelected && styles.selectedImageWrapper,
             ]}
             onPress={() => onSelectImage(image)}>
@@ -47,16 +52,13 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingHorizontal: 12,
     paddingVertical: 8,
-    // backgroundColor: 'green',
     flexDirection: 'row',
     gap: 8,
   },
   imageWrapper: {
     borderRadius: 8,
     overflow: 'hidden',
-    backgroundColor: 'red',
   },
-  unselectedImageWrapper: {},
   selectedImageWrapper: {
     borderWidth: 2,
     borderColor: '#FFF',
