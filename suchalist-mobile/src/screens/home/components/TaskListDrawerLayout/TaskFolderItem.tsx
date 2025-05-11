@@ -47,6 +47,7 @@ export default function TaskFolderItem({
             const listItem = listsMap[list];
             return (
               <TaskListItem
+                key={listItem.id}
                 listHeader={{
                   type: 'LIST',
                   ...listItem,
