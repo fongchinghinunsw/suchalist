@@ -190,11 +190,11 @@ export const selectCurrentTasks = (state: RootState): Task[] => {
 };
 
 export const selectListsMap = (state: RootState): ListsMap => {
-  return state.tasks.listsMap;
+  return state.tasks.listsMap ?? {};
 };
 
 export const selectHeaders = (state: RootState): Header[] =>
-  state.tasks.headers;
+  state.tasks.headers ?? [];
 
 export const tasksActions = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;
