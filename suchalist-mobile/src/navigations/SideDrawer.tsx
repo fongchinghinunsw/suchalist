@@ -32,7 +32,11 @@ export default function SideDrawer() {
           color: textColor,
         },
       }}>
-      <DrawerNavigator.Screen name="DrawerHome" component={HomeScreen} />
+      <DrawerNavigator.Screen
+        name="DrawerHome"
+        component={HomeScreen}
+        options={{title: 'Home'}}
+      />
       <DrawerNavigator.Screen name="Settings" component={SettingsScreen} />
     </DrawerNavigator.Navigator>
   );
