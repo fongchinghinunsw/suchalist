@@ -94,34 +94,28 @@ export default function HomeScreen() {
         style={styles.background}>
         <ForceAppUpdateModal />
 
-        <View style={styles.container}>
-          <View style={styles.tasksListContainer}>
-            <TaskItemList
-              tasks={tasks}
-              setIsCompleted={setIsCompleted}
-              showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-              onTaskItemPress={(task: Task) =>
-                navigation.push('TaskDetails', {task})
-              }
-              onAddTask={addTask}
-              onRemoveTask={removeTask}
-              onScroll={onScroll}
-            />
-          </View>
-
-          <BottomSheet ref={bottomSheetModalRef}>
-            <AddTaskForm
-              defaultDate={defaultDate}
-              onAddTask={addTask}
-              onClose={hideAddTaskForm}
-            />
-          </BottomSheet>
-          <FAB
-            label="Add Task"
-            isExtended={isFABExtended}
-            onPress={onPressFAB}
+        <View style={styles.tasksListContainer}>
+          <TaskItemList
+            tasks={tasks}
+            setIsCompleted={setIsCompleted}
+            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+            onTaskItemPress={(task: Task) =>
+              navigation.push('TaskDetails', {task})
+            }
+            onAddTask={addTask}
+            onRemoveTask={removeTask}
+            onScroll={onScroll}
           />
         </View>
+
+        <BottomSheet ref={bottomSheetModalRef}>
+          <AddTaskForm
+            defaultDate={defaultDate}
+            onAddTask={addTask}
+            onClose={hideAddTaskForm}
+          />
+        </BottomSheet>
+        <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
       </ImageBackground>
     </TaskListDrawerLayout>
   );
