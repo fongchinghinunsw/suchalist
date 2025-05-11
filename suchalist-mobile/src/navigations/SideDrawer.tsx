@@ -15,13 +15,14 @@ export default function SideDrawer() {
 
   return (
     <DrawerNavigator.Navigator
-      initialRouteName="Home"
+      initialRouteName="DrawerHome"
       screenOptions={{
         swipeEnabled: false,
         drawerType: 'front',
         drawerActiveBackgroundColor: backgroundColor,
         drawerActiveTintColor: textColor,
         drawerInactiveTintColor: textColor,
+        headerTitle: 'Home',
         headerPressColor: getColor(theme, 300),
         headerTintColor: textColor,
         headerStyle: {
@@ -31,7 +32,7 @@ export default function SideDrawer() {
           color: textColor,
         },
       }}>
-      <DrawerNavigator.Screen name="Home" component={HomeScreen} />
+      <DrawerNavigator.Screen name="DrawerHome" component={HomeScreen} />
       <DrawerNavigator.Screen name="Settings" component={SettingsScreen} />
     </DrawerNavigator.Navigator>
   );
