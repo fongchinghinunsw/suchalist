@@ -94,8 +94,6 @@ export default function HomeScreen() {
         style={styles.background}>
         <ForceAppUpdateModal />
 
-        <View style={styles.overlay} />
-
         <View style={styles.container}>
           <View style={styles.tasksListContainer}>
             <TaskItemList
@@ -137,10 +135,6 @@ const getStyles = (theme: Theme) => {
     background: {
       flex: 1,
       justifyContent: 'center',
-    },
-    overlay: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(255, 255, 255, 0.7)',
     },
     tasksListContainer: {
       flex: 1,
