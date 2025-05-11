@@ -6,6 +6,7 @@ import {FolderHeader} from './types';
 import {useSelector} from 'react-redux';
 import {selectListsMap} from '@/stores/tasks/tasks';
 import {useState} from 'react';
+import TaskListItem from './TaskListItem';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -45,13 +46,13 @@ export default function TaskFolderItem({
           {lists.map(list => {
             const listItem = listsMap[list];
             return (
-              <Pressable
-                key={listItem.id}
-                style={styles.listItemContainer}
-                onPress={() => onPress(listItem.id)}>
-                <Icon name="list-outline" size={16} />
-                <Text size="large">{listItem.title}</Text>
-              </Pressable>
+              <TaskListItem
+                listHeader={{
+                  type: 'LIST',
+                  ...listItem,
+                }}
+                onPress={() => onPress(listItem.id)}
+              />
             );
           })}
         </View>
@@ -79,11 +80,5 @@ const styles = StyleSheet.create({
   },
   listsContainer: {
     paddingLeft: 12,
-  },
-  listItemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    padding: 12,
   },
 });
