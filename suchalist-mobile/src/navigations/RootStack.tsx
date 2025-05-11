@@ -6,6 +6,9 @@ import {Task} from '@/stores/tasks/types';
 import {createStackNavigator} from '@react-navigation/stack';
 import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';
 import SideDrawer from './SideDrawer';
+import {useDispatch} from 'react-redux';
+import {themeActions} from '@/stores/theme';
+import {ImageSourcePropType} from 'react-native';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -21,6 +24,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
   const {textColor, backgroundColor} = useNavigationTheme();
+  const dispatch = useDispatch();
+
+  const onBackgroundImageChange = (image: ImageSourcePropType) => {
+    dispatch(themeActions.setBackgroundImage(image));
+  };
 
   return (
     <Stack.Navigator

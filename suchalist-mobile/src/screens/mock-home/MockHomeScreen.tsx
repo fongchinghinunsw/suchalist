@@ -24,7 +24,7 @@ export default function MockHomeScreen() {
   const [selectedImage, setSelectedImage] =
     useState<ImageSourcePropType>(backgroundImage);
 
-  const onSelectImage = (image: any) => {
+  const onSelectImage = (image: ImageSourcePropType) => {
     setSelectedImage(image);
   };
 

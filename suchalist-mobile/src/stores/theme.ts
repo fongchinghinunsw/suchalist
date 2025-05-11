@@ -1,11 +1,33 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '.';
+import {ImageSourcePropType} from 'react-native';
 
 export type Theme = 'neutral' | 'blue' | 'green' | 'red' | 'yellow' | 'purple';
 
-const initialThemeState = {
-  theme: 'blue',
-};
+const PRESETS = [
+  {
+    theme: 'blue',
+    backgroundImage: require('@/assets/images/water-paint.jpg'),
+  },
+  {
+    theme: 'purple',
+    backgroundImage: require('@/assets/images/lighthouse.jpg'),
+  },
+  {
+    theme: 'green',
+    backgroundImage: require('@/assets/images/golden-gate-bridge.jpg'),
+  },
+  {
+    theme: 'yellow',
+    backgroundImage: require('@/assets/images/hill-peak.jpg'),
+  },
+  {
+    theme: 'red',
+    backgroundImage: require('@/assets/images/tokyo-tv-tower.jpg'),
+  },
+];
+
+const initialThemeState = PRESETS[0];
 
 const themeSlice = createSlice({
   name: 'theme',
@@ -13,6 +35,9 @@ const themeSlice = createSlice({
   reducers: {
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
+    },
+    setBackgroundImage(state, action: PayloadAction<ImageSourcePropType>) {
+      state.backgroundImage = action.payload;
     },
   },
 });
