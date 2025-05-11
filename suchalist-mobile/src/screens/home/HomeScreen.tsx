@@ -15,7 +15,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
-  View,
 } from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
@@ -94,19 +93,17 @@ export default function HomeScreen() {
         style={styles.background}>
         <ForceAppUpdateModal />
 
-        <View style={styles.tasksListContainer}>
-          <TaskItemList
-            tasks={tasks}
-            setIsCompleted={setIsCompleted}
-            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-            onTaskItemPress={(task: Task) =>
-              navigation.push('TaskDetails', {task})
-            }
-            onAddTask={addTask}
-            onRemoveTask={removeTask}
-            onScroll={onScroll}
-          />
-        </View>
+        <TaskItemList
+          tasks={tasks}
+          setIsCompleted={setIsCompleted}
+          showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+          onTaskItemPress={(task: Task) =>
+            navigation.push('TaskDetails', {task})
+          }
+          onAddTask={addTask}
+          onRemoveTask={removeTask}
+          onScroll={onScroll}
+        />
 
         <BottomSheet ref={bottomSheetModalRef}>
           <AddTaskForm
@@ -129,11 +126,6 @@ const getStyles = (theme: Theme) => {
     background: {
       flex: 1,
       justifyContent: 'center',
-    },
-    tasksListContainer: {
-      flex: 1,
-      paddingVertical: 20,
-      paddingHorizontal: 10,
     },
     fab: {
       position: 'absolute',

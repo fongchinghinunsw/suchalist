@@ -1,6 +1,6 @@
 import Text from '@/components/base/Text';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
-import {ImageBackground, Pressable, StyleSheet, View} from 'react-native';
+import {ImageBackground, Pressable, StyleSheet} from 'react-native';
 import {TASKS} from './fake';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
@@ -13,17 +13,15 @@ export default function MockHomeScreen() {
       source={backgroundImage}
       resizeMode="cover"
       style={styles.background}>
-      <View style={styles.tasksListContainer}>
-        <TaskItemList
-          tasks={TASKS}
-          setIsCompleted={noOp}
-          showAddTaskDrawer={noOp}
-          onTaskItemPress={noOp}
-          onAddTask={noOp}
-          onRemoveTask={noOp}
-          onScroll={noOp}
-        />
-      </View>
+      <TaskItemList
+        tasks={TASKS}
+        setIsCompleted={noOp}
+        showAddTaskDrawer={noOp}
+        onTaskItemPress={noOp}
+        onAddTask={noOp}
+        onRemoveTask={noOp}
+        onScroll={noOp}
+      />
     </ImageBackground>
   );
 }
