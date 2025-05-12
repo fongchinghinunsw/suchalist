@@ -65,6 +65,21 @@ export default function BackgroundImagePicker({
     }
   };
 
+  const removeBackgroundImage = async (image: BackgroundImage) => {
+    if (image.type === 'uri') {
+      const filePath = image.uri.replace('file://', '');
+      try {
+        const exists = await RNFS.exists(filePath);
+        if (exists) {
+          await RNFS.unlink(filePath);
+        }
+      } catch (err) {
+        console.warn('Failed to delete file:', err);
+      }
+    }
+    dispatch(themeActions.removeBackgroundImage(image));
+  };
+
   return (
     <ScrollView
       horizontal
@@ -77,6 +92,8 @@ export default function BackgroundImagePicker({
         const isSelected = selectedImage === image;
         console.log({image, index});
         const source = image.type === 'uri' ? {uri: image.uri} : image.asset;
+        const isCustom = image.type === 'uri';
+        console.log({isCustom});
 
         return (
           <Pressable
@@ -86,6 +103,15 @@ export default function BackgroundImagePicker({
               isSelected && styles.selectedImageWrapper,
             ]}
             onPress={() => onSelectImage(image)}>
+            {isCustom && (
+              <Icon
+                name="close-circle"
+                color="red"
+                style={styles.deleteButton}
+                size={24}
+                onPress={() => removeBackgroundImage(image)}
+              />
+            )}
             <Image source={source} style={styles.image} />
           </Pressable>
         );
@@ -108,17 +134,28 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   imageWrapper: {
+    borderWidth: 2,
+    borderColor: 'transparent',
     borderRadius: 8,
     overflow: 'hidden',
   },
   selectedImageWrapper: {
-    borderWidth: 2,
     borderColor: '#FFF',
   },
   image: {
     width: 100,
     height: '100%',
     resizeMode: 'cover',
+  },
+  deleteButton: {
+    position: 'absolute',
+    zIndex: 10,
+    top: 0,
+    right: 0,
+    backgroundColor: '#FFF',
+    width: 24,
+    height: 24,
+    borderRadius: '100%',
   },
   backgroundPicker: {
     borderRadius: 8,

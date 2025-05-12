@@ -87,6 +87,17 @@ const themeSlice = createSlice({
         state.backgroundImages.push(action.payload);
       }
     },
+    removeBackgroundImage(state, action: PayloadAction<BackgroundImage>) {
+      state.backgroundImages = state.backgroundImages.filter(img => {
+        if (img.type === 'uri' && action.payload.type === 'uri') {
+          return img.uri !== action.payload.uri;
+        }
+        if (img.type === 'asset' && action.payload.type === 'asset') {
+          return img.asset !== action.payload.asset;
+        }
+        return true;
+      });
+    },
   },
 });
 
