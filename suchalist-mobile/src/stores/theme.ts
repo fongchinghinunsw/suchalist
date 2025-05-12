@@ -15,11 +15,27 @@ const DEFAULT_BACKGROUND_IMAGES: BackgroundImage[] = [
   },
   {
     type: 'asset',
+    asset: require('@/assets/images/yellow-flower.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/pink-paint.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/pink-wall.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/green-blue-sky.jpg'),
+  },
+  {
+    type: 'asset',
     asset: require('@/assets/images/lighthouse.jpg'),
   },
   {
     type: 'asset',
-    asset: require('@/assets/images/golden-gate-bridge.jpg'),
+    asset: require('@/assets/images/real-water.jpg'),
   },
   {
     type: 'asset',
@@ -27,7 +43,23 @@ const DEFAULT_BACKGROUND_IMAGES: BackgroundImage[] = [
   },
   {
     type: 'asset',
+    asset: require('@/assets/images/grey-wall.jpg'),
+  },
+  {
+    type: 'asset',
     asset: require('@/assets/images/tokyo-tv-tower.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/crystal.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/blue-ocean.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/pink-water.jpg'),
   },
 ];
 
