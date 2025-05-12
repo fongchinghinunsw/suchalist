@@ -44,5 +44,8 @@ const themeSlice = createSlice({
 
 export const selectTheme = (state: RootState): Theme => state.theme.theme;
 
+export const selectBackgroundImage = (state: RootState): ImageSourcePropType =>
+  state.theme.backgroundImage;
+
 export const themeActions = themeSlice.actions;
 export const themeReducer = themeSlice.reducer;
