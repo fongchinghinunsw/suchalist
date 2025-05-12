@@ -73,6 +73,7 @@ export default function TaskDetailsScreen() {
         },
       }),
     );
+    navigation.pop();
   };
 
   const toggleDeleteTaskModal = () => {
