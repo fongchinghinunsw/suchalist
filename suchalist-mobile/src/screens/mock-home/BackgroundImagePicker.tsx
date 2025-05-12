@@ -1,11 +1,14 @@
+import Icon from '@react-native-vector-icons/ionicons';
 import {
   Image,
   ImageSourcePropType,
   Pressable,
   StyleSheet,
+  Text,
   useWindowDimensions,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 type Props = {
   images: ImageSourcePropType[];
@@ -21,6 +24,21 @@ export default function BackgroundImagePicker({
   const {height} = useWindowDimensions();
 
   const scrollViewHeight = height / 5;
+
+  const onOpenBackgroundPicker = async () => {
+    console.log('onOpenBackgroundPicker');
+    const result = await launchImageLibrary(
+      {
+        mediaType: 'photo',
+        selectionLimit: 1,
+      },
+      res => {
+        console.log({res});
+      },
+    );
+    console.log('hey');
+    console.log({result});
+  };
 
   return (
     <ScrollView
@@ -45,6 +63,12 @@ export default function BackgroundImagePicker({
           </Pressable>
         );
       })}
+      <Pressable
+        style={styles.backgroundPicker}
+        onPress={onOpenBackgroundPicker}>
+        <Icon name="image-outline" color="#FFF" size={24} />
+        <Text style={styles.addFromDeviceButton}>Add From Device</Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -68,5 +92,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: '100%',
     resizeMode: 'cover',
+  },
+  backgroundPicker: {
+    borderRadius: 8,
+    width: 100,
+    height: '100%',
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addFromDeviceButton: {
+    color: '#FFF',
+    textAlign: 'center',
   },
 });

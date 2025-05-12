@@ -4,8 +4,7 @@ import {RootStackParamList} from '@/navigations/RootStack';
 import {themeActions} from '@/stores/theme';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ImageSourcePropType, Pressable, StyleSheet} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {ImageSourcePropType, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 export default function BackgroundPickerSection() {
@@ -13,20 +12,6 @@ export default function BackgroundPickerSection() {
 
   const dispatch = useDispatch();
 
-  const onOpenBackgroundPicker = async () => {
-    console.log('onOpenBackgroundPicker');
-    const result = await launchImageLibrary(
-      {
-        mediaType: 'photo',
-        selectionLimit: 1,
-      },
-      res => {
-        console.log({res});
-      },
-    );
-    console.log('hey');
-    console.log({result});
-  };
   return (
     <>
       <Text tone="neutral" shade={700} size="medium" style={styles.title}>
@@ -35,10 +20,7 @@ export default function BackgroundPickerSection() {
       <Text tone="neutral" shade={700} size="small" style={styles.description}>
         Set a background for your TODO list.
       </Text>
-      <Pressable
-        style={styles.backgroundPicker}
-        onPress={onOpenBackgroundPicker}
-      />
+
       <Button
         mode="contained"
         onPress={() =>
@@ -63,10 +45,5 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 12,
-  },
-  backgroundPicker: {
-    height: 80,
-    width: '100%',
-    backgroundColor: 'green',
   },
 });
