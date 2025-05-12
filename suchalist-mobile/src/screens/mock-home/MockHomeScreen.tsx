@@ -1,17 +1,17 @@
 import Text from '@/components/base/Text';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
+import {selectBackgroundImage} from '@/stores/theme';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useLayoutEffect, useState} from 'react';
 import {
   ImageBackground,
   ImageSourcePropType,
   Pressable,
   StyleSheet,
 } from 'react-native';
-import {TASKS} from './fake';
+import {useSelector} from 'react-redux';
 import BackgroundImagePicker from './BackgroundImagePicker';
-import {useLayoutEffect, useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
-
-const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
+import {TASKS} from './fake';
 
 const images = [
   require('@/assets/images/water-paint.jpg'),
@@ -22,6 +22,8 @@ const images = [
 ];
 
 export default function MockHomeScreen() {
+  const backgroundImage = useSelector(selectBackgroundImage);
+
   const [selectedImage, setSelectedImage] =
     useState<ImageSourcePropType>(backgroundImage);
 
@@ -35,16 +37,8 @@ export default function MockHomeScreen() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <Pressable
-          onPress={() => {
-            console.log('useLayoutEffect', {selectedImage});
-            return route.params?.onDone?.(selectedImage);
-          }}
-          style={styles.headerRight}>
-          <Text shade={900}>Done</Text>
-        </Pressable>
-      ),
+      headerRight: () =>
+        renderHeaderRight(() => route.params?.onDone?.(selectedImage)),
     });
   }, [navigation, route.params, route.params.onDone, selectedImage]);
 
@@ -74,13 +68,9 @@ export default function MockHomeScreen() {
   );
 }
 
-export function renderHeaderRight(onDone: () => void) {
+export function renderHeaderRight(onPress: () => void) {
   return (
-    <Pressable
-      onPress={() => {
-        onDone();
-      }}
-      style={styles.headerRight}>
+    <Pressable onPress={onPress} style={styles.headerRight}>
       <Text shade={900}>Done</Text>
     </Pressable>
   );
