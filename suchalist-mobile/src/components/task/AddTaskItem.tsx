@@ -48,7 +48,13 @@ export default function AddTaskItem({onAddTask}: Props) {
   return (
     <View style={styles.container}>
       <Icon name="add-outline" size={24} color="#fff" onPress={onPress} />
-      <TextInput value={title} onChange={onTitleChange} style={styles.input} />
+      <TextInput
+        value={title}
+        onChange={onTitleChange}
+        placeholder="Add a task..."
+        placeholderTextColor="#FFF"
+        style={styles.input}
+      />
     </View>
   );
 }
