@@ -1,10 +1,10 @@
 import {useNavigationTheme} from '@/hooks/useNavigationTheme';
 import MockHomeScreen from '@/screens/mock-home/MockHomeScreen';
 import {Task} from '@/stores/tasks/types';
+import {BackgroundImage} from '@/stores/theme';
 import {createStackNavigator} from '@react-navigation/stack';
 import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';
 import SideDrawer from './SideDrawer';
-import {ImageSourcePropType} from 'react-native';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -12,7 +12,7 @@ export type RootStackParamList = {
     task: Task;
   };
   MockHome: {
-    onDone: (image: ImageSourcePropType) => void;
+    onDone: (image: BackgroundImage) => void;
   };
 };
 

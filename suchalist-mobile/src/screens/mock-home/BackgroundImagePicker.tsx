@@ -1,3 +1,4 @@
+import {BackgroundImage, themeActions} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import {
   Image,
@@ -7,13 +8,15 @@ import {
   Text,
   useWindowDimensions,
 } from 'react-native';
+import RNFS from 'react-native-fs';
 import {ScrollView} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
+import {useDispatch} from 'react-redux';
 
 type Props = {
   images: ImageSourcePropType[];
-  selectedImage: ImageSourcePropType;
-  onSelectImage: (image: ImageSourcePropType) => void;
+  selectedImage: BackgroundImage;
+  onSelectImage: (image: BackgroundImage) => void;
 };
 
 export default function BackgroundImagePicker({
@@ -22,6 +25,7 @@ export default function BackgroundImagePicker({
   onSelectImage,
 }: Props) {
   const {height} = useWindowDimensions();
+  const dispatch = useDispatch();
 
   const scrollViewHeight = height / 5;
 
@@ -36,8 +40,30 @@ export default function BackgroundImagePicker({
         console.log({res});
       },
     );
-    console.log('hey');
+
     console.log({result});
+    if (result.assets?.length) {
+      const sourceUri = result.assets[0].uri;
+      if (!sourceUri) {
+        return;
+      }
+
+      const fileName = sourceUri.split('/').pop();
+      const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+
+      try {
+        await RNFS.copyFile(sourceUri, destPath);
+        dispatch(
+          themeActions.setBackgroundImage({
+            type: 'uri',
+            uri: `file://${destPath}`,
+          }),
+        );
+        onSelectImage({type: 'uri', uri: `file://${destPath}`});
+      } catch (error) {
+        console.error('Failed to copy file:', error);
+      }
+    }
   };
 
   return (
@@ -58,7 +84,12 @@ export default function BackgroundImagePicker({
               styles.imageWrapper,
               isSelected && styles.selectedImageWrapper,
             ]}
-            onPress={() => onSelectImage(image)}>
+            onPress={() =>
+              onSelectImage({
+                type: 'asset',
+                asset: image,
+              })
+            }>
             <Image source={image} style={styles.image} />
           </Pressable>
         );

@@ -87,10 +87,16 @@ export default function HomeScreen() {
     bottomSheetModalRef.current?.close();
   };
 
+  const source =
+    backgroundImage.type === 'uri'
+      ? {uri: backgroundImage.uri}
+      : backgroundImage.asset;
+  console.log({source, backgroundImage});
+
   return (
     <TaskListDrawerLayout>
       <ImageBackground
-        source={backgroundImage}
+        source={source}
         resizeMode="cover"
         style={styles.background}>
         <ForceAppUpdateModal />

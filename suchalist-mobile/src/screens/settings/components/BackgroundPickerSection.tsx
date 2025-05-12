@@ -1,10 +1,10 @@
 import Button from '@/components/base/Button';
 import Text from '@/components/base/Text';
 import {RootStackParamList} from '@/navigations/RootStack';
-import {themeActions} from '@/stores/theme';
+import {BackgroundImage, themeActions} from '@/stores/theme';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ImageSourcePropType, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 export default function BackgroundPickerSection() {
@@ -25,7 +25,7 @@ export default function BackgroundPickerSection() {
         mode="contained"
         onPress={() =>
           navigation.push('MockHome', {
-            onDone: (image: ImageSourcePropType) => {
+            onDone: (image: BackgroundImage) => {
               console.log('BackgroundPickerSection', image);
               dispatch(themeActions.setBackgroundImage(image));
               navigation.pop();

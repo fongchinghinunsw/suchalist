@@ -1,14 +1,9 @@
 import Text from '@/components/base/Text';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
-import {selectBackgroundImage} from '@/stores/theme';
+import {BackgroundImage, selectBackgroundImage} from '@/stores/theme';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useLayoutEffect, useState} from 'react';
-import {
-  ImageBackground,
-  ImageSourcePropType,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+import {ImageBackground, Pressable, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import BackgroundImagePicker from './BackgroundImagePicker';
 import {TASKS} from './fake';
@@ -25,9 +20,9 @@ export default function MockHomeScreen() {
   const backgroundImage = useSelector(selectBackgroundImage);
 
   const [selectedImage, setSelectedImage] =
-    useState<ImageSourcePropType>(backgroundImage);
+    useState<BackgroundImage>(backgroundImage);
 
-  const onSelectImage = (image: ImageSourcePropType) => {
+  const onSelectImage = (image: BackgroundImage) => {
     console.log('onSelectImage', {image});
     setSelectedImage(image);
   };
@@ -44,9 +39,14 @@ export default function MockHomeScreen() {
 
   const noOp = () => {};
 
+  const source =
+    selectedImage.type === 'uri'
+      ? {uri: selectedImage.uri}
+      : selectedImage.asset;
+
   return (
     <ImageBackground
-      source={selectedImage}
+      source={source}
       resizeMode="cover"
       style={styles.background}>
       <TaskItemList
