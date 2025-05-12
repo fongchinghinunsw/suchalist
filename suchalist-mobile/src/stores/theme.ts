@@ -8,33 +8,59 @@ export type BackgroundImage =
   | {type: 'uri'; uri: string}
   | {type: 'asset'; asset: ImageSourcePropType};
 
+const DEFAULT_BACKGROUND_IMAGES: BackgroundImage[] = [
+  {
+    type: 'asset',
+    asset: require('@/assets/images/water-paint.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/lighthouse.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/golden-gate-bridge.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/hill-peak.jpg'),
+  },
+  {
+    type: 'asset',
+    asset: require('@/assets/images/tokyo-tv-tower.jpg'),
+  },
+];
+
 const PRESETS: {
   theme: Theme;
   backgroundImage: BackgroundImage;
 }[] = [
   {
     theme: 'blue',
-    backgroundImage: require('@/assets/images/water-paint.jpg'),
+    backgroundImage: DEFAULT_BACKGROUND_IMAGES[0],
   },
   {
     theme: 'purple',
-    backgroundImage: require('@/assets/images/lighthouse.jpg'),
+    backgroundImage: DEFAULT_BACKGROUND_IMAGES[1],
   },
   {
     theme: 'green',
-    backgroundImage: require('@/assets/images/golden-gate-bridge.jpg'),
+    backgroundImage: DEFAULT_BACKGROUND_IMAGES[2],
   },
   {
     theme: 'yellow',
-    backgroundImage: require('@/assets/images/hill-peak.jpg'),
+    backgroundImage: DEFAULT_BACKGROUND_IMAGES[3],
   },
   {
     theme: 'red',
-    backgroundImage: require('@/assets/images/tokyo-tv-tower.jpg'),
+    backgroundImage: DEFAULT_BACKGROUND_IMAGES[4],
   },
 ];
 
-const initialThemeState = PRESETS[0];
+const initialThemeState = {
+  ...PRESETS[0],
+  backgroundImages: DEFAULT_BACKGROUND_IMAGES,
+};
 
 const themeSlice = createSlice({
   name: 'theme',
@@ -53,6 +79,9 @@ export const selectTheme = (state: RootState): Theme => state.theme.theme;
 
 export const selectBackgroundImage = (state: RootState): BackgroundImage =>
   state.theme.backgroundImage;
+
+export const selectBackgroundImages = (state: RootState): BackgroundImage[] =>
+  state.theme.backgroundImages;
 
 export const themeActions = themeSlice.actions;
 export const themeReducer = themeSlice.reducer;

@@ -1,6 +1,10 @@
 import Text from '@/components/base/Text';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
-import {BackgroundImage, selectBackgroundImage} from '@/stores/theme';
+import {
+  BackgroundImage,
+  selectBackgroundImage,
+  selectBackgroundImages,
+} from '@/stores/theme';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useLayoutEffect, useState} from 'react';
 import {ImageBackground, Pressable, StyleSheet} from 'react-native';
@@ -8,16 +12,9 @@ import {useSelector} from 'react-redux';
 import BackgroundImagePicker from './BackgroundImagePicker';
 import {TASKS} from './fake';
 
-const images = [
-  require('@/assets/images/water-paint.jpg'),
-  require('@/assets/images/lighthouse.jpg'),
-  require('@/assets/images/golden-gate-bridge.jpg'),
-  require('@/assets/images/hill-peak.jpg'),
-  require('@/assets/images/tokyo-tv-tower.jpg'),
-];
-
 export default function MockHomeScreen() {
   const backgroundImage = useSelector(selectBackgroundImage);
+  const backgroundImages = useSelector(selectBackgroundImages);
 
   const [selectedImage, setSelectedImage] =
     useState<BackgroundImage>(backgroundImage);
@@ -60,7 +57,7 @@ export default function MockHomeScreen() {
       />
 
       <BackgroundImagePicker
-        images={images}
+        images={backgroundImages}
         selectedImage={selectedImage}
         onSelectImage={onSelectImage}
       />

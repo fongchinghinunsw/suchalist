@@ -2,7 +2,6 @@ import {BackgroundImage, themeActions} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import {
   Image,
-  ImageSourcePropType,
   Pressable,
   StyleSheet,
   Text,
@@ -14,7 +13,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {useDispatch} from 'react-redux';
 
 type Props = {
-  images: ImageSourcePropType[];
+  images: BackgroundImage[];
   selectedImage: BackgroundImage;
   onSelectImage: (image: BackgroundImage) => void;
 };
@@ -77,6 +76,8 @@ export default function BackgroundImagePicker({
       {images.map((image, index) => {
         const isSelected = selectedImage === image;
         console.log({image, index});
+        const source = image.type === 'uri' ? {uri: image.uri} : image.asset;
+
         return (
           <Pressable
             key={index}
@@ -84,13 +85,8 @@ export default function BackgroundImagePicker({
               styles.imageWrapper,
               isSelected && styles.selectedImageWrapper,
             ]}
-            onPress={() =>
-              onSelectImage({
-                type: 'asset',
-                asset: image,
-              })
-            }>
-            <Image source={image} style={styles.image} />
+            onPress={() => onSelectImage(image)}>
+            <Image source={source} style={styles.image} />
           </Pressable>
         );
       })}
