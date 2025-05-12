@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import {TASKS} from './fake';
 import BackgroundImagePicker from './BackgroundImagePicker';
-import {useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -25,8 +26,27 @@ export default function MockHomeScreen() {
     useState<ImageSourcePropType>(backgroundImage);
 
   const onSelectImage = (image: ImageSourcePropType) => {
+    console.log('onSelectImage', {image});
     setSelectedImage(image);
   };
+
+  const navigation = useNavigation();
+  const route = useRoute<any>();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable
+          onPress={() => {
+            console.log('useLayoutEffect', {selectedImage});
+            return route.params?.onDone?.(selectedImage);
+          }}
+          style={styles.headerRight}>
+          <Text shade={900}>Done</Text>
+        </Pressable>
+      ),
+    });
+  }, [navigation, route.params, route.params.onDone, selectedImage]);
 
   const noOp = () => {};
 

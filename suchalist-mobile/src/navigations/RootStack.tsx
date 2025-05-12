@@ -1,13 +1,9 @@
 import {useNavigationTheme} from '@/hooks/useNavigationTheme';
-import MockHomeScreen, {
-  renderHeaderRight,
-} from '@/screens/mock-home/MockHomeScreen';
+import MockHomeScreen from '@/screens/mock-home/MockHomeScreen';
 import {Task} from '@/stores/tasks/types';
 import {createStackNavigator} from '@react-navigation/stack';
 import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';
 import SideDrawer from './SideDrawer';
-import {useDispatch} from 'react-redux';
-import {themeActions} from '@/stores/theme';
 import {ImageSourcePropType} from 'react-native';
 
 export type RootStackParamList = {
@@ -16,7 +12,7 @@ export type RootStackParamList = {
     task: Task;
   };
   MockHome: {
-    onDone: () => void;
+    onDone: (image: ImageSourcePropType) => void;
   };
 };
 
@@ -24,11 +20,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
   const {textColor, backgroundColor} = useNavigationTheme();
-  const dispatch = useDispatch();
-
-  const onBackgroundImageChange = (image: ImageSourcePropType) => {
-    dispatch(themeActions.setBackgroundImage(image));
-  };
 
   return (
     <Stack.Navigator
@@ -61,7 +52,7 @@ export default function RootStack() {
       <Stack.Screen
         name="MockHome"
         component={MockHomeScreen}
-        options={({route}) => ({
+        options={{
           headerTintColor: textColor,
           headerTitleStyle: {
             color: textColor,
@@ -71,8 +62,7 @@ export default function RootStack() {
           },
           headerLeft: () => null,
           headerTitle: 'Home',
-          headerRight: () => renderHeaderRight(route.params.onDone),
-        })}
+        }}
       />
     </Stack.Navigator>
   );

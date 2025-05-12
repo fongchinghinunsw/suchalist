@@ -5,7 +5,7 @@ import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';
 import {selectCurrentTasks, tasksActions} from '@/stores/tasks/tasks';
 import {NewTask, Task} from '@/stores/tasks/types';
-import {Theme} from '@/stores/theme';
+import {selectBackgroundImage, Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -23,7 +23,7 @@ import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 import TaskListDrawerLayout from './components/TaskListDrawerLayout/TaskListDrawerLayout';
 
-const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
+// const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
 export default function HomeScreen() {
   const tasks = useSelector(selectCurrentTasks);
@@ -31,6 +31,8 @@ export default function HomeScreen() {
 
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
   const styles = getStyles(theme);
+
+  const backgroundImage = useSelector(selectBackgroundImage);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 

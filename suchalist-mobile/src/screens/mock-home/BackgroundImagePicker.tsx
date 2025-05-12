@@ -32,6 +32,7 @@ export default function BackgroundImagePicker({
       showsHorizontalScrollIndicator={false}>
       {images.map((image, index) => {
         const isSelected = selectedImage === image;
+        console.log({image, index});
         return (
           <Pressable
             key={index}
