@@ -72,6 +72,21 @@ const themeSlice = createSlice({
     setBackgroundImage(state, action: PayloadAction<BackgroundImage>) {
       state.backgroundImage = action.payload;
     },
+    addBackgroundImage(state, action: PayloadAction<BackgroundImage>) {
+      const exists = state.backgroundImages.some(img => {
+        if (img.type === 'uri' && action.payload.type === 'uri') {
+          return img.uri === action.payload.uri;
+        }
+        if (img.type === 'asset' && action.payload.type === 'asset') {
+          return img.asset === action.payload.asset;
+        }
+        return false;
+      });
+
+      if (!exists) {
+        state.backgroundImages.push(action.payload);
+      }
+    },
   },
 });
 

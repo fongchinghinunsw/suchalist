@@ -49,15 +49,15 @@ export default function BackgroundImagePicker({
 
       const fileName = sourceUri.split('/').pop();
       const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+      console.log({destPath});
 
       try {
+        const image: BackgroundImage = {
+          type: 'uri',
+          uri: `file://${destPath}`,
+        };
         await RNFS.copyFile(sourceUri, destPath);
-        dispatch(
-          themeActions.setBackgroundImage({
-            type: 'uri',
-            uri: `file://${destPath}`,
-          }),
-        );
+        dispatch(themeActions.addBackgroundImage(image));
         onSelectImage({type: 'uri', uri: `file://${destPath}`});
       } catch (error) {
         console.error('Failed to copy file:', error);
