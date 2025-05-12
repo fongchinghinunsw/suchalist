@@ -29,18 +29,11 @@ export default function BackgroundImagePicker({
   const scrollViewHeight = height / 5;
 
   const onOpenBackgroundPicker = async () => {
-    console.log('onOpenBackgroundPicker');
-    const result = await launchImageLibrary(
-      {
-        mediaType: 'photo',
-        selectionLimit: 1,
-      },
-      res => {
-        console.log({res});
-      },
-    );
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 1,
+    });
 
-    console.log({result});
     if (result.assets?.length) {
       const sourceUri = result.assets[0].uri;
       if (!sourceUri) {
@@ -49,7 +42,6 @@ export default function BackgroundImagePicker({
 
       const fileName = sourceUri.split('/').pop();
       const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
-      console.log({destPath});
 
       try {
         const image: BackgroundImage = {
@@ -93,7 +85,6 @@ export default function BackgroundImagePicker({
         console.log({image, index});
         const source = image.type === 'uri' ? {uri: image.uri} : image.asset;
         const isCustom = image.type === 'uri';
-        console.log({isCustom});
 
         return (
           <Pressable
