@@ -1,12 +1,11 @@
 import Text from '@/components/base/Text';
-import Icon from '@react-native-vector-icons/ionicons';
-import {Pressable, StyleSheet, View} from 'react-native';
-import Animated from 'react-native-reanimated';
-import {FolderHeader} from './types';
-import {useSelector} from 'react-redux';
 import {selectListsMap} from '@/stores/tasks/tasks';
+import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
+import {Pressable, StyleSheet, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import TaskListItem from './TaskListItem';
+import {FolderHeader} from './types';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -30,7 +29,7 @@ export default function TaskFolderItem({
     : 'chevron-back-outline';
 
   return (
-    <Animated.View>
+    <View>
       <Pressable style={styles.container} onPress={onToggleListItem}>
         <View style={styles.titleContainer}>
           <Icon name="folder-open-outline" size={16} />
@@ -58,7 +57,7 @@ export default function TaskFolderItem({
           })}
         </View>
       )}
-    </Animated.View>
+    </View>
   );
 }
 
