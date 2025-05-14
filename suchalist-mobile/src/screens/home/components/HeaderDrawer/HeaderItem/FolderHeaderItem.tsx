@@ -1,5 +1,5 @@
 import Text from '@/components/base/Text';
-import {selectListsMap} from '@/stores/tasks/tasks';
+import {selectListsMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
@@ -7,7 +7,7 @@ import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ListHeaderItem from './ListHeaderItem';
 import {FolderHeader} from '../types';
 import {List} from '@/services/task-service/types';
@@ -25,10 +25,12 @@ type Props = {
 };
 
 export default function FolderHeaderItem({
-  folderHeader: {title, lists: listsHeader},
+  folderHeader: {id, title, lists: listsHeader},
   onPress,
   onDrag,
 }: Props) {
+  const dispatch = useDispatch();
+
   const listsMap = useSelector(selectListsMap);
 
   const [lists, setLists] = useState(
@@ -36,6 +38,10 @@ export default function FolderHeaderItem({
   );
 
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const onDeleteFolder = () => {
+    dispatch(tasksActions.removeFolder(id));
+  };
 
   const onToggleListItem = () => {
     setIsExpanded(!isExpanded);
@@ -87,7 +93,7 @@ export default function FolderHeaderItem({
                 <Icon name="list-outline" size={16} />
                 <Text>Add List</Text>
               </MenuOption>
-              <MenuOption style={styles.menuOption}>
+              <MenuOption style={styles.menuOption} onSelect={onDeleteFolder}>
                 <Icon name="trash-outline" color="red" size={16} />
                 <Text>Delete Folder</Text>
               </MenuOption>

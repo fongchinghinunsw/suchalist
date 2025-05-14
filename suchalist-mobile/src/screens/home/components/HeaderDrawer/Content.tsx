@@ -5,30 +5,28 @@ import React, {RefObject, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 
-import {tasksActions} from '@/stores/tasks/tasks';
+import AddFolderModal from '@/components/modal/AddFolderModal';
+import AddListModal from '@/components/modal/AddListModal';
+import {selectHeaders, tasksActions} from '@/stores/tasks/tasks';
 import {DrawerLayoutMethods} from 'react-native-gesture-handler/ReanimatedDrawerLayout';
-import {useDispatch, useSelector} from 'react-redux';
-import HeaderList from './HeaderList';
-import {Header} from './types';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import AddListModal from '@/components/modal/AddListModal';
-import AddFolderModal from '@/components/modal/AddFolderModal';
+import {useDispatch, useSelector} from 'react-redux';
+import HeaderList from './HeaderList';
 
 const ADD_BUTTON_RIGHT_OFFSET = 16;
 
 export const Content = ({
   drawerRef,
-  headers,
 }: {
   drawerRef: RefObject<DrawerLayoutMethods | null>;
-  headers: Header[];
 }) => {
   const theme = useSelector(selectTheme);
+  const headers = useSelector(selectHeaders);
 
   const dispatch = useDispatch();
 

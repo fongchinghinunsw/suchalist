@@ -1,4 +1,3 @@
-import {selectHeaders} from '@/stores/tasks/tasks';
 import {JSX, useRef} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -7,7 +6,6 @@ import ReanimatedDrawerLayout, {
   DrawerPosition,
   DrawerType,
 } from 'react-native-gesture-handler/ReanimatedDrawerLayout';
-import {useSelector} from 'react-redux';
 import {Content} from './Content';
 
 type Props = {
@@ -16,7 +14,6 @@ type Props = {
 
 export default function HeaderDrawerLayout({children}: Props) {
   const drawerRef = useRef<DrawerLayoutMethods>(null);
-  const headers = useSelector(selectHeaders);
   const {width} = useWindowDimensions();
 
   const horizontalSwipeGesture = Gesture.Pan()
@@ -34,9 +31,7 @@ export default function HeaderDrawerLayout({children}: Props) {
     <GestureDetector gesture={horizontalSwipeGesture}>
       <ReanimatedDrawerLayout
         ref={drawerRef}
-        renderNavigationView={() => (
-          <Content drawerRef={drawerRef} headers={headers} />
-        )}
+        renderNavigationView={() => <Content drawerRef={drawerRef} />}
         drawerPosition={DrawerPosition.LEFT}
         drawerType={DrawerType.FRONT}
         drawerWidth={width * 0.8}

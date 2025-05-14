@@ -1,4 +1,7 @@
-import {Header} from '@/screens/home/components/HeaderDrawer/types';
+import {
+  Header,
+  isFolderHeader,
+} from '@/screens/home/components/HeaderDrawer/types';
 import {List, Task} from '@/services/task-service/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
@@ -166,14 +169,63 @@ const tasksSlice = createSlice({
         lists: [],
       });
     },
-    // removePastFinishedTasks(state) {
-    //   const today = new Date();
-    //   today.setHours(0, 0, 0, 0);
-    //   state.tasks = state.tasks.filter(task => {
-    //     const taskDate = new Date(task.dueDate);
-    //     return !task.isCompleted || taskDate >= today;
-    //   });
-    // },
+    removeList(
+      state,
+      action: PayloadAction<{
+        listId: string;
+        folderId?: string;
+      }>,
+    ) {
+      const {listId, folderId} = action.payload;
+      delete state.listsMap[listId];
+
+      if (folderId) {
+        // Remove listId from folder's lists
+        const folder = state.headers.find(
+          h => h.type === 'FOLDER' && h.id === folderId,
+        );
+        if (folder && 'lists' in folder) {
+          folder.lists = folder.lists.filter(list => list.id !== listId);
+        }
+      } else {
+        // Remove list directly from headers
+        state.headers = state.headers.filter(
+          header => !(header.type === 'LIST' && header.id === listId),
+        );
+      }
+
+      // Reset currentTaskListId if it was the one removed
+      if (state.currentTaskListId === listId) {
+        state.currentTaskListId = DEFAULT_LIST_ID;
+      }
+    },
+    removeFolder(state, action: PayloadAction<string>) {
+      const folderId = action.payload;
+
+      // Find the folder
+      const folder = state.headers.find(
+        h => h.type === 'FOLDER' && h.id === folderId,
+      );
+
+      if (folder && isFolderHeader(folder)) {
+        // Delete all lists in the folder from listsMap
+        for (const list of folder.lists) {
+          delete state.listsMap[list.id];
+        }
+
+        if (
+          folder.lists.map(list => list.id).includes(state.currentTaskListId)
+        ) {
+          // If currentTaskListId was inside this folder, reset it
+          state.currentTaskListId = DEFAULT_LIST_ID;
+        }
+      }
+
+      // Remove the folder from headers
+      state.headers = state.headers.filter(
+        header => !(header.type === 'FOLDER' && header.id === folderId),
+      );
+    },
   },
 });
 

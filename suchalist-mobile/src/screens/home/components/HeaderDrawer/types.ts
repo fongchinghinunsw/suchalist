@@ -24,3 +24,7 @@ export type FolderHeader = {
  * Union type representing either a list header or a folder header.
  */
 export type Header = ListHeader | FolderHeader;
+
+export function isFolderHeader(header: Header): header is FolderHeader {
+  return header.type === 'FOLDER';
+}
