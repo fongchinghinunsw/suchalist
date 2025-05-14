@@ -18,10 +18,7 @@ export default function ListHeaderItem({
     <View>
       <Pressable
         style={styles.container}
-        onPress={() => {
-          console.log('ListHeaderItem', {id});
-          onPress(id);
-        }}
+        onPress={() => onPress(id)}
         onLongPress={onDrag}
         delayLongPress={250}>
         <Icon name="list-outline" size={16} />

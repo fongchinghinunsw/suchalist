@@ -53,7 +53,6 @@ const tasksSlice = createSlice({
         //         originalParentId: taskId,
         //       },
       };
-      console.log({newTask});
 
       const index = currentTasks.findIndex(task => {
         if (newTask.dueDate == null) {
@@ -140,6 +139,7 @@ const tasksSlice = createSlice({
       const listId = getId();
       const title = action.payload;
       const now = new Date().toISOString();
+      console.log('addList', action.payload);
 
       state.listsMap[listId] = {
         id: listId,
@@ -178,10 +178,6 @@ const tasksSlice = createSlice({
 });
 
 export const selectCurrentTasks = (state: RootState): Task[] => {
-  console.log('selectCurrentTasks', {
-    currentTaskListId: state.tasks.currentTaskListId,
-    lists: state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks,
-  });
   return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
 

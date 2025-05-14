@@ -11,6 +11,12 @@ import {useSelector} from 'react-redux';
 import ListHeaderItem from './ListHeaderItem';
 import {FolderHeader} from '../types';
 import {List} from '@/services/task-service/types';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -66,7 +72,27 @@ export default function FolderHeaderItem({
           <Text size="large">{title}</Text>
         </View>
         <View style={styles.iconContainer}>
-          <Icon name="ellipsis-horizontal-outline" size={16} />
+          <Menu>
+            <MenuTrigger>
+              <Icon name="ellipsis-horizontal-outline" size={16} />
+            </MenuTrigger>
+            <MenuOptions
+              customStyles={{
+                optionsContainer: {
+                  padding: 8,
+                  borderRadius: 10,
+                },
+              }}>
+              <MenuOption style={styles.menuOption}>
+                <Icon name="list-outline" size={16} />
+                <Text>Add List</Text>
+              </MenuOption>
+              <MenuOption style={styles.menuOption}>
+                <Icon name="trash-outline" color="red" size={16} />
+                <Text>Delete Folder</Text>
+              </MenuOption>
+            </MenuOptions>
+          </Menu>
           <Icon name={folderItemIconName} size={16} />
         </View>
       </Pressable>
@@ -74,10 +100,7 @@ export default function FolderHeaderItem({
         <View style={styles.listsContainer}>
           <DraggableFlatList
             data={lists}
-            onDragEnd={({data}) => {
-              console.log('TaskFolderItem onDragEnd', data);
-              setLists(data);
-            }}
+            onDragEnd={({data}) => setLists(data)}
             keyExtractor={list => list.id}
             renderItem={renderItem}
             dragItemOverflow={false}
@@ -107,5 +130,10 @@ const styles = StyleSheet.create({
   },
   listsContainer: {
     paddingLeft: 12,
+  },
+  menuOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
 });
