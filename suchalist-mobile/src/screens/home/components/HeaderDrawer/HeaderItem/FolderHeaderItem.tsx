@@ -25,10 +25,12 @@ type Props = {
 };
 
 export default function FolderHeaderItem({
-  folderHeader: {id, title, lists: listsHeader},
+  folderHeader,
   onPress,
   onDrag,
 }: Props) {
+  const {id, title, lists: listsHeader} = folderHeader;
+
   const dispatch = useDispatch();
 
   const listsMap = useSelector(selectListsMap);
@@ -53,6 +55,7 @@ export default function FolderHeaderItem({
             type: 'LIST',
             ...item,
           }}
+          folderHeader={folderHeader}
           onPress={() => onPress(item.id)}
           onDrag={listDrag}
         />
