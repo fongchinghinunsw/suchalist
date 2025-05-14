@@ -7,7 +7,7 @@ import {Folder, List} from '@/services/task-service/types';
  */
 export type ListHeader = {
   type: 'LIST';
-} & Pick<List, 'id' | 'title'>;
+} & Pick<List, 'id'>;
 
 /**
  * Represents a folder header item which can contain multiple list header items.
@@ -18,7 +18,7 @@ export type ListHeader = {
 export type FolderHeader = {
   type: 'FOLDER';
   lists: ListHeader[];
-} & Pick<Folder, 'id' | 'title'>;
+} & Pick<Folder, 'id'>;
 
 /**
  * Union type representing either a list header or a folder header.

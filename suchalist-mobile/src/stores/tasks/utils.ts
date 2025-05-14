@@ -17,21 +17,23 @@ export async function getFakeTasksState(): Promise<TasksState> {
 
   const state: TasksState = {
     currentTaskListId: DEFAULT_LIST_ID,
-    listsMap: {},
+    listMap: {},
+    folderMap: {},
     headers: [],
   };
 
   resources.forEach(resource => {
     if (isFolder(resource)) {
       resource.lists.forEach(list => {
-        state.listsMap[list.id] = list;
+        state.listMap[list.id] = list;
       });
+      state.folderMap[resource.id] = resource;
       state.headers.push(toFolderHeader(resource));
       return;
     }
 
     if (isList(resource)) {
-      state.listsMap[resource.id] = resource;
+      state.listMap[resource.id] = resource;
       state.headers.push(toListHeader(resource));
       return;
     }

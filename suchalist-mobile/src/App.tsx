@@ -20,7 +20,7 @@ export default function App(): React.JSX.Element {
   const initialize = async () => {
     // Hydrate initial fake state only if not already persisted
     const state = store.getState();
-    const hasData = Object.keys(state.tasks.listsMap).length > 0;
+    const hasData = Object.keys(state.tasks.listMap).length > 0;
 
     if (!hasData) {
       const initialState = await getFakeTasksState();

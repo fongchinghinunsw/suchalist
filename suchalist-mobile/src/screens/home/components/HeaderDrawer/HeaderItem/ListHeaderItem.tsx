@@ -1,15 +1,15 @@
 import Text from '@/components/base/Text';
+import {selectListMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import {Pressable, StyleSheet, View} from 'react-native';
-import {FolderHeader, ListHeader} from '../types';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {tasksActions} from '@/stores/tasks/tasks';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {FolderHeader, ListHeader} from '../types';
 
 type Props = {
   listHeader: ListHeader;
@@ -19,12 +19,15 @@ type Props = {
 };
 
 export default function ListHeaderItem({
-  listHeader: {id, title},
+  listHeader: {id},
   folderHeader,
   onPress,
   onDrag,
 }: Props) {
   const dispatch = useDispatch();
+
+  const listMap = useSelector(selectListMap);
+  const {title} = listMap[id];
 
   const onDeleteList = () => {
     dispatch(tasksActions.removeList({listId: id, folderId: folderHeader?.id}));

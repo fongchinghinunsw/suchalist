@@ -2,7 +2,7 @@ import {
   Header,
   isFolderHeader,
 } from '@/screens/home/components/HeaderDrawer/types';
-import {List, Task} from '@/services/task-service/types';
+import {Folder, List, Task} from '@/services/task-service/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
 import {EditTask, NewTask} from './types';
@@ -13,15 +13,21 @@ type ListMap = {
   [listId: string]: List;
 };
 
+type FolderMap = {
+  [folderId: string]: Folder;
+};
+
 export type TasksState = {
   currentTaskListId: string;
-  listsMap: ListMap;
+  listMap: ListMap;
+  folderMap: FolderMap;
   headers: Header[];
 };
 
 const initialTasksState: TasksState = {
   currentTaskListId: DEFAULT_LIST_ID,
-  listsMap: {},
+  listMap: {},
+  folderMap: {},
   headers: [],
 };
 
@@ -36,7 +42,7 @@ const tasksSlice = createSlice({
       state.currentTaskListId = action.payload;
     },
     addTask(state, action: PayloadAction<NewTask>) {
-      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+      const currentTasks = state.listMap[state.currentTaskListId].tasks;
 
       const taskId = getId();
 
@@ -74,7 +80,7 @@ const tasksSlice = createSlice({
       currentTasks.splice(index === -1 ? 0 : index, 0, newTask);
     },
     removeTask(state, action: PayloadAction<string>) {
-      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+      const currentTasks = state.listMap[state.currentTaskListId].tasks;
 
       const index = currentTasks.findIndex(task => task.id === action.payload);
 
@@ -87,7 +93,7 @@ const tasksSlice = createSlice({
         task: EditTask;
       }>,
     ) {
-      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+      const currentTasks = state.listMap[state.currentTaskListId].tasks;
 
       const now = new Date().toISOString();
 
@@ -120,7 +126,7 @@ const tasksSlice = createSlice({
         isCompleted: boolean;
       }>,
     ) {
-      const currentTasks = state.listsMap[state.currentTaskListId].tasks;
+      const currentTasks = state.listMap[state.currentTaskListId].tasks;
 
       const index = currentTasks.findIndex(
         task => task.id === action.payload.id,
@@ -144,7 +150,7 @@ const tasksSlice = createSlice({
       const now = new Date().toISOString();
       console.log('addList', action.payload);
 
-      state.listsMap[listId] = {
+      state.listMap[listId] = {
         id: listId,
         title,
         tasks: [],
@@ -155,7 +161,6 @@ const tasksSlice = createSlice({
       state.headers.push({
         type: 'LIST',
         id: listId,
-        title,
       });
 
       console.log('addList', state.headers);
@@ -163,11 +168,19 @@ const tasksSlice = createSlice({
     addFolder(state, action: PayloadAction<string>) {
       const folderId = getId();
       const title = action.payload;
+      const now = new Date().toISOString();
+
+      state.folderMap[folderId] = {
+        id: folderId,
+        title,
+        lists: [],
+        createdAt: now,
+        updatedAt: now,
+      };
 
       state.headers.push({
         type: 'FOLDER',
         id: folderId,
-        title,
         lists: [],
       });
     },
@@ -179,7 +192,7 @@ const tasksSlice = createSlice({
       }>,
     ) {
       const {listId, folderId} = action.payload;
-      delete state.listsMap[listId];
+      delete state.listMap[listId];
 
       if (folderId) {
         // Remove listId from folder's lists
@@ -212,7 +225,7 @@ const tasksSlice = createSlice({
       if (folder && isFolderHeader(folder)) {
         // Delete all lists in the folder from listsMap
         for (const list of folder.lists) {
-          delete state.listsMap[list.id];
+          delete state.listMap[list.id];
         }
 
         if (
@@ -232,11 +245,15 @@ const tasksSlice = createSlice({
 });
 
 export const selectCurrentTasks = (state: RootState): Task[] => {
-  return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
+  return state.tasks.listMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
 
-export const selectListsMap = (state: RootState): ListMap => {
-  return state.tasks.listsMap ?? {};
+export const selectListMap = (state: RootState): ListMap => {
+  return state.tasks.listMap ?? {};
+};
+
+export const selectFolderMap = (state: RootState): FolderMap => {
+  return state.tasks.folderMap ?? {};
 };
 
 export const selectHeaders = (state: RootState): Header[] =>

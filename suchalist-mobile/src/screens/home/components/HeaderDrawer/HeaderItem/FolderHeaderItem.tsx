@@ -1,5 +1,9 @@
 import Text from '@/components/base/Text';
-import {selectListsMap, tasksActions} from '@/stores/tasks/tasks';
+import {
+  selectFolderMap,
+  selectListMap,
+  tasksActions,
+} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
@@ -29,13 +33,15 @@ export default function FolderHeaderItem({
   onPress,
   onDrag,
 }: Props) {
-  const {id, title, lists: listsHeader} = folderHeader;
+  const {id, lists: listsHeader} = folderHeader;
 
   const dispatch = useDispatch();
 
-  const listsMap = useSelector(selectListsMap);
+  const listMap = useSelector(selectListMap);
+  const lists = listsHeader.map(list => listMap[list.id]);
 
-  const lists = listsHeader.map(list => listsMap[list.id]);
+  const folderMap = useSelector(selectFolderMap);
+  const {title} = folderMap[folderHeader.id];
 
   const [isExpanded, setIsExpanded] = useState(false);
 

@@ -11,12 +11,7 @@ export function toHeaders(resources: Resource[]): Header[] {
   return resources
     .map(resource => {
       if (isFolder(resource)) {
-        return {
-          type: 'FOLDER',
-          id: resource.id,
-          title: resource.title,
-          lists: resource.lists.map(toListHeader),
-        };
+        return toFolderHeader(resource);
       }
 
       if (isList(resource)) {
@@ -32,7 +27,6 @@ export function toFolderHeader(resource: Folder): FolderHeader {
   return {
     type: 'FOLDER',
     id: resource.id,
-    title: resource.title,
     lists: resource.lists.map(toListHeader),
   };
 }
@@ -41,6 +35,5 @@ export function toListHeader(resource: List): ListHeader {
   return {
     type: 'LIST',
     id: resource.id,
-    title: resource.title,
   };
 }
