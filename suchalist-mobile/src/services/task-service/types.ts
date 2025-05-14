@@ -18,6 +18,7 @@ export type Task = {
 
 export type List = {
   id: string;
+  folderId?: string;
   title: string;
   tasks: Task[];
   createdAt: string;

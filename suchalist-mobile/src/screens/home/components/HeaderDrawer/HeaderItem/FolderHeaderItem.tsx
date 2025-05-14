@@ -1,9 +1,5 @@
 import Text from '@/components/base/Text';
-import {
-  selectFolderMap,
-  selectListMap,
-  tasksActions,
-} from '@/stores/tasks/tasks';
+import {selectFolderMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
@@ -11,16 +7,15 @@ import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import {useDispatch, useSelector} from 'react-redux';
-import ListHeaderItem from './ListHeaderItem';
-import {FolderHeader} from '../types';
-import {List} from '@/services/task-service/types';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import {useDispatch, useSelector} from 'react-redux';
+import {FolderHeader, ListHeader} from '../types';
+import ListHeaderItem from './ListHeaderItem';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -33,12 +28,9 @@ export default function FolderHeaderItem({
   onPress,
   onDrag,
 }: Props) {
-  const {id, lists: listsHeader} = folderHeader;
+  const {id} = folderHeader;
 
   const dispatch = useDispatch();
-
-  const listMap = useSelector(selectListMap);
-  const lists = listsHeader.map(list => listMap[list.id]);
 
   const folderMap = useSelector(selectFolderMap);
   const {title} = folderMap[folderHeader.id];
@@ -53,15 +45,11 @@ export default function FolderHeaderItem({
     setIsExpanded(!isExpanded);
   };
 
-  const renderItem = ({item, drag: listDrag}: RenderItemParams<List>) => {
+  const renderItem = ({item, drag: listDrag}: RenderItemParams<ListHeader>) => {
     return (
       <ScaleDecorator>
         <ListHeaderItem
-          listHeader={{
-            type: 'LIST',
-            ...item,
-          }}
-          folderHeader={folderHeader}
+          listHeader={item}
           onPress={() => onPress(item.id)}
           onDrag={listDrag}
         />
@@ -112,8 +100,10 @@ export default function FolderHeaderItem({
       {isExpanded && (
         <View style={styles.listsContainer}>
           <DraggableFlatList
-            data={lists}
-            onDragEnd={({data}) => {}}
+            data={folderHeader.lists}
+            onDragEnd={({data}) => {
+              console.log('FolderHeaderItem', data);
+            }}
             keyExtractor={list => list.id}
             renderItem={renderItem}
             dragItemOverflow={false}

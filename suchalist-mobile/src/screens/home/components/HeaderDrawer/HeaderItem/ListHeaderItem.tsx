@@ -9,18 +9,16 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import {useDispatch, useSelector} from 'react-redux';
-import {FolderHeader, ListHeader} from '../types';
+import {ListHeader} from '../types';
 
 type Props = {
   listHeader: ListHeader;
-  folderHeader?: FolderHeader;
   onPress: (taskListId: string) => void;
   onDrag: () => void;
 };
 
 export default function ListHeaderItem({
   listHeader: {id},
-  folderHeader,
   onPress,
   onDrag,
 }: Props) {
@@ -30,7 +28,7 @@ export default function ListHeaderItem({
   const {title} = listMap[id];
 
   const onDeleteList = () => {
-    dispatch(tasksActions.removeList({listId: id, folderId: folderHeader?.id}));
+    dispatch(tasksActions.removeList(id));
   };
 
   return (

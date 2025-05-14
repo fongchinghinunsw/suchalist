@@ -12,8 +12,6 @@ type Props = {
 };
 
 export default function HeaderList({headers, onPress}: Props) {
-  // console.log('HeaderList', resources);
-
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
       <ScaleDecorator>
@@ -33,7 +31,9 @@ export default function HeaderList({headers, onPress}: Props) {
   return (
     <DraggableFlatList
       data={headers}
-      onDragEnd={({data}) => {}}
+      onDragEnd={({data}) => {
+        console.log('HeaderList', data);
+      }}
       keyExtractor={resource => resource.id}
       renderItem={renderItem}
       dragItemOverflow={false}

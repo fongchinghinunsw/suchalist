@@ -144,19 +144,32 @@ const tasksSlice = createSlice({
         // console.log('setIsCompleted', state.tasks);
       }
     },
-    addList(state, action: PayloadAction<string>) {
+    addList(
+      state,
+      action: PayloadAction<{
+        title: string;
+        folderId?: string;
+      }>,
+    ) {
       const listId = getId();
-      const title = action.payload;
+      const {title, folderId} = action.payload;
       const now = new Date().toISOString();
       console.log('addList', action.payload);
 
-      state.listMap[listId] = {
+      const newList: List = {
         id: listId,
+        folderId,
         title,
         tasks: [],
         createdAt: now,
         updatedAt: now,
       };
+
+      state.listMap[listId] = newList;
+
+      if (folderId) {
+        state.folderMap[folderId].lists.push(newList);
+      }
 
       state.headers.push({
         type: 'LIST',
@@ -184,14 +197,10 @@ const tasksSlice = createSlice({
         lists: [],
       });
     },
-    removeList(
-      state,
-      action: PayloadAction<{
-        listId: string;
-        folderId?: string;
-      }>,
-    ) {
-      const {listId, folderId} = action.payload;
+    removeList(state, action: PayloadAction<string>) {
+      const listId = action.payload;
+
+      const folderId = state.listMap[listId].folderId;
       delete state.listMap[listId];
 
       if (folderId) {
