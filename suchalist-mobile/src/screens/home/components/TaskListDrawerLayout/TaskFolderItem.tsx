@@ -61,7 +61,8 @@ export default function TaskFolderItem({
       <Pressable
         style={styles.container}
         onPress={onToggleListItem}
-        onLongPress={onDrag}>
+        onLongPress={onDrag}
+        delayLongPress={250}>
         <View style={styles.titleContainer}>
           <Icon name="folder-open-outline" size={16} />
           <Text size="large">{title}</Text>
@@ -75,7 +76,10 @@ export default function TaskFolderItem({
         <View style={styles.listsContainer}>
           <DraggableFlatList
             data={lists}
-            onDragEnd={({data}) => setLists(data)}
+            onDragEnd={({data}) => {
+              console.log('TaskFolderItem onDragEnd', data);
+              setLists(data);
+            }}
             keyExtractor={list => list.id}
             renderItem={renderItem}
             dragItemOverflow={false}

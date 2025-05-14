@@ -30,7 +30,10 @@ export default function TaskLists({headers, onPress}: Props) {
   return (
     <DraggableFlatList
       data={resources}
-      onDragEnd={({data}) => setResources(data)}
+      onDragEnd={({data}) => {
+        console.log('TaskLists onDragEnd', data);
+        setResources(data);
+      }}
       keyExtractor={resource => resource.id}
       renderItem={renderItem}
       dragItemOverflow={false}

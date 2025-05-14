@@ -19,7 +19,8 @@ export default function TaskListItem({
       <Pressable
         style={styles.container}
         onPress={() => onPress(id)}
-        onLongPress={onDrag}>
+        onLongPress={onDrag}
+        delayLongPress={250}>
         <Icon name="list-outline" size={16} />
         <Text size="large">{title}</Text>
       </Pressable>
