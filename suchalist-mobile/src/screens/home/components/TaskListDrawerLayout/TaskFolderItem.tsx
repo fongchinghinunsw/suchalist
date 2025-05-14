@@ -1,8 +1,13 @@
 import Text from '@/components/base/Text';
 import {selectListsMap} from '@/stores/tasks/tasks';
+import {List} from '@/stores/tasks/types';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
+import DraggableFlatList, {
+  RenderItemParams,
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
 import {useSelector} from 'react-redux';
 import TaskListItem from './TaskListItem';
 import {FolderHeader} from './types';
@@ -14,16 +19,37 @@ type Props = {
 };
 
 export default function TaskFolderItem({
-  folderHeader: {title, lists},
+  folderHeader: {title, lists: listsHeader},
   onPress,
   onDrag,
 }: Props) {
   const listsMap = useSelector(selectListsMap);
 
+  const [lists, setLists] = useState(listsHeader.map(list => listsMap[list]));
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onToggleListItem = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const renderItem = ({
+    item,
+    drag: listDrag,
+    isActive: listIsActive,
+  }: RenderItemParams<List>) => {
+    return (
+      <ScaleDecorator>
+        <TaskListItem
+          listHeader={{
+            type: 'LIST',
+            ...item,
+          }}
+          onPress={() => onPress(item.id)}
+          onDrag={listDrag}
+        />
+      </ScaleDecorator>
+    );
   };
 
   const folderItemIconName = isExpanded
@@ -47,20 +73,13 @@ export default function TaskFolderItem({
       </Pressable>
       {isExpanded && (
         <View style={styles.listsContainer}>
-          {lists.map(list => {
-            const listItem = listsMap[list];
-            return (
-              <TaskListItem
-                key={listItem.id}
-                listHeader={{
-                  type: 'LIST',
-                  ...listItem,
-                }}
-                onPress={() => onPress(listItem.id)}
-                onDrag={() => {}}
-              />
-            );
-          })}
+          <DraggableFlatList
+            data={lists}
+            onDragEnd={({data}) => setLists(data)}
+            keyExtractor={list => list.id}
+            renderItem={renderItem}
+            dragItemOverflow={false}
+          />
         </View>
       )}
     </View>
