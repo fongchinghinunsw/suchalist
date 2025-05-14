@@ -1,4 +1,8 @@
-import {UnreachableError} from '@/components/base/UnreachableError';
+import {useState} from 'react';
+import DraggableFlatList, {
+  RenderItemParams,
+  ScaleDecorator,
+} from 'react-native-draggable-flatlist';
 import TaskFolderItem from './TaskFolderItem';
 import TaskListItem from './TaskListItem';
 import {Header} from './types';
@@ -9,22 +13,27 @@ type Props = {
 };
 
 export default function TaskLists({headers, onPress}: Props) {
-  return headers.map(header => {
-    switch (header.type) {
-      case 'FOLDER':
-        return (
-          <TaskFolderItem
-            key={header.id}
-            folderHeader={header}
-            onPress={onPress}
-          />
-        );
-      case 'LIST':
-        return (
-          <TaskListItem key={header.id} listHeader={header} onPress={onPress} />
-        );
-      default:
-        throw new UnreachableError(header);
-    }
-  });
+  const [resources, setResources] = useState(headers);
+
+  const renderItem = ({item, drag, isActive}: RenderItemParams<Header>) => {
+    return (
+      <ScaleDecorator>
+        {item.type === 'FOLDER' ? (
+          <TaskFolderItem folderHeader={item} onPress={onPress} onDrag={drag} />
+        ) : (
+          <TaskListItem listHeader={item} onPress={onPress} onDrag={drag} />
+        )}
+      </ScaleDecorator>
+    );
+  };
+
+  return (
+    <DraggableFlatList
+      data={resources}
+      onDragEnd={({data}) => setResources(data)}
+      keyExtractor={resource => resource.id}
+      renderItem={renderItem}
+      dragItemOverflow={false}
+    />
+  );
 }

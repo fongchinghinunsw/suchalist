@@ -6,15 +6,20 @@ import {ListHeader} from './types';
 type Props = {
   listHeader: ListHeader;
   onPress: (taskListId: string) => void;
+  onDrag: () => void;
 };
 
 export default function TaskListItem({
   listHeader: {id, title},
   onPress,
+  onDrag,
 }: Props) {
   return (
     <View>
-      <Pressable style={styles.container} onPress={() => onPress(id)}>
+      <Pressable
+        style={styles.container}
+        onPress={() => onPress(id)}
+        onLongPress={onDrag}>
         <Icon name="list-outline" size={16} />
         <Text size="large">{title}</Text>
       </Pressable>

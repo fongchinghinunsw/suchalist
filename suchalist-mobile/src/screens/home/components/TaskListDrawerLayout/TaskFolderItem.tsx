@@ -10,11 +10,13 @@ import {FolderHeader} from './types';
 type Props = {
   folderHeader: FolderHeader;
   onPress: (taskListId: string) => void;
+  onDrag: () => void;
 };
 
 export default function TaskFolderItem({
   folderHeader: {title, lists},
   onPress,
+  onDrag,
 }: Props) {
   const listsMap = useSelector(selectListsMap);
 
@@ -30,7 +32,10 @@ export default function TaskFolderItem({
 
   return (
     <View>
-      <Pressable style={styles.container} onPress={onToggleListItem}>
+      <Pressable
+        style={styles.container}
+        onPress={onToggleListItem}
+        onLongPress={onDrag}>
         <View style={styles.titleContainer}>
           <Icon name="folder-open-outline" size={16} />
           <Text size="large">{title}</Text>
@@ -52,6 +57,7 @@ export default function TaskFolderItem({
                   ...listItem,
                 }}
                 onPress={() => onPress(listItem.id)}
+                onDrag={() => {}}
               />
             );
           })}
