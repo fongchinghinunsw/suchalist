@@ -16,6 +16,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {FolderHeader, ListHeader} from '../types';
 import ListHeaderItem from './ListHeaderItem';
+import AddListModal from '@/components/modal/AddListModal';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -30,12 +31,23 @@ export default function FolderHeaderItem({
 }: Props) {
   const {id} = folderHeader;
 
+  const [isAddListModalVisible, setIsAddListModalVisible] = useState(false);
+
   const dispatch = useDispatch();
 
   const folderMap = useSelector(selectFolderMap);
-  const {title} = folderMap[folderHeader.id];
+  const folder = folderMap[folderHeader.id];
 
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleAddListModal = () => {
+    setIsAddListModalVisible(!isAddListModalVisible);
+  };
+
+  const onAddList = (title: string) => {
+    dispatch(tasksActions.addList({title, folderId: folderHeader.id}));
+    toggleAddListModal();
+  };
 
   const onDeleteFolder = () => {
     dispatch(tasksActions.removeFolder(id));
@@ -70,7 +82,7 @@ export default function FolderHeaderItem({
         delayLongPress={250}>
         <View style={styles.titleContainer}>
           <Icon name="folder-open-outline" size={16} />
-          <Text size="large">{title}</Text>
+          <Text size="large">{folder.title}</Text>
         </View>
         <View style={styles.iconContainer}>
           <Menu>
@@ -84,7 +96,9 @@ export default function FolderHeaderItem({
                   borderRadius: 10,
                 },
               }}>
-              <MenuOption style={styles.menuOption}>
+              <MenuOption
+                style={styles.menuOption}
+                onSelect={toggleAddListModal}>
                 <Icon name="list-outline" size={16} />
                 <Text>Add List</Text>
               </MenuOption>
@@ -110,6 +124,11 @@ export default function FolderHeaderItem({
           />
         </View>
       )}
+      <AddListModal
+        isVisible={isAddListModalVisible}
+        onAddList={onAddList}
+        onCancel={toggleAddListModal}
+      />
     </>
   );
 }

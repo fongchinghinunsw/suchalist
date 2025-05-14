@@ -50,7 +50,7 @@ export const Content = ({
   };
 
   const onAddList = (title: string) => {
-    dispatch(tasksActions.addList(title));
+    dispatch(tasksActions.addList({title}));
     toggleAddListModal();
   };
 

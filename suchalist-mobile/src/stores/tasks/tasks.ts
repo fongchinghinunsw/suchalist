@@ -1,13 +1,14 @@
 import {
   Header,
   isFolderHeader,
+  ListHeader,
 } from '@/screens/home/components/HeaderDrawer/types';
+import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 import {Folder, List, Task} from '@/services/task-service/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
 import {EditTask, NewTask} from './types';
 import {getId} from './utils';
-import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 
 type ListMap = {
   [listId: string]: List;
@@ -154,7 +155,6 @@ const tasksSlice = createSlice({
       const listId = getId();
       const {title, folderId} = action.payload;
       const now = new Date().toISOString();
-      console.log('addList', action.payload);
 
       const newList: List = {
         id: listId,
@@ -167,16 +167,22 @@ const tasksSlice = createSlice({
 
       state.listMap[listId] = newList;
 
-      if (folderId) {
-        state.folderMap[folderId].lists.push(newList);
-      }
-
-      state.headers.push({
+      const listHeader: ListHeader = {
         type: 'LIST',
         id: listId,
-      });
+      };
 
-      console.log('addList', state.headers);
+      if (folderId) {
+        state.folderMap[folderId].lists.push(newList);
+        const folderHeader = state.headers.find(
+          header => isFolderHeader(header) && header.id === folderId,
+        );
+        if (folderHeader && isFolderHeader(folderHeader)) {
+          folderHeader.lists.push(listHeader);
+        }
+      } else {
+        state.headers.push(listHeader);
+      }
     },
     addFolder(state, action: PayloadAction<string>) {
       const folderId = getId();
@@ -201,7 +207,6 @@ const tasksSlice = createSlice({
       const listId = action.payload;
 
       const folderId = state.listMap[listId].folderId;
-      delete state.listMap[listId];
 
       if (folderId) {
         // Remove listId from folder's lists
@@ -222,6 +227,8 @@ const tasksSlice = createSlice({
       if (state.currentTaskListId === listId) {
         state.currentTaskListId = DEFAULT_LIST_ID;
       }
+
+      delete state.listMap[listId];
     },
     removeFolder(state, action: PayloadAction<string>) {
       const folderId = action.payload;
