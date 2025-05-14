@@ -9,13 +9,13 @@ import {EditTask, NewTask} from './types';
 import {getId} from './utils';
 import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 
-type ListsMap = {
+type ListMap = {
   [listId: string]: List;
 };
 
 export type TasksState = {
   currentTaskListId: string;
-  listsMap: ListsMap;
+  listsMap: ListMap;
   headers: Header[];
 };
 
@@ -235,7 +235,7 @@ export const selectCurrentTasks = (state: RootState): Task[] => {
   return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
 
-export const selectListsMap = (state: RootState): ListsMap => {
+export const selectListsMap = (state: RootState): ListMap => {
   return state.tasks.listsMap ?? {};
 };
 
