@@ -1,4 +1,4 @@
-import {Task} from '@/stores/tasks/types';
+import {Task} from '@/services/task-service/types';
 import {sortTasks} from '@/utils/task/sort';
 import React from 'react';
 import {View} from 'react-native';

@@ -1,6 +1,6 @@
 import {useNavigationTheme} from '@/hooks/useNavigationTheme';
 import MockHomeScreen from '@/screens/mock-home/MockHomeScreen';
-import {Task} from '@/stores/tasks/types';
+import {Task} from '@/services/task-service/types';
 import {BackgroundImage} from '@/stores/theme';
 import {createStackNavigator} from '@react-navigation/stack';
 import TaskDetailsScreen from '../screens/task_details/TaskDetailsScreen';

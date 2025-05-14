@@ -1,4 +1,4 @@
-import {Folder, List} from '@/stores/tasks/types';
+import {Folder, List} from '@/services/task-service/types';
 
 /**
  * Represents a list header item.
@@ -17,7 +17,8 @@ export type ListHeader = {
  */
 export type FolderHeader = {
   type: 'FOLDER';
-} & Pick<Folder, 'id' | 'title' | 'lists'>;
+  lists: ListHeader[];
+} & Pick<Folder, 'id' | 'title'>;
 
 /**
  * Union type representing either a list header or a folder header.

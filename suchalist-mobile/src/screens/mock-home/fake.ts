@@ -1,5 +1,5 @@
-import {DEFAULT_LIST_ID} from '@/stores/tasks/fakes';
-import {Task} from '@/stores/tasks/types';
+import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
+import {Task} from '@/services/task-service/types';
 
 export const TASKS: Task[] = [
   {

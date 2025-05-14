@@ -1,4 +1,4 @@
-import {Task} from '@/stores/tasks/types';
+import {Task} from '@/services/task-service/types';
 
 export const sortTasks = (tasks: Task[]) => {
   return tasks.slice().sort((a, b) => {

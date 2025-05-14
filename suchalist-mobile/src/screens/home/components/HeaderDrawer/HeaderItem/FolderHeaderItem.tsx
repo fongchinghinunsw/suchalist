@@ -1,6 +1,5 @@
 import Text from '@/components/base/Text';
 import {selectListsMap} from '@/stores/tasks/tasks';
-import {List} from '@/stores/tasks/types';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
@@ -11,6 +10,7 @@ import DraggableFlatList, {
 import {useSelector} from 'react-redux';
 import ListHeaderItem from './ListHeaderItem';
 import {FolderHeader} from '../types';
+import {List} from '@/services/task-service/types';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -25,7 +25,9 @@ export default function FolderHeaderItem({
 }: Props) {
   const listsMap = useSelector(selectListsMap);
 
-  const [lists, setLists] = useState(listsHeader.map(list => listsMap[list]));
+  const [lists, setLists] = useState(
+    listsHeader.map(list => listsMap[list.id]),
+  );
 
   const [isExpanded, setIsExpanded] = useState(false);
 

@@ -1,6 +1,6 @@
 import Text from '@/components/base/Text';
 import {RootState} from '@/stores';
-import {Task, TaskWithDueDate} from '@/stores/tasks/types';
+import {TaskWithDueDate} from '@/stores/tasks/types';
 import {Theme} from '@/stores/theme';
 import {useMemo} from 'react';
 import Animated, {LinearTransition} from 'react-native-reanimated';
@@ -10,6 +10,7 @@ import {StyleSheet, View} from 'react-native';
 import Icon from '@react-native-vector-icons/ionicons';
 import {getColor} from '@/constants/styles';
 import {styles as commonStyles} from './common';
+import {Task} from '@/services/task-service/types';
 
 type Props = {
   tasks: TaskWithDueDate[];

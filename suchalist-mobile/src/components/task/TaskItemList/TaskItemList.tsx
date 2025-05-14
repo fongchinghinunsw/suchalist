@@ -1,5 +1,4 @@
-import {Task, TaskWithDueDate} from '@/stores/tasks/types';
-import {isTaskWithDueDate} from '@/stores/tasks/utils';
+import {TaskWithDueDate} from '@/stores/tasks/types';
 import React from 'react';
 import {
   NativeScrollEvent,
@@ -12,6 +11,7 @@ import TaskItemGroupedList from './TaskItemGroupedList';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
 import Divider from '@/components/base/Divider';
 import AddTaskItem from '../AddTaskItem';
+import {isTaskWithDueDate, Task} from '@/services/task-service/types';
 
 type Props = {
   tasks: Task[];

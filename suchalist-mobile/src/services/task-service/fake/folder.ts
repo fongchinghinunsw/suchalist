@@ -1,11 +1,19 @@
 import {getId} from '@/stores/tasks/utils';
-import {FolderResource} from '../task-service';
-import {EXERCISE_LIST_ID, GROCERY_LIST_ID} from './list';
+import {Folder} from '../types';
+import {EXERCISE_LIST, MOVIE_LIST, MUSIC_LIST, STUDY_LIST} from './list';
 
-export const FOLDER_2024: FolderResource = {
+export const PERSONAL_IMPROVEMENT_FOLDER: Folder = {
   id: getId(),
-  title: '2024',
-  lists: [EXERCISE_LIST_ID, GROCERY_LIST_ID],
+  title: 'Personal Improvement 🧘🏻',
+  lists: [EXERCISE_LIST, STUDY_LIST],
   createdAt: new Date(2025, 2, 10).toISOString(),
-  updatedAt: new Date(2025, 2, 10).toISOString(),
+  updatedAt: new Date(2025, 2, 15).toISOString(),
+};
+
+export const LEISURE_FOLDER: Folder = {
+  id: getId(),
+  title: 'Leisure 🎮',
+  lists: [MOVIE_LIST, MUSIC_LIST],
+  createdAt: new Date(2025, 4, 10).toISOString(),
+  updatedAt: new Date(2025, 5, 14).toISOString(),
 };

@@ -4,7 +4,7 @@ import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
 import {RootState} from '@/stores';
 import {selectCurrentTasks, tasksActions} from '@/stores/tasks/tasks';
-import {NewTask, Task} from '@/stores/tasks/types';
+import {NewTask} from '@/stores/tasks/types';
 import {selectBackgroundImage, Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
@@ -22,6 +22,7 @@ import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
+import {Task} from '@/services/task-service/types';
 
 // const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 

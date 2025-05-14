@@ -1,23 +1,16 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {
-  DEFAULT_LIST,
-  DEFAULT_LIST_ID,
-  EXERCISE_LIST,
-  EXERCISE_LIST_ID,
-  GROCERY_LIST,
-  GROCERY_LIST_ID,
-  HEADERS,
-} from './fakes';
-import {EditTask, NewTask, Task, List} from './types';
-import {getId} from './utils';
-import {RootState} from '..';
 import {Header} from '@/screens/home/components/HeaderDrawer/types';
+import {List, Task} from '@/services/task-service/types';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '..';
+import {EditTask, NewTask} from './types';
+import {getId} from './utils';
+import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 
 type ListsMap = {
   [listId: string]: List;
 };
 
-type TasksState = {
+export type TasksState = {
   currentTaskListId: string;
   listsMap: ListsMap;
   headers: Header[];
@@ -25,18 +18,17 @@ type TasksState = {
 
 const initialTasksState: TasksState = {
   currentTaskListId: DEFAULT_LIST_ID,
-  listsMap: {
-    [DEFAULT_LIST_ID]: DEFAULT_LIST,
-    [GROCERY_LIST_ID]: GROCERY_LIST,
-    [EXERCISE_LIST_ID]: EXERCISE_LIST,
-  },
-  headers: HEADERS,
+  listsMap: {},
+  headers: [],
 };
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: initialTasksState,
   reducers: {
+    hydrate(_state, action: PayloadAction<TasksState>) {
+      return action.payload;
+    },
     setCurrentTaskListId(state, action: PayloadAction<string>) {
       state.currentTaskListId = action.payload;
     },
@@ -186,6 +178,10 @@ const tasksSlice = createSlice({
 });
 
 export const selectCurrentTasks = (state: RootState): Task[] => {
+  console.log('selectCurrentTasks', {
+    currentTaskListId: state.tasks.currentTaskListId,
+    lists: state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks,
+  });
   return state.tasks.listsMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
 

@@ -1,6 +1,6 @@
 import {getColor} from '@/constants/styles';
 import {RootState} from '@/stores';
-import {Task} from '@/stores/tasks/types';
+import {Task} from '@/services/task-service/types';
 import {Theme} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';

@@ -1,6 +1,13 @@
-import {Task} from '@/stores/tasks/types';
+import {Task} from '@/services/task-service/types';
 import {getId} from '@/stores/tasks/utils';
-import {DEFAULT_LIST_ID, EXERCISE_LIST_ID, GROCERY_LIST_ID} from './list';
+import {
+  DEFAULT_LIST_ID,
+  EXERCISE_LIST_ID,
+  GROCERY_LIST_ID,
+  MOVIE_LIST_ID,
+  MUSIC_LIST_ID,
+  STUDY_LIST_ID,
+} from './id';
 
 export const DEFAULT_TASKS: Task[] = [
   {
@@ -22,7 +29,7 @@ export const DEFAULT_TASKS: Task[] = [
   {
     id: getId(),
     taskListId: DEFAULT_LIST_ID,
-    title: 'Watch Big Bang Theory',
+    title: 'Talk with Jacob',
     dueDate: new Date(2025, 3, 5).toISOString(),
     isCompleted: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
@@ -206,6 +213,87 @@ export const EXERCISE_TASKS: Task[] = [
     taskListId: EXERCISE_LIST_ID,
     title: 'Football',
     dueDate: new Date(2025, 3, 8).toISOString(),
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+];
+
+export const STUDY_TASKS: Task[] = [
+  {
+    id: getId(),
+    taskListId: STUDY_LIST_ID,
+    title: 'Math',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: STUDY_LIST_ID,
+    title: 'Calculus',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+];
+
+export const MOVIE_TASKS: Task[] = [
+  {
+    id: getId(),
+    taskListId: MOVIE_LIST_ID,
+    title: 'Terminator',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: MOVIE_LIST_ID,
+    title: 'Predator 1',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: MOVIE_LIST_ID,
+    title: 'Predator 2',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: MOVIE_LIST_ID,
+    title: 'Predator 3',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+];
+
+export const MUSIC_TASKS: Task[] = [
+  {
+    id: getId(),
+    taskListId: MUSIC_LIST_ID,
+    title: 'Crystal Math',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 5).toISOString(),
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: MUSIC_LIST_ID,
+    title: 'Let it go',
+    isCompleted: false,
+    createdAt: new Date(2025, 3, 6).toISOString(),
+    updatedAt: new Date(2025, 3, 6).toISOString(),
+  },
+  {
+    id: getId(),
+    taskListId: MUSIC_LIST_ID,
+    title: 'Summertime Sadness',
     isCompleted: false,
     createdAt: new Date(2025, 3, 6).toISOString(),
     updatedAt: new Date(2025, 3, 6).toISOString(),

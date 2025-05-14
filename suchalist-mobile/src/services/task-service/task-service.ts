@@ -1,51 +1,12 @@
-import {Task} from '@/stores/tasks/types';
-import {FOLDER_2024} from './fake/folder';
-import {
-  DEFAULT_LIST,
-  DEFAULT_LIST_ID,
-  EXERCISE_LIST_ID,
-  GROCERY_LIST_ID,
-} from './fake/list';
-import {DEFAULT_TASKS, EXERCISE_TASKS, GROCERY_TASKS} from './fake/task';
-
-export type ListResource = {
-  type: 'LIST';
-  id: string;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type FolderResource = {
-  type: 'FOLDER';
-  id: string;
-  title: string;
-  lists: string[];
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type Resource = FolderResource | ListResource;
+import {LEISURE_FOLDER, PERSONAL_IMPROVEMENT_FOLDER} from './fake/folder';
+import {DEFAULT_LIST, GROCERY_LIST} from './fake/list';
+import {Resource} from './types';
 
 export const getResources = async (): Promise<Resource[]> => {
-  return [DEFAULT_LIST, FOLDER_2024];
+  return [
+    DEFAULT_LIST,
+    PERSONAL_IMPROVEMENT_FOLDER,
+    LEISURE_FOLDER,
+    GROCERY_LIST,
+  ];
 };
-
-export async function fetchTasksForList(listId: string): Promise<Task[]> {
-  let list: Task[];
-  switch (listId) {
-    case DEFAULT_LIST_ID:
-      list = DEFAULT_TASKS;
-      break;
-    case GROCERY_LIST_ID:
-      list = GROCERY_TASKS;
-      break;
-    case EXERCISE_LIST_ID:
-      list = EXERCISE_TASKS;
-      break;
-    default:
-      list = [];
-  }
-
-  return list;
-}
