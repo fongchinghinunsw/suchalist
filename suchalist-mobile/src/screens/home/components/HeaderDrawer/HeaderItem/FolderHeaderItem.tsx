@@ -17,6 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {FolderHeader, ListHeader} from '../types';
 import ListHeaderItem from './ListHeaderItem';
 import AddListModal from '@/components/modal/AddListModal';
+import DeleteFolderModal from '@/components/modal/DeleteFolderModal';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -32,6 +33,8 @@ export default function FolderHeaderItem({
   const {id} = folderHeader;
 
   const [isAddListModalVisible, setIsAddListModalVisible] = useState(false);
+  const [isDeleteFolderModalVisible, setIsDeleteFolderModalVisible] =
+    useState(false);
 
   const dispatch = useDispatch();
 
@@ -42,6 +45,10 @@ export default function FolderHeaderItem({
 
   const toggleAddListModal = () => {
     setIsAddListModalVisible(!isAddListModalVisible);
+  };
+
+  const toggleDeleteFolderModal = () => {
+    setIsDeleteFolderModalVisible(!isDeleteFolderModalVisible);
   };
 
   const onAddList = (title: string) => {
@@ -102,7 +109,9 @@ export default function FolderHeaderItem({
                 <Icon name="list-outline" size={16} />
                 <Text>Add List</Text>
               </MenuOption>
-              <MenuOption style={styles.menuOption} onSelect={onDeleteFolder}>
+              <MenuOption
+                style={styles.menuOption}
+                onSelect={toggleDeleteFolderModal}>
                 <Icon name="trash-outline" color="red" size={16} />
                 <Text>Delete Folder</Text>
               </MenuOption>
@@ -128,6 +137,12 @@ export default function FolderHeaderItem({
         isVisible={isAddListModalVisible}
         onAddList={onAddList}
         onCancel={toggleAddListModal}
+      />
+      <DeleteFolderModal
+        folderName={folder.title}
+        isVisible={isDeleteFolderModalVisible}
+        onConfirm={onDeleteFolder}
+        onCancel={toggleDeleteFolderModal}
       />
     </>
   );
