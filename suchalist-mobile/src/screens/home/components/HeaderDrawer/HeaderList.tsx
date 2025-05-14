@@ -3,8 +3,8 @@ import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import TaskFolderItem from './TaskFolderItem';
-import TaskListItem from './TaskListItem';
+import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
+import ListHeaderItem from './HeaderItem/ListHeaderItem';
 import {Header} from './types';
 
 type Props = {
@@ -12,16 +12,20 @@ type Props = {
   onPress: (taskListId: string) => void;
 };
 
-export default function TaskLists({headers, onPress}: Props) {
+export default function HeaderList({headers, onPress}: Props) {
   const [resources, setResources] = useState(headers);
 
-  const renderItem = ({item, drag, isActive}: RenderItemParams<Header>) => {
+  const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
       <ScaleDecorator>
         {item.type === 'FOLDER' ? (
-          <TaskFolderItem folderHeader={item} onPress={onPress} onDrag={drag} />
+          <FolderHeaderItem
+            folderHeader={item}
+            onPress={onPress}
+            onDrag={drag}
+          />
         ) : (
-          <TaskListItem listHeader={item} onPress={onPress} onDrag={drag} />
+          <ListHeaderItem listHeader={item} onPress={onPress} onDrag={drag} />
         )}
       </ScaleDecorator>
     );

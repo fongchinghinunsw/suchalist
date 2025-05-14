@@ -1,7 +1,7 @@
 import Text from '@/components/base/Text';
 import Icon from '@react-native-vector-icons/ionicons';
 import {Pressable, StyleSheet, View} from 'react-native';
-import {ListHeader} from './types';
+import {ListHeader} from '../types';
 
 type Props = {
   listHeader: ListHeader;
@@ -9,7 +9,7 @@ type Props = {
   onDrag: () => void;
 };
 
-export default function TaskListItem({
+export default function ListHeaderItem({
   listHeader: {id, title},
   onPress,
   onDrag,

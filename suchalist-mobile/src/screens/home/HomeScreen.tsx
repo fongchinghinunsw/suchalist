@@ -21,7 +21,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
-import TaskListDrawerLayout from './components/TaskListDrawerLayout/TaskListDrawerLayout';
+import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
 
 // const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -94,7 +94,7 @@ export default function HomeScreen() {
   console.log({source, backgroundImage});
 
   return (
-    <TaskListDrawerLayout>
+    <HeaderDrawerLayout>
       <ImageBackground
         source={source}
         resizeMode="cover"
@@ -122,7 +122,7 @@ export default function HomeScreen() {
         </BottomSheet>
         <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
       </ImageBackground>
-    </TaskListDrawerLayout>
+    </HeaderDrawerLayout>
   );
 }
 

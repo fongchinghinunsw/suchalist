@@ -11,7 +11,7 @@ import {
 import {EditTask, NewTask, Task, List} from './types';
 import {getId} from './utils';
 import {RootState} from '..';
-import {Header} from '@/screens/home/components/TaskListDrawerLayout/types';
+import {Header} from '@/screens/home/components/HeaderDrawer/types';
 
 type ListsMap = {
   [listId: string]: List;

@@ -15,7 +15,7 @@ type Props = {
   children: JSX.Element;
 };
 
-export default function TaskListDrawerLayout({children}: Props) {
+export default function HeaderDrawerLayout({children}: Props) {
   const drawerRef = useRef<DrawerLayoutMethods>(null);
 
   const headers = useSelector(selectHeaders);

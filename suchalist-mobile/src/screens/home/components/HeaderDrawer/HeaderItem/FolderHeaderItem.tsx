@@ -9,8 +9,8 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import {useSelector} from 'react-redux';
-import TaskListItem from './TaskListItem';
-import {FolderHeader} from './types';
+import ListHeaderItem from './ListHeaderItem';
+import {FolderHeader} from '../types';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -18,7 +18,7 @@ type Props = {
   onDrag: () => void;
 };
 
-export default function TaskFolderItem({
+export default function FolderHeaderItem({
   folderHeader: {title, lists: listsHeader},
   onPress,
   onDrag,
@@ -33,14 +33,10 @@ export default function TaskFolderItem({
     setIsExpanded(!isExpanded);
   };
 
-  const renderItem = ({
-    item,
-    drag: listDrag,
-    isActive: listIsActive,
-  }: RenderItemParams<List>) => {
+  const renderItem = ({item, drag: listDrag}: RenderItemParams<List>) => {
     return (
       <ScaleDecorator>
-        <TaskListItem
+        <ListHeaderItem
           listHeader={{
             type: 'LIST',
             ...item,
