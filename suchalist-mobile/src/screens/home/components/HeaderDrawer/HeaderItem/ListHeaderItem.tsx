@@ -31,15 +31,15 @@ export default function ListHeaderItem({
   };
 
   return (
-    <View style={styles.container}>
-      <Pressable
-        style={styles.title}
-        onPress={() => onPress(id)}
-        onLongPress={onDrag}
-        delayLongPress={250}>
+    <Pressable
+      style={styles.container}
+      onPress={() => onPress(id)}
+      onLongPress={onDrag}
+      delayLongPress={250}>
+      <View style={styles.title}>
         <Icon name="list-outline" size={16} />
         <Text size="large">{title}</Text>
-      </Pressable>
+      </View>
       <Menu>
         <MenuTrigger>
           <Icon name="ellipsis-horizontal-outline" size={16} />
@@ -57,7 +57,7 @@ export default function ListHeaderItem({
           </MenuOption>
         </MenuOptions>
       </Menu>
-    </View>
+    </Pressable>
   );
 }
 

@@ -68,7 +68,7 @@ export default function FolderHeaderItem({
     : 'chevron-back-outline';
 
   return (
-    <View>
+    <>
       <Pressable
         style={styles.container}
         onPress={onToggleListItem}
@@ -114,7 +114,7 @@ export default function FolderHeaderItem({
           />
         </View>
       )}
-    </View>
+    </>
   );
 }
 
