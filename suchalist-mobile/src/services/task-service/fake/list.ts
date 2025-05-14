@@ -3,8 +3,10 @@ import {
   DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,
   GROCERY_LIST_ID,
+  LEISURE_FOLDER_ID,
   MOVIE_LIST_ID,
   MUSIC_LIST_ID,
+  PERSONAL_IMPROVEMENT_FOLDER_ID,
   STUDY_LIST_ID,
 } from './id';
 import {
@@ -34,6 +36,7 @@ export const GROCERY_LIST: List = {
 
 export const EXERCISE_LIST: List = {
   id: EXERCISE_LIST_ID,
+  folderId: PERSONAL_IMPROVEMENT_FOLDER_ID,
   title: 'Exercise',
   tasks: EXERCISE_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
@@ -42,6 +45,7 @@ export const EXERCISE_LIST: List = {
 
 export const STUDY_LIST: List = {
   id: STUDY_LIST_ID,
+  folderId: PERSONAL_IMPROVEMENT_FOLDER_ID,
   title: 'Study',
   tasks: STUDY_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
@@ -50,6 +54,7 @@ export const STUDY_LIST: List = {
 
 export const MOVIE_LIST: List = {
   id: MOVIE_LIST_ID,
+  folderId: LEISURE_FOLDER_ID,
   title: 'Movie',
   tasks: MOVIE_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
@@ -58,6 +63,7 @@ export const MOVIE_LIST: List = {
 
 export const MUSIC_LIST: List = {
   id: MUSIC_LIST_ID,
+  folderId: LEISURE_FOLDER_ID,
   title: 'Music',
   tasks: MUSIC_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),

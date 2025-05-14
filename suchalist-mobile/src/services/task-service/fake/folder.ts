@@ -1,9 +1,9 @@
-import {getId} from '@/stores/tasks/utils';
 import {Folder} from '../types';
+import {LEISURE_FOLDER_ID, PERSONAL_IMPROVEMENT_FOLDER_ID} from './id';
 import {EXERCISE_LIST, MOVIE_LIST, MUSIC_LIST, STUDY_LIST} from './list';
 
 export const PERSONAL_IMPROVEMENT_FOLDER: Folder = {
-  id: getId(),
+  id: PERSONAL_IMPROVEMENT_FOLDER_ID,
   title: 'Personal Improvement 🧘🏻',
   lists: [EXERCISE_LIST, STUDY_LIST],
   createdAt: new Date(2025, 2, 10).toISOString(),
@@ -11,7 +11,7 @@ export const PERSONAL_IMPROVEMENT_FOLDER: Folder = {
 };
 
 export const LEISURE_FOLDER: Folder = {
-  id: getId(),
+  id: LEISURE_FOLDER_ID,
   title: 'Leisure 🎮',
   lists: [MOVIE_LIST, MUSIC_LIST],
   createdAt: new Date(2025, 4, 10).toISOString(),

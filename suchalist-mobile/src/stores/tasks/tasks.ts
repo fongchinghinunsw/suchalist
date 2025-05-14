@@ -208,12 +208,14 @@ const tasksSlice = createSlice({
 
       const folderId = state.listMap[listId].folderId;
 
+      delete state.listMap[listId];
+
       if (folderId) {
         // Remove listId from folder's lists
         const folder = state.headers.find(
           h => h.type === 'FOLDER' && h.id === folderId,
         );
-        if (folder && 'lists' in folder) {
+        if (folder && isFolderHeader(folder)) {
           folder.lists = folder.lists.filter(list => list.id !== listId);
         }
       } else {
@@ -227,8 +229,6 @@ const tasksSlice = createSlice({
       if (state.currentTaskListId === listId) {
         state.currentTaskListId = DEFAULT_LIST_ID;
       }
-
-      delete state.listMap[listId];
     },
     removeFolder(state, action: PayloadAction<string>) {
       const folderId = action.payload;
