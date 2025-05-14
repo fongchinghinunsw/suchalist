@@ -157,6 +157,8 @@ const tasksSlice = createSlice({
         id: listId,
         title,
       });
+
+      console.log('addList', state.headers);
     },
     addFolder(state, action: PayloadAction<string>) {
       const folderId = getId();

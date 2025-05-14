@@ -33,9 +33,7 @@ export default function FolderHeaderItem({
 
   const listsMap = useSelector(selectListsMap);
 
-  const [lists, setLists] = useState(
-    listsHeader.map(list => listsMap[list.id]),
-  );
+  const lists = listsHeader.map(list => listsMap[list.id]);
 
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -106,7 +104,7 @@ export default function FolderHeaderItem({
         <View style={styles.listsContainer}>
           <DraggableFlatList
             data={lists}
-            onDragEnd={({data}) => setLists(data)}
+            onDragEnd={({data}) => {}}
             keyExtractor={list => list.id}
             renderItem={renderItem}
             dragItemOverflow={false}

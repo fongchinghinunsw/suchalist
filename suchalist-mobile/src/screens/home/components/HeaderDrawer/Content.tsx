@@ -28,6 +28,8 @@ export const Content = ({
   const theme = useSelector(selectTheme);
   const headers = useSelector(selectHeaders);
 
+  console.log('Content', headers);
+
   const dispatch = useDispatch();
 
   const [isAddListModalVisible, setIsAddListModalVisible] = useState(false);

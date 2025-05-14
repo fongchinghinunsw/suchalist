@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
@@ -13,7 +12,7 @@ type Props = {
 };
 
 export default function HeaderList({headers, onPress}: Props) {
-  const [resources, setResources] = useState(headers);
+  // console.log('HeaderList', resources);
 
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
@@ -33,8 +32,8 @@ export default function HeaderList({headers, onPress}: Props) {
 
   return (
     <DraggableFlatList
-      data={resources}
-      onDragEnd={({data}) => setResources(data)}
+      data={headers}
+      onDragEnd={({data}) => {}}
       keyExtractor={resource => resource.id}
       renderItem={renderItem}
       dragItemOverflow={false}
