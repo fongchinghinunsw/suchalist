@@ -2,7 +2,6 @@ import {getColor} from '@/constants/styles';
 import {Task} from '@/services/task-service/types';
 import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';
-import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -10,7 +9,6 @@ import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import {
   default as Animated,
   LinearTransition,
-  SharedValue,
   SlideOutRight,
   useAnimatedStyle,
   useSharedValue,
@@ -18,8 +16,9 @@ import {
 } from 'react-native-reanimated';
 import SoundPlayer from 'react-native-sound-player';
 import {useSelector} from 'react-redux';
-import Text from '../../../base/Text';
-import DeleteTaskModal from '../../../modal/DeleteTaskModal';
+import Text from '../../../../base/Text';
+import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
+import RightAction from './RightAction';
 
 type Props = {
   task: Task;
@@ -99,11 +98,10 @@ export default function TaskItem({
         style={[isCompleting && styles.standout]}>
         <Swipeable
           containerStyle={styles.swipeable}
-          renderRightActions={(progress, drag) =>
+          renderRightActions={(_progress, drag) =>
             RightAction({
-              progress,
               drag,
-              onPressDeleteTask: toggleDeleteTaskModal,
+              onRemoveTaskPress: toggleDeleteTaskModal,
             })
           }
           overshootRight={false}>
@@ -145,31 +143,6 @@ export default function TaskItem({
   );
 }
 
-type RightActionProps = {
-  progress: SharedValue<number>;
-  drag: SharedValue<number>;
-  onPressDeleteTask: () => void;
-};
-
-function RightAction({drag, onPressDeleteTask}: RightActionProps) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
-  const styles = getStyle(theme);
-
-  const styleAnimation = useAnimatedStyle(() => {
-    return {
-      transform: [{translateX: drag.value + styles.rightAction.width}],
-    };
-  });
-
-  return (
-    <Animated.View style={styleAnimation}>
-      <Pressable style={styles.rightAction} onPress={onPressDeleteTask}>
-        <Icon name="trash-outline" color="#FFF" size={24} />
-      </Pressable>
-    </Animated.View>
-  );
-}
-
 const getStyle = (theme: Theme) => {
   return StyleSheet.create({
     standout: {
@@ -200,13 +173,6 @@ const getStyle = (theme: Theme) => {
     },
     checkboxInnerIcon: {
       borderRadius: 8,
-    },
-    rightAction: {
-      width: 50,
-      height: '100%',
-      backgroundColor: 'red',
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     titleWrapper: {
       position: 'relative',

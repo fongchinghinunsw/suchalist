@@ -2,7 +2,7 @@ import {Task} from '@/services/task-service/types';
 import {sortTasks} from '@/utils/task/sort';
 import React from 'react';
 import {View} from 'react-native';
-import TaskItem from '../TaskItem';
+import TaskItem from '../TaskItem/TaskItem';
 import {styles} from './styles';
 
 type Props = {

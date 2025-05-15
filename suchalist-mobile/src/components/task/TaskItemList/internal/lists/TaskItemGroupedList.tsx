@@ -5,7 +5,7 @@ import {Theme} from '@/stores/theme';
 import {useMemo} from 'react';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
-import TaskItem from '../TaskItem';
+import TaskItem from '../TaskItem/TaskItem';
 import {StyleSheet, View} from 'react-native';
 import Icon from '@react-native-vector-icons/ionicons';
 import {getColor} from '@/constants/styles';
