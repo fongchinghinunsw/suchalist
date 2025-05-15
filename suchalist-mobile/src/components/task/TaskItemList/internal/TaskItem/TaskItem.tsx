@@ -95,7 +95,7 @@ export default function TaskItem({
       <Animated.View
         exiting={ExitingAnimation}
         layout={LinearTransition}
-        style={[isCompleting && styles.standout]}>
+        style={[isCompleting && styles.completingTaskItem]}>
         <Swipeable
           containerStyle={styles.swipeable}
           renderRightActions={(_progress, drag) =>
@@ -145,7 +145,7 @@ export default function TaskItem({
 
 const getStyle = (theme: Theme) => {
   return StyleSheet.create({
-    standout: {
+    completingTaskItem: {
       zIndex: 1,
     },
     swipeable: {

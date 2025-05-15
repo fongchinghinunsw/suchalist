@@ -3,7 +3,7 @@ import {RootState} from '@/stores';
 import {Task} from '@/services/task-service/types';
 import {Theme} from '@/stores/theme';
 import {useState} from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -73,7 +73,11 @@ export default function CompletedTaskItemList(props: Props) {
           <Text style={styles.buttonText}>Show Completed Tasks</Text>
         </Pressable>
       </Animated.View>
-      {isTasksVisible && <TaskItemUngroupedList {...props} />}
+      {isTasksVisible && (
+        <View style={styles.listContainer}>
+          <TaskItemUngroupedList {...props} />
+        </View>
+      )}
     </>
   );
 }
@@ -92,6 +96,9 @@ const getStyles = (theme: Theme) => {
     buttonText: {
       color: '#FFF',
       fontWeight: 800,
+    },
+    listContainer: {
+      marginBottom: 72,
     },
   });
 };
