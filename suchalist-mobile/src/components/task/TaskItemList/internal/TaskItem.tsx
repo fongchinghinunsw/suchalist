@@ -18,8 +18,8 @@ import {
 } from 'react-native-reanimated';
 import SoundPlayer from 'react-native-sound-player';
 import {useSelector} from 'react-redux';
-import Text from '../base/Text';
-import DeleteTaskModal from '../modal/DeleteTaskModal';
+import Text from '../../../base/Text';
+import DeleteTaskModal from '../../../modal/DeleteTaskModal';
 
 type Props = {
   task: Task;
@@ -61,7 +61,7 @@ export default function TaskItem({
     setIsDeleteTaskModalVisible(false);
   };
 
-  const handlePress = async (isChecked: boolean) => {
+  const onCompleteTaskCheckboxPressed = async (isChecked: boolean) => {
     if (!isChecked) {
       try {
         SoundPlayer.loadSoundFile('pop', 'mp3');
@@ -125,7 +125,9 @@ export default function TaskItem({
                 iconStyle={styles.checkboxIcon}
                 innerIconStyle={styles.checkboxInnerIcon}
                 fillColor={getColor(theme, 400)}
-                onPress={(isChecked: boolean) => handlePress(isChecked)}
+                onPress={(isChecked: boolean) =>
+                  onCompleteTaskCheckboxPressed(isChecked)
+                }
               />
             </View>
           </Pressable>

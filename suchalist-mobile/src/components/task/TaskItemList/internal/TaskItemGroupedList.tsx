@@ -5,11 +5,11 @@ import {Theme} from '@/stores/theme';
 import {useMemo} from 'react';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
-import TaskItem from '../TaskItem';
+import TaskItem from './TaskItem';
 import {StyleSheet, View} from 'react-native';
 import Icon from '@react-native-vector-icons/ionicons';
 import {getColor} from '@/constants/styles';
-import {styles as commonStyles} from './common';
+import {styles as commonStyles} from './styles';
 import {Task} from '@/services/task-service/types';
 
 type Props = {

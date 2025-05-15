@@ -6,11 +6,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import CompletedTaskItemList from './CompletedTaskItemList';
-import TaskItemGroupedList from './TaskItemGroupedList';
-import TaskItemUngroupedList from './TaskItemUngroupedList';
+import CompletedTaskItemList from './internal/CompletedTaskItemList';
+import TaskItemGroupedList from './internal/TaskItemGroupedList';
+import TaskItemUngroupedList from './internal/TaskItemUngroupedList';
 import Divider from '@/components/base/Divider';
-import AddTaskItem from '../AddTaskItem';
+import AddTaskItem from './internal/AddTaskItem';
 import {isTaskWithDueDate, Task} from '@/services/task-service/types';
 
 type Props = {

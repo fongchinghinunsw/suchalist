@@ -2,8 +2,8 @@ import {Task} from '@/services/task-service/types';
 import {sortTasks} from '@/utils/task/sort';
 import React from 'react';
 import {View} from 'react-native';
-import TaskItem from '../TaskItem';
-import {styles} from './common';
+import TaskItem from './TaskItem';
+import {styles} from './styles';
 
 type Props = {
   tasks: Task[];
