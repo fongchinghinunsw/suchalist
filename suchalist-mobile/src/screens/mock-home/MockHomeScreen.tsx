@@ -51,7 +51,7 @@ export default function MockHomeScreen() {
         showAddTaskDrawer={noOp}
         onTaskItemPress={noOp}
         onAddTask={noOp}
-        onRemoveTask={noOp}
+        onDeleteTask={noOp}
         onScroll={noOp}
       />
 

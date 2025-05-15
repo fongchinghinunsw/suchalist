@@ -1,7 +1,7 @@
+import SoundPlayer from '@/components/SoundPlayer';
 import {getColor} from '@/constants/styles';
 import {Task} from '@/services/task-service/types';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
+import {selectTheme, Theme} from '@/stores/theme';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -18,12 +18,11 @@ import {useSelector} from 'react-redux';
 import Text from '../../../../base/Text';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import RightAction from './RightAction';
-import SoundPlayer from '@/components/SoundPlayer';
 
 type Props = {
   task: Task;
   onPress: (task: Task) => void;
-  onRemoveTask: (id: string) => void;
+  onDeleteTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
 };
@@ -31,34 +30,35 @@ type Props = {
 export default function TaskItem({
   task,
   onPress,
-  onRemoveTask,
+  onDeleteTask,
   onCompleteTask,
   onUncompleteTask,
 }: Props) {
   const {id, title, isCompleted} = task;
 
+  const theme = useSelector(selectTheme);
+  const styles = getStyle(theme);
+
+  // Controlling animation for completing a task
   const [isCompleting, setIsCompleting] = useState(false);
 
   const strikeThrough = useSharedValue(0);
-
   const strikeThroughStyle = useAnimatedStyle(() => {
     return {
       width: `${strikeThrough.value * 100}%`,
     };
   });
 
+  // Remove Task Modal
   const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
     useState(false);
-
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
-  const styles = getStyle(theme);
 
   const toggleDeleteTaskModal = () => {
     setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
   };
 
-  const onDeleteTask = (taskId: string) => {
-    onRemoveTask(taskId);
+  const onConfirmDeleteTaskPressed = (taskId: string) => {
+    onDeleteTask(taskId);
     setIsDeleteTaskModalVisible(false);
   };
 
@@ -67,15 +67,11 @@ export default function TaskItem({
       SoundPlayer.play('pop');
       onUncompleteTask(id);
     } else {
-      try {
-        setIsCompleting(true);
-        strikeThrough.value = withTiming(1, {duration: 400});
-        await new Promise(resolve => setTimeout(resolve, 400));
+      setIsCompleting(true);
+      strikeThrough.value = withTiming(1, {duration: 400});
+      await new Promise(resolve => setTimeout(resolve, 400));
 
-        SoundPlayer.play('ding');
-      } catch (e) {
-        console.log('cannot play the sound file', e);
-      }
+      SoundPlayer.play('ding');
       onCompleteTask(id);
     }
   };
@@ -93,7 +89,7 @@ export default function TaskItem({
           renderRightActions={(_progress, drag) =>
             RightAction({
               drag,
-              onRemoveTaskPress: toggleDeleteTaskModal,
+              onDeleteTaskPressed: toggleDeleteTaskModal,
             })
           }
           overshootRight={false}>
@@ -128,7 +124,7 @@ export default function TaskItem({
       <DeleteTaskModal
         taskName={task.title}
         isVisible={isDeleteTaskModalVisible}
-        onConfirm={() => onDeleteTask(task.id)}
+        onConfirm={() => onConfirmDeleteTaskPressed(task.id)}
         onCancel={toggleDeleteTaskModal}
       />
     </>

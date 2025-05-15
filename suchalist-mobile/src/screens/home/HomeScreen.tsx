@@ -42,9 +42,9 @@ export default function HomeScreen() {
     [dispatch],
   );
 
-  const removeTask = useCallback(
+  const deleteTask = useCallback(
     (id: string) => {
-      dispatch(tasksActions.removeTask(id));
+      dispatch(tasksActions.deleteTask(id));
     },
     [dispatch],
   );
@@ -97,7 +97,7 @@ export default function HomeScreen() {
             navigation.push('TaskDetails', {task})
           }
           onAddTask={addTask}
-          onRemoveTask={removeTask}
+          onDeleteTask={deleteTask}
           onScroll={onScroll}
         />
 

@@ -4,10 +4,10 @@ import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
 
 type Props = {
   drag: SharedValue<number>;
-  onRemoveTaskPress: () => void;
+  onDeleteTaskPressed: () => void;
 };
 
-export default function RightAction({drag, onRemoveTaskPress}: Props) {
+export default function RightAction({drag, onDeleteTaskPressed}: Props) {
   const styleAnimation = useAnimatedStyle(() => {
     return {
       transform: [{translateX: drag.value + styles.rightAction.width}],
@@ -16,7 +16,7 @@ export default function RightAction({drag, onRemoveTaskPress}: Props) {
 
   return (
     <Animated.View style={styleAnimation}>
-      <Pressable style={styles.rightAction} onPress={onRemoveTaskPress}>
+      <Pressable style={styles.rightAction} onPress={onDeleteTaskPressed}>
         <Icon name="trash-outline" color="#FFF" size={24} />
       </Pressable>
     </Animated.View>

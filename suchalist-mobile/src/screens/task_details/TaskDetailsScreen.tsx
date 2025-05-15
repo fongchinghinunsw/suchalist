@@ -81,7 +81,7 @@ export default function TaskDetailsScreen() {
   };
 
   const onDeleteTask = (id: string) => {
-    dispatch(tasksActions.removeTask(id));
+    dispatch(tasksActions.deleteTask(id));
     setIsDeleteTaskModalVisible(false);
     navigation.goBack();
   };

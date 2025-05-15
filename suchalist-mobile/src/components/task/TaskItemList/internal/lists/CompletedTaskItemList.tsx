@@ -16,7 +16,7 @@ import SoundPlayer from '@/components/SoundPlayer';
 type Props = {
   tasks: Task[];
   onTaskItemPress: (task: Task) => void;
-  onRemoveTask: (id: string) => void;
+  onDeleteTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
 };

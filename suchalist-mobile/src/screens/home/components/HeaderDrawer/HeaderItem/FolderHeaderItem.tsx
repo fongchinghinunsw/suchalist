@@ -57,7 +57,7 @@ export default function FolderHeaderItem({
   };
 
   const onDeleteFolder = () => {
-    dispatch(tasksActions.removeFolder(id));
+    dispatch(tasksActions.deleteFolder(id));
   };
 
   const onToggleListItem = () => {

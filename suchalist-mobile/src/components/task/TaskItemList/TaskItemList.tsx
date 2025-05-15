@@ -20,7 +20,7 @@ type Props = {
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onAddTask: (task: {title: string}) => void;
-  onRemoveTask: (id: string) => void;
+  onDeleteTask: (id: string) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 
@@ -29,7 +29,7 @@ export default function TaskItemList({
   showAddTaskDrawer,
   onTaskItemPress,
   onAddTask,
-  onRemoveTask,
+  onDeleteTask,
   onScroll,
 }: Props) {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ export default function TaskItemList({
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
         onTaskItemPress={onTaskItemPress}
-        onRemoveTask={onRemoveTask}
+        onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}
       />
@@ -74,7 +74,7 @@ export default function TaskItemList({
         tasks={tasksWithDueDate}
         showAddTaskDrawer={showAddTaskDrawer}
         onTaskItemPress={onTaskItemPress}
-        onRemoveTask={onRemoveTask}
+        onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}
       />
@@ -82,7 +82,7 @@ export default function TaskItemList({
       <CompletedTaskItemList
         tasks={completedTasks}
         onTaskItemPress={onTaskItemPress}
-        onRemoveTask={onRemoveTask}
+        onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}
       />

@@ -80,7 +80,7 @@ const tasksSlice = createSlice({
       });
       currentTasks.splice(index === -1 ? 0 : index, 0, newTask);
     },
-    removeTask(state, action: PayloadAction<string>) {
+    deleteTask(state, action: PayloadAction<string>) {
       const currentTasks = state.listMap[state.currentTaskListId].tasks;
 
       const index = currentTasks.findIndex(task => task.id === action.payload);
@@ -203,7 +203,7 @@ const tasksSlice = createSlice({
         lists: [],
       });
     },
-    removeList(state, action: PayloadAction<string>) {
+    deleteList(state, action: PayloadAction<string>) {
       const listId = action.payload;
 
       const folderId = state.listMap[listId].folderId;
@@ -230,7 +230,7 @@ const tasksSlice = createSlice({
         state.currentTaskListId = DEFAULT_LIST_ID;
       }
     },
-    removeFolder(state, action: PayloadAction<string>) {
+    deleteFolder(state, action: PayloadAction<string>) {
       const folderId = action.payload;
 
       // Find the folder

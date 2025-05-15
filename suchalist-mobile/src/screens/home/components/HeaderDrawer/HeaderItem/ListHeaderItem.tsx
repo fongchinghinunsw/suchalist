@@ -37,7 +37,7 @@ export default function ListHeaderItem({
   };
 
   const onDeleteList = () => {
-    dispatch(tasksActions.removeList(id));
+    dispatch(tasksActions.deleteList(id));
   };
 
   return (
