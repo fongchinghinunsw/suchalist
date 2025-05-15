@@ -6,9 +6,9 @@ import {
   StyleSheet,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import CompletedTaskItemList from './internal/CompletedTaskItemList';
-import TaskItemGroupedList from './internal/TaskItemGroupedList';
-import TaskItemUngroupedList from './internal/TaskItemUngroupedList';
+import CompletedTaskItemList from './internal/lists/CompletedTaskItemList';
+import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
+import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 import Divider from '@/components/base/Divider';
 import AddTaskItem from './internal/AddTaskItem';
 import {isTaskWithDueDate, Task} from '@/services/task-service/types';
