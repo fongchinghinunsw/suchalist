@@ -1,69 +1,98 @@
-import React from 'react';
-import {Button as PaperButton} from 'react-native-paper';
-import {Props as PaperButtonProps} from 'react-native-paper/lib/typescript/components/Button/Button';
-import {useSelector} from 'react-redux';
 import {getColor} from '@/constants/styles';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
+import {selectTheme, Theme} from '@/stores/theme';
+import React from 'react';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import {useSelector} from 'react-redux';
 import {UnreachableError} from './UnreachableError';
 
 type ButtonTone = 'danger';
+type ButtonMode = 'text' | 'outlined' | 'contained';
 
-type Props = PaperButtonProps & {
-  mode: Extract<PaperButtonProps['mode'], 'text' | 'outlined' | 'contained'>;
+type Props = {
+  children: string;
+  mode: ButtonMode;
   tone?: ButtonTone;
+  disabled?: boolean;
+  loading?: boolean;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  onPress: () => void;
 };
 
 export default function Button({
   children,
   mode,
   tone,
-  disabled,
+  style,
+  textStyle,
   ...otherProps
 }: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
-  const defaultStyleProps = disabled
+  const theme = useSelector(selectTheme);
+
+  const styleProps = otherProps.disabled
     ? getDisabledStyleProps(mode)
     : getStyleProps(theme, mode, tone);
 
   return (
-    <PaperButton {...defaultStyleProps} {...otherProps}>
-      {children}
-    </PaperButton>
+    <Pressable
+      style={({pressed}) => [
+        styles.base,
+        styleProps.container,
+        pressed && !otherProps.disabled && styles.pressed,
+        style,
+      ]}
+      {...otherProps}>
+      <Text style={[styles.text, styleProps.text, textStyle]}>{children}</Text>
+    </Pressable>
   );
 }
 
 type StyleProps = {
-  buttonColor?: Props['buttonColor'];
-  textColor?: Props['textColor'];
-  rippleColor?: Props['rippleColor'];
-  style?: Props['style'];
+  container: ViewStyle;
+  text: TextStyle;
 };
 
 const getStyleProps = (
-  defaulTheme: Theme,
-  mode: Props['mode'],
+  defaultTheme: Theme,
+  mode: ButtonMode,
   tone?: ButtonTone,
 ): StyleProps => {
-  const theme = tone === undefined ? defaulTheme : 'red';
+  const theme = tone === undefined ? defaultTheme : 'red';
+  const color = getColor(theme, 500);
 
   switch (mode) {
     case 'text':
       return {
-        textColor: getColor(theme, 500),
+        container: {},
+        text: {color},
       };
     case 'outlined':
       return {
-        textColor: getColor(theme, 500),
-        style: {
-          borderColor: getColor(theme, 500),
+        container: {
+          borderColor: color,
           borderWidth: 2,
+          paddingHorizontal: 12,
+          paddingVertical: 6,
+          borderRadius: 6,
         },
+        text: {color},
       };
     case 'contained':
       return {
-        buttonColor: getColor(theme, 500),
-        textColor: '#FFF',
+        container: {
+          backgroundColor: color,
+          paddingHorizontal: 12,
+          paddingVertical: 6,
+          borderRadius: 6,
+        },
+        text: {color: '#FFF'},
       };
     default:
       throw new UnreachableError(mode);
@@ -71,28 +100,50 @@ const getStyleProps = (
 };
 
 const getDisabledStyleProps = (mode: Props['mode']): StyleProps => {
+  const neutral = getColor('neutral', 500);
+
   switch (mode) {
     case 'text':
       return {
-        textColor: getColor('neutral', 500),
-        rippleColor: 'transparent',
+        container: {},
+        text: {color: neutral},
       };
     case 'outlined':
       return {
-        textColor: getColor('neutral', 500),
-        rippleColor: 'transparent',
-        style: {
-          borderColor: getColor('neutral', 500),
+        container: {
+          borderColor: neutral,
           borderWidth: 2,
+          paddingHorizontal: 12,
+          paddingVertical: 6,
+          borderRadius: 6,
         },
+        text: {color: neutral},
       };
     case 'contained':
       return {
-        buttonColor: getColor('neutral', 500),
-        textColor: '#FFF',
-        rippleColor: 'transparent',
+        container: {
+          backgroundColor: neutral,
+          paddingHorizontal: 12,
+          paddingVertical: 6,
+          borderRadius: 6,
+        },
+        text: {color: '#FFF'},
       };
     default:
       throw new UnreachableError(mode);
   }
 };
+
+const styles = StyleSheet.create({
+  base: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  pressed: {
+    opacity: 0.6,
+  },
+  text: {
+    fontWeight: '600',
+    fontSize: 16,
+  },
+});

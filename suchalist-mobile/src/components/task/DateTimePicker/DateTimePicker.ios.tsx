@@ -117,6 +117,7 @@ const getStyles = (theme: Theme) => {
     },
     confirmButton: {
       marginTop: 20,
+      color: 'red',
     },
   });
 };
