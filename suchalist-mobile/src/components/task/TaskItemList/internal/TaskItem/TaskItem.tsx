@@ -14,11 +14,11 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import SoundPlayer from 'react-native-sound-player';
 import {useSelector} from 'react-redux';
 import Text from '../../../../base/Text';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import RightAction from './RightAction';
+import SoundPlayer from '@/components/SoundPlayer';
 
 type Props = {
   task: Task;
@@ -64,13 +64,7 @@ export default function TaskItem({
 
   const onCompleteTaskCheckboxPressed = async (isChecked: boolean) => {
     if (!isChecked) {
-      try {
-        SoundPlayer.loadSoundFile('pop', 'mp3');
-        SoundPlayer.seek(0);
-        SoundPlayer.play();
-      } catch (e) {
-        console.log('cannot play the sound file', e);
-      }
+      SoundPlayer.play('pop');
       onUncompleteTask(id);
     } else {
       try {
@@ -78,9 +72,7 @@ export default function TaskItem({
         strikeThrough.value = withTiming(1, {duration: 400});
         await new Promise(resolve => setTimeout(resolve, 400));
 
-        SoundPlayer.loadSoundFile('ding', 'mp3');
-        SoundPlayer.seek(0);
-        SoundPlayer.play();
+        SoundPlayer.play('ding');
       } catch (e) {
         console.log('cannot play the sound file', e);
       }

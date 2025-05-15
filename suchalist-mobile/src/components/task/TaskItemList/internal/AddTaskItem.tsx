@@ -1,4 +1,9 @@
+import SoundPlayer from '@/components/SoundPlayer';
+import {getColor} from '@/constants/styles';
+import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';
+import Icon from '@react-native-vector-icons/ionicons';
+import {useState} from 'react';
 import {
   NativeSyntheticEvent,
   Platform,
@@ -8,11 +13,6 @@ import {
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {getColor} from '@/constants/styles';
-import Icon from '@react-native-vector-icons/ionicons';
-import {useState} from 'react';
-import SoundPlayer from 'react-native-sound-player';
 
 type Props = {
   onAddTask: (task: {title: string}) => void;
@@ -31,13 +31,7 @@ export default function AddTaskItem({onAddTask}: Props) {
 
   const onPress = () => {
     if (title.length > 0) {
-      try {
-        SoundPlayer.loadSoundFile('pop', 'mp3');
-        SoundPlayer.seek(0);
-        SoundPlayer.play();
-      } catch (e) {
-        console.log('cannot play the sound file', e);
-      }
+      SoundPlayer.play('pop');
       onAddTask({title: title.trim()});
       setTitle('');
       console.log({title});
