@@ -72,8 +72,8 @@ export default function TaskItemList({
       />
       <TaskItemGroupedList
         tasks={tasksWithDueDate}
-        onTaskItemPress={onTaskItemPress}
         showAddTaskDrawer={showAddTaskDrawer}
+        onTaskItemPress={onTaskItemPress}
         onRemoveTask={onRemoveTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}

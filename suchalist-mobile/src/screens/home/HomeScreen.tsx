@@ -24,8 +24,6 @@ import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
 
-// const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
-
 export default function HomeScreen() {
   const tasks = useSelector(selectCurrentTasks);
   const dispatch = useDispatch();
@@ -58,7 +56,6 @@ export default function HomeScreen() {
     bottomSheetModalRef.current?.present();
   };
 
-  // FAB
   const [isFABExtended, setIsFABExtended] = useState(true);
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {

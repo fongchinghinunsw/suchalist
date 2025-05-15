@@ -1,7 +1,6 @@
 import SoundPlayer from '@/components/SoundPlayer';
 import {getColor} from '@/constants/styles';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
+import {selectTheme, Theme} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {
@@ -19,7 +18,7 @@ type Props = {
 };
 
 export default function AddTaskItem({onAddTask}: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
 
   const [title, setTitle] = useState('');
@@ -30,14 +29,13 @@ export default function AddTaskItem({onAddTask}: Props) {
   };
 
   const onPress = () => {
-    if (title.length > 0) {
+    const trimmedTitle = title.trim();
+    if (trimmedTitle.length > 0) {
       SoundPlayer.play('pop');
-      onAddTask({title: title.trim()});
+      onAddTask({title: trimmedTitle});
       setTitle('');
-      console.log({title});
     }
   };
-  console.log('outside', {title});
 
   return (
     <View style={styles.container}>

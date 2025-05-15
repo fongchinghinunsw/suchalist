@@ -14,8 +14,8 @@ import {Task} from '@/services/task-service/types';
 
 type Props = {
   tasks: TaskWithDueDate[];
-  onTaskItemPress: (task: Task) => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
+  onTaskItemPress: (task: Task) => void;
   onRemoveTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
@@ -23,8 +23,8 @@ type Props = {
 
 export default function TaskItemGroupedList({
   tasks,
-  onTaskItemPress,
   showAddTaskDrawer,
+  onTaskItemPress,
   onRemoveTask,
   onCompleteTask,
   onUncompleteTask,
