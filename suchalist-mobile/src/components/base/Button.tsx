@@ -12,7 +12,7 @@ import {
 import {useSelector} from 'react-redux';
 import {UnreachableError} from './UnreachableError';
 
-type ButtonTone = 'danger';
+type ButtonTone = 'neutral' | 'danger';
 type ButtonMode = 'text' | 'outlined' | 'contained';
 
 type Props = {
@@ -64,7 +64,7 @@ const getStyleProps = (
   mode: ButtonMode,
   tone?: ButtonTone,
 ): StyleProps => {
-  const theme = tone === undefined ? defaultTheme : 'red';
+  const theme = tone === undefined ? defaultTheme : getButtonTheme(tone);
   const color = getColor(theme, 500);
 
   switch (mode) {
@@ -96,6 +96,17 @@ const getStyleProps = (
       };
     default:
       throw new UnreachableError(mode);
+  }
+};
+
+const getButtonTheme = (tone: ButtonTone): Theme => {
+  switch (tone) {
+    case 'neutral':
+      return 'neutral';
+    case 'danger':
+      return 'red';
+    default:
+      throw new UnreachableError(tone);
   }
 };
 

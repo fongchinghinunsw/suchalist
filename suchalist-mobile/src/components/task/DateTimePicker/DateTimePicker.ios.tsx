@@ -97,6 +97,7 @@ export default function DateTimePicker({
           <Button
             mode="outlined"
             style={styles.confirmButton}
+            textStyle={styles.confirmButtonText}
             onPress={onConfirmClick}>
             Confirm
           </Button>
@@ -117,7 +118,10 @@ const getStyles = (theme: Theme) => {
     },
     confirmButton: {
       marginTop: 20,
-      color: 'red',
+      borderColor: '#000',
+    },
+    confirmButtonText: {
+      color: '#000',
     },
   });
 };
