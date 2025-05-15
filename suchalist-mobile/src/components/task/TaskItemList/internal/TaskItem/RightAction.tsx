@@ -10,13 +10,13 @@ type Props = {
 export default function RightAction({drag, onDeleteTaskPressed}: Props) {
   const styleAnimation = useAnimatedStyle(() => {
     return {
-      transform: [{translateX: drag.value + styles.rightAction.width}],
+      transform: [{translateX: drag.value + styles.deleteAction.width}],
     };
   });
 
   return (
     <Animated.View style={styleAnimation}>
-      <Pressable style={styles.rightAction} onPress={onDeleteTaskPressed}>
+      <Pressable style={styles.deleteAction} onPress={onDeleteTaskPressed}>
         <Icon name="trash-outline" color="#FFF" size={24} />
       </Pressable>
     </Animated.View>
@@ -24,7 +24,7 @@ export default function RightAction({drag, onDeleteTaskPressed}: Props) {
 }
 
 const styles = StyleSheet.create({
-  rightAction: {
+  deleteAction: {
     width: 50,
     height: '100%',
     backgroundColor: 'red',

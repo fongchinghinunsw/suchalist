@@ -8,6 +8,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import {
   default as Animated,
+  FadeIn,
   LinearTransition,
   SlideOutRight,
   useAnimatedStyle,
@@ -81,6 +82,7 @@ export default function TaskItem({
   return (
     <>
       <Animated.View
+        entering={FadeIn}
         exiting={ExitingAnimation}
         layout={LinearTransition}
         style={[isCompleting && styles.completingTaskItem]}>
@@ -98,7 +100,7 @@ export default function TaskItem({
               <Text
                 shade={700}
                 numberOfLines={1}
-                style={[isCompleted && styles.titleCompleted]}>
+                style={[isCompleted && styles.completedTitle]}>
                 {title}
               </Text>
               {isCompleting && (
@@ -149,7 +151,7 @@ const getStyle = (theme: Theme) => {
       justifyContent: 'space-between',
       padding: 12,
     },
-    titleCompleted: {
+    completedTitle: {
       textDecorationLine: 'line-through',
     },
     checkbox: {
