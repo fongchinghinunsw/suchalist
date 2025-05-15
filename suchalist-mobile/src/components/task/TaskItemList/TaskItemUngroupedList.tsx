@@ -2,7 +2,6 @@ import {Task} from '@/services/task-service/types';
 import {sortTasks} from '@/utils/task/sort';
 import React from 'react';
 import {View} from 'react-native';
-import Animated, {LinearTransition} from 'react-native-reanimated';
 import TaskItem from '../TaskItem';
 import {styles} from './common';
 
@@ -24,14 +23,13 @@ export default function TaskItemUngroupedList({
   return (
     <View style={styles.container}>
       {sortedTasks.map(task => (
-        <Animated.View key={task.id} layout={LinearTransition}>
-          <TaskItem
-            task={task}
-            setIsCompleted={setIsCompleted}
-            onPress={onTaskItemPress}
-            onRemoveTask={onRemoveTask}
-          />
-        </Animated.View>
+        <TaskItem
+          key={task.id}
+          task={task}
+          setIsCompleted={setIsCompleted}
+          onPress={onTaskItemPress}
+          onRemoveTask={onRemoveTask}
+        />
       ))}
     </View>
   );

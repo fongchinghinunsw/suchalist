@@ -1,15 +1,20 @@
 import {getColor} from '@/constants/styles';
-import {RootState} from '@/stores';
 import {Task} from '@/services/task-service/types';
+import {RootState} from '@/stores';
 import {Theme} from '@/stores/theme';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
-import Reanimated, {
+import {
+  default as Animated,
+  LinearTransition,
   SharedValue,
+  SlideOutRight,
   useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 import SoundPlayer from 'react-native-sound-player';
 import {useSelector} from 'react-redux';
@@ -31,6 +36,16 @@ export default function TaskItem({
 }: Props) {
   const {id, title, isCompleted} = task;
 
+  const [isCompleting, setIsCompleting] = useState(false);
+
+  const strikeThrough = useSharedValue(0);
+
+  const strikeThroughStyle = useAnimatedStyle(() => {
+    return {
+      width: `${strikeThrough.value * 100}%`,
+    };
+  });
+
   const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
     useState(false);
 
@@ -46,9 +61,7 @@ export default function TaskItem({
     setIsDeleteTaskModalVisible(false);
   };
 
-  const handlePress = (isChecked: boolean) => {
-    setIsCompleted(id, isChecked);
-
+  const handlePress = async (isChecked: boolean) => {
     if (!isChecked) {
       try {
         SoundPlayer.loadSoundFile('pop', 'mp3');
@@ -57,48 +70,67 @@ export default function TaskItem({
       } catch (e) {
         console.log('cannot play the sound file', e);
       }
-      return;
+    } else {
+      try {
+        setIsCompleting(true);
+        strikeThrough.value = withTiming(1, {duration: 400});
+        await new Promise(resolve => setTimeout(resolve, 400));
+
+        SoundPlayer.loadSoundFile('ding', 'mp3');
+        SoundPlayer.seek(0);
+        SoundPlayer.play();
+      } catch (e) {
+        console.log('cannot play the sound file', e);
+      }
     }
 
-    try {
-      SoundPlayer.loadSoundFile('ding', 'mp3');
-      SoundPlayer.seek(0);
-      SoundPlayer.play();
-    } catch (e) {
-      console.log('cannot play the sound file', e);
-    }
+    setIsCompleted(id, isChecked);
   };
+
+  const ExitingAnimation = SlideOutRight.duration(500);
 
   return (
     <>
-      <Swipeable
-        containerStyle={styles.swipeable}
-        renderRightActions={(progress, drag) =>
-          RightAction({
-            progress,
-            drag,
-            onPressDeleteTask: toggleDeleteTaskModal,
-          })
-        }
-        overshootRight={false}>
-        <Pressable style={styles.pressable} onPress={() => onPress(task)}>
-          <Text
-            shade={700}
-            numberOfLines={1}
-            style={[styles.title, isCompleted && styles.titleCompleted]}>
-            {title}
-          </Text>
-          <View style={styles.checkbox}>
-            <BouncyCheckbox
-              isChecked={isCompleted}
-              iconStyle={styles.checkboxIcon}
-              innerIconStyle={styles.checkboxInnerIcon}
-              fillColor={getColor(theme, 400)}
-              onPress={(isChecked: boolean) => handlePress(isChecked)}
-            />
-          </View>
-        </Pressable>
-      </Swipeable>
+      <Animated.View
+        exiting={ExitingAnimation}
+        layout={LinearTransition}
+        style={[isCompleting && styles.standout]}>
+        <Swipeable
+          containerStyle={styles.swipeable}
+          renderRightActions={(progress, drag) =>
+            RightAction({
+              progress,
+              drag,
+              onPressDeleteTask: toggleDeleteTaskModal,
+            })
+          }
+          overshootRight={false}>
+          <Pressable style={styles.pressable} onPress={() => onPress(task)}>
+            <View style={styles.titleWrapper}>
+              <Text
+                shade={700}
+                numberOfLines={1}
+                style={[isCompleted && styles.titleCompleted]}>
+                {title}
+              </Text>
+              {isCompleting && (
+                <Animated.View
+                  style={[styles.strikeThroughLine, strikeThroughStyle]}
+                />
+              )}
+            </View>
+            <View style={styles.checkbox}>
+              <BouncyCheckbox
+                isChecked={isCompleted}
+                iconStyle={styles.checkboxIcon}
+                innerIconStyle={styles.checkboxInnerIcon}
+                fillColor={getColor(theme, 400)}
+                onPress={(isChecked: boolean) => handlePress(isChecked)}
+              />
+            </View>
+          </Pressable>
+        </Swipeable>
+      </Animated.View>
       <DeleteTaskModal
         taskName={task.title}
         isVisible={isDeleteTaskModalVisible}
@@ -126,16 +158,19 @@ function RightAction({drag, onPressDeleteTask}: RightActionProps) {
   });
 
   return (
-    <Reanimated.View style={styleAnimation}>
+    <Animated.View style={styleAnimation}>
       <Pressable style={styles.rightAction} onPress={onPressDeleteTask}>
         <Icon name="trash-outline" color="#FFF" size={24} />
       </Pressable>
-    </Reanimated.View>
+    </Animated.View>
   );
 }
 
 const getStyle = (theme: Theme) => {
   return StyleSheet.create({
+    standout: {
+      zIndex: 1,
+    },
     swipeable: {
       backgroundColor: 'red',
       borderColor: getColor(theme, 400),
@@ -148,10 +183,6 @@ const getStyle = (theme: Theme) => {
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: 12,
-    },
-    title: {
-      flex: 1,
-      overflow: 'hidden',
     },
     titleCompleted: {
       textDecorationLine: 'line-through',
@@ -172,6 +203,17 @@ const getStyle = (theme: Theme) => {
       backgroundColor: 'red',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    titleWrapper: {
+      position: 'relative',
+      justifyContent: 'center',
+    },
+    strikeThroughLine: {
+      position: 'absolute',
+      height: 1,
+      backgroundColor: getColor(theme, 700),
+      top: '40%',
+      left: 0,
     },
   });
 };
