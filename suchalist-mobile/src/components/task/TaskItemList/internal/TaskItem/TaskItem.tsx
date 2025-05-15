@@ -8,7 +8,7 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import {
   default as Animated,
-  FadeIn,
+  FadeInLeft,
   LinearTransition,
   SlideOutRight,
   useAnimatedStyle,
@@ -77,12 +77,13 @@ export default function TaskItem({
     }
   };
 
-  const ExitingAnimation = SlideOutRight.duration(500);
+  const EnteringAnimation = FadeInLeft.springify().damping(14);
+  const ExitingAnimation = SlideOutRight.springify().damping(14);
 
   return (
     <>
       <Animated.View
-        entering={FadeIn}
+        entering={EnteringAnimation}
         exiting={ExitingAnimation}
         layout={LinearTransition}
         style={[isCompleting && styles.completingTaskItem]}>
