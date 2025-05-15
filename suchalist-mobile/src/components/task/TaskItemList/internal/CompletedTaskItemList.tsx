@@ -15,9 +15,10 @@ import SoundPlayer from 'react-native-sound-player';
 
 type Props = {
   tasks: Task[];
-  setIsCompleted: (id: string, isCompleted: boolean) => void;
   onTaskItemPress: (task: Task) => void;
   onRemoveTask: (id: string) => void;
+  onCompleteTask: (id: string) => void;
+  onUncompleteTask: (id: string) => void;
 };
 
 export default function CompletedTaskItemList(props: Props) {

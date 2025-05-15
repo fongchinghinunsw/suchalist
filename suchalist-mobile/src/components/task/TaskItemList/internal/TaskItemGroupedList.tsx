@@ -14,18 +14,20 @@ import {Task} from '@/services/task-service/types';
 
 type Props = {
   tasks: TaskWithDueDate[];
-  setIsCompleted: (id: string, isCompleted: boolean) => void;
   onTaskItemPress: (task: Task) => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onRemoveTask: (id: string) => void;
+  onCompleteTask: (id: string) => void;
+  onUncompleteTask: (id: string) => void;
 };
 
 export default function TaskItemGroupedList({
   tasks,
-  setIsCompleted,
   onTaskItemPress,
   showAddTaskDrawer,
   onRemoveTask,
+  onCompleteTask,
+  onUncompleteTask,
 }: Props) {
   const theme = useSelector<RootState, Theme>(state => state.theme.theme);
 
@@ -50,9 +52,10 @@ export default function TaskItemGroupedList({
     <Animated.View key={task.id} layout={LinearTransition}>
       <TaskItem
         task={task}
-        setIsCompleted={setIsCompleted}
         onPress={onTaskItemPress}
         onRemoveTask={onRemoveTask}
+        onCompleteTask={onCompleteTask}
+        onUncompleteTask={onUncompleteTask}
       />
     </Animated.View>
   );

@@ -7,16 +7,18 @@ import {styles} from './styles';
 
 type Props = {
   tasks: Task[];
-  setIsCompleted: (id: string, isCompleted: boolean) => void;
   onTaskItemPress: (task: Task) => void;
   onRemoveTask: (id: string) => void;
+  onCompleteTask: (id: string) => void;
+  onUncompleteTask: (id: string) => void;
 };
 
 export default function TaskItemUngroupedList({
   tasks,
-  setIsCompleted,
   onTaskItemPress,
   onRemoveTask,
+  onCompleteTask,
+  onUncompleteTask,
 }: Props) {
   const sortedTasks = sortTasks(tasks);
 
@@ -26,9 +28,10 @@ export default function TaskItemUngroupedList({
         <TaskItem
           key={task.id}
           task={task}
-          setIsCompleted={setIsCompleted}
           onPress={onTaskItemPress}
           onRemoveTask={onRemoveTask}
+          onCompleteTask={onCompleteTask}
+          onUncompleteTask={onUncompleteTask}
         />
       ))}
     </View>

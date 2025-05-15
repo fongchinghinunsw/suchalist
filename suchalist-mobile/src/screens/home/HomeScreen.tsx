@@ -17,12 +17,12 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import {Task} from '@/services/task-service/types';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTaskForm from './components/AddTaskForm/AddTaskForm';
 import FAB from './components/FAB';
 import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
-import {Task} from '@/services/task-service/types';
 
 // const backgroundImage = require('@/assets/images/golden-gate-bridge.jpg');
 
@@ -50,15 +50,6 @@ export default function HomeScreen() {
     },
     [dispatch],
   );
-
-  const setIsCompleted = (id: string, isCompleted: boolean) => {
-    dispatch(tasksActions.setIsCompleted({id, isCompleted}));
-    // dispatch(tasksActions.removePastFinishedTasks());
-  };
-
-  // useEffect(() => {
-  // dispatch(tasksActions.removePastFinishedTasks());
-  // }, [dispatch]);
 
   const [defaultDate, setDefaultDate] = useState<Date | undefined>(undefined);
 
@@ -104,7 +95,6 @@ export default function HomeScreen() {
 
         <TaskItemList
           tasks={tasks}
-          setIsCompleted={setIsCompleted}
           showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
           onTaskItemPress={(task: Task) =>
             navigation.push('TaskDetails', {task})

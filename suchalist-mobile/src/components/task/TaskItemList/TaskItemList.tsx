@@ -12,10 +12,11 @@ import TaskItemUngroupedList from './internal/TaskItemUngroupedList';
 import Divider from '@/components/base/Divider';
 import AddTaskItem from './internal/AddTaskItem';
 import {isTaskWithDueDate, Task} from '@/services/task-service/types';
+import {tasksActions} from '@/stores/tasks/tasks';
+import {useDispatch} from 'react-redux';
 
 type Props = {
   tasks: Task[];
-  setIsCompleted: (id: string, isCompleted: boolean) => void;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onAddTask: (task: {title: string}) => void;
@@ -25,13 +26,14 @@ type Props = {
 
 export default function TaskItemList({
   tasks,
-  setIsCompleted,
   showAddTaskDrawer,
   onTaskItemPress,
   onAddTask,
   onRemoveTask,
   onScroll,
 }: Props) {
+  const dispatch = useDispatch();
+
   const completedTasks: Task[] = [];
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
@@ -50,28 +52,39 @@ export default function TaskItemList({
     tasksWithoutDueDate.push(task);
   });
 
+  const onCompleteTask = (id: string) => {
+    dispatch(tasksActions.setIsCompleted({id, isCompleted: true}));
+  };
+
+  const onUncompleteTask = (id: string) => {
+    dispatch(tasksActions.setIsCompleted({id, isCompleted: false}));
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container} onScroll={onScroll}>
       <AddTaskItem onAddTask={onAddTask} />
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
-        setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
         onRemoveTask={onRemoveTask}
+        onCompleteTask={onCompleteTask}
+        onUncompleteTask={onUncompleteTask}
       />
       <TaskItemGroupedList
         tasks={tasksWithDueDate}
-        setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
         showAddTaskDrawer={showAddTaskDrawer}
         onRemoveTask={onRemoveTask}
+        onCompleteTask={onCompleteTask}
+        onUncompleteTask={onUncompleteTask}
       />
       <Divider />
       <CompletedTaskItemList
         tasks={completedTasks}
-        setIsCompleted={setIsCompleted}
         onTaskItemPress={onTaskItemPress}
         onRemoveTask={onRemoveTask}
+        onCompleteTask={onCompleteTask}
+        onUncompleteTask={onUncompleteTask}
       />
     </ScrollView>
   );

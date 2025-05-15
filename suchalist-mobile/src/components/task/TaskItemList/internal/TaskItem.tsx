@@ -23,16 +23,18 @@ import DeleteTaskModal from '../../../modal/DeleteTaskModal';
 
 type Props = {
   task: Task;
-  setIsCompleted: (id: string, isCompleted: boolean) => void;
   onPress: (task: Task) => void;
   onRemoveTask: (id: string) => void;
+  onCompleteTask: (id: string) => void;
+  onUncompleteTask: (id: string) => void;
 };
 
 export default function TaskItem({
   task,
-  setIsCompleted,
   onPress,
   onRemoveTask,
+  onCompleteTask,
+  onUncompleteTask,
 }: Props) {
   const {id, title, isCompleted} = task;
 
@@ -70,6 +72,7 @@ export default function TaskItem({
       } catch (e) {
         console.log('cannot play the sound file', e);
       }
+      onUncompleteTask(id);
     } else {
       try {
         setIsCompleting(true);
@@ -82,9 +85,8 @@ export default function TaskItem({
       } catch (e) {
         console.log('cannot play the sound file', e);
       }
+      onCompleteTask(id);
     }
-
-    setIsCompleted(id, isChecked);
   };
 
   const ExitingAnimation = SlideOutRight.duration(500);

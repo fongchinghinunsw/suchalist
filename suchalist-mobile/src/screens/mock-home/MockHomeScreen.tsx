@@ -48,7 +48,6 @@ export default function MockHomeScreen() {
       style={styles.background}>
       <TaskItemList
         tasks={TASKS}
-        setIsCompleted={noOp}
         showAddTaskDrawer={noOp}
         onTaskItemPress={noOp}
         onAddTask={noOp}
