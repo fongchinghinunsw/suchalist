@@ -126,6 +126,7 @@ export default function FolderHeaderItem({
             data={folderHeader.lists}
             onDragEnd={({data}) => {
               console.log('FolderHeaderItem', data);
+              console.log('folderHeader', id);
             }}
             keyExtractor={list => list.id}
             renderItem={renderItem}

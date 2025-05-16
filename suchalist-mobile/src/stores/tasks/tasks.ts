@@ -4,11 +4,19 @@ import {
   ListHeader,
 } from '@/screens/home/components/HeaderDrawer/types';
 import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
-import {Folder, List, Task} from '@/services/task-service/types';
+import {
+  Folder,
+  isFolder,
+  isList,
+  List,
+  Resource,
+  Task,
+} from '@/services/task-service/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
 import {EditTask, NewTask} from './types';
 import {getId} from './utils';
+import {RESOURCES} from '@/services/task-service/task-service';
 
 type ListMap = {
   [listId: string]: List;
@@ -18,14 +26,43 @@ type FolderMap = {
   [folderId: string]: Folder;
 };
 
+/**
+ * Represents the structure of the task management state.
+ */
 export type TasksState = {
+  /**
+   * A list of task lists and task folders.
+   */
+  resources: Resource[];
+  /**
+   * The ID of the currently selected or active task list.
+   */
   currentTaskListId: string;
+  /**
+   * A mapping of task list IDs to their corresponding task list data, this
+   * can be derived from TasksState.resources. But it's also dynamically
+   * populated while the app is running to ensure good performance.
+   */
   listMap: ListMap;
+  /**
+   * A mapping of task folder IDs to their corresponding folder data, this
+   * can be derived from TasksState.resources. But it's also dynamically
+   * populated while the app is running to ensure good performance.
+   */
   folderMap: FolderMap;
+  /**
+   * An ordered array of headers, which can represent folders or individual task lists, this
+   * can be derived from TasksState.resources. But it's also dynamically
+   * populated while the app is running to ensure good performance.
+   */
   headers: Header[];
 };
 
+/**
+ * listMap, folderMap and headers can be derived from resources.
+ */
 const initialTasksState: TasksState = {
+  resources: RESOURCES,
   currentTaskListId: DEFAULT_LIST_ID,
   listMap: {},
   folderMap: {},
@@ -37,6 +74,7 @@ const tasksSlice = createSlice({
   initialState: initialTasksState,
   reducers: {
     hydrate(_state, action: PayloadAction<TasksState>) {
+      console.log('hydating');
       return action.payload;
     },
     setCurrentTaskListId(state, action: PayloadAction<string>) {
@@ -173,14 +211,30 @@ const tasksSlice = createSlice({
       };
 
       if (folderId) {
+        const folder = state.resources.find(
+          resource => resource.id === folderId,
+        );
+
+        // Add the new list to the folder
+        if (folder && isFolder(folder)) {
+          folder.lists.push(newList);
+        }
+
+        // Add the new list to the folder map
         state.folderMap[folderId].lists.push(newList);
+
         const folderHeader = state.headers.find(
           header => isFolderHeader(header) && header.id === folderId,
         );
         if (folderHeader && isFolderHeader(folderHeader)) {
+          // Add the new list to the folder header
           folderHeader.lists.push(listHeader);
         }
       } else {
+        // Add the new list to the resources list
+        state.resources.push(newList);
+
+        // Add the new list to the headers list
         state.headers.push(listHeader);
       }
     },
@@ -189,13 +243,17 @@ const tasksSlice = createSlice({
       const title = action.payload;
       const now = new Date().toISOString();
 
-      state.folderMap[folderId] = {
+      const newFolder: Folder = {
         id: folderId,
         title,
         lists: [],
         createdAt: now,
         updatedAt: now,
       };
+
+      state.resources.push(newFolder);
+
+      state.folderMap[folderId] = newFolder;
 
       state.headers.push({
         type: 'FOLDER',
@@ -212,16 +270,32 @@ const tasksSlice = createSlice({
 
       if (folderId) {
         // Remove listId from folder's lists
-        const folder = state.headers.find(
+        const folderHeader = state.headers.find(
           h => h.type === 'FOLDER' && h.id === folderId,
         );
-        if (folder && isFolderHeader(folder)) {
-          folder.lists = folder.lists.filter(list => list.id !== listId);
+        if (folderHeader && isFolderHeader(folderHeader)) {
+          folderHeader.lists = folderHeader.lists.filter(
+            list => list.id !== listId,
+          );
+        }
+
+        const folder = state.resources.find(
+          resource => resource.id === folderId,
+        );
+
+        // Remove the list from the folder
+        if (folder && isFolder(folder)) {
+          folder.lists = folder.lists.filter(list => !(list.id === listId));
         }
       } else {
         // Remove list directly from headers
         state.headers = state.headers.filter(
           header => !(header.type === 'LIST' && header.id === listId),
+        );
+
+        // Remove list directly from resource
+        state.resources = state.resources.filter(
+          resource => !(isList(resource) && resource.id === listId),
         );
       }
 
@@ -247,7 +321,7 @@ const tasksSlice = createSlice({
         if (
           folder.lists.map(list => list.id).includes(state.currentTaskListId)
         ) {
-          // If currentTaskListId was inside this folder, reset it
+          // If currentTaskListId was inside this folder, reset it to the default list
           state.currentTaskListId = DEFAULT_LIST_ID;
         }
       }
@@ -256,6 +330,25 @@ const tasksSlice = createSlice({
       state.headers = state.headers.filter(
         header => !(header.type === 'FOLDER' && header.id === folderId),
       );
+
+      state.resources = state.resources.filter(
+        resource => !(resource.id === folderId),
+      );
+    },
+    reorderList(
+      state,
+      action: PayloadAction<{
+        headerId: string;
+        listHeaders: ListHeader[];
+      }>,
+    ) {
+      const {headerId, listHeaders} = action.payload;
+      // Modify folder's lists in folderMap
+      state.folderMap[headerId].lists = listHeaders.map(
+        header => state.listMap[header.id],
+      );
+
+      // Modify headers (may not be needed, headers should be deterministic and generated at app start)
     },
   },
 });

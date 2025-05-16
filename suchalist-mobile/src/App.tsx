@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import store, {persistor} from '@/stores';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -14,18 +14,17 @@ import {PersistGate} from 'redux-persist/integration/react';
 import RootStack from './navigations/RootStack';
 import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
 import {tasksActions} from './stores/tasks/tasks';
-import {getFakeTasksState} from './stores/tasks/utils';
+import {getTasksState} from './stores/tasks/utils';
 
 export default function App(): React.JSX.Element {
   const initialize = async () => {
-    // Hydrate initial fake state only if not already persisted
+    console.log('initializing');
+    // Hydrate initial state
     const state = store.getState();
-    const hasData = Object.keys(state.tasks.listMap).length > 0;
 
-    if (!hasData) {
-      const initialState = await getFakeTasksState();
-      store.dispatch(tasksActions.hydrate(initialState));
-    }
+    const initialState = await getTasksState(state.tasks.resources);
+    console.log({initialState});
+    store.dispatch(tasksActions.hydrate(initialState));
 
     if (Platform.OS === 'ios') {
       notifee.requestPermission();
@@ -42,12 +41,13 @@ export default function App(): React.JSX.Element {
     SplashScreen.hide();
   };
 
+  useEffect(() => {
+    initialize();
+  }, []);
+
   return (
     <ReduxStoreProvider store={store}>
-      <PersistGate
-        loading={null}
-        persistor={persistor}
-        onBeforeLift={initialize}>
+      <PersistGate loading={null} persistor={persistor}>
         <PaperProvider theme={{dark: false}}>
           <MenuProvider>
             <GestureHandlerRootView>

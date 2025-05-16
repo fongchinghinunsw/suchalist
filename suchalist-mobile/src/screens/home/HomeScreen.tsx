@@ -79,7 +79,6 @@ export default function HomeScreen() {
     backgroundImage.type === 'uri'
       ? {uri: backgroundImage.uri}
       : backgroundImage.asset;
-  console.log({source, backgroundImage});
 
   return (
     <HeaderDrawerLayout>

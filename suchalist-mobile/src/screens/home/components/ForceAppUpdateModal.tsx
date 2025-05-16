@@ -10,7 +10,6 @@ export default function ForceAppUpdateModal() {
   useEffect(() => {
     const checkIsAppOutdated = async () => {
       const isOutdated = await isAppOutdated();
-      console.log({isOutdated});
       setIsModalVisible(isOutdated);
     };
 
