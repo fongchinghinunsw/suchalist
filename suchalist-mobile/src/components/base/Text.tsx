@@ -1,8 +1,7 @@
-import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
-import {StyleSheet, Text as ReactNativeText, TextProps} from 'react-native';
 import {getColor, Shade} from '@/constants/styles';
+import {selectTheme, Theme} from '@/stores/theme';
+import {Text as ReactNativeText, StyleSheet, TextProps} from 'react-native';
+import {useSelector} from 'react-redux';
 
 type TextSize =
   | 'xxlarge'
@@ -29,7 +28,7 @@ export default function Text({
   style,
   ...otherProps
 }: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyle(theme, shade, size, tone);
 
   return (

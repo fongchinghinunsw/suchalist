@@ -1,7 +1,7 @@
+import SoundPlayer from '@/components/SoundPlayer';
 import {getColor} from '@/constants/styles';
-import {RootState} from '@/stores';
 import {Task} from '@/services/task-service/types';
-import {Theme} from '@/stores/theme';
+import {selectTheme, Theme} from '@/stores/theme';
 import {useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import Animated, {
@@ -11,7 +11,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
-import SoundPlayer from '@/components/SoundPlayer';
 
 type Props = {
   tasks: Task[];
@@ -22,7 +21,7 @@ type Props = {
 };
 
 export default function CompletedTaskItemList(props: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
 
   const [isTasksVisible, setIsTasksVisible] = useState(false);

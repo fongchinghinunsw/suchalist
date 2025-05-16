@@ -1,12 +1,11 @@
-import * as React from 'react';
-import {Switch as PaperSwitch} from 'react-native-paper';
-import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
 import {getColor} from '@/constants/styles';
 import {HookFormFieldProps} from '@/hooks/useForm';
+import {selectTheme} from '@/stores/theme';
+import * as React from 'react';
 import {Controller} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
+import {Switch as PaperSwitch} from 'react-native-paper';
+import {useSelector} from 'react-redux';
 import Text from '../Text';
 
 interface Props
@@ -24,7 +23,7 @@ export default function Switch({
   onClick,
   ...otherProps
 }: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
 
   return (
     <View style={styles.container}>

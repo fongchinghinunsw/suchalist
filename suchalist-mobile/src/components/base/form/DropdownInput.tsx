@@ -1,14 +1,13 @@
+import {getColor} from '@/constants/styles';
+import {HookFormFieldProps} from '@/hooks/useForm';
+import {selectTheme, Theme} from '@/stores/theme';
 import React, {useState} from 'react';
 import {Controller} from 'react-hook-form';
+import {StyleSheet} from 'react-native';
 import PaperDropdown, {
   DropDownPropsInterface,
 } from 'react-native-paper-dropdown';
-import {HookFormFieldProps} from '@/hooks/useForm';
 import {useSelector} from 'react-redux';
-import {Theme} from '@/stores/theme';
-import {RootState} from '@/stores';
-import {StyleSheet} from 'react-native';
-import {getColor} from '@/constants/styles';
 
 interface Props extends HookFormFieldProps {
   name: string;
@@ -25,7 +24,7 @@ export default function DropdownInput({
   control,
   options,
 }: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
 
   const [showDropDown, setShowDropDown] = useState(false);

@@ -1,15 +1,14 @@
+import {getColor} from '@/constants/styles';
+import {HookFormFieldProps} from '@/hooks/useForm';
+import {selectTheme} from '@/stores/theme';
+import {JSX} from 'react';
 import {Controller} from 'react-hook-form';
 import {StyleSheet} from 'react-native';
 import {
   TextInput as PaperTextInput,
   type TextInputProps,
 } from 'react-native-paper';
-import {HookFormFieldProps} from '@/hooks/useForm';
-import {JSX} from 'react';
-import {getColor} from '@/constants/styles';
 import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
 
 interface Props extends TextInputProps, HookFormFieldProps {
   name: string;
@@ -24,7 +23,7 @@ export default function TextInput({
   style,
   ...otherProps
 }: Props): JSX.Element {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
 
   return (
     <Controller

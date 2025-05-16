@@ -1,10 +1,9 @@
-import {useSelector} from 'react-redux';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
 import {getColor} from '@/constants/styles';
+import {selectTheme} from '@/stores/theme';
+import {useSelector} from 'react-redux';
 
 export function useNavigationTheme() {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
 
   const textColor = getColor(theme, 900);
   const backgroundColor = getColor(theme, 400);

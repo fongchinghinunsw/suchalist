@@ -1,11 +1,10 @@
 import TextInput from '@/components/base/form/TextInput';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
+import {getColor} from '@/constants/styles';
+import {selectTheme} from '@/stores/theme';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 import {Pressable} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Props} from './common';
-import {getColor} from '@/constants/styles';
 
 export default function DateTimePicker({
   name,
@@ -22,7 +21,7 @@ export default function DateTimePicker({
     timeDisplay = 'default',
   } = androidOptions;
 
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   console.log({mode});
   const showDatePicker =
     (mode === 'date' || mode === 'datetime') && isTextInputVisible;

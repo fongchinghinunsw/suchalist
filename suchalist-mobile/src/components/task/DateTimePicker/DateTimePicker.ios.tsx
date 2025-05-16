@@ -1,8 +1,7 @@
 import Button from '@/components/base/Button';
 import TextInput from '@/components/base/form/TextInput';
 import {getColor} from '@/constants/styles';
-import {RootState} from '@/stores';
-import {Theme} from '@/stores/theme';
+import {selectTheme, Theme} from '@/stores/theme';
 import {formatDate} from '@/utils/format';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {useState} from 'react';
@@ -23,7 +22,7 @@ export default function DateTimePicker({
 }: Props) {
   const {mode = 'datetime', display = 'default'} = iosOptions;
 
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
 
   const [isVisible, setIsVisible] = useState(false);

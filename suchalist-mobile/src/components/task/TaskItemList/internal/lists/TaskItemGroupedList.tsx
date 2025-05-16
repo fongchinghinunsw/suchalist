@@ -1,16 +1,15 @@
 import Text from '@/components/base/Text';
-import {RootState} from '@/stores';
+import {getColor} from '@/constants/styles';
+import {Task} from '@/services/task-service/types';
 import {TaskWithDueDate} from '@/stores/tasks/types';
-import {Theme} from '@/stores/theme';
+import {selectTheme} from '@/stores/theme';
+import Icon from '@react-native-vector-icons/ionicons';
 import {useMemo} from 'react';
+import {StyleSheet, View} from 'react-native';
 import Animated, {LinearTransition} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import TaskItem from '../TaskItem/TaskItem';
-import {StyleSheet, View} from 'react-native';
-import Icon from '@react-native-vector-icons/ionicons';
-import {getColor} from '@/constants/styles';
 import {styles as commonStyles} from './styles';
-import {Task} from '@/services/task-service/types';
 
 type Props = {
   tasks: TaskWithDueDate[];
@@ -29,7 +28,7 @@ export default function TaskItemGroupedList({
   onCompleteTask,
   onUncompleteTask,
 }: Props) {
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
 
   const sections = useMemo(() => {
     const grouped: Record<string, TaskWithDueDate[]> = {};

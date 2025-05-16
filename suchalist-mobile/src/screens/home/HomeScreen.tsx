@@ -2,10 +2,9 @@ import BottomSheet from '@/components/base/BottomSheet';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
-import {RootState} from '@/stores';
 import {selectCurrentTasks, tasksActions} from '@/stores/tasks/tasks';
 import {NewTask} from '@/stores/tasks/types';
-import {selectBackgroundImage, Theme} from '@/stores/theme';
+import {selectBackgroundImage, selectTheme, Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -28,7 +27,7 @@ export default function HomeScreen() {
   const tasks = useSelector(selectCurrentTasks);
   const dispatch = useDispatch();
 
-  const theme = useSelector<RootState, Theme>(state => state.theme.theme);
+  const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
 
   const backgroundImage = useSelector(selectBackgroundImage);
