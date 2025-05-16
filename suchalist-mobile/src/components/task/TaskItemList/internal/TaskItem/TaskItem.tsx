@@ -110,8 +110,9 @@ export default function TaskItem({
                 />
               )}
             </View>
-            <View style={styles.checkbox}>
+            <View>
               <BouncyCheckbox
+                size={24}
                 isChecked={isCompleted}
                 iconStyle={styles.checkboxIcon}
                 innerIconStyle={styles.checkboxInnerIcon}
@@ -155,21 +156,21 @@ const getStyle = (theme: Theme) => {
     completedTitle: {
       textDecorationLine: 'line-through',
     },
-    checkbox: {
-      alignSelf: 'flex-end',
-      marginLeft: 12,
-    },
     checkboxIcon: {
       borderRadius: 8,
+      marginLeft: 12,
     },
     checkboxInnerIcon: {
       borderRadius: 8,
     },
     titleWrapper: {
       // make sure a long title doesn't push the checkbox off the view
-      flex: 1,
+      flexShrink: 1,
       position: 'relative',
       justifyContent: 'center',
+    },
+    innerTitleWrapper: {
+      alignSelf: 'flex-start',
     },
     strikeThroughLine: {
       position: 'absolute',
