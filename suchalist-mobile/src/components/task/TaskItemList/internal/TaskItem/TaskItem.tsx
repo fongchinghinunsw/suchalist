@@ -166,6 +166,8 @@ const getStyle = (theme: Theme) => {
       borderRadius: 8,
     },
     titleWrapper: {
+      // make sure a long title doesn't push the checkbox off the view
+      flex: 1,
       position: 'relative',
       justifyContent: 'center',
     },
