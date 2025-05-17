@@ -1,0 +1,47 @@
+import {Task} from '@/services/task-service/types';
+import {PayloadAction} from '@reduxjs/toolkit';
+import {TasksState} from '../tasks';
+import {NewTask} from '../types';
+import {getId} from '../utils';
+
+export default function addTask(
+  state: TasksState,
+  action: PayloadAction<NewTask>,
+) {
+  const currentTasks = state.listMap[state.currentTaskListId].tasks;
+
+  const taskId = getId();
+
+  const now = new Date().toISOString();
+  const newTask: Task = {
+    ...action.payload,
+    id: taskId,
+    taskListId: state.currentTaskListId,
+    isCompleted: false,
+    isStarred: false,
+    createdAt: now,
+    updatedAt: now,
+    // recurrence:
+    //   recurrence === undefined
+    //     ? undefined
+    //     : {
+    //         ...recurrence,
+    //         originalParentId: taskId,
+    //       },
+  };
+
+  const index = currentTasks.findIndex(task => {
+    if (newTask.dueDate == null) {
+      return task.dueDate !== undefined;
+    } else {
+      if (task.dueDate == null) {
+        return false;
+      }
+
+      return (
+        new Date(task.dueDate).getTime() > new Date(newTask.dueDate).getTime()
+      );
+    }
+  });
+  currentTasks.splice(index === -1 ? 0 : index, 0, newTask);
+}

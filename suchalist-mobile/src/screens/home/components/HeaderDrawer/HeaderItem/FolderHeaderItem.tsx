@@ -126,7 +126,7 @@ export default function FolderHeaderItem({
             data={folderHeader.lists}
             onDragEnd={({from, to}) => {
               dispatch(
-                tasksActions.reorderListWithinFolder({
+                tasksActions.reorderListsWithinFolder({
                   folderHeaderId: id,
                   from,
                   to,
