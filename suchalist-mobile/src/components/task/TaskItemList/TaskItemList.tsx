@@ -20,7 +20,7 @@ type Props = {
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onAddTask: (task: {title: string}) => void;
-  onDeleteTask: (id: string) => void;
+  onDeleteTask: (listId: string, taskId: string) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
 

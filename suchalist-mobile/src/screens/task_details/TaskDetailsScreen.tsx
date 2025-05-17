@@ -16,7 +16,6 @@ const schema = z.object({
   title: z.string(),
   note: z.string().optional(),
   dueDate: z.date().optional(),
-  // recurrenceType: z.union([z.nativeEnum(RecurrenceType), z.literal('')]),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -63,12 +62,6 @@ export default function TaskDetailsScreen() {
           title,
           note,
           dueDate: dueDate?.toISOString(),
-          // recurrence:
-          //   recurrenceType === undefined || recurrenceType === ''
-          //     ? undefined
-          //     : {
-          //         type: recurrenceType,
-          //       },
         },
       }),
     );
@@ -79,8 +72,8 @@ export default function TaskDetailsScreen() {
     setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
   };
 
-  const onDeleteTask = (id: string) => {
-    dispatch(tasksActions.deleteTask(id));
+  const onDeleteTask = (listId: string, taskId: string) => {
+    dispatch(tasksActions.deleteTask({listId, taskId}));
     setIsDeleteTaskModalVisible(false);
     navigation.goBack();
   };
@@ -145,7 +138,7 @@ export default function TaskDetailsScreen() {
       <DeleteTaskModal
         taskName={task.title}
         isVisible={isDeleteTaskModalVisible}
-        onConfirm={() => onDeleteTask(task.id)}
+        onConfirm={() => onDeleteTask(task.taskListId, task.id)}
         onCancel={toggleDeleteTaskModal}
       />
     </View>

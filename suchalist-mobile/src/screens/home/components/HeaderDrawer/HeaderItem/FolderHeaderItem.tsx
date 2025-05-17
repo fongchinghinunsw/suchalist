@@ -69,6 +69,7 @@ export default function FolderHeaderItem({
       <ScaleDecorator>
         <ListHeaderItem
           listHeader={item}
+          isDeletableList={false}
           onPress={() => onPress(item.id)}
           onDrag={listDrag}
         />

@@ -25,7 +25,7 @@ type Props = {
   task: Task;
   onPress: (task: Task) => void;
   onStarTask: (id: string, isStarred: boolean) => void;
-  onDeleteTask: (id: string) => void;
+  onDeleteTask: (listId: string, taskId: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
 };
@@ -38,7 +38,7 @@ export default function TaskItem({
   onCompleteTask,
   onUncompleteTask,
 }: Props) {
-  const {id, title, isCompleted} = task;
+  const {id, taskListId, title, isCompleted} = task;
 
   const theme = useSelector(selectTheme);
   const styles = getStyle(theme);
@@ -62,7 +62,7 @@ export default function TaskItem({
   };
 
   const onConfirmDeleteTaskPressed = (taskId: string) => {
-    onDeleteTask(taskId);
+    onDeleteTask(taskListId, taskId);
     setIsDeleteTaskModalVisible(false);
   };
 

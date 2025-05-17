@@ -5,9 +5,12 @@ import {getListFromResources} from '../utils/get_list';
 
 export default function deleteTask(
   state: TasksState,
-  action: PayloadAction<string>,
+  action: PayloadAction<{
+    listId: string;
+    taskId: string;
+  }>,
 ) {
-  const taskId = action.payload;
+  const {listId, taskId} = action.payload;
 
   const currentTasks = getCurrentTasksFromListMap(state);
 
@@ -15,11 +18,11 @@ export default function deleteTask(
 
   currentTasks.splice(index, 1);
 
-  store(state, taskId);
+  store(state, listId, taskId);
 }
 
-function store(state: TasksState, taskId: string) {
-  const result = getListFromResources(state.currentTaskListId, state.resources);
+function store(state: TasksState, listId: string, taskId: string) {
+  const result = getListFromResources(listId, state.resources);
   if (result) {
     result.list.tasks = result.list.tasks.filter(task => task.id !== taskId);
   }
