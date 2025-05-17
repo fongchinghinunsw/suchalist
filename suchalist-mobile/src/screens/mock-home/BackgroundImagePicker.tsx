@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     width: 24,
     height: 24,
-    borderRadius: '100%',
+    borderRadius: 12,
   },
   backgroundPicker: {
     borderRadius: 8,
