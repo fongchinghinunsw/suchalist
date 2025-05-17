@@ -10,7 +10,10 @@ export default function addTask(
   state: TasksState,
   action: PayloadAction<NewTask>,
 ) {
-  const currentTasks = getCurrentTasksFromListMap(state);
+  const currentTasks = getCurrentTasksFromListMap(
+    state,
+    state.currentTaskListId,
+  );
 
   const taskId = getId();
 

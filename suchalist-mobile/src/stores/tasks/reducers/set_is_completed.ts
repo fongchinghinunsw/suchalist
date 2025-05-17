@@ -14,7 +14,7 @@ export default function setIsCompleted(
 ) {
   const {listId, taskId, isCompleted} = action.payload;
 
-  const currentTasks = getCurrentTasksFromListMap(state);
+  const currentTasks = getCurrentTasksFromListMap(state, listId);
 
   const task = getTask(currentTasks, taskId);
   if (task !== undefined) {

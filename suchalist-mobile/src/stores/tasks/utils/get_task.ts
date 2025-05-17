@@ -8,6 +8,9 @@ export function getTask(tasks: Task[], taskId: string) {
   }
 }
 
-export function getCurrentTasksFromListMap(state: TasksState): Task[] {
-  return state.listMap[state.currentTaskListId].tasks;
+export function getCurrentTasksFromListMap(
+  state: TasksState,
+  listId: string,
+): Task[] {
+  return state.listMap[listId].tasks;
 }

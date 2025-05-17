@@ -14,7 +14,7 @@ export default function editTask(
   }>,
 ) {
   const {listId, taskId} = action.payload;
-  const currentTasks = getCurrentTasksFromListMap(state);
+  const currentTasks = getCurrentTasksFromListMap(state, listId);
 
   const now = new Date().toISOString();
 

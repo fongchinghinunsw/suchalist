@@ -12,7 +12,7 @@ export default function deleteTask(
 ) {
   const {listId, taskId} = action.payload;
 
-  const currentTasks = getCurrentTasksFromListMap(state);
+  const currentTasks = getCurrentTasksFromListMap(state, listId);
 
   const index = currentTasks.findIndex(task => task.id === taskId);
 
