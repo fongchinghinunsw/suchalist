@@ -25,6 +25,7 @@ import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
 
 export default function HomeScreen() {
   const currentList = useSelector(selectCurrentList);
+  console.log({currentList});
   const dispatch = useDispatch();
 
   const theme = useSelector(selectTheme);

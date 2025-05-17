@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import store, {persistor} from '@/stores';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -22,7 +22,9 @@ export default function App(): React.JSX.Element {
     const state = store.getState();
 
     const initialState = await getTasksState(state.tasks.resources);
+
     store.dispatch(tasksActions.hydrate(initialState));
+    console.log('hydrated');
 
     if (Platform.OS === 'ios') {
       notifee.requestPermission();
@@ -39,13 +41,12 @@ export default function App(): React.JSX.Element {
     SplashScreen.hide();
   };
 
-  useEffect(() => {
-    initialize();
-  }, []);
-
   return (
     <ReduxStoreProvider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+        onBeforeLift={initialize}>
         <PaperProvider theme={{dark: false}}>
           <MenuProvider>
             <GestureHandlerRootView>
