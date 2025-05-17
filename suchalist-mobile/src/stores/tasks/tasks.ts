@@ -90,6 +90,7 @@ const tasksSlice = createSlice({
         id: taskId,
         taskListId: state.currentTaskListId,
         isCompleted: false,
+        isStarred: false,
         createdAt: now,
         updatedAt: now,
         // recurrence:

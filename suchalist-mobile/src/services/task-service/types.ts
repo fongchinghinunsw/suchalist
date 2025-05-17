@@ -7,6 +7,7 @@ export type Task = {
   note?: string;
   dueDate?: string;
   isCompleted: boolean;
+  isStarred: boolean;
   //   recurrence?: {
   //     type: RecurrenceType;
   //     originalParentId: string; // id of the first recurring task being created
