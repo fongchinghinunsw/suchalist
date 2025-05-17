@@ -19,6 +19,7 @@ import {useSelector} from 'react-redux';
 import Text from '../../../../base/Text';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import RightAction from './RightAction';
+import Icon from '@react-native-vector-icons/ionicons';
 
 type Props = {
   task: Task;
@@ -110,17 +111,20 @@ export default function TaskItem({
                 />
               )}
             </View>
-            <View>
-              <BouncyCheckbox
-                size={24}
-                isChecked={isCompleted}
-                iconStyle={styles.checkboxIcon}
-                innerIconStyle={styles.checkboxInnerIcon}
-                fillColor={getColor(theme, 400)}
-                onPress={(isChecked: boolean) =>
-                  onCompleteTaskCheckboxPressed(isChecked)
-                }
-              />
+            <View style={styles.rightSection}>
+              <Icon name="star-outline" size={24} style={styles.starIcon} />
+              <View>
+                <BouncyCheckbox
+                  size={24}
+                  isChecked={isCompleted}
+                  iconStyle={styles.checkboxIcon}
+                  innerIconStyle={styles.checkboxInnerIcon}
+                  fillColor={getColor(theme, 400)}
+                  onPress={(isChecked: boolean) =>
+                    onCompleteTaskCheckboxPressed(isChecked)
+                  }
+                />
+              </View>
             </View>
           </Pressable>
         </Swipeable>
@@ -152,13 +156,23 @@ const getStyle = (theme: Theme) => {
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: 12,
+      gap: 12,
     },
     completedTitle: {
       textDecorationLine: 'line-through',
     },
+    rightSection: {
+      gap: 12,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    starIcon: {
+      // backgroundColor: 'yellow',
+      color: getColor(theme, 400),
+    },
     checkboxIcon: {
       borderRadius: 8,
-      marginLeft: 12,
     },
     checkboxInnerIcon: {
       borderRadius: 8,
