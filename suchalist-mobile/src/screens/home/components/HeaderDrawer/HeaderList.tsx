@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
 import ListHeaderItem from './HeaderItem/ListHeaderItem';
 import {Header} from './types';
+import {StyleSheet} from 'react-native';
 
 type Props = {
   headers: Header[];
@@ -41,6 +42,13 @@ export default function HeaderList({headers, onPress}: Props) {
       keyExtractor={resource => resource.id}
       renderItem={renderItem}
       dragItemOverflow={false}
+      style={styles.container}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+  },
+});
