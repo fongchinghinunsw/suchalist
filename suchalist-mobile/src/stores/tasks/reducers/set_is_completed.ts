@@ -16,12 +16,14 @@ export default function setIsCompleted(
 
   const currentTasks = getCurrentTasksFromListMap(state, listId);
 
+  const now = new Date().toISOString();
   const task = getTask(currentTasks, taskId);
   if (task !== undefined) {
     task.isCompleted = isCompleted;
+    task.completedAt = isCompleted ? now : undefined;
   }
 
-  store(state, listId, taskId, isCompleted);
+  store(state, listId, taskId, isCompleted, now);
 }
 
 function store(
@@ -29,12 +31,14 @@ function store(
   listId: string,
   taskId: string,
   isCompleted: boolean,
+  now: string,
 ) {
   const result = getListFromResources(listId, state.resources);
   if (result !== undefined) {
     const taskFromResources = result.list.tasks.find(t => t.id === taskId);
     if (taskFromResources) {
       taskFromResources.isCompleted = isCompleted;
+      taskFromResources.completedAt = isCompleted ? now : undefined;
     }
   }
 }

@@ -52,6 +52,10 @@ export default function TaskItemList({
     tasksWithoutDueDate.push(task);
   });
 
+  tasksWithDueDate.sort(
+    (l1, l2) => new Date(l1.dueDate).getTime() - new Date(l2.dueDate).getTime(),
+  );
+
   const onStarTask = (taskId: string, isStarred: boolean) => {
     dispatch(tasksActions.setIsStarred({listId: list.id, taskId, isStarred}));
   };

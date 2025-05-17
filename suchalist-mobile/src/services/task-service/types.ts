@@ -14,7 +14,7 @@ export type Task = {
   //   };
   createdAt: string;
   updatedAt: string;
-  finishedAt?: string;
+  completedAt?: string;
 };
 
 export type List = {
