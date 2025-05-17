@@ -47,6 +47,7 @@ export const DEFAULT_TASKS: Task[] = [
     isStarred: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
     updatedAt: new Date(2025, 3, 5).toISOString(),
+    completedAt: new Date(2025, 3, 8).toISOString(),
   },
   {
     id: getId(),
@@ -57,6 +58,7 @@ export const DEFAULT_TASKS: Task[] = [
     isStarred: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
     updatedAt: new Date(2025, 3, 5).toISOString(),
+    completedAt: new Date(2025, 3, 10).toISOString(),
   },
   {
     id: getId(),
@@ -67,6 +69,7 @@ export const DEFAULT_TASKS: Task[] = [
     isStarred: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
     updatedAt: new Date(2025, 3, 5).toISOString(),
+    completedAt: new Date(2025, 3, 12).toISOString(),
   },
   {
     id: getId(),
@@ -87,6 +90,7 @@ export const DEFAULT_TASKS: Task[] = [
     isStarred: true,
     createdAt: new Date(2025, 6, 6).toISOString(),
     updatedAt: new Date(2025, 6, 6).toISOString(),
+    completedAt: new Date(2025, 3, 9).toISOString(),
   },
   {
     id: getId(),
@@ -97,6 +101,7 @@ export const DEFAULT_TASKS: Task[] = [
     isStarred: false,
     createdAt: new Date(2025, 6, 9).toISOString(),
     updatedAt: new Date(2025, 6, 9).toISOString(),
+    completedAt: new Date(2025, 3, 3).toISOString(),
   },
   {
     id: getId(),
@@ -127,6 +132,7 @@ export const DEFAULT_TASKS: Task[] = [
     isStarred: false,
     createdAt: new Date(2025, 8, 10).toISOString(),
     updatedAt: new Date(2025, 8, 10).toISOString(),
+    completedAt: new Date(2025, 3, 5).toISOString(),
   },
 ];
 

@@ -1,4 +1,12 @@
-import {TaskWithDueDate} from '@/stores/tasks/types';
+import Divider from '@/components/base/Divider';
+import {
+  isCompletedTask,
+  isTaskWithDueDate,
+  List,
+  Task,
+} from '@/services/task-service/types';
+import {tasksActions} from '@/stores/tasks/tasks';
+import {CompletedTask, TaskWithDueDate} from '@/stores/tasks/types';
 import React from 'react';
 import {
   NativeScrollEvent,
@@ -6,14 +14,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
+import AddTaskItem from './internal/AddTaskItem';
 import CompletedTaskItemList from './internal/lists/CompletedTaskItemList';
 import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
 import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
-import Divider from '@/components/base/Divider';
-import AddTaskItem from './internal/AddTaskItem';
-import {isTaskWithDueDate, List, Task} from '@/services/task-service/types';
-import {tasksActions} from '@/stores/tasks/tasks';
-import {useDispatch} from 'react-redux';
 
 type Props = {
   list: List;
@@ -34,12 +39,12 @@ export default function TaskItemList({
 }: Props) {
   const dispatch = useDispatch();
 
-  const completedTasks: Task[] = [];
+  const completedTasks: CompletedTask[] = [];
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
 
   list.tasks.forEach(task => {
-    if (task.isCompleted) {
+    if (isCompletedTask(task)) {
       completedTasks.push(task);
       return;
     }
@@ -54,6 +59,11 @@ export default function TaskItemList({
 
   tasksWithDueDate.sort(
     (l1, l2) => new Date(l1.dueDate).getTime() - new Date(l2.dueDate).getTime(),
+  );
+
+  completedTasks.sort(
+    (l1, l2) =>
+      new Date(l2.completedAt).getTime() - new Date(l1.completedAt).getTime(),
   );
 
   const onStarTask = (taskId: string, isStarred: boolean) => {

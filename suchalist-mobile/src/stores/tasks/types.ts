@@ -12,6 +12,8 @@ export type FinishedTask = Task & {
 
 export type TaskWithDueDate = Task & {dueDate: string};
 
+export type CompletedTask = Task & {completedAt: string};
+
 export type NewTask = Pick<Task, 'title' | 'note' | 'dueDate'>;
 
 export type EditTask = Pick<Task, 'title' | 'note' | 'dueDate'>;

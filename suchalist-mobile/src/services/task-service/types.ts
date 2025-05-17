@@ -1,4 +1,4 @@
-import {TaskWithDueDate} from '@/stores/tasks/types';
+import {CompletedTask, TaskWithDueDate} from '@/stores/tasks/types';
 
 export type Task = {
   id: string;
@@ -52,4 +52,8 @@ export function isList(resource: List | Folder): resource is List {
 
 export function isTaskWithDueDate(task: Task): task is TaskWithDueDate {
   return task.dueDate !== undefined;
+}
+
+export function isCompletedTask(task: Task): task is CompletedTask {
+  return task.isCompleted === true && task.completedAt !== undefined;
 }
