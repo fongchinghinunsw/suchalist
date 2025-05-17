@@ -35,13 +35,6 @@ export default function addList(
   };
 
   if (folderId) {
-    const folder = state.resources.find(resource => resource.id === folderId);
-
-    // Add the new list to the folder
-    if (folder && isFolder(folder)) {
-      folder.lists.push(newList);
-    }
-
     // Add the new list to the folder map
     state.folderMap[folderId].lists.push(newList);
 
@@ -53,10 +46,22 @@ export default function addList(
       folderHeader.lists.push(listHeader);
     }
   } else {
-    // Add the new list to the resources list
-    state.resources.push(newList);
-
     // Add the new list to the headers list
     state.headers.push(listHeader);
+  }
+
+  store(state, folderId, newList);
+}
+
+function store(state: TasksState, folderId: string | undefined, newList: List) {
+  if (folderId) {
+    const folder = state.resources.find(resource => resource.id === folderId);
+
+    // Add the new list to the folder
+    if (folder && isFolder(folder)) {
+      folder.lists.push(newList);
+    }
+  } else {
+    state.resources.push(newList);
   }
 }

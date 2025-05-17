@@ -31,6 +31,10 @@ export default function deleteFolder(
     header => !(header.type === 'FOLDER' && header.id === folderId),
   );
 
+  store(state, folderId);
+}
+
+function store(state: TasksState, folderId: string) {
   state.resources = state.resources.filter(
     resource => !(resource.id === folderId),
   );

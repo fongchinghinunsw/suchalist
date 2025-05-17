@@ -19,8 +19,6 @@ export default function addFolder(
     updatedAt: now,
   };
 
-  state.resources.push(newFolder);
-
   state.folderMap[folderId] = newFolder;
 
   state.headers.push({
@@ -28,4 +26,10 @@ export default function addFolder(
     id: folderId,
     lists: [],
   });
+
+  store(state, newFolder);
+}
+
+function store(state: TasksState, newFolder: Folder) {
+  state.resources.push(newFolder);
 }

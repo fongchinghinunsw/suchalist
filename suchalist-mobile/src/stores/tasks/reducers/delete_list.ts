@@ -1,8 +1,9 @@
+import {isFolderHeader} from '@/screens/home/components/HeaderDrawer/types';
+import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
+import {isList} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
-import {isFolderHeader} from '@/screens/home/components/HeaderDrawer/types';
-import {isFolder, isList} from '@/services/task-service/types';
-import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
+import {getListFromResources} from '../utils/get_list';
 
 export default function deleteList(
   state: TasksState,
@@ -24,27 +25,33 @@ export default function deleteList(
         list => list.id !== listId,
       );
     }
-
-    const folder = state.resources.find(resource => resource.id === folderId);
-
-    // Remove the list from the folder
-    if (folder && isFolder(folder)) {
-      folder.lists = folder.lists.filter(list => !(list.id === listId));
-    }
   } else {
     // Remove list directly from headers
     state.headers = state.headers.filter(
       header => !(header.type === 'LIST' && header.id === listId),
-    );
-
-    // Remove list directly from resource
-    state.resources = state.resources.filter(
-      resource => !(isList(resource) && resource.id === listId),
     );
   }
 
   // Reset currentTaskListId if it was the one removed
   if (state.currentTaskListId === listId) {
     state.currentTaskListId = DEFAULT_LIST_ID;
+  }
+
+  store(state, listId);
+}
+
+function store(state: TasksState, listId: string) {
+  const result = getListFromResources(listId, state.resources);
+  if (result) {
+    const {folder} = result;
+    if (folder) {
+      // Remove the list from the folder
+      folder.lists = folder.lists.filter(l => !(l.id === listId));
+    } else {
+      // Remove list directly from resource
+      state.resources = state.resources.filter(
+        resource => !(isList(resource) && resource.id === listId),
+      );
+    }
   }
 }

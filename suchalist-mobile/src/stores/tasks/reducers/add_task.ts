@@ -4,6 +4,7 @@ import {TasksState} from '../tasks';
 import {NewTask} from '../types';
 import {getId} from '../utils/utils';
 import getCurrentTasksFromListMap from '../utils/get_current_tasks';
+import {getListFromResources} from '../utils/get_list';
 
 export default function addTask(
   state: TasksState,
@@ -22,13 +23,6 @@ export default function addTask(
     isStarred: false,
     createdAt: now,
     updatedAt: now,
-    // recurrence:
-    //   recurrence === undefined
-    //     ? undefined
-    //     : {
-    //         ...recurrence,
-    //         originalParentId: taskId,
-    //       },
   };
 
   const index = currentTasks.findIndex(task => {
@@ -45,4 +39,13 @@ export default function addTask(
     }
   });
   currentTasks.splice(index === -1 ? 0 : index, 0, newTask);
+
+  store(state, state.currentTaskListId, newTask);
+}
+
+function store(state: TasksState, listId: string, newTask: Task) {
+  const result = getListFromResources(listId, state.resources);
+  if (result !== undefined) {
+    result.list.tasks.push(newTask);
+  }
 }
