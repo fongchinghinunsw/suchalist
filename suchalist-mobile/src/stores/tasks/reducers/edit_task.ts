@@ -1,6 +1,7 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
 import {EditTask} from '../types';
+import {getCurrentTasks} from '../utils/get_current_tasks';
 
 export default function editTask(
   state: TasksState,
@@ -9,7 +10,7 @@ export default function editTask(
     task: EditTask;
   }>,
 ) {
-  const currentTasks = state.listMap[state.currentTaskListId].tasks;
+  const currentTasks = getCurrentTasks(state);
 
   const now = new Date().toISOString();
 

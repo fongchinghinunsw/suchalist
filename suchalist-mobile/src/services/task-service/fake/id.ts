@@ -1,4 +1,4 @@
-import {getId} from '@/stores/tasks/utils';
+import {getId} from '@/stores/tasks/utils/utils';
 
 export const DEFAULT_LIST_ID = 'DEFAULT';
 

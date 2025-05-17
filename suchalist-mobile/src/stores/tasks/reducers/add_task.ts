@@ -2,13 +2,14 @@ import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
 import {NewTask} from '../types';
-import {getId} from '../utils';
+import {getId} from '../utils/utils';
+import {getCurrentTasks} from '../utils/get_current_tasks';
 
 export default function addTask(
   state: TasksState,
   action: PayloadAction<NewTask>,
 ) {
-  const currentTasks = state.listMap[state.currentTaskListId].tasks;
+  const currentTasks = getCurrentTasks(state);
 
   const taskId = getId();
 

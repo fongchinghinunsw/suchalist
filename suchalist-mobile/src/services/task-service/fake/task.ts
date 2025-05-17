@@ -1,5 +1,5 @@
 import {Task} from '@/services/task-service/types';
-import {getId} from '@/stores/tasks/utils';
+import {getId} from '@/stores/tasks/utils/utils';
 import {
   DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,

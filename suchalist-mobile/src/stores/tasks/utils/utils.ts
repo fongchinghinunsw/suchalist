@@ -5,7 +5,7 @@ import {
 import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 import {isFolder, isList, Resource} from '@/services/task-service/types';
 import uuid from 'react-native-uuid';
-import {TasksState} from './tasks';
+import {TasksState} from '../tasks';
 
 export const getId = () => {
   return uuid.v4();

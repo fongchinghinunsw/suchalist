@@ -14,7 +14,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import RootStack from './navigations/RootStack';
 import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
 import {tasksActions} from './stores/tasks/tasks';
-import {getTasksState} from './stores/tasks/utils';
+import {getTasksState} from './stores/tasks/utils/utils';
 
 export default function App(): React.JSX.Element {
   const initialize = async () => {

@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
-import {getId} from '../utils';
+import {getId} from '../utils/utils';
 import {Folder} from '@/services/task-service/types';
 
 export default function addFolder(
