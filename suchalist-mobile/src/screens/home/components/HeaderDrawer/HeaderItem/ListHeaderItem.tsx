@@ -16,7 +16,7 @@ import {useState} from 'react';
 type Props = {
   listHeader: ListHeader;
   onPress: (taskListId: string) => void;
-  onDrag: () => void;
+  onDrag?: () => void;
 };
 
 export default function ListHeaderItem({

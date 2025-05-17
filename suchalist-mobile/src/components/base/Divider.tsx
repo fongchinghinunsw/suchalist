@@ -1,10 +1,14 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 
-export default function Divider() {
-  return <View style={styles.divider} />;
+type Props = {
+  styles?: ViewStyle;
+};
+
+export default function Divider({styles}: Props) {
+  return <View style={[internalStyles.divider, styles]} />;
 }
 
-const styles = StyleSheet.create({
+const internalStyles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: '#ccc', // or getColor(theme, 200)

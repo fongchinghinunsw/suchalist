@@ -28,3 +28,7 @@ export type Header = ListHeader | FolderHeader;
 export function isFolderHeader(header: Header): header is FolderHeader {
   return header.type === 'FOLDER';
 }
+
+export function isListHeader(header: Header): header is ListHeader {
+  return header.type === 'LIST';
+}

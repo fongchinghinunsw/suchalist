@@ -1,13 +1,14 @@
-import {tasksActions} from '@/stores/tasks/tasks';
+import {selectDefaultListHeader, tasksActions} from '@/stores/tasks/tasks';
+import {StyleSheet} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
 import ListHeaderItem from './HeaderItem/ListHeaderItem';
 import {Header} from './types';
-import {StyleSheet} from 'react-native';
+import Divider from '@/components/base/Divider';
 
 type Props = {
   headers: Header[];
@@ -16,6 +17,7 @@ type Props = {
 
 export default function HeaderList({headers, onPress}: Props) {
   const dispatch = useDispatch();
+  const defaultListHeader = useSelector(selectDefaultListHeader);
 
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
@@ -34,21 +36,30 @@ export default function HeaderList({headers, onPress}: Props) {
   };
 
   return (
-    <DraggableFlatList
-      data={headers}
-      onDragEnd={({from, to}) => {
-        dispatch(tasksActions.reorderTopLevelResources({from, to}));
-      }}
-      keyExtractor={resource => resource.id}
-      renderItem={renderItem}
-      dragItemOverflow={false}
-      style={styles.container}
-    />
+    <>
+      <ListHeaderItem listHeader={defaultListHeader} onPress={onPress} />
+      <Divider styles={styles.divider} />
+      <DraggableFlatList
+        data={headers}
+        onDragEnd={({from, to}) => {
+          dispatch(
+            tasksActions.reorderTopLevelResources({from: from + 1, to: to + 1}),
+          );
+        }}
+        keyExtractor={resource => resource.id}
+        renderItem={renderItem}
+        dragItemOverflow={false}
+        style={styles.container}
+      />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+  },
+  divider: {
+    marginHorizontal: 10,
   },
 });

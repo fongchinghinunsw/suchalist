@@ -1,8 +1,8 @@
-import {Header} from '@/screens/home/components/HeaderDrawer/types';
+import {Header, ListHeader} from '@/screens/home/components/HeaderDrawer/types';
 import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 import {RESOURCES} from '@/services/task-service/task-service';
 import {Folder, List, Resource, Task} from '@/services/task-service/types';
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
 import addFolder from './reducers/add_folder';
 import addList from './reducers/add_list';
@@ -91,6 +91,8 @@ const tasksSlice = createSlice({
   },
 });
 
+const selectTasksState = (state: RootState) => state.tasks;
+
 export const selectCurrentList = (state: RootState): List => {
   return state.tasks.listMap[state.tasks.currentTaskListId] ?? [];
 };
@@ -99,16 +101,33 @@ export const selectCurrentTasks = (state: RootState): Task[] => {
   return state.tasks.listMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };
 
-export const selectListMap = (state: RootState): ListMap => {
-  return state.tasks.listMap ?? {};
-};
+export const selectListMap = createSelector(
+  [selectTasksState],
+  tasks => tasks.listMap,
+);
 
 export const selectFolderMap = (state: RootState): FolderMap => {
   return state.tasks.folderMap ?? {};
 };
 
-export const selectHeaders = (state: RootState): Header[] =>
-  state.tasks.headers ?? [];
+const selectAllHeaders = createSelector(
+  [selectTasksState],
+  tasks => tasks.headers,
+);
+
+export const selectHeaders = createSelector(
+  [selectAllHeaders],
+  (headers): Header[] =>
+    headers.filter((header: Header) => header.id !== DEFAULT_LIST_ID),
+);
+
+export const selectDefaultListHeader = createSelector(
+  [selectListMap],
+  (listMap): ListHeader => ({
+    type: 'LIST',
+    ...listMap[DEFAULT_LIST_ID],
+  }),
+);
 
 export const tasksActions = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;
