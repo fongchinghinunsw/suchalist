@@ -18,12 +18,10 @@ import {getTasksState} from './stores/tasks/utils';
 
 export default function App(): React.JSX.Element {
   const initialize = async () => {
-    console.log('initializing');
     // Hydrate initial state
     const state = store.getState();
 
     const initialState = await getTasksState(state.tasks.resources);
-    console.log({initialState});
     store.dispatch(tasksActions.hydrate(initialState));
 
     if (Platform.OS === 'ios') {

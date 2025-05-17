@@ -34,7 +34,6 @@ export default function Switch({
         name={name}
         control={control}
         render={({field: {onChange, value}}) => {
-          console.log('Inside Switch:', value);
           return (
             <PaperSwitch
               value={value}

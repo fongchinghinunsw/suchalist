@@ -22,23 +22,30 @@ export default function DateTimePicker({
   } = androidOptions;
 
   const theme = useSelector(selectTheme);
-  console.log({mode});
+
+  const selectedValue = value ?? new Date();
+
   const showDatePicker =
     (mode === 'date' || mode === 'datetime') && isTextInputVisible;
   const showTimePicker =
     (mode === 'time' || mode === 'datetime') && isTextInputVisible;
 
+  const dateTimeDisplay =
+    value !== undefined
+      ? showDatePicker
+        ? value.toLocaleDateString()
+        : value.toLocaleTimeString()
+      : '';
+
   const onShowDatePicker = () => {
-    console.log('onShowDatePicker');
     DateTimePickerAndroid.open({
       mode: 'date',
       display: dateDisplay,
-      value,
+      value: selectedValue,
       style: {
         backgroundColor: getColor(theme, 600),
       },
       onChange: (event, date?: Date) => {
-        console.log('onShowDatePicker', {date, value});
         switch (event.type) {
           case 'set':
             if (date) {
@@ -56,13 +63,11 @@ export default function DateTimePicker({
   };
 
   const onShowTimePicker = () => {
-    console.log('onShowTimePicker');
     DateTimePickerAndroid.open({
       mode: 'time',
       display: timeDisplay,
-      value,
+      value: selectedValue,
       onChange: (event, date?: Date) => {
-        console.log('onShowTimePicker', {date, value});
         switch (event.type) {
           case 'set':
             if (date) {
@@ -88,7 +93,7 @@ export default function DateTimePicker({
             label="Date"
             editable={false}
             control={control}
-            value={value.toLocaleDateString()}
+            value={dateTimeDisplay}
           />
         </Pressable>
       )}
@@ -100,7 +105,7 @@ export default function DateTimePicker({
             label="Time"
             editable={false}
             control={control}
-            value={value.toLocaleTimeString()}
+            value={dateTimeDisplay}
           />
         </Pressable>
       )}

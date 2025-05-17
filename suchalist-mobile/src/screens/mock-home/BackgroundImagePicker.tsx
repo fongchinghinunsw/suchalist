@@ -82,7 +82,6 @@ export default function BackgroundImagePicker({
       showsHorizontalScrollIndicator={false}>
       {images.map((image, index) => {
         const isSelected = selectedImage === image;
-        console.log({image, index});
         const source = image.type === 'uri' ? {uri: image.uri} : image.asset;
         const isCustom = image.type === 'uri';
 

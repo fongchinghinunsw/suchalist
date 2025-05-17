@@ -74,7 +74,6 @@ const tasksSlice = createSlice({
   initialState: initialTasksState,
   reducers: {
     hydrate(_state, action: PayloadAction<TasksState>) {
-      console.log('hydating');
       return action.payload;
     },
     setCurrentTaskListId(state, action: PayloadAction<string>) {

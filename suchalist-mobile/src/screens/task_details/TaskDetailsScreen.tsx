@@ -51,7 +51,6 @@ export default function TaskDetailsScreen() {
   });
 
   useEffect(() => {
-    console.log({values: getValues()});
     trigger(); // triggers all form validations when component is mounted
   }, [getValues, trigger]);
 
@@ -93,7 +92,6 @@ export default function TaskDetailsScreen() {
   const mode = 'date';
 
   const isSaveTaskButtonDisabled = !isValid || isLoading;
-  console.log({isValid, isLoading});
 
   return (
     <View style={styles.container}>

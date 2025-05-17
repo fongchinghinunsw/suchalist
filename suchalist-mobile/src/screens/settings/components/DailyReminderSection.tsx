@@ -38,7 +38,6 @@ export default function DailyReminderSection() {
   const isEnabled = useSelector<RootState, boolean>(
     state => state.notification.dailyReminder.isEnabled,
   );
-  console.log({isEnabled});
 
   const {control, watch, setValue} = useForm<Schema>({
     schema,
@@ -57,12 +56,10 @@ export default function DailyReminderSection() {
 
   const onToggleReminder = (value: boolean) => {
     if (value) {
-      console.log('toggleReminder', {value});
       dispatch(
         notificationActions.setDailyReminder(timeWatchValue.toISOString()),
       );
     } else {
-      console.log('untoggleReminder');
       dispatch(notificationActions.disableDailyReminder());
       cancelReminder();
     }
