@@ -54,6 +54,10 @@ export default function CompletedTaskItemList(props: Props) {
     setIsTasksVisible(!isTasksVisible);
   };
 
+  const buttonText = isTasksVisible
+    ? 'Hide Completed Tasks'
+    : 'Show Completed Tasks';
+
   return (
     <>
       <Animated.View style={[styles.buttonContainer, animatedStyle]}>
@@ -62,7 +66,7 @@ export default function CompletedTaskItemList(props: Props) {
           onPress={toggleTasks}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}>
-          <Text style={styles.buttonText}>Show Completed Tasks</Text>
+          <Text style={styles.buttonText}>{buttonText}</Text>
         </Pressable>
       </Animated.View>
       {isTasksVisible && (
