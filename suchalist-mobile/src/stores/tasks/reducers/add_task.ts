@@ -3,7 +3,7 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
 import {NewTask} from '../types';
 import {getId} from '../utils/utils';
-import getCurrentTasksFromListMap from '../utils/get_current_tasks';
+import {getCurrentTasksFromListMap} from '../utils/get_task';
 import {getListFromResources} from '../utils/get_list';
 
 export default function addTask(

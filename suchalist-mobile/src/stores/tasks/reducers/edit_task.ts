@@ -1,7 +1,7 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
 import {EditTask} from '../types';
-import getCurrentTasksFromListMap from '../utils/get_current_tasks';
+import {getCurrentTasksFromListMap} from '../utils/get_task';
 
 export default function editTask(
   state: TasksState,

@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
-import getCurrentTasksFromListMap from '../utils/get_current_tasks';
+import {getCurrentTasksFromListMap} from '../utils/get_task';
 
 export default function deleteTask(
   state: TasksState,
