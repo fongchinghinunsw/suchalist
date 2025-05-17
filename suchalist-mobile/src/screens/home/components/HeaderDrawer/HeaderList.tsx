@@ -29,7 +29,12 @@ export default function HeaderList({headers, onPress}: Props) {
             onDrag={drag}
           />
         ) : (
-          <ListHeaderItem listHeader={item} onPress={onPress} onDrag={drag} />
+          <ListHeaderItem
+            listHeader={item}
+            isDeletableList={true}
+            onPress={onPress}
+            onDrag={drag}
+          />
         )}
       </ScaleDecorator>
     );
@@ -37,7 +42,11 @@ export default function HeaderList({headers, onPress}: Props) {
 
   return (
     <>
-      <ListHeaderItem listHeader={defaultListHeader} onPress={onPress} />
+      <ListHeaderItem
+        listHeader={defaultListHeader}
+        isDeletableList={false}
+        onPress={onPress}
+      />
       <Divider styles={styles.divider} />
       <DraggableFlatList
         data={headers}

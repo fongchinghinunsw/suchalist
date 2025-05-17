@@ -1,7 +1,7 @@
 import Text from '@/components/base/Text';
 import {selectListMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Pressable, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {
   Menu,
   MenuOption,
@@ -11,16 +11,29 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {ListHeader} from '../types';
 import DeleteListModal from '@/components/modal/DeleteListModal';
-import {useState} from 'react';
+import {ComponentProps, useState} from 'react';
+
+type Option = {
+  title: string;
+  icon: {
+    name: ComponentProps<typeof Icon>['name'];
+    color: string;
+    size: number;
+  };
+  onSelect: () => void;
+  style?: StyleProp<ViewStyle>;
+};
 
 type Props = {
   listHeader: ListHeader;
+  isDeletableList: boolean;
   onPress: (taskListId: string) => void;
   onDrag?: () => void;
 };
 
 export default function ListHeaderItem({
   listHeader: {id},
+  isDeletableList,
   onPress,
   onDrag,
 }: Props) {
@@ -40,6 +53,20 @@ export default function ListHeaderItem({
     dispatch(tasksActions.deleteList(id));
   };
 
+  const menuOptions: Option[] = [];
+  if (isDeletableList) {
+    menuOptions.push({
+      title: 'Delete List',
+      icon: {
+        name: 'trash-outline',
+        color: 'red',
+        size: 16,
+      },
+      onSelect: toggleDeleteListModal,
+      style: styles.menuOption,
+    });
+  }
+
   return (
     <>
       <Pressable
@@ -51,25 +78,34 @@ export default function ListHeaderItem({
           <Icon name="list-outline" size={16} />
           <Text size="large">{list.title}</Text>
         </View>
-        <Menu>
-          <MenuTrigger>
-            <Icon name="ellipsis-horizontal-outline" size={16} />
-          </MenuTrigger>
-          <MenuOptions
-            customStyles={{
-              optionsContainer: {
-                padding: 8,
-                borderRadius: 10,
-              },
-            }}>
-            <MenuOption
-              style={styles.menuOption}
-              onSelect={toggleDeleteListModal}>
-              <Icon name="trash-outline" color="red" size={16} />
-              <Text>Delete List</Text>
-            </MenuOption>
-          </MenuOptions>
-        </Menu>
+        {menuOptions.length > 0 && (
+          <Menu>
+            <MenuTrigger>
+              <Icon name="ellipsis-horizontal-outline" size={16} />
+            </MenuTrigger>
+            <MenuOptions
+              customStyles={{
+                optionsContainer: {
+                  padding: 8,
+                  borderRadius: 10,
+                },
+              }}>
+              {menuOptions.map(option => (
+                <MenuOption
+                  key={option.title}
+                  style={option.style}
+                  onSelect={option.onSelect}>
+                  <Icon
+                    name={option.icon.name}
+                    color={option.icon.color}
+                    size={option.icon.size}
+                  />
+                  <Text>{option.title}</Text>
+                </MenuOption>
+              ))}
+            </MenuOptions>
+          </Menu>
+        )}
       </Pressable>
       <DeleteListModal
         listName={list.title}
