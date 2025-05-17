@@ -89,6 +89,10 @@ const tasksSlice = createSlice({
   },
 });
 
+export const selectCurrentList = (state: RootState): List => {
+  return state.tasks.listMap[state.tasks.currentTaskListId] ?? [];
+};
+
 export const selectCurrentTasks = (state: RootState): Task[] => {
   return state.tasks.listMap[state.tasks.currentTaskListId]?.tasks ?? [];
 };

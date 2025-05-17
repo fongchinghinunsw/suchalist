@@ -2,7 +2,7 @@ import BottomSheet from '@/components/base/BottomSheet';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
-import {selectCurrentTasks, tasksActions} from '@/stores/tasks/tasks';
+import {selectCurrentList, tasksActions} from '@/stores/tasks/tasks';
 import {NewTask} from '@/stores/tasks/types';
 import {selectBackgroundImage, selectTheme, Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
@@ -24,7 +24,7 @@ import ForceAppUpdateModal from './components/ForceAppUpdateModal';
 import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
 
 export default function HomeScreen() {
-  const tasks = useSelector(selectCurrentTasks);
+  const currentList = useSelector(selectCurrentList);
   const dispatch = useDispatch();
 
   const theme = useSelector(selectTheme);
@@ -89,7 +89,7 @@ export default function HomeScreen() {
         <ForceAppUpdateModal />
 
         <TaskItemList
-          tasks={tasks}
+          list={currentList}
           showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
           onTaskItemPress={(task: Task) =>
             navigation.push('TaskDetails', {task})

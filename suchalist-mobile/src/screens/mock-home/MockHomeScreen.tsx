@@ -10,7 +10,7 @@ import {useLayoutEffect, useState} from 'react';
 import {ImageBackground, Pressable, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import BackgroundImagePicker from './BackgroundImagePicker';
-import {TASKS} from './fake';
+import {LIST} from './fake';
 
 export default function MockHomeScreen() {
   const backgroundImage = useSelector(selectBackgroundImage);
@@ -47,7 +47,7 @@ export default function MockHomeScreen() {
       resizeMode="cover"
       style={styles.background}>
       <TaskItemList
-        tasks={TASKS}
+        list={LIST}
         showAddTaskDrawer={noOp}
         onTaskItemPress={noOp}
         onAddTask={noOp}

@@ -11,12 +11,12 @@ import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
 import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 import Divider from '@/components/base/Divider';
 import AddTaskItem from './internal/AddTaskItem';
-import {isTaskWithDueDate, Task} from '@/services/task-service/types';
+import {isTaskWithDueDate, List, Task} from '@/services/task-service/types';
 import {tasksActions} from '@/stores/tasks/tasks';
 import {useDispatch} from 'react-redux';
 
 type Props = {
-  tasks: Task[];
+  list: List;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onAddTask: (task: {title: string}) => void;
@@ -25,7 +25,7 @@ type Props = {
 };
 
 export default function TaskItemList({
-  tasks,
+  list,
   showAddTaskDrawer,
   onTaskItemPress,
   onAddTask,
@@ -38,7 +38,7 @@ export default function TaskItemList({
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
 
-  tasks.forEach(task => {
+  list.tasks.forEach(task => {
     if (task.isCompleted) {
       completedTasks.push(task);
       return;
@@ -52,12 +52,20 @@ export default function TaskItemList({
     tasksWithoutDueDate.push(task);
   });
 
-  const onCompleteTask = (id: string) => {
-    dispatch(tasksActions.setIsCompleted({id, isCompleted: true}));
+  const onCompleteTask = (taskId: string) => {
+    dispatch(
+      tasksActions.setIsCompleted({listId: list.id, taskId, isCompleted: true}),
+    );
   };
 
-  const onUncompleteTask = (id: string) => {
-    dispatch(tasksActions.setIsCompleted({id, isCompleted: false}));
+  const onUncompleteTask = (taskId: string) => {
+    dispatch(
+      tasksActions.setIsCompleted({
+        listId: list.id,
+        taskId,
+        isCompleted: false,
+      }),
+    );
   };
 
   return (

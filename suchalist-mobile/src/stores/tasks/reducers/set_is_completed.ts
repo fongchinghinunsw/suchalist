@@ -1,27 +1,29 @@
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
-import {getCurrentTasks} from '../utils/get_current_tasks';
+import getCurrentTasksFromListMap from '../utils/get_current_tasks';
+import {getListFromResources} from '../utils/get_list';
+import getTask from '../utils/get_task';
 
 export default function setIsCompleted(
   state: TasksState,
   action: PayloadAction<{
-    id: string;
+    listId: string;
+    taskId: string;
     isCompleted: boolean;
   }>,
 ) {
-  const currentTasks = getCurrentTasks(state);
+  const {listId, taskId, isCompleted} = action.payload;
 
-  const index = currentTasks.findIndex(task => task.id === action.payload.id);
-  if (index !== -1) {
-    currentTasks[index].isCompleted = action.payload.isCompleted;
+  const currentTasks = getCurrentTasksFromListMap(state);
 
-    // const tasks = mayBeCreateNextNRecurringTasks(
-    //   state.tasks[index],
-    //   state.tasks.slice(index + 1),
-    //   4,
-    // );
-    // state.tasks.push(...tasks);
-    currentTasks.sort();
-    // console.log('setIsCompleted', state.tasks);
+  const task = getTask(currentTasks, taskId);
+  if (task !== undefined) {
+    task.isCompleted = isCompleted;
+  }
+
+  const list = getListFromResources(listId, state.resources);
+  const taskFromResources = list?.tasks.find(t => t.id === taskId);
+  if (taskFromResources) {
+    taskFromResources.isCompleted = isCompleted;
   }
 }
