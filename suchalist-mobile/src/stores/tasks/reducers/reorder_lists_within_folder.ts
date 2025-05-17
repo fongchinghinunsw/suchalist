@@ -31,8 +31,12 @@ export default function reorderListsWithinFolder(
     folderHeader.lists.splice(to, 0, movedHeader);
   }
 
+  store(state, folderHeaderId, from, to);
+}
+
+function store(state: TasksState, folderId: string, from: number, to: number) {
   const folder = state.resources.find(
-    resource => resource.id === folderHeaderId && isFolder(resource),
+    resource => resource.id === folderId && isFolder(resource),
   );
 
   if (folder && isFolder(folder)) {

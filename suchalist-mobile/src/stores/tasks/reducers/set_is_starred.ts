@@ -21,6 +21,15 @@ export default function setIsStarred(
     task.isStarred = isStarred;
   }
 
+  store(state, listId, taskId, isStarred);
+}
+
+function store(
+  state: TasksState,
+  listId: string,
+  taskId: string,
+  isStarred: boolean,
+) {
   const result = getListFromResources(listId, state.resources);
   if (result !== undefined) {
     const taskFromResources = result.list.tasks.find(t => t.id === taskId);

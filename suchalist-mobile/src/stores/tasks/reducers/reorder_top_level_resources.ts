@@ -14,9 +14,13 @@ export default function reorderTopLevelResources(
     return;
   }
 
-  const [movedResource] = state.resources.splice(from, 1);
-  state.resources.splice(to, 0, movedResource);
-
   const [movedHeader] = state.headers.splice(from, 1);
   state.headers.splice(to, 0, movedHeader);
+
+  store(state, from, to);
+}
+
+function store(state: TasksState, from: number, to: number) {
+  const [movedResource] = state.resources.splice(from, 1);
+  state.resources.splice(to, 0, movedResource);
 }

@@ -21,6 +21,15 @@ export default function setIsCompleted(
     task.isCompleted = isCompleted;
   }
 
+  store(state, listId, taskId, isCompleted);
+}
+
+function store(
+  state: TasksState,
+  listId: string,
+  taskId: string,
+  isCompleted: boolean,
+) {
   const result = getListFromResources(listId, state.resources);
   if (result !== undefined) {
     const taskFromResources = result.list.tasks.find(t => t.id === taskId);
