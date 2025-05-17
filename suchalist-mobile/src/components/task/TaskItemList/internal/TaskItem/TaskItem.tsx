@@ -112,7 +112,12 @@ export default function TaskItem({
               )}
             </View>
             <View style={styles.rightSection}>
-              <Icon name="star-outline" size={24} style={styles.starIcon} />
+              <Icon
+                name={task.isStarred ? 'star' : 'star-outline'}
+                size={24}
+                color={getColor('yellow', 400)}
+                style={[!task.isStarred && styles.starIcon]}
+              />
               <View>
                 <BouncyCheckbox
                   size={24}
@@ -168,7 +173,6 @@ const getStyle = (theme: Theme) => {
       alignItems: 'center',
     },
     starIcon: {
-      // backgroundColor: 'yellow',
       color: getColor(theme, 400),
     },
     checkboxIcon: {
