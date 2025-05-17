@@ -24,6 +24,7 @@ import Icon from '@react-native-vector-icons/ionicons';
 type Props = {
   task: Task;
   onPress: (task: Task) => void;
+  onStarTask: (id: string, isStarred: boolean) => void;
   onDeleteTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
@@ -32,6 +33,7 @@ type Props = {
 export default function TaskItem({
   task,
   onPress,
+  onStarTask,
   onDeleteTask,
   onCompleteTask,
   onUncompleteTask,
@@ -117,6 +119,7 @@ export default function TaskItem({
                 size={24}
                 color={getColor('yellow', 400)}
                 style={[!task.isStarred && styles.starIcon]}
+                onPress={() => onStarTask(id, !task.isStarred)}
               />
               <View>
                 <BouncyCheckbox

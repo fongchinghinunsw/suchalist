@@ -8,6 +8,7 @@ import {styles} from './styles';
 type Props = {
   tasks: Task[];
   onTaskItemPress: (task: Task) => void;
+  onStarTask: (id: string, isStarred: boolean) => void;
   onDeleteTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
@@ -16,6 +17,7 @@ type Props = {
 export default function TaskItemUngroupedList({
   tasks,
   onTaskItemPress,
+  onStarTask,
   onDeleteTask,
   onCompleteTask,
   onUncompleteTask,
@@ -29,6 +31,7 @@ export default function TaskItemUngroupedList({
           key={task.id}
           task={task}
           onPress={onTaskItemPress}
+          onStarTask={onStarTask}
           onDeleteTask={onDeleteTask}
           onCompleteTask={onCompleteTask}
           onUncompleteTask={onUncompleteTask}

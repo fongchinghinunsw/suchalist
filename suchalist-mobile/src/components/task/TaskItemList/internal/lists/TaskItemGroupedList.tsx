@@ -15,6 +15,7 @@ type Props = {
   tasks: TaskWithDueDate[];
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
+  onStarTask: (id: string, isStarred: boolean) => void;
   onDeleteTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;
@@ -24,6 +25,7 @@ export default function TaskItemGroupedList({
   tasks,
   showAddTaskDrawer,
   onTaskItemPress,
+  onStarTask,
   onDeleteTask,
   onCompleteTask,
   onUncompleteTask,
@@ -52,6 +54,7 @@ export default function TaskItemGroupedList({
       <TaskItem
         task={task}
         onPress={onTaskItemPress}
+        onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}

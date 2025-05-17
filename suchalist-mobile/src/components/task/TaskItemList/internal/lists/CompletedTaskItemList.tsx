@@ -15,6 +15,7 @@ import TaskItemUngroupedList from './TaskItemUngroupedList';
 type Props = {
   tasks: Task[];
   onTaskItemPress: (task: Task) => void;
+  onStarTask: (id: string, isStarred: boolean) => void;
   onDeleteTask: (id: string) => void;
   onCompleteTask: (id: string) => void;
   onUncompleteTask: (id: string) => void;

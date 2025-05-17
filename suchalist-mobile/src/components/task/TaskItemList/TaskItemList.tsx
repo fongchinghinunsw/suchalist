@@ -52,6 +52,10 @@ export default function TaskItemList({
     tasksWithoutDueDate.push(task);
   });
 
+  const onStarTask = (taskId: string, isStarred: boolean) => {
+    dispatch(tasksActions.setIsStarred({listId: list.id, taskId, isStarred}));
+  };
+
   const onCompleteTask = (taskId: string) => {
     dispatch(
       tasksActions.setIsCompleted({listId: list.id, taskId, isCompleted: true}),
@@ -74,6 +78,7 @@ export default function TaskItemList({
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
         onTaskItemPress={onTaskItemPress}
+        onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}
@@ -82,6 +87,7 @@ export default function TaskItemList({
         tasks={tasksWithDueDate}
         showAddTaskDrawer={showAddTaskDrawer}
         onTaskItemPress={onTaskItemPress}
+        onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}
@@ -90,6 +96,7 @@ export default function TaskItemList({
       <CompletedTaskItemList
         tasks={completedTasks}
         onTaskItemPress={onTaskItemPress}
+        onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}
         onCompleteTask={onCompleteTask}
         onUncompleteTask={onUncompleteTask}
