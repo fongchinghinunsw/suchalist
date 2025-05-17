@@ -1,7 +1,9 @@
+import {tasksActions} from '@/stores/tasks/tasks';
 import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
+import {useDispatch} from 'react-redux';
 import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
 import ListHeaderItem from './HeaderItem/ListHeaderItem';
 import {Header} from './types';
@@ -12,6 +14,8 @@ type Props = {
 };
 
 export default function HeaderList({headers, onPress}: Props) {
+  const dispatch = useDispatch();
+
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
       <ScaleDecorator>
@@ -31,8 +35,8 @@ export default function HeaderList({headers, onPress}: Props) {
   return (
     <DraggableFlatList
       data={headers}
-      onDragEnd={({data}) => {
-        console.log('HeaderList', data);
+      onDragEnd={({from, to}) => {
+        dispatch(tasksActions.reorderTopLevelResources({from, to}));
       }}
       keyExtractor={resource => resource.id}
       renderItem={renderItem}

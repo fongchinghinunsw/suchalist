@@ -335,20 +335,64 @@ const tasksSlice = createSlice({
         resource => !(resource.id === folderId),
       );
     },
-    reorderList(
+    reorderListWithinFolder(
       state,
       action: PayloadAction<{
-        headerId: string;
-        listHeaders: ListHeader[];
+        folderHeaderId: string;
+        from: number;
+        to: number;
       }>,
     ) {
-      const {headerId, listHeaders} = action.payload;
-      // Modify folder's lists in folderMap
-      state.folderMap[headerId].lists = listHeaders.map(
-        header => state.listMap[header.id],
+      const {folderHeaderId, from, to} = action.payload;
+
+      if (from === to) {
+        return;
+      }
+
+      // Update folder's lists in folderMap based on the new list headers
+      const [movedResource] = state.folderMap[folderHeaderId].lists.splice(
+        from,
+        1,
+      );
+      state.folderMap[folderHeaderId].lists.splice(to, 0, movedResource);
+
+      // Modify folder header (may not be needed, headers should be deterministic and generated at app start, but could be good for performance
+      // so that no need to generate the whole headers by processing all the resources again)
+      const folderHeader = state.headers.find(
+        header => header.id === folderHeaderId,
+      );
+      if (folderHeader && isFolderHeader(folderHeader)) {
+        const [movedHeader] = folderHeader.lists.splice(from, 1);
+        folderHeader.lists.splice(to, 0, movedHeader);
+      }
+
+      const folder = state.resources.find(
+        resource => resource.id === folderHeaderId && isFolder(resource),
       );
 
-      // Modify headers (may not be needed, headers should be deterministic and generated at app start)
+      if (folder && isFolder(folder)) {
+        const [movedHeader] = folder.lists.splice(from, 1);
+        folder.lists.splice(to, 0, movedHeader);
+      }
+    },
+    reorderTopLevelResources(
+      state,
+      action: PayloadAction<{
+        from: number;
+        to: number;
+      }>,
+    ) {
+      const {from, to} = action.payload;
+
+      if (from === to) {
+        return;
+      }
+
+      const [movedResource] = state.resources.splice(from, 1);
+      state.resources.splice(to, 0, movedResource);
+
+      const [movedHeader] = state.headers.splice(from, 1);
+      state.headers.splice(to, 0, movedHeader);
     },
   },
 });

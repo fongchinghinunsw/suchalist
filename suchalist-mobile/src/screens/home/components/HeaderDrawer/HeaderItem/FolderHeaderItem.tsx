@@ -1,4 +1,6 @@
 import Text from '@/components/base/Text';
+import AddListModal from '@/components/modal/AddListModal';
+import DeleteFolderModal from '@/components/modal/DeleteFolderModal';
 import {selectFolderMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
@@ -16,8 +18,6 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {FolderHeader, ListHeader} from '../types';
 import ListHeaderItem from './ListHeaderItem';
-import AddListModal from '@/components/modal/AddListModal';
-import DeleteFolderModal from '@/components/modal/DeleteFolderModal';
 
 type Props = {
   folderHeader: FolderHeader;
@@ -124,9 +124,14 @@ export default function FolderHeaderItem({
         <View style={styles.listsContainer}>
           <DraggableFlatList
             data={folderHeader.lists}
-            onDragEnd={({data}) => {
-              console.log('FolderHeaderItem', data);
-              console.log('folderHeader', id);
+            onDragEnd={({from, to}) => {
+              dispatch(
+                tasksActions.reorderListWithinFolder({
+                  folderHeaderId: id,
+                  from,
+                  to,
+                }),
+              );
             }}
             keyExtractor={list => list.id}
             renderItem={renderItem}
