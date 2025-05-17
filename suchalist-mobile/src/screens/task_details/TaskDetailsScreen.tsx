@@ -57,7 +57,8 @@ export default function TaskDetailsScreen() {
     const {title, note, dueDate} = data;
     dispatch(
       tasksActions.editTask({
-        id: task.id,
+        listId: task.taskListId,
+        taskId: task.id,
         task: {
           title,
           note,

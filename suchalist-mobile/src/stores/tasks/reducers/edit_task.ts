@@ -8,11 +8,12 @@ import {getCurrentTasksFromListMap} from '../utils/get_task';
 export default function editTask(
   state: TasksState,
   action: PayloadAction<{
-    id: string;
+    listId: string;
+    taskId: string;
     task: EditTask;
   }>,
 ) {
-  const taskId = action.payload.id;
+  const {listId, taskId} = action.payload;
   const currentTasks = getCurrentTasksFromListMap(state);
 
   const now = new Date().toISOString();
@@ -32,11 +33,16 @@ export default function editTask(
 
   currentTasks[index] = newTask;
 
-  store(state, taskId, newTask);
+  store(state, listId, taskId, newTask);
 }
 
-function store(state: TasksState, taskId: string, updatedTask: Task) {
-  const result = getListFromResources(state.currentTaskListId, state.resources);
+function store(
+  state: TasksState,
+  listId: string,
+  taskId: string,
+  updatedTask: Task,
+) {
+  const result = getListFromResources(listId, state.resources);
   if (result) {
     const index = result.list.tasks.findIndex(t => t.id === taskId);
     if (index !== -1) {
