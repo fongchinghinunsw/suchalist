@@ -4,7 +4,10 @@ import {ComponentProps, ReactNode} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 
 type Props = {
-  icon: ComponentProps<typeof Icon>['name'];
+  icon: {
+    name: ComponentProps<typeof Icon>['name'];
+    color?: ComponentProps<typeof Icon>['color'];
+  };
   title: string;
   rightSection: ReactNode;
   onPress: () => void;
@@ -25,7 +28,7 @@ export default function BaseHeaderItem({
       onPress={onPress}
       onLongPress={onLongPress}>
       <View style={styles.leftSection}>
-        <Icon name={icon} size={16} />
+        <Icon name={icon.name} color={icon.color} size={16} />
         <Text size="large">{title}</Text>
       </View>
       {rightSection}

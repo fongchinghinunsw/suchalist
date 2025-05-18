@@ -55,6 +55,9 @@ export default function HeaderList({headers, onPress}: Props) {
       <ListHeaderItem
         listHeader={starredListHeader}
         isDeletableList={false}
+        icon={{
+          name: 'star',
+        }}
         onPress={onPress}
       />
       <Divider styles={styles.divider} />

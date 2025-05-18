@@ -85,7 +85,7 @@ export default function FolderHeaderItem({
   return (
     <>
       <BaseHeaderItem
-        icon="folder-open-outline"
+        icon={{name: 'folder-open-outline'}}
         title={folder.title}
         rightSection={
           <View style={styles.iconContainer}>

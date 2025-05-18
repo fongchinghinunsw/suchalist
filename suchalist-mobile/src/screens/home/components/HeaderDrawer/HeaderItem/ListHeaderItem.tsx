@@ -18,7 +18,7 @@ type Option = {
   title: string;
   icon: {
     name: ComponentProps<typeof Icon>['name'];
-    color: string;
+    color: ComponentProps<typeof Icon>['color'];
     size: number;
   };
   onSelect: () => void;
@@ -28,6 +28,9 @@ type Option = {
 type Props = {
   listHeader: ListHeader;
   isDeletableList: boolean;
+  icon?: {
+    name?: ComponentProps<typeof Icon>['name'];
+  };
   onPress: (taskListId: string) => void;
   onDrag?: () => void;
 };
@@ -35,6 +38,7 @@ type Props = {
 export default function ListHeaderItem({
   listHeader: {id},
   isDeletableList,
+  icon = {},
   onPress,
   onDrag,
 }: Props) {
@@ -71,7 +75,7 @@ export default function ListHeaderItem({
   return (
     <>
       <BaseHeaderItem
-        icon="list-outline"
+        icon={{name: icon.name ?? 'list-outline'}}
         title={list.title}
         rightSection={
           menuOptions.length > 0 && (
