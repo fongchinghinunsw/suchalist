@@ -2,6 +2,7 @@ import Divider from '@/components/base/Divider';
 import {
   selectDefaultListHeader,
   selectStarredListHeader,
+  selectTodayListHeader,
   tasksActions,
 } from '@/stores/tasks/tasks';
 import {StyleSheet} from 'react-native';
@@ -23,6 +24,7 @@ export default function HeaderList({headers, onPress}: Props) {
   const dispatch = useDispatch();
   const defaultListHeader = useSelector(selectDefaultListHeader);
   const starredListHeader = useSelector(selectStarredListHeader);
+  const todayListHeader = useSelector(selectTodayListHeader);
 
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
@@ -58,6 +60,11 @@ export default function HeaderList({headers, onPress}: Props) {
         icon={{
           name: 'star',
         }}
+        onPress={onPress}
+      />
+      <ListHeaderItem
+        listHeader={todayListHeader}
+        isDeletableList={false}
         onPress={onPress}
       />
       <Divider styles={styles.divider} />

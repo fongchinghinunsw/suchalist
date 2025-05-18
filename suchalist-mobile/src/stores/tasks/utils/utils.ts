@@ -5,8 +5,15 @@ import {
 import {
   DEFAULT_LIST_ID,
   STARRED_LIST_ID,
+  TODAY_LIST_ID,
 } from '@/services/task-service/fake/id';
-import {isFolder, isList, List, Resource} from '@/services/task-service/types';
+import {
+  isFolder,
+  isList,
+  List,
+  Resource,
+  Task,
+} from '@/services/task-service/types';
 import uuid from 'react-native-uuid';
 import {TasksState} from '../tasks';
 
@@ -26,9 +33,30 @@ export async function getTasksState(
   };
 
   const now = new Date().toISOString();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const isDueToday = (task: Task) => {
+    if (!task.dueDate) {
+      return false;
+    }
+
+    const due = new Date(task.dueDate);
+    due.setHours(0, 0, 0, 0);
+    return due.getTime() === today.getTime();
+  };
+
   const starredList: List = {
     id: STARRED_LIST_ID,
     title: 'Starred',
+    tasks: [],
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  const todayList: List = {
+    id: TODAY_LIST_ID,
+    title: 'Today',
     tasks: [],
     createdAt: now,
     updatedAt: now,
@@ -43,6 +71,10 @@ export async function getTasksState(
           if (task.isStarred) {
             starredList.tasks.push(task);
           }
+
+          if (isDueToday(task)) {
+            todayList.tasks.push(task);
+          }
         });
       });
 
@@ -55,6 +87,10 @@ export async function getTasksState(
       resource.tasks.forEach(task => {
         if (task.isStarred) {
           starredList.tasks.push(task);
+        }
+
+        if (isDueToday(task)) {
+          todayList.tasks.push(task);
         }
       });
 
@@ -70,6 +106,12 @@ export async function getTasksState(
   state.headers.push({
     type: 'LIST',
     id: STARRED_LIST_ID,
+  });
+
+  state.listMap[TODAY_LIST_ID] = todayList;
+  state.headers.push({
+    type: 'LIST',
+    id: TODAY_LIST_ID,
   });
 
   return state;

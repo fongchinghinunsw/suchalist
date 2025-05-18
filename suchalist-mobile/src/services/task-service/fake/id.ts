@@ -4,6 +4,8 @@ export const DEFAULT_LIST_ID = 'DEFAULT';
 
 export const STARRED_LIST_ID = 'STARRED';
 
+export const TODAY_LIST_ID = 'TODAY';
+
 export const GROCERY_LIST_ID = getId();
 
 export const EXERCISE_LIST_ID = getId();

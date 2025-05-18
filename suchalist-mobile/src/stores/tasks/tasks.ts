@@ -2,6 +2,7 @@ import {Header, ListHeader} from '@/screens/home/components/HeaderDrawer/types';
 import {
   DEFAULT_LIST_ID,
   STARRED_LIST_ID,
+  TODAY_LIST_ID,
 } from '@/services/task-service/fake/id';
 import {FAKE_RESOURCES} from '@/services/task-service/task-service';
 import {Folder, List, Resource, Task} from '@/services/task-service/types';
@@ -116,7 +117,10 @@ export const selectFolderMap = (state: RootState): FolderMap => {
 export const selectIsCurrentListGenerated = createSelector(
   [selectTasksState],
   tasks => {
-    return tasks.currentTaskListId === STARRED_LIST_ID;
+    return (
+      tasks.currentTaskListId === STARRED_LIST_ID ||
+      tasks.currentTaskListId === TODAY_LIST_ID
+    );
   },
 );
 
@@ -130,7 +134,9 @@ export const selectHeaders = createSelector(
   (headers): Header[] =>
     headers.filter(
       (header: Header) =>
-        header.id !== DEFAULT_LIST_ID && header.id !== STARRED_LIST_ID,
+        header.id !== DEFAULT_LIST_ID &&
+        header.id !== STARRED_LIST_ID &&
+        header.id !== TODAY_LIST_ID,
     ),
 );
 
@@ -147,6 +153,14 @@ export const selectStarredListHeader = createSelector(
   (listMap): ListHeader => ({
     type: 'LIST',
     ...listMap[STARRED_LIST_ID],
+  }),
+);
+
+export const selectTodayListHeader = createSelector(
+  [selectListMap],
+  (listMap): ListHeader => ({
+    type: 'LIST',
+    ...listMap[TODAY_LIST_ID],
   }),
 );
 
