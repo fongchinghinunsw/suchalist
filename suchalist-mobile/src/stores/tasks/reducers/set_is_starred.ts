@@ -2,7 +2,7 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
 import {getCurrentTasksFromListMap} from '../utils/get_task';
 import {getListFromResources} from '../utils/get_list';
-import {getTask} from '../utils/get_task';
+import {getTaskIndex} from '../utils/get_task';
 
 export default function setIsStarred(
   state: TasksState,
@@ -16,9 +16,12 @@ export default function setIsStarred(
 
   const currentTasks = getCurrentTasksFromListMap(state, listId);
 
-  const task = getTask(currentTasks, taskId);
-  if (task !== undefined) {
-    task.isStarred = isStarred;
+  const index = getTaskIndex(currentTasks, taskId);
+  if (index !== -1) {
+    currentTasks[index] = {
+      ...currentTasks[index],
+      isStarred,
+    };
   }
 
   store(state, listId, taskId, isStarred);

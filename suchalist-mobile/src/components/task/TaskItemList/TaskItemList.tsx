@@ -39,6 +39,7 @@ export default function TaskItemList({
   onDeleteTask,
   onScroll,
 }: Props) {
+  console.log('TaskItemList', list.tasks);
   const dispatch = useDispatch();
 
   const completedTasks: CompletedTask[] = [];

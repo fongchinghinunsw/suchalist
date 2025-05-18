@@ -2,28 +2,63 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../tasks';
 import {getCurrentTasksFromListMap} from '../utils/get_task';
 import {getListFromResources} from '../utils/get_list';
-import {getTask} from '../utils/get_task';
+import {getTaskIndex} from '../utils/get_task';
+import {Task} from '@/services/task-service/types';
+import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
 
 export default function setIsCompleted(
   state: TasksState,
   action: PayloadAction<{
-    listId: string;
-    taskId: string;
+    task: Task;
     isCompleted: boolean;
   }>,
 ) {
-  const {listId, taskId, isCompleted} = action.payload;
+  const {task, isCompleted} = action.payload;
+  const listId = task.taskListId;
+  const taskId = task.id;
 
-  const currentTasks = getCurrentTasksFromListMap(state, listId);
+  console.log({listId, taskId, isCompleted});
+
+  const tasksFromListMap = getCurrentTasksFromListMap(state, listId);
 
   const now = new Date().toISOString();
-  const task = getTask(currentTasks, taskId);
-  if (task !== undefined) {
-    task.isCompleted = isCompleted;
-    task.completedAt = isCompleted ? now : undefined;
-  }
+  const index = getTaskIndex(tasksFromListMap, taskId);
 
-  store(state, listId, taskId, isCompleted, now);
+  if (index !== -1) {
+    const newTask: Task = {
+      ...tasksFromListMap[index],
+      isCompleted,
+      completedAt: isCompleted ? now : undefined,
+    };
+
+    tasksFromListMap[index] = newTask;
+
+    updateGeneratedList(state, task, isCompleted, now);
+
+    store(state, listId, taskId, isCompleted, now);
+  }
+}
+
+function updateGeneratedList(
+  state: TasksState,
+  task: Task,
+  isCompleted: boolean,
+  now: string,
+) {
+  if (task.isStarred) {
+    console.log(
+      'updateGeneratedList',
+      state.currentTaskListId,
+      task.title,
+      isCompleted,
+    );
+    const index = state.listMap[STARRED_LIST_ID].tasks.findIndex(t => t.id);
+    if (index !== -1) {
+      const t = state.listMap[STARRED_LIST_ID].tasks[index];
+      t.isCompleted = isCompleted;
+      t.completedAt = now;
+    }
+  }
 }
 
 function store(
