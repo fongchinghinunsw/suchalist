@@ -1,10 +1,11 @@
+import {TODAY_LIST_ID} from '@/services/task-service/fake/id';
 import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../../tasks';
 import {NewTask} from '../../types';
-import {getId} from '../../utils/utils';
-import {getCurrentTasksFromListMap} from '../../utils/get_task';
 import {getListFromResources} from '../../utils/get_list';
+import {getCurrentTasksFromListMap} from '../../utils/get_task';
+import {getId, getToday, isDueToday} from '../../utils/utils';
 
 export default function addTask(
   state: TasksState,
@@ -43,7 +44,15 @@ export default function addTask(
   });
   currentTasks.splice(index === -1 ? 0 : index, 0, newTask);
 
+  updateGeneratedList(state, newTask);
+
   store(state, state.currentTaskListId, newTask);
+}
+
+function updateGeneratedList(state: TasksState, task: Task) {
+  if (isDueToday(task, getToday())) {
+    state.listMap[TODAY_LIST_ID].tasks.push(task);
+  }
 }
 
 function store(state: TasksState, listId: string, newTask: Task) {

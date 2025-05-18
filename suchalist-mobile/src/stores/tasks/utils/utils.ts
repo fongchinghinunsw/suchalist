@@ -33,18 +33,7 @@ export async function getTasksState(
   };
 
   const now = new Date().toISOString();
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const isDueToday = (task: Task) => {
-    if (!task.dueDate) {
-      return false;
-    }
-
-    const due = new Date(task.dueDate);
-    due.setHours(0, 0, 0, 0);
-    return due.getTime() === today.getTime();
-  };
+  const today = getToday();
 
   const starredList: List = {
     id: STARRED_LIST_ID,
@@ -72,7 +61,7 @@ export async function getTasksState(
             starredList.tasks.push(task);
           }
 
-          if (isDueToday(task)) {
+          if (isDueToday(task, today)) {
             todayList.tasks.push(task);
           }
         });
@@ -89,7 +78,7 @@ export async function getTasksState(
           starredList.tasks.push(task);
         }
 
-        if (isDueToday(task)) {
+        if (isDueToday(task, today)) {
           todayList.tasks.push(task);
         }
       });
@@ -116,3 +105,19 @@ export async function getTasksState(
 
   return state;
 }
+
+export const isDueToday = (task: Task, today: Date) => {
+  if (!task.dueDate) {
+    return false;
+  }
+
+  const due = new Date(task.dueDate);
+  due.setHours(0, 0, 0, 0);
+  return due.getTime() === today.getTime();
+};
+
+export const getToday = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+};
