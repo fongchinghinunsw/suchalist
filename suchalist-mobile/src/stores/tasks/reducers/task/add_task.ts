@@ -1,11 +1,14 @@
-import {TODAY_LIST_ID} from '@/services/task-service/fake/id';
+import {
+  NEXT_SEVEN_DAYS_LIST_ID,
+  TODAY_LIST_ID,
+} from '@/services/task-service/fake/id';
 import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../../tasks';
 import {NewTask} from '../../types';
 import {getListFromResources} from '../../utils/get_list';
 import {getCurrentTasksFromListMap} from '../../utils/get_task';
-import {getId, isDueToday} from '../../utils/utils';
+import {getId, isDueToday, isDueWithin7Days} from '../../utils/utils';
 
 export default function addTask(
   state: TasksState,
@@ -52,6 +55,10 @@ export default function addTask(
 function updateGeneratedList(state: TasksState, task: Task) {
   if (isDueToday(task)) {
     state.listMap[TODAY_LIST_ID].tasks.push(task);
+  }
+
+  if (isDueWithin7Days(task)) {
+    state.listMap[NEXT_SEVEN_DAYS_LIST_ID].tasks.push(task);
   }
 }
 

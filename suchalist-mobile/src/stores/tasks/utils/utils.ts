@@ -94,7 +94,7 @@ export async function getTasksState(
           todayList.tasks.push(task);
         }
 
-        if (isDueWithinNextDays(task, 7)) {
+        if (isDueWithin7Days(task)) {
           nextSevenDaysList.tasks.push(task);
         }
       });
@@ -132,7 +132,11 @@ export const isDueToday = (task: Task) => {
   return isDueWithinNextDays(task, 1);
 };
 
-export const isDueWithinNextDays = (task: Task, days: number = 7) => {
+export const isDueWithin7Days = (task: Task) => {
+  return isDueWithinNextDays(task, 7);
+};
+
+export const isDueWithinNextDays = (task: Task, days: number) => {
   const dueDate = task.dueDate;
 
   if (!dueDate) {
