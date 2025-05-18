@@ -4,7 +4,7 @@ import TextInput from '../base/form/TextInput';
 import Modal from '../base/Modal';
 
 export const addListSchema = z.object({
-  title: z.string().min(1),
+  title: z.string().trim().min(1),
 });
 
 export type AddListSchema = z.infer<typeof addListSchema>;

@@ -13,6 +13,7 @@ import addFolder from './reducers/folder/add_folder';
 import addList from './reducers/list/add_list';
 import addTask from './reducers/task/add_task';
 import deleteFolder from './reducers/folder/delete_folder';
+import renameFolder from './reducers/folder/rename_folder';
 import deleteList from './reducers/list/delete_list';
 import deleteTask from './reducers/task/delete_task';
 import editTask from './reducers/task/edit_task';
@@ -90,6 +91,7 @@ const tasksSlice = createSlice({
     addList,
     addFolder,
     deleteList,
+    renameFolder,
     deleteFolder,
     reorderListsWithinFolder,
     reorderTopLevelResources,

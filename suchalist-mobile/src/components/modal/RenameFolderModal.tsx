@@ -3,21 +3,23 @@ import * as z from 'zod';
 import TextInput from '../base/form/TextInput';
 import Modal from '../base/Modal';
 
-export const addFolderSchema = z.object({
+export const renameFolderSchema = z.object({
   title: z.string().trim().min(1),
 });
 
-export type AddFolderSchema = z.infer<typeof addFolderSchema>;
+export type RenameFolderSchema = z.infer<typeof renameFolderSchema>;
 
 type Props = {
+  defaultTitle: string;
   isVisible: boolean;
-  onAddFolder: (title: string) => void;
+  onRenameFolder: (newTitle: string) => void;
   onCancel: () => void;
 };
 
-export default function AddFolderModal({
+export default function RenameFolderModal({
+  defaultTitle,
   isVisible,
-  onAddFolder,
+  onRenameFolder,
   onCancel,
 }: Props) {
   const {
@@ -25,21 +27,21 @@ export default function AddFolderModal({
     handleSubmit,
     setValue,
     formState: {isValid},
-  } = useForm<AddFolderSchema>({
-    schema: addFolderSchema,
+  } = useForm<RenameFolderSchema>({
+    schema: renameFolderSchema,
     defaultValues: {
-      title: '',
+      title: defaultTitle,
     },
   });
 
-  const onConfirm = (data: AddFolderSchema) => {
-    onAddFolder(data.title);
+  const onConfirm = (data: RenameFolderSchema) => {
+    onRenameFolder(data.title);
     setValue('title', '');
   };
 
   return (
     <Modal
-      title="Add a new folder"
+      title="Rename the folder"
       content={
         <TextInput
           name="title"
@@ -51,7 +53,7 @@ export default function AddFolderModal({
       }
       isVisible={isVisible}
       primaryButton={{
-        label: 'Add Folder',
+        label: 'Rename Folder',
         disabled: !isValid,
         onClick: handleSubmit(onConfirm),
       }}

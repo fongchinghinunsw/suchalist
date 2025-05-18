@@ -1,6 +1,7 @@
 import Text from '@/components/base/Text';
 import AddListModal from '@/components/modal/AddListModal';
 import DeleteFolderModal from '@/components/modal/DeleteFolderModal';
+import RenameFolderModal from '@/components/modal/RenameFolderModal';
 import {selectFolderMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
 import {useState} from 'react';
@@ -34,6 +35,8 @@ export default function FolderHeaderItem({
   const {id} = folderHeader;
 
   const [isAddListModalVisible, setIsAddListModalVisible] = useState(false);
+  const [isRenameFolderModalVisible, setIsRenameFolderModalVisible] =
+    useState(false);
   const [isDeleteFolderModalVisible, setIsDeleteFolderModalVisible] =
     useState(false);
 
@@ -48,6 +51,10 @@ export default function FolderHeaderItem({
     setIsAddListModalVisible(!isAddListModalVisible);
   };
 
+  const toggleRenameFolderModal = () => {
+    setIsRenameFolderModalVisible(!isRenameFolderModalVisible);
+  };
+
   const toggleDeleteFolderModal = () => {
     setIsDeleteFolderModalVisible(!isDeleteFolderModalVisible);
   };
@@ -55,6 +62,11 @@ export default function FolderHeaderItem({
   const onAddList = (title: string) => {
     dispatch(tasksActions.addList({title, folderId: folderHeader.id}));
     toggleAddListModal();
+  };
+
+  const onRenameFolder = (newTitle: string) => {
+    dispatch(tasksActions.renameFolder({folder, newTitle}));
+    toggleRenameFolderModal();
   };
 
   const onDeleteFolder = () => {
@@ -108,6 +120,12 @@ export default function FolderHeaderItem({
                 </MenuOption>
                 <MenuOption
                   style={styles.menuOption}
+                  onSelect={toggleRenameFolderModal}>
+                  <Icon name="create-outline" size={16} />
+                  <Text>Rename Folder</Text>
+                </MenuOption>
+                <MenuOption
+                  style={styles.menuOption}
                   onSelect={toggleDeleteFolderModal}>
                   <Icon name="trash-outline" color="red" size={16} />
                   <Text>Delete Folder</Text>
@@ -143,6 +161,12 @@ export default function FolderHeaderItem({
         isVisible={isAddListModalVisible}
         onAddList={onAddList}
         onCancel={toggleAddListModal}
+      />
+      <RenameFolderModal
+        defaultTitle={folder.title}
+        isVisible={isRenameFolderModalVisible}
+        onRenameFolder={onRenameFolder}
+        onCancel={toggleRenameFolderModal}
       />
       <DeleteFolderModal
         folderName={folder.title}
