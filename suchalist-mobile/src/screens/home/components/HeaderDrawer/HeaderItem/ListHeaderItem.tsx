@@ -1,7 +1,9 @@
 import Text from '@/components/base/Text';
+import DeleteListModal from '@/components/modal/DeleteListModal';
 import {selectListMap, tasksActions} from '@/stores/tasks/tasks';
 import Icon from '@react-native-vector-icons/ionicons';
-import {Pressable, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {ComponentProps, useState} from 'react';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {
   Menu,
   MenuOption,
@@ -10,8 +12,7 @@ import {
 } from 'react-native-popup-menu';
 import {useDispatch, useSelector} from 'react-redux';
 import {ListHeader} from '../types';
-import DeleteListModal from '@/components/modal/DeleteListModal';
-import {ComponentProps, useState} from 'react';
+import BaseHeaderItem from './BaseHeaderItem';
 
 type Option = {
   title: string;
@@ -69,44 +70,42 @@ export default function ListHeaderItem({
 
   return (
     <>
-      <Pressable
-        style={styles.container}
+      <BaseHeaderItem
+        icon="list-outline"
+        title={list.title}
+        rightSection={
+          menuOptions.length > 0 && (
+            <Menu>
+              <MenuTrigger>
+                <Icon name="ellipsis-horizontal-outline" size={16} />
+              </MenuTrigger>
+              <MenuOptions
+                customStyles={{
+                  optionsContainer: {
+                    padding: 8,
+                    borderRadius: 10,
+                  },
+                }}>
+                {menuOptions.map(option => (
+                  <MenuOption
+                    key={option.title}
+                    style={option.style}
+                    onSelect={option.onSelect}>
+                    <Icon
+                      name={option.icon.name}
+                      color={option.icon.color}
+                      size={option.icon.size}
+                    />
+                    <Text>{option.title}</Text>
+                  </MenuOption>
+                ))}
+              </MenuOptions>
+            </Menu>
+          )
+        }
         onPress={() => onPress(id)}
         onLongPress={onDrag}
-        delayLongPress={250}>
-        <View style={styles.title}>
-          <Icon name="list-outline" size={16} />
-          <Text size="large">{list.title}</Text>
-        </View>
-        {menuOptions.length > 0 && (
-          <Menu>
-            <MenuTrigger>
-              <Icon name="ellipsis-horizontal-outline" size={16} />
-            </MenuTrigger>
-            <MenuOptions
-              customStyles={{
-                optionsContainer: {
-                  padding: 8,
-                  borderRadius: 10,
-                },
-              }}>
-              {menuOptions.map(option => (
-                <MenuOption
-                  key={option.title}
-                  style={option.style}
-                  onSelect={option.onSelect}>
-                  <Icon
-                    name={option.icon.name}
-                    color={option.icon.color}
-                    size={option.icon.size}
-                  />
-                  <Text>{option.title}</Text>
-                </MenuOption>
-              ))}
-            </MenuOptions>
-          </Menu>
-        )}
-      </Pressable>
+      />
       <DeleteListModal
         listName={list.title}
         isVisible={isDeleteListModalVisible}
@@ -118,17 +117,6 @@ export default function ListHeaderItem({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-  },
-  title: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
   menuOption: {
     flexDirection: 'row',
     alignItems: 'center',

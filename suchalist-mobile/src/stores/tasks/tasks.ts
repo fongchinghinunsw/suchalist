@@ -1,6 +1,6 @@
 import {Header, ListHeader} from '@/screens/home/components/HeaderDrawer/types';
 import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
-import {INITIAL_RESOURCES} from '@/services/task-service/task-service';
+import {FAKE_RESOURCES} from '@/services/task-service/task-service';
 import {Folder, List, Resource, Task} from '@/services/task-service/types';
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
@@ -60,7 +60,7 @@ export type TasksState = {
  * listMap, folderMap and headers can be derived from resources.
  */
 const initialTasksState: TasksState = {
-  resources: INITIAL_RESOURCES,
+  resources: FAKE_RESOURCES,
   currentTaskListId: DEFAULT_LIST_ID,
   listMap: {},
   folderMap: {},

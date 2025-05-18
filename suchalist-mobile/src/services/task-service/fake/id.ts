@@ -2,6 +2,8 @@ import {getId} from '@/stores/tasks/utils/utils';
 
 export const DEFAULT_LIST_ID = 'DEFAULT';
 
+export const STARRED_LIST_ID = 'STARRED';
+
 export const GROCERY_LIST_ID = getId();
 
 export const EXERCISE_LIST_ID = getId();
