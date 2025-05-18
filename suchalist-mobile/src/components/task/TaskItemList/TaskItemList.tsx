@@ -72,17 +72,14 @@ export default function TaskItemList({
     dispatch(tasksActions.setIsStarred({listId: list.id, taskId, isStarred}));
   };
 
-  const onCompleteTask = (taskId: string) => {
-    dispatch(
-      tasksActions.setIsCompleted({listId: list.id, taskId, isCompleted: true}),
-    );
+  const onCompleteTask = (task: Task) => {
+    dispatch(tasksActions.setIsCompleted({task, isCompleted: true}));
   };
 
-  const onUncompleteTask = (taskId: string) => {
+  const onUncompleteTask = (task: Task) => {
     dispatch(
       tasksActions.setIsCompleted({
-        listId: list.id,
-        taskId,
+        task,
         isCompleted: false,
       }),
     );

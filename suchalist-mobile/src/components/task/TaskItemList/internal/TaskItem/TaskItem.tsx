@@ -26,8 +26,8 @@ type Props = {
   onPress: (task: Task) => void;
   onStarTask: (id: string, isStarred: boolean) => void;
   onDeleteTask: (listId: string, taskId: string) => void;
-  onCompleteTask: (id: string) => void;
-  onUncompleteTask: (id: string) => void;
+  onCompleteTask: (task: Task) => void;
+  onUncompleteTask: (task: Task) => void;
 };
 
 export default function TaskItem({
@@ -69,14 +69,14 @@ export default function TaskItem({
   const onCompleteTaskCheckboxPressed = async (isChecked: boolean) => {
     if (!isChecked) {
       SoundPlayer.play('pop');
-      onUncompleteTask(id);
+      onUncompleteTask(task);
     } else {
       setIsCompleting(true);
       strikeThrough.value = withTiming(1, {duration: 400});
       await new Promise(resolve => setTimeout(resolve, 400));
 
       SoundPlayer.play('ding');
-      onCompleteTask(id);
+      onCompleteTask(task);
     }
   };
 

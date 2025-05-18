@@ -30,12 +30,8 @@ export const isAppOutdated = async (): Promise<boolean> => {
     const parsed = versionResponseSchema.parse(data);
     const latestSupportedVersion = parsed.minimumSupportedVersion.versionName;
 
-    console.log(
-      'compare',
-      compareVersions(currentVersion, latestSupportedVersion) < 0,
-      currentVersion,
-      latestSupportedVersion,
-    );
+    console.log({currentVersion, latestSupportedVersion});
+
     return compareVersions(currentVersion, latestSupportedVersion) < 0;
   } catch (err) {
     console.error('Failed to check app version:', err);

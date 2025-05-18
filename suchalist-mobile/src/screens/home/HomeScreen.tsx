@@ -29,7 +29,7 @@ import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
 
 export default function HomeScreen() {
   const currentList = useSelector(selectCurrentList);
-  console.log({currentList});
+  console.log('HomeScreen', {currentList: currentList.title});
   const dispatch = useDispatch();
 
   const isCurrentListGenerated = useSelector(selectIsCurrentListGenerated);

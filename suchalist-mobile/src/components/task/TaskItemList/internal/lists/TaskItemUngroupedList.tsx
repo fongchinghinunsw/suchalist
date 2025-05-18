@@ -10,8 +10,8 @@ type Props = {
   onTaskItemPress: (task: Task) => void;
   onStarTask: (id: string, isStarred: boolean) => void;
   onDeleteTask: (listId: string, taskId: string) => void;
-  onCompleteTask: (id: string) => void;
-  onUncompleteTask: (id: string) => void;
+  onCompleteTask: (task: Task) => void;
+  onUncompleteTask: (task: Task) => void;
 };
 
 export default function TaskItemUngroupedList({
