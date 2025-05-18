@@ -3,7 +3,8 @@ import {TasksState} from '../../tasks';
 import {getCurrentTasksFromListMap} from '../../utils/get_task';
 import {getListFromResources} from '../../utils/get_list';
 import {Task} from '@/services/task-service/types';
-import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
+import {STARRED_LIST_ID, TODAY_LIST_ID} from '@/services/task-service/fake/id';
+import {getToday, isDueToday} from '../../utils/utils';
 
 export default function deleteTask(
   state: TasksState,
@@ -32,6 +33,16 @@ function updateGeneratedList(state: TasksState, task: Task) {
     );
     if (index !== -1) {
       state.listMap[STARRED_LIST_ID].tasks.splice(index, 1);
+    }
+  }
+
+  if (isDueToday(task, getToday())) {
+    const index = state.listMap[TODAY_LIST_ID].tasks.findIndex(
+      t => t.id === task.id,
+    );
+
+    if (index !== -1) {
+      state.listMap[TODAY_LIST_ID].tasks.splice(index, 1);
     }
   }
 }

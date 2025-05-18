@@ -4,7 +4,8 @@ import {TasksState} from '../../tasks';
 import {EditTask} from '../../types';
 import {getListFromResources} from '../../utils/get_list';
 import {getCurrentTasksFromListMap} from '../../utils/get_task';
-import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
+import {STARRED_LIST_ID, TODAY_LIST_ID} from '@/services/task-service/fake/id';
+import {getToday, isDueToday} from '../../utils/utils';
 
 export default function editTask(
   state: TasksState,
@@ -46,6 +47,16 @@ function updateGeneratedList(state: TasksState, newTask: Task) {
     );
     if (index !== -1) {
       state.listMap[STARRED_LIST_ID].tasks[index] = newTask;
+    }
+  }
+
+  if (isDueToday(newTask, getToday())) {
+    const index = state.listMap[TODAY_LIST_ID].tasks.findIndex(
+      t => t.id === newTask.id,
+    );
+
+    if (index !== -1) {
+      state.listMap[TODAY_LIST_ID].tasks.splice(index, 1);
     }
   }
 }
