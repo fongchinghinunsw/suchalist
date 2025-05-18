@@ -3,28 +3,45 @@ import {TasksState} from '../tasks';
 import {getCurrentTasksFromListMap} from '../utils/get_task';
 import {getListFromResources} from '../utils/get_list';
 import {getTaskIndex} from '../utils/get_task';
+import {Task} from '@/services/task-service/types';
+import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
 
 export default function setIsStarred(
   state: TasksState,
   action: PayloadAction<{
-    listId: string;
-    taskId: string;
+    task: Task;
     isStarred: boolean;
   }>,
 ) {
-  const {listId, taskId, isStarred} = action.payload;
+  const {task, isStarred} = action.payload;
+  const listId = task.taskListId;
+  const taskId = task.id;
 
   const currentTasks = getCurrentTasksFromListMap(state, listId);
 
   const index = getTaskIndex(currentTasks, taskId);
   if (index !== -1) {
-    currentTasks[index] = {
+    const newTask = {
       ...currentTasks[index],
       isStarred,
     };
-  }
 
-  store(state, listId, taskId, isStarred);
+    currentTasks[index] = newTask;
+
+    updateGeneratedList(state, newTask);
+
+    store(state, listId, taskId, isStarred);
+  }
+}
+
+function updateGeneratedList(state: TasksState, newTask: Task) {
+  if (newTask.isStarred) {
+    state.listMap[STARRED_LIST_ID].tasks.push(newTask);
+  } else {
+    state.listMap[STARRED_LIST_ID].tasks = state.listMap[
+      STARRED_LIST_ID
+    ].tasks.filter(task => task.id !== newTask.id);
+  }
 }
 
 function store(

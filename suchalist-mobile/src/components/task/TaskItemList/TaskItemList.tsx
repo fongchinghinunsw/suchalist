@@ -69,8 +69,8 @@ export default function TaskItemList({
       new Date(l2.completedAt).getTime() - new Date(l1.completedAt).getTime(),
   );
 
-  const onStarTask = (taskId: string, isStarred: boolean) => {
-    dispatch(tasksActions.setIsStarred({listId: list.id, taskId, isStarred}));
+  const onStarTask = (task: Task, isStarred: boolean) => {
+    dispatch(tasksActions.setIsStarred({task, isStarred}));
   };
 
   const onCompleteTask = (task: Task) => {
