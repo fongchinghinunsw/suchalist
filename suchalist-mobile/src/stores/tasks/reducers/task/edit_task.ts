@@ -10,17 +10,18 @@ import {getToday, isDueToday} from '../../utils/utils';
 export default function editTask(
   state: TasksState,
   action: PayloadAction<{
-    listId: string;
-    taskId: string;
+    task: Task;
     editTask: EditTask;
   }>,
 ) {
-  const {listId, taskId} = action.payload;
+  const task = action.payload.task;
+  const {taskListId: listId, id: taskId} = task;
+
   const currentTasks = getCurrentTasksFromListMap(state, listId);
 
   const now = new Date().toISOString();
 
-  const index = currentTasks.findIndex(task => task.id === taskId);
+  const index = currentTasks.findIndex(t => t.id === taskId);
 
   console.log('editing task', {
     ...currentTasks[index],
@@ -35,12 +36,12 @@ export default function editTask(
 
   currentTasks[index] = newTask;
 
-  updateGeneratedList(state, newTask);
+  updateGeneratedList(state, task, newTask);
 
   store(state, listId, taskId, newTask);
 }
 
-function updateGeneratedList(state: TasksState, newTask: Task) {
+function updateGeneratedList(state: TasksState, oldTask: Task, newTask: Task) {
   if (newTask.isStarred) {
     const index = state.listMap[STARRED_LIST_ID].tasks.findIndex(
       t => t.id === newTask.id,
@@ -50,7 +51,18 @@ function updateGeneratedList(state: TasksState, newTask: Task) {
     }
   }
 
-  if (isDueToday(newTask, getToday())) {
+  const isOldTaskDueToday = isDueToday(oldTask, getToday());
+  const isNewTaskDueToday = isDueToday(newTask, getToday());
+  if (isOldTaskDueToday && isNewTaskDueToday) {
+    const index = state.listMap[TODAY_LIST_ID].tasks.findIndex(
+      t => t.id === newTask.id,
+    );
+
+    if (index !== -1) {
+      state.listMap[TODAY_LIST_ID].tasks[index] = newTask;
+    }
+  } else if (isOldTaskDueToday) {
+    // the new task is not due today anymore, remove the old task from the list
     const index = state.listMap[TODAY_LIST_ID].tasks.findIndex(
       t => t.id === newTask.id,
     );
@@ -58,6 +70,9 @@ function updateGeneratedList(state: TasksState, newTask: Task) {
     if (index !== -1) {
       state.listMap[TODAY_LIST_ID].tasks.splice(index, 1);
     }
+  } else if (isNewTaskDueToday) {
+    // the new task is due today, add to the list
+    state.listMap[TODAY_LIST_ID].tasks.push(newTask);
   }
 }
 
