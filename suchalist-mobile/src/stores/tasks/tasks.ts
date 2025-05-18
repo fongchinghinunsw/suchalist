@@ -1,5 +1,8 @@
 import {Header, ListHeader} from '@/screens/home/components/HeaderDrawer/types';
-import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
+import {
+  DEFAULT_LIST_ID,
+  STARRED_LIST_ID,
+} from '@/services/task-service/fake/id';
 import {FAKE_RESOURCES} from '@/services/task-service/task-service';
 import {Folder, List, Resource, Task} from '@/services/task-service/types';
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
@@ -110,6 +113,13 @@ export const selectFolderMap = (state: RootState): FolderMap => {
   return state.tasks.folderMap ?? {};
 };
 
+export const selectIsCurrentListGenerated = createSelector(
+  [selectTasksState],
+  tasks => {
+    return tasks.currentTaskListId === STARRED_LIST_ID;
+  },
+);
+
 const selectAllHeaders = createSelector(
   [selectTasksState],
   tasks => tasks.headers,
@@ -118,7 +128,10 @@ const selectAllHeaders = createSelector(
 export const selectHeaders = createSelector(
   [selectAllHeaders],
   (headers): Header[] =>
-    headers.filter((header: Header) => header.id !== DEFAULT_LIST_ID),
+    headers.filter(
+      (header: Header) =>
+        header.id !== DEFAULT_LIST_ID && header.id !== STARRED_LIST_ID,
+    ),
 );
 
 export const selectDefaultListHeader = createSelector(
@@ -126,6 +139,14 @@ export const selectDefaultListHeader = createSelector(
   (listMap): ListHeader => ({
     type: 'LIST',
     ...listMap[DEFAULT_LIST_ID],
+  }),
+);
+
+export const selectStarredListHeader = createSelector(
+  [selectListMap],
+  (listMap): ListHeader => ({
+    type: 'LIST',
+    ...listMap[STARRED_LIST_ID],
   }),
 );
 

@@ -22,6 +22,7 @@ import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 
 type Props = {
   list: List;
+  showAddTaskItem?: boolean;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onAddTask: (task: {title: string}) => void;
@@ -31,6 +32,7 @@ type Props = {
 
 export default function TaskItemList({
   list,
+  showAddTaskItem = true,
   showAddTaskDrawer,
   onTaskItemPress,
   onAddTask,
@@ -88,7 +90,7 @@ export default function TaskItemList({
 
   return (
     <ScrollView contentContainerStyle={styles.container} onScroll={onScroll}>
-      <AddTaskItem onAddTask={onAddTask} />
+      {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
       <TaskItemUngroupedList
         tasks={tasksWithoutDueDate}
         onTaskItemPress={onTaskItemPress}

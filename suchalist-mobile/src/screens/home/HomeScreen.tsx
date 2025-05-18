@@ -2,7 +2,11 @@ import BottomSheet from '@/components/base/BottomSheet';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import {getColor} from '@/constants/styles';
 import {RootStackParamList} from '@/navigations/RootStack';
-import {selectCurrentList, tasksActions} from '@/stores/tasks/tasks';
+import {
+  selectCurrentList,
+  selectIsCurrentListGenerated,
+  tasksActions,
+} from '@/stores/tasks/tasks';
 import {NewTask} from '@/stores/tasks/types';
 import {selectBackgroundImage, selectTheme, Theme} from '@/stores/theme';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
@@ -27,6 +31,8 @@ export default function HomeScreen() {
   const currentList = useSelector(selectCurrentList);
   console.log({currentList});
   const dispatch = useDispatch();
+
+  const isCurrentListGenerated = useSelector(selectIsCurrentListGenerated);
 
   const theme = useSelector(selectTheme);
   const styles = getStyles(theme);
@@ -91,6 +97,7 @@ export default function HomeScreen() {
 
         <TaskItemList
           list={currentList}
+          showAddTaskItem={!isCurrentListGenerated}
           showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
           onTaskItemPress={(task: Task) =>
             navigation.push('TaskDetails', {task})
@@ -100,14 +107,22 @@ export default function HomeScreen() {
           onScroll={onScroll}
         />
 
-        <BottomSheet ref={bottomSheetModalRef}>
-          <AddTaskForm
-            defaultDate={defaultDate}
-            onAddTask={addTask}
-            onClose={hideAddTaskForm}
-          />
-        </BottomSheet>
-        <FAB label="Add Task" isExtended={isFABExtended} onPress={onPressFAB} />
+        {!isCurrentListGenerated && (
+          <>
+            <BottomSheet ref={bottomSheetModalRef}>
+              <AddTaskForm
+                defaultDate={defaultDate}
+                onAddTask={addTask}
+                onClose={hideAddTaskForm}
+              />
+            </BottomSheet>
+            <FAB
+              label="Add Task"
+              isExtended={isFABExtended}
+              onPress={onPressFAB}
+            />
+          </>
+        )}
       </ImageBackground>
     </HeaderDrawerLayout>
   );

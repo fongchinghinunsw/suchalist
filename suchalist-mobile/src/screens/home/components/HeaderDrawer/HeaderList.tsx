@@ -1,4 +1,9 @@
-import {selectDefaultListHeader, tasksActions} from '@/stores/tasks/tasks';
+import Divider from '@/components/base/Divider';
+import {
+  selectDefaultListHeader,
+  selectStarredListHeader,
+  tasksActions,
+} from '@/stores/tasks/tasks';
 import {StyleSheet} from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
@@ -8,7 +13,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
 import ListHeaderItem from './HeaderItem/ListHeaderItem';
 import {Header} from './types';
-import Divider from '@/components/base/Divider';
 
 type Props = {
   headers: Header[];
@@ -18,6 +22,7 @@ type Props = {
 export default function HeaderList({headers, onPress}: Props) {
   const dispatch = useDispatch();
   const defaultListHeader = useSelector(selectDefaultListHeader);
+  const starredListHeader = useSelector(selectStarredListHeader);
 
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
@@ -44,6 +49,11 @@ export default function HeaderList({headers, onPress}: Props) {
     <>
       <ListHeaderItem
         listHeader={defaultListHeader}
+        isDeletableList={false}
+        onPress={onPress}
+      />
+      <ListHeaderItem
+        listHeader={starredListHeader}
         isDeletableList={false}
         onPress={onPress}
       />
