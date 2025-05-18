@@ -13,12 +13,13 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {ListHeader} from '../types';
 import BaseHeaderItem from './BaseHeaderItem';
+import RenameListModal from '@/components/modal/RenameListModal';
 
 type Option = {
   title: string;
   icon: {
     name: ComponentProps<typeof Icon>['name'];
-    color: ComponentProps<typeof Icon>['color'];
+    color?: ComponentProps<typeof Icon>['color'];
     size: number;
   };
   onSelect: () => void;
@@ -27,7 +28,7 @@ type Option = {
 
 type Props = {
   listHeader: ListHeader;
-  isDeletableList: boolean;
+  hasOptions: boolean;
   icon?: {
     name?: ComponentProps<typeof Icon>['name'];
   };
@@ -37,7 +38,7 @@ type Props = {
 
 export default function ListHeaderItem({
   listHeader: {id},
-  isDeletableList,
+  hasOptions,
   icon = {},
   onPress,
   onDrag,
@@ -47,11 +48,22 @@ export default function ListHeaderItem({
   const listMap = useSelector(selectListMap);
   const list = listMap[id];
 
+  const [isRenameListModalVisible, setIsRenameListModalVisible] =
+    useState(false);
   const [isDeleteListModalVisible, setIsDeleteListModalVisible] =
     useState(false);
 
+  const toggleRenameListModal = () => {
+    setIsRenameListModalVisible(!isRenameListModalVisible);
+  };
+
   const toggleDeleteListModal = () => {
     setIsDeleteListModalVisible(!isDeleteListModalVisible);
+  };
+
+  const onRenameList = (newTitle: string) => {
+    dispatch(tasksActions.renameList({list, newTitle}));
+    toggleRenameListModal();
   };
 
   const onDeleteList = () => {
@@ -59,7 +71,17 @@ export default function ListHeaderItem({
   };
 
   const menuOptions: Option[] = [];
-  if (isDeletableList) {
+  if (hasOptions) {
+    menuOptions.push({
+      title: 'Rename List',
+      icon: {
+        name: 'create-outline',
+        size: 16,
+      },
+      onSelect: toggleRenameListModal,
+      style: styles.menuOption,
+    });
+
     menuOptions.push({
       title: 'Delete List',
       icon: {
@@ -109,6 +131,12 @@ export default function ListHeaderItem({
         }
         onPress={() => onPress(id)}
         onLongPress={onDrag}
+      />
+      <RenameListModal
+        defaultTitle={list.title}
+        isVisible={isRenameListModalVisible}
+        onRenameList={onRenameList}
+        onCancel={toggleRenameListModal}
       />
       <DeleteListModal
         listName={list.title}

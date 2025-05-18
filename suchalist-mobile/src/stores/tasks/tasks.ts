@@ -21,6 +21,7 @@ import reorderListsWithinFolder from './reducers/reorder_lists_within_folder';
 import reorderTopLevelResources from './reducers/reorder_top_level_resources';
 import setIsCompleted from './reducers/task/set_is_completed';
 import setIsStarred from './reducers/task/set_is_starred';
+import renameList from './reducers/list/rename_list';
 
 type ListMap = {
   [listId: string]: List;
@@ -89,6 +90,7 @@ const tasksSlice = createSlice({
     setIsCompleted,
     setIsStarred,
     addList,
+    renameList,
     addFolder,
     deleteList,
     renameFolder,

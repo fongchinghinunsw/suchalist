@@ -40,7 +40,7 @@ export default function HeaderList({headers, onPress}: Props) {
         ) : (
           <ListHeaderItem
             listHeader={item}
-            isDeletableList={true}
+            hasOptions={true}
             onPress={onPress}
             onDrag={drag}
           />
@@ -53,12 +53,12 @@ export default function HeaderList({headers, onPress}: Props) {
     <>
       <ListHeaderItem
         listHeader={defaultListHeader}
-        isDeletableList={false}
+        hasOptions={false}
         onPress={onPress}
       />
       <ListHeaderItem
         listHeader={starredListHeader}
-        isDeletableList={false}
+        hasOptions={false}
         icon={{
           name: 'star',
         }}
@@ -66,7 +66,7 @@ export default function HeaderList({headers, onPress}: Props) {
       />
       <ListHeaderItem
         listHeader={todayListHeader}
-        isDeletableList={false}
+        hasOptions={false}
         icon={{
           name: 'calendar-number-outline',
         }}
@@ -74,7 +74,7 @@ export default function HeaderList({headers, onPress}: Props) {
       />
       <ListHeaderItem
         listHeader={nextSevenDaysListHeader}
-        isDeletableList={false}
+        hasOptions={false}
         icon={{
           name: 'calendar-outline',
         }}
