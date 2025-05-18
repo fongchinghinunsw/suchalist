@@ -1,6 +1,6 @@
 import {PayloadAction} from '@reduxjs/toolkit';
-import {TasksState} from '../tasks';
-import {getId} from '../utils/utils';
+import {TasksState} from '../../tasks';
+import {getId} from '../../utils/utils';
 import {isFolder, List} from '@/services/task-service/types';
 import {
   isFolderHeader,

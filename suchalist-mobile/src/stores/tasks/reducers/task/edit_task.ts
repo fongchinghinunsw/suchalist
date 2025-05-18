@@ -1,9 +1,9 @@
 import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
-import {TasksState} from '../tasks';
-import {EditTask} from '../types';
-import {getListFromResources} from '../utils/get_list';
-import {getCurrentTasksFromListMap} from '../utils/get_task';
+import {TasksState} from '../../tasks';
+import {EditTask} from '../../types';
+import {getListFromResources} from '../../utils/get_list';
+import {getCurrentTasksFromListMap} from '../../utils/get_task';
 import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
 
 export default function editTask(

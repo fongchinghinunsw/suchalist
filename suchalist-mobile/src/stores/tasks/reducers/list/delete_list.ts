@@ -2,8 +2,8 @@ import {isFolderHeader} from '@/screens/home/components/HeaderDrawer/types';
 import {DEFAULT_LIST_ID} from '@/services/task-service/fake/id';
 import {isList} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
-import {TasksState} from '../tasks';
-import {getListFromResources} from '../utils/get_list';
+import {TasksState} from '../../tasks';
+import {getListFromResources} from '../../utils/get_list';
 
 export default function deleteList(
   state: TasksState,

@@ -8,17 +8,17 @@ import {FAKE_RESOURCES} from '@/services/task-service/task-service';
 import {Folder, List, Resource, Task} from '@/services/task-service/types';
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '..';
-import addFolder from './reducers/add_folder';
-import addList from './reducers/add_list';
-import addTask from './reducers/add_task';
-import deleteFolder from './reducers/delete_folder';
-import deleteList from './reducers/delete_list';
-import deleteTask from './reducers/delete_task';
-import editTask from './reducers/edit_task';
+import addFolder from './reducers/folder/add_folder';
+import addList from './reducers/list/add_list';
+import addTask from './reducers/task/add_task';
+import deleteFolder from './reducers/folder/delete_folder';
+import deleteList from './reducers/list/delete_list';
+import deleteTask from './reducers/task/delete_task';
+import editTask from './reducers/task/edit_task';
 import reorderListsWithinFolder from './reducers/reorder_lists_within_folder';
 import reorderTopLevelResources from './reducers/reorder_top_level_resources';
-import setIsCompleted from './reducers/set_is_completed';
-import setIsStarred from './reducers/set_is_starred';
+import setIsCompleted from './reducers/task/set_is_completed';
+import setIsStarred from './reducers/task/set_is_starred';
 
 type ListMap = {
   [listId: string]: List;

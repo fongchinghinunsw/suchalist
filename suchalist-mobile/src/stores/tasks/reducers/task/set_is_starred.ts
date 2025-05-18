@@ -1,8 +1,8 @@
 import {PayloadAction} from '@reduxjs/toolkit';
-import {TasksState} from '../tasks';
-import {getCurrentTasksFromListMap} from '../utils/get_task';
-import {getListFromResources} from '../utils/get_list';
-import {getTaskIndex} from '../utils/get_task';
+import {TasksState} from '../../tasks';
+import {getCurrentTasksFromListMap} from '../../utils/get_task';
+import {getListFromResources} from '../../utils/get_list';
+import {getTaskIndex} from '../../utils/get_task';
 import {Task} from '@/services/task-service/types';
 import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
 

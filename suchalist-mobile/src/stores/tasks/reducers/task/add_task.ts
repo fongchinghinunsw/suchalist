@@ -1,10 +1,10 @@
 import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
-import {TasksState} from '../tasks';
-import {NewTask} from '../types';
-import {getId} from '../utils/utils';
-import {getCurrentTasksFromListMap} from '../utils/get_task';
-import {getListFromResources} from '../utils/get_list';
+import {TasksState} from '../../tasks';
+import {NewTask} from '../../types';
+import {getId} from '../../utils/utils';
+import {getCurrentTasksFromListMap} from '../../utils/get_task';
+import {getListFromResources} from '../../utils/get_list';
 
 export default function addTask(
   state: TasksState,
