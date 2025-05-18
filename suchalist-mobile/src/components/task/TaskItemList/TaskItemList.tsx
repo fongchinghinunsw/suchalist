@@ -100,6 +100,7 @@ export default function TaskItemList({
       <TaskItemGroupedList
         tasks={tasksWithDueDate}
         showAddTaskDrawer={showAddTaskDrawer}
+        showAddTaskButton={showAddTaskItem}
         onTaskItemPress={onTaskItemPress}
         onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}

@@ -13,6 +13,7 @@ import {styles as commonStyles} from './styles';
 
 type Props = {
   tasks: TaskWithDueDate[];
+  showAddTaskButton?: boolean;
   showAddTaskDrawer: (defaultDate: Date) => void;
   onTaskItemPress: (task: Task) => void;
   onStarTask: (task: Task, isStarred: boolean) => void;
@@ -23,6 +24,7 @@ type Props = {
 
 export default function TaskItemGroupedList({
   tasks,
+  showAddTaskButton = true,
   showAddTaskDrawer,
   onTaskItemPress,
   onStarTask,
@@ -72,13 +74,15 @@ export default function TaskItemGroupedList({
               <Text shade={800} style={styles.headerText}>
                 {section.title}
               </Text>
-              <Icon
-                name="add"
-                size={20}
-                color="blue"
-                style={{color: getColor(theme, 500)}}
-                onPress={() => showAddTaskDrawer(new Date(title))}
-              />
+              {showAddTaskButton && (
+                <Icon
+                  name="add"
+                  size={20}
+                  color="blue"
+                  style={{color: getColor(theme, 500)}}
+                  onPress={() => showAddTaskDrawer(new Date(title))}
+                />
+              )}
             </View>
             <View style={commonStyles.container}>
               {data.map(task => {
