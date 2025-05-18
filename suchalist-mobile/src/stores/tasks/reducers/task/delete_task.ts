@@ -1,10 +1,10 @@
+import {STARRED_LIST_ID, TODAY_LIST_ID} from '@/services/task-service/fake/id';
+import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../../tasks';
-import {getCurrentTasksFromListMap} from '../../utils/get_task';
 import {getListFromResources} from '../../utils/get_list';
-import {Task} from '@/services/task-service/types';
-import {STARRED_LIST_ID, TODAY_LIST_ID} from '@/services/task-service/fake/id';
-import {getToday, isDueToday} from '../../utils/utils';
+import {getCurrentTasksFromListMap} from '../../utils/get_task';
+import {isDueToday} from '../../utils/utils';
 
 export default function deleteTask(
   state: TasksState,
@@ -36,7 +36,7 @@ function updateGeneratedList(state: TasksState, task: Task) {
     }
   }
 
-  if (isDueToday(task, getToday())) {
+  if (isDueToday(task)) {
     const index = state.listMap[TODAY_LIST_ID].tasks.findIndex(
       t => t.id === task.id,
     );

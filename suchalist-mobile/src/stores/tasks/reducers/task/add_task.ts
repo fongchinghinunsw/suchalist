@@ -5,7 +5,7 @@ import {TasksState} from '../../tasks';
 import {NewTask} from '../../types';
 import {getListFromResources} from '../../utils/get_list';
 import {getCurrentTasksFromListMap} from '../../utils/get_task';
-import {getId, getToday, isDueToday} from '../../utils/utils';
+import {getId, isDueToday} from '../../utils/utils';
 
 export default function addTask(
   state: TasksState,
@@ -50,7 +50,7 @@ export default function addTask(
 }
 
 function updateGeneratedList(state: TasksState, task: Task) {
-  if (isDueToday(task, getToday())) {
+  if (isDueToday(task)) {
     state.listMap[TODAY_LIST_ID].tasks.push(task);
   }
 }

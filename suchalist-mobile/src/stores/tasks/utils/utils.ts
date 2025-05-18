@@ -33,7 +33,6 @@ export async function getTasksState(
   };
 
   const now = new Date().toISOString();
-  const today = getToday();
 
   const starredList: List = {
     id: STARRED_LIST_ID,
@@ -61,7 +60,7 @@ export async function getTasksState(
             starredList.tasks.push(task);
           }
 
-          if (isDueToday(task, today)) {
+          if (isDueToday(task)) {
             todayList.tasks.push(task);
           }
         });
@@ -78,7 +77,7 @@ export async function getTasksState(
           starredList.tasks.push(task);
         }
 
-        if (isDueToday(task, today)) {
+        if (isDueToday(task)) {
           todayList.tasks.push(task);
         }
       });
@@ -106,18 +105,25 @@ export async function getTasksState(
   return state;
 }
 
-export const isDueToday = (task: Task, today: Date) => {
-  if (!task.dueDate) {
+export const isDueToday = (task: Task) => {
+  return isDueWithinNextDays(task, 1);
+};
+
+export const isDueWithinNextDays = (task: Task, days: number = 7) => {
+  const dueDate = task.dueDate;
+
+  if (!dueDate) {
     return false;
   }
 
-  const due = new Date(task.dueDate);
-  due.setHours(0, 0, 0, 0);
-  return due.getTime() === today.getTime();
-};
+  const now = new Date();
+  const due = new Date(dueDate);
 
-export const getToday = () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return today;
+  now.setHours(0, 0, 0, 0);
+  due.setHours(0, 0, 0, 0);
+
+  const diffInTime = due.getTime() - now.getTime();
+  const diffInDays = diffInTime / (1000 * 60 * 60 * 24);
+
+  return diffInDays < days;
 };

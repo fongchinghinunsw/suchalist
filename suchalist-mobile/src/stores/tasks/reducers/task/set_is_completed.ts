@@ -1,11 +1,10 @@
+import {STARRED_LIST_ID, TODAY_LIST_ID} from '@/services/task-service/fake/id';
+import {Task} from '@/services/task-service/types';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {TasksState} from '../../tasks';
-import {getCurrentTasksFromListMap} from '../../utils/get_task';
 import {getListFromResources} from '../../utils/get_list';
-import {getTaskIndex} from '../../utils/get_task';
-import {Task} from '@/services/task-service/types';
-import {STARRED_LIST_ID, TODAY_LIST_ID} from '@/services/task-service/fake/id';
-import {getToday, isDueToday} from '../../utils/utils';
+import {getCurrentTasksFromListMap, getTaskIndex} from '../../utils/get_task';
+import {isDueToday} from '../../utils/utils';
 
 export default function setIsCompleted(
   state: TasksState,
@@ -50,7 +49,7 @@ function updateGeneratedList(state: TasksState, newTask: Task) {
     }
   }
 
-  if (isDueToday(newTask, getToday())) {
+  if (isDueToday(newTask)) {
     const index = state.listMap[TODAY_LIST_ID].tasks.findIndex(
       t => t.id === newTask.id,
     );
