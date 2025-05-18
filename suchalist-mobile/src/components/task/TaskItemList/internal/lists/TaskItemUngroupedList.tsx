@@ -9,7 +9,7 @@ type Props = {
   tasks: Task[];
   onTaskItemPress: (task: Task) => void;
   onStarTask: (task: Task, isStarred: boolean) => void;
-  onDeleteTask: (listId: string, taskId: string) => void;
+  onDeleteTask: (task: Task) => void;
   onCompleteTask: (task: Task) => void;
   onUncompleteTask: (task: Task) => void;
 };

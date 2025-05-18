@@ -25,7 +25,7 @@ type Props = {
   task: Task;
   onPress: (task: Task) => void;
   onStarTask: (task: Task, isStarred: boolean) => void;
-  onDeleteTask: (listId: string, taskId: string) => void;
+  onDeleteTask: (task: Task) => void;
   onCompleteTask: (task: Task) => void;
   onUncompleteTask: (task: Task) => void;
 };
@@ -38,7 +38,7 @@ export default function TaskItem({
   onCompleteTask,
   onUncompleteTask,
 }: Props) {
-  const {taskListId, title, isCompleted} = task;
+  const {title, isCompleted} = task;
 
   const theme = useSelector(selectTheme);
   const styles = getStyle(theme);
@@ -61,8 +61,8 @@ export default function TaskItem({
     setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
   };
 
-  const onConfirmDeleteTaskPressed = (taskId: string) => {
-    onDeleteTask(taskListId, taskId);
+  const onConfirmDeleteTaskPressed = (deletingTask: Task) => {
+    onDeleteTask(deletingTask);
     setIsDeleteTaskModalVisible(false);
   };
 
@@ -140,7 +140,7 @@ export default function TaskItem({
       <DeleteTaskModal
         taskName={task.title}
         isVisible={isDeleteTaskModalVisible}
-        onConfirm={() => onConfirmDeleteTaskPressed(task.id)}
+        onConfirm={() => onConfirmDeleteTaskPressed(task)}
         onCancel={toggleDeleteTaskModal}
       />
     </>

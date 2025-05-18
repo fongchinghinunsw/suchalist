@@ -49,8 +49,8 @@ export default function HomeScreen() {
   );
 
   const deleteTask = useCallback(
-    (listId: string, taskId: string) => {
-      dispatch(tasksActions.deleteTask({listId, taskId}));
+    (task: Task) => {
+      dispatch(tasksActions.deleteTask({task}));
     },
     [dispatch],
   );
