@@ -4,6 +4,7 @@ import DeleteTaskModal from '@/components/modal/DeleteTaskModal';
 import DateTimePicker from '@/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@/hooks/useForm';
 import {RootStackParamList} from '@/navigations/RootStack';
+import {Task} from '@/services/task-service/types';
 import {tasksActions} from '@/stores/tasks/tasks';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -59,7 +60,7 @@ export default function TaskDetailsScreen() {
       tasksActions.editTask({
         listId: task.taskListId,
         taskId: task.id,
-        task: {
+        editTask: {
           title,
           note,
           dueDate: dueDate?.toISOString(),
@@ -73,8 +74,8 @@ export default function TaskDetailsScreen() {
     setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
   };
 
-  const onDeleteTask = (listId: string, taskId: string) => {
-    dispatch(tasksActions.deleteTask({listId, taskId}));
+  const onDeleteTask = (deletingTask: Task) => {
+    dispatch(tasksActions.deleteTask({task: deletingTask}));
     setIsDeleteTaskModalVisible(false);
     navigation.goBack();
   };
@@ -139,7 +140,7 @@ export default function TaskDetailsScreen() {
       <DeleteTaskModal
         taskName={task.title}
         isVisible={isDeleteTaskModalVisible}
-        onConfirm={() => onDeleteTask(task.taskListId, task.id)}
+        onConfirm={() => onDeleteTask(task)}
         onCancel={toggleDeleteTaskModal}
       />
     </View>

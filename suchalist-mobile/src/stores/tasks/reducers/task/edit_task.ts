@@ -12,7 +12,7 @@ export default function editTask(
   action: PayloadAction<{
     listId: string;
     taskId: string;
-    task: EditTask;
+    editTask: EditTask;
   }>,
 ) {
   const {listId, taskId} = action.payload;
@@ -24,12 +24,12 @@ export default function editTask(
 
   console.log('editing task', {
     ...currentTasks[index],
-    ...action.payload.task,
+    ...action.payload.editTask,
   });
 
   const newTask = {
     ...currentTasks[index],
-    ...action.payload.task,
+    ...action.payload.editTask,
     updatedAt: now,
   };
 
