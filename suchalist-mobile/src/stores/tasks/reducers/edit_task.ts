@@ -4,6 +4,7 @@ import {TasksState} from '../tasks';
 import {EditTask} from '../types';
 import {getListFromResources} from '../utils/get_list';
 import {getCurrentTasksFromListMap} from '../utils/get_task';
+import {STARRED_LIST_ID} from '@/services/task-service/fake/id';
 
 export default function editTask(
   state: TasksState,
@@ -33,7 +34,20 @@ export default function editTask(
 
   currentTasks[index] = newTask;
 
+  updateGeneratedList(state, newTask);
+
   store(state, listId, taskId, newTask);
+}
+
+function updateGeneratedList(state: TasksState, newTask: Task) {
+  if (newTask.isStarred) {
+    const index = state.listMap[STARRED_LIST_ID].tasks.findIndex(
+      t => t.id === newTask.id,
+    );
+    if (index !== -1) {
+      state.listMap[STARRED_LIST_ID].tasks[index] = newTask;
+    }
+  }
 }
 
 function store(
