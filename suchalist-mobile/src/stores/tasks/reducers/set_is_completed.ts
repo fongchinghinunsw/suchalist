@@ -33,30 +33,21 @@ export default function setIsCompleted(
 
     tasksFromListMap[index] = newTask;
 
-    updateGeneratedList(state, task, isCompleted, now);
+    updateGeneratedList(state, task, newTask);
 
     store(state, listId, taskId, isCompleted, now);
   }
 }
 
-function updateGeneratedList(
-  state: TasksState,
-  task: Task,
-  isCompleted: boolean,
-  now: string,
-) {
+function updateGeneratedList(state: TasksState, task: Task, newTask: Task) {
   if (task.isStarred) {
-    console.log(
-      'updateGeneratedList',
-      state.currentTaskListId,
-      task.title,
-      isCompleted,
+    console.log('updateGeneratedList', {newTask});
+    const index = state.listMap[STARRED_LIST_ID].tasks.findIndex(
+      t => t.id === task.id,
     );
-    const index = state.listMap[STARRED_LIST_ID].tasks.findIndex(t => t.id);
     if (index !== -1) {
-      const t = state.listMap[STARRED_LIST_ID].tasks[index];
-      t.isCompleted = isCompleted;
-      t.completedAt = now;
+      console.log('updating listMap for the starred list');
+      state.listMap[STARRED_LIST_ID].tasks[index] = newTask;
     }
   }
 }
