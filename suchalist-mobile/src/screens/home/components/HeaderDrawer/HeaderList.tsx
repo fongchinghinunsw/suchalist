@@ -65,6 +65,9 @@ export default function HeaderList({headers, onPress}: Props) {
       <ListHeaderItem
         listHeader={todayListHeader}
         isDeletableList={false}
+        icon={{
+          name: 'calendar-number-outline',
+        }}
         onPress={onPress}
       />
       <Divider styles={styles.divider} />
