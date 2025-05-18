@@ -4,6 +4,7 @@ import {
 } from '@/screens/home/components/HeaderDrawer/utils';
 import {
   DEFAULT_LIST_ID,
+  NEXT_SEVEN_DAYS_LIST_ID,
   STARRED_LIST_ID,
   TODAY_LIST_ID,
 } from '@/services/task-service/fake/id';
@@ -50,6 +51,14 @@ export async function getTasksState(
     updatedAt: now,
   };
 
+  const nextSevenDaysList: List = {
+    id: NEXT_SEVEN_DAYS_LIST_ID,
+    title: 'Next 7 Days',
+    tasks: [],
+    createdAt: now,
+    updatedAt: now,
+  };
+
   resources.forEach(resource => {
     if (isFolder(resource)) {
       resource.lists.forEach(list => {
@@ -62,6 +71,10 @@ export async function getTasksState(
 
           if (isDueToday(task)) {
             todayList.tasks.push(task);
+          }
+
+          if (isDueWithinNextDays(task, 7)) {
+            nextSevenDaysList.tasks.push(task);
           }
         });
       });
@@ -79,6 +92,10 @@ export async function getTasksState(
 
         if (isDueToday(task)) {
           todayList.tasks.push(task);
+        }
+
+        if (isDueWithinNextDays(task, 7)) {
+          nextSevenDaysList.tasks.push(task);
         }
       });
 
@@ -100,6 +117,12 @@ export async function getTasksState(
   state.headers.push({
     type: 'LIST',
     id: TODAY_LIST_ID,
+  });
+
+  state.listMap[NEXT_SEVEN_DAYS_LIST_ID] = nextSevenDaysList;
+  state.headers.push({
+    type: 'LIST',
+    id: NEXT_SEVEN_DAYS_LIST_ID,
   });
 
   return state;

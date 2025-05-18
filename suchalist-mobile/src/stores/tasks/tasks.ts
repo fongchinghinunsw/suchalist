@@ -1,6 +1,7 @@
 import {Header, ListHeader} from '@/screens/home/components/HeaderDrawer/types';
 import {
   DEFAULT_LIST_ID,
+  NEXT_SEVEN_DAYS_LIST_ID,
   STARRED_LIST_ID,
   TODAY_LIST_ID,
 } from '@/services/task-service/fake/id';
@@ -119,7 +120,8 @@ export const selectIsCurrentListGenerated = createSelector(
   tasks => {
     return (
       tasks.currentTaskListId === STARRED_LIST_ID ||
-      tasks.currentTaskListId === TODAY_LIST_ID
+      tasks.currentTaskListId === TODAY_LIST_ID ||
+      tasks.currentTaskListId === NEXT_SEVEN_DAYS_LIST_ID
     );
   },
 );
@@ -136,7 +138,8 @@ export const selectHeaders = createSelector(
       (header: Header) =>
         header.id !== DEFAULT_LIST_ID &&
         header.id !== STARRED_LIST_ID &&
-        header.id !== TODAY_LIST_ID,
+        header.id !== TODAY_LIST_ID &&
+        header.id !== NEXT_SEVEN_DAYS_LIST_ID,
     ),
 );
 
@@ -161,6 +164,14 @@ export const selectTodayListHeader = createSelector(
   (listMap): ListHeader => ({
     type: 'LIST',
     ...listMap[TODAY_LIST_ID],
+  }),
+);
+
+export const selectNextSevenDaysListHeader = createSelector(
+  [selectListMap],
+  (listMap): ListHeader => ({
+    type: 'LIST',
+    ...listMap[NEXT_SEVEN_DAYS_LIST_ID],
   }),
 );
 

@@ -1,6 +1,7 @@
 import Divider from '@/components/base/Divider';
 import {
   selectDefaultListHeader,
+  selectNextSevenDaysListHeader,
   selectStarredListHeader,
   selectTodayListHeader,
   tasksActions,
@@ -25,6 +26,7 @@ export default function HeaderList({headers, onPress}: Props) {
   const defaultListHeader = useSelector(selectDefaultListHeader);
   const starredListHeader = useSelector(selectStarredListHeader);
   const todayListHeader = useSelector(selectTodayListHeader);
+  const nextSevenDaysListHeader = useSelector(selectNextSevenDaysListHeader);
 
   const renderItem = ({item, drag}: RenderItemParams<Header>) => {
     return (
@@ -67,6 +69,14 @@ export default function HeaderList({headers, onPress}: Props) {
         isDeletableList={false}
         icon={{
           name: 'calendar-number-outline',
+        }}
+        onPress={onPress}
+      />
+      <ListHeaderItem
+        listHeader={nextSevenDaysListHeader}
+        isDeletableList={false}
+        icon={{
+          name: 'calendar-outline',
         }}
         onPress={onPress}
       />
