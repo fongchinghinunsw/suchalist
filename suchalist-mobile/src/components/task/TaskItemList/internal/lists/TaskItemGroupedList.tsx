@@ -106,5 +106,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontWeight: 'bold',
+    padding: 2,
   },
 });
