@@ -1,8 +1,8 @@
-import eslintConfigPrettier from '@electron-toolkit/eslint-config-prettier'
-import tseslint from '@electron-toolkit/eslint-config-ts'
-import eslintPluginReact from 'eslint-plugin-react'
-import eslintPluginReactHooks from 'eslint-plugin-react-hooks'
-import eslintPluginReactRefresh from 'eslint-plugin-react-refresh'
+import eslintConfigPrettier from '@electron-toolkit/eslint-config-prettier';
+import tseslint from '@electron-toolkit/eslint-config-ts';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import eslintPluginReactRefresh from 'eslint-plugin-react-refresh';
 
 export default tseslint.config(
   { ignores: ['**/node_modules', '**/dist', '**/out'] },
@@ -25,8 +25,9 @@ export default tseslint.config(
     rules: {
       ...eslintPluginReactHooks.configs.recommended.rules,
       ...eslintPluginReactRefresh.configs.vite.rules,
-      '@typescript-eslint/explicit-function-return-type': 'off'
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      'prettier/prettier': ['error', { semi: true }]
     }
   },
   eslintConfigPrettier
-)
+);
