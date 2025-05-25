@@ -2,6 +2,7 @@ import {useNavigationTheme} from '@/hooks/useNavigationTheme';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import HomeScreen from '../screens/home/HomeScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
+// import PurchaseScreen from '@/screens/purchase/PurchaseScreen';
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -32,6 +33,7 @@ export default function SideDrawer() {
         component={HomeScreen}
         options={{title: 'Home'}}
       />
+      {/* <DrawerNavigator.Screen name="Purchase" component={PurchaseScreen} /> */}
       <DrawerNavigator.Screen name="Settings" component={SettingsScreen} />
     </DrawerNavigator.Navigator>
   );

@@ -15,8 +15,6 @@ import RootStack from './navigations/RootStack';
 import {DAILY_REMINDER_CHANNEL_ID} from './stores/notification';
 import {tasksActions} from './stores/tasks/tasks';
 import {getTasksState} from './stores/tasks/utils/utils';
-import {useIAPInit} from './hooks/iap/useIAPInit';
-import {useProducts} from './hooks/iap/useProducts';
 
 export default function App(): React.JSX.Element {
   const initialize = async () => {
@@ -42,10 +40,6 @@ export default function App(): React.JSX.Element {
 
     SplashScreen.hide();
   };
-
-  const {isInitialized: isIAPInitialized} = useIAPInit();
-  const {subscriptions, loading: isFetchingProducts} =
-    useProducts(isIAPInitialized);
 
   return (
     <ReduxStoreProvider store={store}>

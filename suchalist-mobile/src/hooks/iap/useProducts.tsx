@@ -1,9 +1,16 @@
+import {isSupportedSubscriptionProduct} from '@/utils/iap/subscription';
 import {useEffect, useState} from 'react';
 import {Platform} from 'react-native';
-import {getSubscriptions, Subscription} from 'react-native-iap';
+import {
+  getSubscriptions,
+  SubscriptionAndroid,
+  SubscriptionIOS,
+} from 'react-native-iap';
 
 export function useProducts(isIAPInitialized: boolean) {
-  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [subscriptions, setSubscriptions] = useState<
+    (SubscriptionAndroid | SubscriptionIOS)[]
+  >([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,7 +32,7 @@ export function useProducts(isIAPInitialized: boolean) {
 
         const subs = await getSubscriptions({skus: skus ?? []});
         console.log(subs);
-        setSubscriptions(subs);
+        setSubscriptions(subs.filter(isSupportedSubscriptionProduct));
       } catch (err) {
         console.warn('Failed to fetch subscriptions:', err);
       } finally {
