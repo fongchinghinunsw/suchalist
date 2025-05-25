@@ -15,6 +15,7 @@
 		DC12526E2DCCC51E00D862E2 /* bubble_pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC12526B2DCCC51E00D862E2 /* bubble_pop.mp3 */; };
 		DC12526F2DCCC51E00D862E2 /* pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC12526C2DCCC51E00D862E2 /* pop.mp3 */; };
 		DC1252702DCCC51E00D862E2 /* select.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC12526D2DCCC51E00D862E2 /* select.mp3 */; };
+		DC88166B2DE2B8F500CD3242 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC88166A2DE2B8F500CD3242 /* StoreKit.framework */; };
 		DCC7C3CF2DB31D7F00BA298A /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DCC7C3CE2DB31D7F00BA298A /* ding.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		DC12526B2DCCC51E00D862E2 /* bubble_pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubble_pop.mp3; sourceTree = "<group>"; };
 		DC12526C2DCCC51E00D862E2 /* pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pop.mp3; sourceTree = "<group>"; };
 		DC12526D2DCCC51E00D862E2 /* select.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = select.mp3; sourceTree = "<group>"; };
+		DC88166A2DE2B8F500CD3242 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DCC7C3CE2DB31D7F00BA298A /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -41,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-suchalist.a in Frameworks */,
+				DC88166B2DE2B8F500CD3242 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +69,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC88166A2DE2B8F500CD3242 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-suchalist.a */,
 			);
@@ -410,10 +414,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -482,10 +483,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
