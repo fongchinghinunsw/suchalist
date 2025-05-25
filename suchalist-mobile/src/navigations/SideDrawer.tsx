@@ -18,7 +18,6 @@ export default function SideDrawer() {
         drawerActiveBackgroundColor: backgroundColor,
         drawerActiveTintColor: textColor,
         drawerInactiveTintColor: textColor,
-        headerTitle: 'Home',
         headerPressColor: pressColor,
         headerTintColor: textColor,
         headerStyle: {
