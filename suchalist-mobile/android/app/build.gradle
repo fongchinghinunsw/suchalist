@@ -84,6 +84,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 3
         versionName "2.0.1"
+        missingDimensionStrategy "store", "play"
     }
     signingConfigs {
         debug {
@@ -119,6 +120,8 @@ dependencies {
 
     // Ensure support for the backported AndroidX Photo Picker, this is added for react-native-image-picker
     implementation("androidx.activity:activity:1.9.+")
+
+    implementation project(':react-native-iap')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
