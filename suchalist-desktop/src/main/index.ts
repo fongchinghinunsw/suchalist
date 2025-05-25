@@ -8,11 +8,16 @@ function createWindow(): void {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   const mainWindow = new BrowserWindow({
-    title: 'Suchalist',
     width,
     height,
     show: false,
     autoHideMenuBar: true,
+    frame: false,
+    vibrancy: 'under-window',
+    visualEffectState: 'active',
+    trafficLightPosition: { x: 15, y: 15 },
+    title: 'Suchalist',
+    titleBarStyle: 'hidden',
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
