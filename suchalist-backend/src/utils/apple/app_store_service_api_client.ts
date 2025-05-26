@@ -8,7 +8,7 @@ const keyId = process.env.APPLE_KEY_ID ?? "";
 const filePath = `${__dirname}/app_store_connect_api_key.p8`;
 const encodedKey = fs.readFileSync(filePath).toString();
 
-export const client = new AppStoreServerAPIClient(
+export const appStoreServerApiClient = new AppStoreServerAPIClient(
   encodedKey,
   keyId,
   issuerId,
