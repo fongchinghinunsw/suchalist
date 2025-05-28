@@ -2,7 +2,8 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Api } from "./api";
 // import { Waf } from "./waf";
-import { Functions } from "./functions/functions";
+import { AppleFunctions } from "./functions/apple/functions";
+import { GoogleFunctions } from "./functions/google/functions";
 
 export class SuchalistBackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -10,6 +11,7 @@ export class SuchalistBackendStack extends cdk.Stack {
 
     const api = new Api(this);
     // new Waf(this, api);
-    new Functions(this, api);
+    new AppleFunctions(this, api);
+    new GoogleFunctions(this, api);
   }
 }

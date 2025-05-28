@@ -17,20 +17,20 @@ export function useProducts(isIAPInitialized: boolean) {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const getProductIds = Platform.select({
-          ios: async () => [
+        const getSubscriptionProductIds = Platform.select({
+          ios: () => [
             'com.suchalist.subscription.suchalist_pro_monthly',
             'com.suchalist.subscription.suchalist_pro_yearly',
           ],
-          android: async () => [],
-          default: async () => [],
+          android: () => ['pro-monthly', 'pro-yearly'],
+          default: () => [],
         });
 
-        const skus = await getProductIds();
-        console.log('==== skus ====');
-        console.log(skus ?? []);
+        const subscriptionProductIds = getSubscriptionProductIds();
+        const subs = await getSubscriptions({
+          skus: subscriptionProductIds ?? [],
+        });
 
-        const subs = await getSubscriptions({skus: skus ?? []});
         console.log(subs);
         setSubscriptions(subs.filter(isSupportedSubscriptionProduct));
       } catch (err) {
