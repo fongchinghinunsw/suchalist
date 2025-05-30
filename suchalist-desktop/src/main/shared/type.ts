@@ -27,7 +27,6 @@ export type List = {
 export type Folder = {
   id: string;
   title: string;
-  lists: List[];
   createdAt: string;
   updatedAt: string;
 };
