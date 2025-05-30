@@ -1,4 +1,4 @@
-import { List } from '@common/types/task';
+import { ListRow } from '@/database/types/task';
 import {
   DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,
@@ -9,63 +9,51 @@ import {
   PERSONAL_IMPROVEMENT_FOLDER_ID,
   STUDY_LIST_ID
 } from './id';
-import {
-  DEFAULT_TASKS,
-  EXERCISE_TASKS,
-  GROCERY_TASKS,
-  MOVIE_TASKS,
-  MUSIC_TASKS,
-  STUDY_TASKS
-} from './task';
 
-export const DEFAULT_LIST: List = {
+export const DEFAULT_LIST: ListRow = {
   id: DEFAULT_LIST_ID,
+  folderId: null,
   title: 'Default',
-  tasks: DEFAULT_TASKS,
   createdAt: new Date(2025, 3, 5).toISOString(),
   updatedAt: new Date(2025, 3, 5).toISOString()
 };
 
-export const GROCERY_LIST: List = {
+export const GROCERY_LIST: ListRow = {
   id: GROCERY_LIST_ID,
+  folderId: null,
   title: 'Grocery',
-  tasks: GROCERY_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString()
 };
 
-export const EXERCISE_LIST: List = {
+export const EXERCISE_LIST: ListRow = {
   id: EXERCISE_LIST_ID,
   folderId: PERSONAL_IMPROVEMENT_FOLDER_ID,
   title: 'Exercise',
-  tasks: EXERCISE_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString()
 };
 
-export const STUDY_LIST: List = {
+export const STUDY_LIST: ListRow = {
   id: STUDY_LIST_ID,
   folderId: PERSONAL_IMPROVEMENT_FOLDER_ID,
   title: 'Study',
-  tasks: STUDY_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString()
 };
 
-export const MOVIE_LIST: List = {
+export const MOVIE_LIST: ListRow = {
   id: MOVIE_LIST_ID,
   folderId: LEISURE_FOLDER_ID,
   title: 'Movie',
-  tasks: MOVIE_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString()
 };
 
-export const MUSIC_LIST: List = {
+export const MUSIC_LIST: ListRow = {
   id: MUSIC_LIST_ID,
   folderId: LEISURE_FOLDER_ID,
   title: 'Music',
-  tasks: MUSIC_TASKS,
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString()
 };
