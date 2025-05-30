@@ -2,6 +2,7 @@ import { electronApp, is, optimizer } from '@electron-toolkit/utils';
 import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../resources/icon.png?asset';
+import { init } from './database/init';
 
 function createWindow(): void {
   // Get the actual available space on the user's primary screen.
@@ -62,6 +63,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'));
 
   createWindow();
+  init();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
