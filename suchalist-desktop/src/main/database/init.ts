@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { FOLDERS, LISTS, TASKS } from './fake';
+import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
 
 // Create a connection to the DB. If the database file does not exist, it is created.
 export const db: InstanceType<typeof Database> = new Database('suchalist.db');
@@ -51,9 +51,9 @@ export function init() {
   );
 
   const insertAll = db.transaction(() => {
-    for (const f of FOLDERS) insertFolder.run(f);
-    for (const l of LISTS) insertList.run(l);
-    for (const t of TASKS) insertTask.run(t);
+    for (const f of FOLDER_ROWS) insertFolder.run(f);
+    for (const l of LIST_ROWS) insertList.run(l);
+    for (const t of TASK_ROWS) insertTask.run(t);
   });
 
   insertAll();

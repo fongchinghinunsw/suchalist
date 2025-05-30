@@ -1,5 +1,4 @@
-import { FolderRow, TaskRow } from '@/database/types/task';
-import { List } from '@common/types/task';
+import { FolderRow, ListRow, TaskRow } from '@/database/types/task';
 import { LEISURE_FOLDER, PERSONAL_IMPROVEMENT_FOLDER } from './folder';
 import {
   DEFAULT_LIST,
@@ -18,9 +17,9 @@ import {
   STUDY_TASKS
 } from './task';
 
-export const FOLDERS: FolderRow[] = [PERSONAL_IMPROVEMENT_FOLDER, LEISURE_FOLDER];
+export const FOLDER_ROWS: FolderRow[] = [PERSONAL_IMPROVEMENT_FOLDER, LEISURE_FOLDER];
 
-export const LISTS: List[] = [
+export const LIST_ROWS: ListRow[] = [
   DEFAULT_LIST,
   GROCERY_LIST,
   EXERCISE_LIST,
@@ -29,7 +28,7 @@ export const LISTS: List[] = [
   MUSIC_LIST
 ];
 
-export const TASKS: TaskRow[] = [
+export const TASK_ROWS: TaskRow[] = [
   ...DEFAULT_TASKS,
   ...GROCERY_TASKS,
   ...EXERCISE_TASKS,
