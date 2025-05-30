@@ -2,7 +2,7 @@ import { electronApp, is, optimizer } from '@electron-toolkit/utils';
 import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../resources/icon.png?asset';
-import { init } from './database/init';
+import { db, init } from './database/init';
 
 function createWindow(): void {
   // Get the actual available space on the user's primary screen.
@@ -61,6 +61,15 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
+  ipcMain.handle('get-list', (_, id: string) => {
+    const list = db.prepare('SELECT * FROM lists WHERE id = ?').get(id);
+    if (!list) {
+      return null;
+    }
+
+    const tasks = db.prepare('SELECT * FROM tasks WHERE listId = ?').all(id);
+    return { ...list, tasks };
+  });
 
   createWindow();
   init();

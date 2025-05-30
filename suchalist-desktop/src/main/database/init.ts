@@ -2,7 +2,7 @@ import Database from 'better-sqlite3';
 import { FOLDERS, LISTS, TASKS } from './fake';
 
 // Create a connection to the DB. If the database file does not exist, it is created.
-const db = new Database('suchalist.db');
+export const db = new Database('suchalist.db');
 
 export function init() {
   db.exec(`

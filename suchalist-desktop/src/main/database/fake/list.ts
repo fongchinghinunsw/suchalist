@@ -1,4 +1,4 @@
-import { List } from '../../shared/type';
+import { List } from '@common/types/task';
 import {
   DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,

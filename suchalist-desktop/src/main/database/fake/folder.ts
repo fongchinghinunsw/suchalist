@@ -1,14 +1,14 @@
-import { Folder } from '../../shared/type';
+import { Folder } from '@common/types/task';
 import { LEISURE_FOLDER_ID, PERSONAL_IMPROVEMENT_FOLDER_ID } from './id';
 
-export const PERSONAL_IMPROVEMENT_FOLDER: Folder = {
+export const PERSONAL_IMPROVEMENT_FOLDER: Omit<Folder, 'lists'> = {
   id: PERSONAL_IMPROVEMENT_FOLDER_ID,
   title: 'Personal Improvement 🧘🏻',
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 15).toISOString()
 };
 
-export const LEISURE_FOLDER: Folder = {
+export const LEISURE_FOLDER: Omit<Folder, 'lists'> = {
   id: LEISURE_FOLDER_ID,
   title: 'Leisure 🎮',
   createdAt: new Date(2025, 4, 10).toISOString(),

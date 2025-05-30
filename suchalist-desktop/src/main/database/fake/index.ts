@@ -1,4 +1,4 @@
-import { Folder, List, Task } from '../../shared/type';
+import { Folder, List, Task } from '@common/types/task';
 import { LEISURE_FOLDER, PERSONAL_IMPROVEMENT_FOLDER } from './folder';
 import {
   DEFAULT_LIST,
@@ -17,7 +17,7 @@ import {
   STUDY_TASKS
 } from './task';
 
-export const FOLDERS: Folder[] = [PERSONAL_IMPROVEMENT_FOLDER, LEISURE_FOLDER];
+export const FOLDERS: Omit<Folder, 'lists'>[] = [PERSONAL_IMPROVEMENT_FOLDER, LEISURE_FOLDER];
 
 export const LISTS: List[] = [
   DEFAULT_LIST,

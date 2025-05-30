@@ -1,17 +1,11 @@
-import { CompletedTask, TaskWithDueDate } from '@/stores/tasks/types';
-
 export type Task = {
   id: string;
-  taskListId: string;
+  listId: string;
   title: string;
   note?: string;
   dueDate?: string;
   isCompleted: boolean;
   isStarred: boolean;
-  //   recurrence?: {
-  //     type: RecurrenceType;
-  //     originalParentId: string; // id of the first recurring task being created
-  //   };
   createdAt: string;
   updatedAt: string;
   completedAt?: string;
@@ -49,6 +43,10 @@ export function isFolder(resource: List | Folder): resource is Folder {
 export function isList(resource: List | Folder): resource is List {
   return Array.isArray((resource as List).tasks);
 }
+
+export type TaskWithDueDate = Task & { dueDate: string };
+
+export type CompletedTask = Task & { completedAt: string };
 
 export function isTaskWithDueDate(task: Task): task is TaskWithDueDate {
   return task.dueDate !== undefined;

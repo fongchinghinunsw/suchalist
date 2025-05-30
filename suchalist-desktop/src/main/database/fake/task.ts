@@ -1,5 +1,5 @@
-import { Task } from '../../shared/type';
-import { getId } from '../../utils';
+import { Task } from '@common/types/task';
+import { getId } from '@common/utils/id';
 import {
   DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,

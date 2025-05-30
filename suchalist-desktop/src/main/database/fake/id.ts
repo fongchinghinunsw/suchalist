@@ -1,4 +1,4 @@
-import { getId } from '../../utils';
+import { getId } from '@common/utils/id';
 
 export const DEFAULT_LIST_ID = 'DEFAULT';
 
