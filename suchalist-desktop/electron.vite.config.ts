@@ -17,12 +17,7 @@ export default defineConfig({
     }
   },
   preload: {
-    plugins: [externalizeDepsPlugin()],
-    build: {
-      rollupOptions: {
-        external: ['better-sqlite3']
-      }
-    }
+    plugins: [externalizeDepsPlugin()]
   },
   renderer: {
     assetsInclude: 'src/renderer/assets/**',

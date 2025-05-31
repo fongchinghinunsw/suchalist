@@ -6,7 +6,7 @@ declare global {
   interface Window {
     electron: ElectronAPI;
     database: {
-      getResources: () => Resource;
+      getResources: () => Promise<Resource>;
       getList: (listId: string) => Promise<List | null>;
     };
   }

@@ -4,7 +4,7 @@ import TopBar from './components/TopBar';
 
 function App(): React.JSX.Element {
   useEffect(() => {
-    console.log(window.database.getResources());
+    window.database.getResources().then((data) => console.log(data));
   }, []);
   return (
     <>

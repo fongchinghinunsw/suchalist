@@ -10,9 +10,20 @@ An Electron application with React and TypeScript
 
 ### Install
 
+In Electron, `dependencies` are packages needed at runtime (for the main and preload processes), whereas `devDependencies` are packages only need at build time (linters, copmilers, Vite, etc.).
+
 ```bash
 $ yarn
 ```
+
+The following command allows you to use native Node.js modules in Electron apps without your system version of Node.js matching exactly (which is often not the case, and sometimes not even possible).
+
+```bash
+$ yarn rebuild
+```
+
+https://github.com/electron/rebuild
+https://github.com/WiseLibs/better-sqlite3/issues/126
 
 ### Development
 
