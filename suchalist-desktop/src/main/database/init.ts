@@ -8,9 +8,14 @@ export function init() {
   db.exec(`
     PRAGMA foreign_keys = ON;
 
+    DROP TABLE folders;
+    DROP TABLE lists;
+    DROP TABLE tasks;
+
     CREATE TABLE IF NOT EXISTS folders (
       id TEXT PRIMARY KEY,
       title TEXT NOT NULL,
+      "order" INTEGER NOT NULL,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL
     );
@@ -19,6 +24,8 @@ export function init() {
       id TEXT PRIMARY KEY,
       folderId TEXT,
       title TEXT NOT NULL,
+      "order" INTEGER,
+      folderOrder INTEGER,
       createdAt TEXT NOT NULL,
       updatedAt TEXT NOT NULL,
       FOREIGN KEY (folderId) REFERENCES folders(id) ON DELETE CASCADE
@@ -37,14 +44,18 @@ export function init() {
       completedAt TEXT,
       FOREIGN KEY (listId) REFERENCES lists(id) ON DELETE CASCADE
     );
+
+    DELETE FROM tasks;
+    DELETE FROM lists;
+    DELETE FROM folders;
     `);
 
   // Insert a row into a table if the primary key doesn't exist, otherwise simply ignore the statement.
   const insertFolder = db.prepare(
-    `INSERT OR IGNORE INTO folders VALUES (@id, @title, @createdAt, @updatedAt)`
+    `INSERT OR IGNORE INTO folders VALUES (@id, @title, @order, @createdAt, @updatedAt)`
   );
   const insertList = db.prepare(
-    `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @createdAt, @updatedAt)`
+    `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @order, @folderOrder, @createdAt, @updatedAt)`
   );
   const insertTask = db.prepare(
     `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
@@ -52,7 +63,13 @@ export function init() {
 
   const insertAll = db.transaction(() => {
     for (const f of FOLDER_ROWS) insertFolder.run(f);
-    for (const l of LIST_ROWS) insertList.run({ ...l, folderId: l.folderId ?? null });
+    for (const l of LIST_ROWS)
+      insertList.run({
+        ...l,
+        folderId: l.folderId ?? null,
+        order: l.order ?? null,
+        folderOrder: l.folderOrder ?? null
+      });
     for (const t of TASK_ROWS)
       insertTask.run({
         ...t,

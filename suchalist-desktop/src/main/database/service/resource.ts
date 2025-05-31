@@ -37,6 +37,7 @@ export function getResources(): Resource[] {
         listsInFolderMap.set(folderId, [list]);
       }
     } else {
+      console.log({ list });
       if (isListWithOrder(list)) {
         topLevelLists.push(list);
       }
