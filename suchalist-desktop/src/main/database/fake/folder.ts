@@ -1,4 +1,4 @@
-import { FolderRow } from '@/database/types/task';
+import { FolderRow } from '../types/folder';
 import { LEISURE_FOLDER_ID, PERSONAL_IMPROVEMENT_FOLDER_ID } from './id';
 
 export const PERSONAL_IMPROVEMENT_FOLDER: FolderRow = {

@@ -1,28 +1,25 @@
-export type TaskRow = {
-  id: string;
-  listId: string;
-  title: string;
-  note: string | null;
-  dueDate: string | null;
-  // SQLite doesn't have boolean, so use 0/1
-  isCompleted: number;
-  isStarred: number;
-  createdAt: string;
-  updatedAt: string;
-  completedAt: string | null;
-};
+import { z } from 'zod';
 
-export type ListRow = {
-  id: string;
-  folderId: string | null;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-};
+export const TaskRowSchema = z.object({
+  id: z.string(),
+  listId: z.string(),
+  title: z.string(),
+  note: z
+    .string()
+    .nullable()
+    .transform((val) => val ?? undefined),
+  dueDate: z
+    .string()
+    .nullable()
+    .transform((val) => val ?? undefined),
+  isCompleted: z.number().transform((n) => n === 1),
+  isStarred: z.number().transform((n) => n === 1),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  completedAt: z
+    .string()
+    .nullable()
+    .transform((val) => val ?? undefined)
+});
 
-export type FolderRow = {
-  id: string;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-};
+export type TaskRow = z.infer<typeof TaskRowSchema>;

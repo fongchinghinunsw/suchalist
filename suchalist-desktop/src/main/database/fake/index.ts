@@ -1,4 +1,6 @@
-import { FolderRow, ListRow, TaskRow } from '@/database/types/task';
+import { TaskRow } from '@/database/types/task';
+import { FolderRow } from '../types/folder';
+import { ListRow } from '../types/list';
 import { LEISURE_FOLDER, PERSONAL_IMPROVEMENT_FOLDER } from './folder';
 import {
   DEFAULT_LIST,

@@ -1,4 +1,4 @@
-import { ListRow } from '@/database/types/task';
+import { ListRow } from '../types/list';
 import {
   DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,
@@ -12,7 +12,6 @@ import {
 
 export const DEFAULT_LIST: ListRow = {
   id: DEFAULT_LIST_ID,
-  folderId: null,
   title: 'Default',
   createdAt: new Date(2025, 3, 5).toISOString(),
   updatedAt: new Date(2025, 3, 5).toISOString()
@@ -20,7 +19,6 @@ export const DEFAULT_LIST: ListRow = {
 
 export const GROCERY_LIST: ListRow = {
   id: GROCERY_LIST_ID,
-  folderId: null,
   title: 'Grocery',
   createdAt: new Date(2025, 2, 10).toISOString(),
   updatedAt: new Date(2025, 2, 10).toISOString()
