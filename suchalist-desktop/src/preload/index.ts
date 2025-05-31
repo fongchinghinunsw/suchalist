@@ -1,4 +1,3 @@
-import { electronAPI } from '@electron-toolkit/preload';
 import { contextBridge, ipcRenderer } from 'electron';
 
 // Custom APIs for renderer
@@ -12,7 +11,6 @@ const database = {
 // just add to the DOM global.
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI);
     contextBridge.exposeInMainWorld('database', database);
   } catch (error) {
     console.error(error);
