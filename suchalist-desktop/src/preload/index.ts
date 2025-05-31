@@ -2,7 +2,8 @@ import { electronAPI } from '@electron-toolkit/preload';
 import { contextBridge, ipcRenderer } from 'electron';
 
 // Custom APIs for renderer
-const taskAPI = {
+const database = {
+  getResources: () => ipcRenderer.invoke('get-resources'),
   getListWithTasks: (listId: string) => ipcRenderer.invoke('get-list-with-tasks', listId)
 };
 
@@ -12,7 +13,7 @@ const taskAPI = {
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI);
-    contextBridge.exposeInMainWorld('taskAPI', taskAPI);
+    contextBridge.exposeInMainWorld('database', database);
   } catch (error) {
     console.error(error);
   }
@@ -20,5 +21,5 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.electron = electronAPI;
   // @ts-ignore (define in dts)
-  window.taskAPI = taskAPI;
+  window.database = database;
 }

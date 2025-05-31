@@ -7,6 +7,14 @@ export const ListRowSchema = z.object({
     .nullable()
     .transform((val) => val ?? undefined),
   title: z.string(),
+  order: z
+    .number()
+    .nullable()
+    .transform((val) => val ?? undefined),
+  folderOrder: z
+    .number()
+    .nullable()
+    .transform((val) => val ?? undefined),
   createdAt: z.string(),
   updatedAt: z.string()
 });

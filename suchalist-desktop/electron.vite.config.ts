@@ -4,16 +4,32 @@ import { resolve } from 'path';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    resolve: {
+      alias: {
+        '@common': resolve('src/common')
+      }
+    },
+    build: {
+      rollupOptions: {
+        external: ['better-sqlite3']
+      }
+    }
   },
   preload: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    build: {
+      rollupOptions: {
+        external: ['better-sqlite3']
+      }
+    }
   },
   renderer: {
     assetsInclude: 'src/renderer/assets/**',
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src'),
+        '@common': resolve('src/common'),
         '@/components': resolve('src/renderer/src/components'),
         '@/stores': resolve('src/renderer/src/stores'),
         '@/services': resolve('src/renderer/src/services')

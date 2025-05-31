@@ -1,4 +1,4 @@
-import { List } from '@common/types/task';
+import { List } from '@common/types/list';
 import { getListRowById } from '../repository/list';
 import { getTasksByListId } from './task';
 

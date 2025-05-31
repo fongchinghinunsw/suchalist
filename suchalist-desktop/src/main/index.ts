@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../resources/icon.png?asset';
 import { db, init } from './database/init';
+import { getResources } from './database/service/resource';
 
 function createWindow(): void {
   // Get the actual available space on the user's primary screen.
@@ -70,6 +71,7 @@ app.whenReady().then(() => {
     const tasks = db.prepare('SELECT * FROM tasks WHERE listId = ?').all(id);
     return { ...list, tasks };
   });
+  ipcMain.handle('get-resources', () => getResources());
 
   createWindow();
   init();

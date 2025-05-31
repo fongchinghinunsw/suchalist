@@ -47,7 +47,7 @@ export function init() {
     `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @createdAt, @updatedAt)`
   );
   const insertTask = db.prepare(
-    `INSERT OR IGNORE INTO tasks VALUES (@id, @taskListId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
+    `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
   );
 
   const insertAll = db.transaction(() => {

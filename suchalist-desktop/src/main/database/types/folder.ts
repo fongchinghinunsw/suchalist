@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const FolderRowSchema = z.object({
   id: z.string(),
   title: z.string(),
+  order: z.number(),
   createdAt: z.string(),
   updatedAt: z.string()
 });

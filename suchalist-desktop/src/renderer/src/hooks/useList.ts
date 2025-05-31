@@ -1,4 +1,4 @@
-import { List } from '@common/types/task';
+import { List } from '@common/types/list';
 import { useEffect, useState } from 'react';
 
 export function useList(id: string) {
@@ -12,7 +12,7 @@ export function useList(id: string) {
       try {
         setLoading(true);
         setError(null);
-        const list = await window.taskAPI.getList(id);
+        const list = await window.database.getList(id);
         console.log({ list });
         setList(list);
       } catch (error) {

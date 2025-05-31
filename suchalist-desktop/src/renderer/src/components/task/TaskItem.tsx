@@ -1,4 +1,4 @@
-import { Task } from '@/services/task_service/types';
+import { Task } from '@common/types/task';
 
 type Props = {
   task: Task;
@@ -9,13 +9,6 @@ type Props = {
   onUncompleteTask: (task: Task) => void;
 };
 
-export default function TaskItem({
-  task,
-  onPress,
-  onStarTask,
-  onDeleteTask,
-  onCompleteTask,
-  onUncompleteTask
-}: Props) {
+export default function TaskItem({ task }: Props) {
   return <div>{task.title}</div>;
 }
