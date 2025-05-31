@@ -22,3 +22,7 @@ export function isTaskWithDueDate(task: Task): task is TaskWithDueDate {
 export function isCompletedTask(task: Task): task is CompletedTask {
   return task.isCompleted === true && task.completedAt !== undefined;
 }
+
+export type NewTask = Pick<Task, 'title' | 'note' | 'dueDate'>;
+
+export type EditTask = Pick<Task, 'title' | 'note' | 'dueDate'>;
