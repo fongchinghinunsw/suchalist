@@ -6,13 +6,17 @@ import {
   Task,
   TaskWithDueDate
 } from '@common/types/task';
+import Spacer from '@renderer/components/base/Spacer';
+import AddTaskItem from './internal/AddTaskItem';
 import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 
 type Props = {
   list: List;
+  showAddTaskItem?: boolean;
+  onAddTask: (task: { title: string }) => void;
 };
 
-export default function TaskItemList({ list }: Props) {
+export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }: Props) {
   const completedTasks: CompletedTask[] = [];
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
@@ -41,6 +45,8 @@ export default function TaskItemList({ list }: Props) {
 
   return (
     <section className="w-full">
+      {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
+      <Spacer size={2} />
       <TaskItemUngroupedList tasks={tasksWithoutDueDate} />
     </section>
   );

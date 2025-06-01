@@ -9,6 +9,7 @@ import { isDueToday, isDueWithin7Days } from '../../utils/utils';
 
 export default function addTask(state: TasksState, action: PayloadAction<NewTask>) {
   const currentTasks = getCurrentTasksFromListMap(state, state.currentTaskListId);
+  console.log('payload', action.payload);
 
   const taskId = getId();
 
