@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type NotificationState = {
   dailyReminder: {
@@ -10,8 +10,8 @@ type NotificationState = {
 const initialNotificationState: NotificationState = {
   dailyReminder: {
     isEnabled: false,
-    datetime: new Date().toISOString(),
-  },
+    datetime: new Date().toISOString()
+  }
 };
 
 const notificationSlice = createSlice({
@@ -25,8 +25,8 @@ const notificationSlice = createSlice({
     },
     disableDailyReminder(state) {
       state.dailyReminder.isEnabled = false;
-    },
-  },
+    }
+  }
 });
 
 export const notificationActions = notificationSlice.actions;

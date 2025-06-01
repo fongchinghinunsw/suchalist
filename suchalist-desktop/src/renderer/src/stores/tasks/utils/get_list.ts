@@ -28,4 +28,6 @@ export function getListFromResources(
       };
     }
   }
+
+  return;
 }

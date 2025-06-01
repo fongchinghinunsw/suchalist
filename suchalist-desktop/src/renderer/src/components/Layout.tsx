@@ -3,7 +3,7 @@ type Props = {
 };
 
 export function RootLayout({ children }: Props) {
-  return <main className="flex flex-row h-full w-full bg-red-300 pt-11">{children}</main>;
+  return <main className="flex flex-row h-full w-full pt-11">{children}</main>;
 }
 
 export function SideBar({ children }: Props) {

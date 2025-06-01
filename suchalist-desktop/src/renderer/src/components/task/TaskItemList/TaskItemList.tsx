@@ -6,6 +6,7 @@ import {
   Task,
   TaskWithDueDate
 } from '@common/types/task';
+import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 
 type Props = {
   list: List;
@@ -39,10 +40,8 @@ export default function TaskItemList({ list }: Props) {
   );
 
   return (
-    <section>
-      {tasksWithoutDueDate.map((task) => (
-        <div key={task.id}>{task.title}</div>
-      ))}
+    <section className="w-full">
+      <TaskItemUngroupedList tasks={tasksWithoutDueDate} />
     </section>
   );
 }

@@ -27,6 +27,8 @@ export default defineConfig({
         '@common': resolve('src/common'),
         '@/components': resolve('src/renderer/src/components'),
         '@/stores': resolve('src/renderer/src/stores'),
+        '@/types': resolve('src/renderer/src/types'),
+        '@/utils': resolve('src/renderer/src/utils'),
         '@/services': resolve('src/renderer/src/services')
       }
     },
