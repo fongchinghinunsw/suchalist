@@ -1,8 +1,10 @@
 import Text from '@/components/base/Text';
 import { selectTheme, Theme } from '@/stores/theme';
 import { Task } from '@common/types/task';
+import { getTextColorClassName } from '@renderer/utils/styles/textColor';
 import { UnreachableError } from '@renderer/utils/UnreachableError';
 import clsx from 'clsx';
+import { IoStar, IoStarOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 
 type Props = {
@@ -13,8 +15,18 @@ export default function TaskItem({ task }: Props) {
   const theme = useSelector(selectTheme);
 
   return (
-    <div className={clsx('border-2 rounded-lg bg-white p-2', getBorderColor(theme))}>
+    <div
+      className={clsx(
+        'border-2 rounded-lg bg-white p-2 flex justify-between items-center',
+        getBorderColor(theme)
+      )}
+    >
       <Text size="small">{task.title}</Text>
+      {task.isStarred ? (
+        <IoStar className={getTextColorClassName(theme, 600)} />
+      ) : (
+        <IoStarOutline className={getTextColorClassName(theme, 600)} />
+      )}
     </div>
   );
 }
