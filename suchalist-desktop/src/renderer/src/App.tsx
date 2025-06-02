@@ -1,17 +1,33 @@
 import { Provider as ReduxStoreProvider } from 'react-redux';
-import { RootLayout } from './components/Layout';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
+import { Layout, SideBar } from './components/Layout';
 import TopBar from './components/TopBar';
 import HomePage from './pages/home/HomePage';
+import SettingsPage from './pages/settings/SettingsPage';
 import store from './stores';
+
+function RootLayout(): React.JSX.Element {
+  return (
+    <Layout>
+      <SideBar>SideBar</SideBar>
+      <Outlet />
+    </Layout>
+  );
+}
 
 function App(): React.JSX.Element {
   return (
-    <ReduxStoreProvider store={store}>
-      <TopBar />
-      <RootLayout>
-        <HomePage />
-      </RootLayout>
-    </ReduxStoreProvider>
+    <BrowserRouter>
+      <ReduxStoreProvider store={store}>
+        <Routes>
+          <Route element={<RootLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
+        </Routes>
+        <TopBar />
+      </ReduxStoreProvider>
+    </BrowserRouter>
   );
 }
 

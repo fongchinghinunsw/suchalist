@@ -10,14 +10,17 @@ type TextSize = 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
 type Props = {
   size: TextSize;
   shade?: Shade;
+  className?: string;
   children: string;
 };
 
-export default function Text({ size, shade = 400, children }: Props) {
+export default function Text({ size, shade = 400, className, children }: Props) {
   const theme = useSelector(selectTheme);
 
   return (
-    <span className={clsx(getFontSizeClassName(size), getTextColorClassName(theme, shade))}>
+    <span
+      className={clsx(getFontSizeClassName(size), getTextColorClassName(theme, shade), className)}
+    >
       {children}
     </span>
   );

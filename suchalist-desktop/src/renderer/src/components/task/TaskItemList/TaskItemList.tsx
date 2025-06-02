@@ -8,6 +8,7 @@ import {
 } from '@common/types/task';
 import Spacer from '@renderer/components/base/Spacer';
 import AddTaskItem from './internal/AddTaskItem';
+import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
 import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 
 type Props = {
@@ -48,6 +49,7 @@ export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }
       {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
       <Spacer size={2} />
       <TaskItemUngroupedList tasks={tasksWithoutDueDate} />
+      <TaskItemGroupedList tasks={tasksWithDueDate} />
     </section>
   );
 }

@@ -1,4 +1,3 @@
-import { SideBar } from '@/components/Layout';
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
 import { isList } from '@common/types/list';
 import { Resource } from '@common/types/resource';
@@ -26,11 +25,8 @@ export default function HomePage() {
     [dispatch]
   );
   return (
-    <>
-      <SideBar>SideBar</SideBar>
-      <main className="w-full px-2 py-3">
-        {lists.length > 0 && <TaskItemList list={lists[0]} onAddTask={addTask} />}
-      </main>
-    </>
+    <main className="w-full px-2 py-3">
+      {lists.length > 0 && <TaskItemList list={lists[0]} onAddTask={addTask} />}
+    </main>
   );
 }

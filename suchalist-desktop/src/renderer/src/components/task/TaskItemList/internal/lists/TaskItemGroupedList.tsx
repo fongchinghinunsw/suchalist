@@ -1,7 +1,6 @@
+import Text from '@/components/base/Text';
 import { TaskWithDueDate } from '@common/types/task';
-import { selectTheme } from '@renderer/stores/theme';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import TaskItem from '../TaskItem';
 
 type Props = {
@@ -9,8 +8,6 @@ type Props = {
 };
 
 export default function TaskItemGroupedList({ tasks }: Props) {
-  const theme = useSelector(selectTheme);
-
   const sections = useMemo(() => {
     const grouped: Record<string, TaskWithDueDate[]> = {};
 
@@ -36,8 +33,12 @@ export default function TaskItemGroupedList({ tasks }: Props) {
         const { title, data } = section;
         return (
           <div key={title}>
-            <div>{title}</div>
-            <div>{data.map((task) => renderItem(task))}</div>
+            <div className="py-2">
+              <Text size="small" shade={600}>
+                {title}
+              </Text>
+            </div>
+            <div className="flex flex-col gap-2">{data.map((task) => renderItem(task))}</div>
           </div>
         );
       })}
