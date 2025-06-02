@@ -12,8 +12,8 @@ export const TaskRowSchema = z.object({
     .string()
     .nullable()
     .transform((val) => val ?? undefined),
-  isCompleted: z.number().transform((n) => n === 1),
-  isStarred: z.number().transform((n) => n === 1),
+  isCompleted: z.number(),
+  isStarred: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
   completedAt: z

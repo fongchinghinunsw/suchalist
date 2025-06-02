@@ -1,16 +1,16 @@
+import { ENV } from '@common/constants/env';
 import Database from 'better-sqlite3';
 import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
+import { getListRowsCount } from './service/list';
 
 // Create a connection to the DB. If the database file does not exist, it is created.
 export const db: InstanceType<typeof Database> = new Database('suchalist.db');
 
 export function init() {
+  console.log('environment:', ENV);
+
   db.exec(`
     PRAGMA foreign_keys = ON;
-
-    DROP TABLE folders;
-    DROP TABLE lists;
-    DROP TABLE tasks;
 
     CREATE TABLE IF NOT EXISTS folders (
       id TEXT PRIMARY KEY,
@@ -44,42 +44,45 @@ export function init() {
       completedAt TEXT,
       FOREIGN KEY (listId) REFERENCES lists(id) ON DELETE CASCADE
     );
-
-    DELETE FROM tasks;
-    DELETE FROM lists;
-    DELETE FROM folders;
     `);
 
-  // Insert a row into a table if the primary key doesn't exist, otherwise simply ignore the statement.
-  const insertFolder = db.prepare(
-    `INSERT OR IGNORE INTO folders VALUES (@id, @title, @order, @createdAt, @updatedAt)`
-  );
-  const insertList = db.prepare(
-    `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @order, @folderOrder, @createdAt, @updatedAt)`
-  );
-  const insertTask = db.prepare(
-    `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
-  );
+  // Insert fake data in development build
+  if (ENV === 'development') {
+    // Check if at least one list exists (DEFAULT list should always exist if the app has been initialized).
+    const listRowsCount = getListRowsCount();
+    if (listRowsCount === 0) {
+      return;
+    }
 
-  const insertAll = db.transaction(() => {
-    for (const f of FOLDER_ROWS) insertFolder.run(f);
-    for (const l of LIST_ROWS)
-      insertList.run({
-        ...l,
-        folderId: l.folderId ?? null,
-        order: l.order ?? null,
-        folderOrder: l.folderOrder ?? null
-      });
-    for (const t of TASK_ROWS)
-      insertTask.run({
-        ...t,
-        note: t.note ?? null,
-        dueDate: t.dueDate ?? null,
-        isCompleted: t.isCompleted === true ? 1 : 0,
-        isStarred: t.isStarred === true ? 1 : 0,
-        completedAt: t.completedAt ?? null
-      });
-  });
+    // INSERT OR IGNORE: Insert a row into a table if the primary key doesn't exist, otherwise simply ignore the statement.
+    const insertFolder = db.prepare(
+      `INSERT OR IGNORE INTO folders VALUES (@id, @title, @order, @createdAt, @updatedAt)`
+    );
+    const insertList = db.prepare(
+      `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @order, @folderOrder, @createdAt, @updatedAt)`
+    );
+    const insertTask = db.prepare(
+      `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
+    );
 
-  insertAll();
+    const insertAll = db.transaction(() => {
+      for (const f of FOLDER_ROWS) insertFolder.run(f);
+      for (const l of LIST_ROWS)
+        insertList.run({
+          ...l,
+          folderId: l.folderId ?? null,
+          order: l.order ?? null,
+          folderOrder: l.folderOrder ?? null
+        });
+      for (const t of TASK_ROWS)
+        insertTask.run({
+          ...t,
+          note: t.note ?? null,
+          dueDate: t.dueDate ?? null,
+          completedAt: t.completedAt ?? null
+        });
+    });
+
+    insertAll();
+  }
 }

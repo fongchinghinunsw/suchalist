@@ -1,6 +1,10 @@
 import { List } from '@common/types/list';
-import { getListRowById } from '../repository/list';
+import { getListRowById, getListRowsCount as getListRowsCountObject } from '../repository/list';
 import { getTasksByListId } from './task';
+
+export function getListRowsCount() {
+  return getListRowsCountObject().count;
+}
 
 export function getListById(id: string): List | null {
   const list = getListRowById(id);

@@ -1,9 +1,9 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
-import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
+import { app, BrowserWindow, screen, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../resources/icon.png?asset';
-import { db, init } from './database/init';
-import { getResources } from './database/service/resource';
+import { init } from './database/init';
+import { registerIpcHandlers } from './ipc';
 
 function createWindow(): void {
   // Get the actual available space on the user's primary screen.
@@ -60,18 +60,8 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'));
-  ipcMain.handle('get-list', (_, id: string) => {
-    const list = db.prepare('SELECT * FROM lists WHERE id = ?').get(id);
-    if (!list) {
-      return null;
-    }
-
-    const tasks = db.prepare('SELECT * FROM tasks WHERE listId = ?').all(id);
-    return { ...list, tasks };
-  });
-  ipcMain.handle('get-resources', () => getResources());
+  // IPCs
+  registerIpcHandlers();
 
   createWindow();
   init();
