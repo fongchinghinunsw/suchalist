@@ -1,5 +1,11 @@
 import { List } from '@common/types/list';
-import { getListRowById, getListRowsCount as getListRowsCountObject } from '../repository/list';
+import {
+  getListRowById,
+  getListRowsCount as getListRowsCountObject,
+  insertListRow
+} from '../repository/list';
+import { ListRow, ListSchema } from '../types/list';
+import { normalize } from '../utils/normalize';
 import { getTasksByListId } from './task';
 
 export function getListRowsCount() {
@@ -14,7 +20,12 @@ export function getListById(id: string): List | null {
   }
 
   return {
-    ...list,
+    ...ListSchema.parse(list),
     tasks: getTasksByListId(list.id)
   };
+}
+
+export function insertList(list: List) {
+  const listRow = normalize<List, ListRow>(list);
+  insertListRow(listRow);
 }

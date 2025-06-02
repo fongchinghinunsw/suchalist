@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function HomePage() {
   const currentList = useSelector(selectCurrentList);
+  console.log({ currentList });
 
   const dispatch = useDispatch();
 
@@ -17,7 +18,7 @@ export default function HomePage() {
   );
   return (
     <main className="w-full px-2 py-3">
-      <TaskItemList list={currentList} onAddTask={addTask} />
+      {currentList && <TaskItemList list={currentList} onAddTask={addTask} />}
     </main>
   );
 }

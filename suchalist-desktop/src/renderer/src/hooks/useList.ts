@@ -13,7 +13,6 @@ export function useList(id: string) {
         setLoading(true);
         setError(null);
         const list = await window.database.getList(id);
-        console.log({ list });
         setList(list);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'Failed to fetch list');

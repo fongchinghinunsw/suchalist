@@ -3,6 +3,7 @@ import { isListWithOrder, List, ListWithOrder } from '@common/types/list';
 import { Resource } from '@common/types/resource';
 import { getAllFolderRows } from '../repository/folder';
 import { getAllListRows } from '../repository/list';
+import { ListSchema } from '../types/list';
 import { getTasksByListId } from './task';
 
 export function getResources(): Resource[] {
@@ -22,7 +23,7 @@ export function getResources(): Resource[] {
     const tasks = getTasksByListId(id);
 
     const list: List = {
-      ...listRow,
+      ...ListSchema.parse(listRow),
       tasks
     };
 
@@ -37,7 +38,6 @@ export function getResources(): Resource[] {
         listsInFolderMap.set(folderId, [list]);
       }
     } else {
-      console.log({ list });
       if (isListWithOrder(list)) {
         topLevelLists.push(list);
       }

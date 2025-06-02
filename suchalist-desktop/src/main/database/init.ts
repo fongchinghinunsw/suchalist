@@ -1,6 +1,9 @@
 import { ENV } from '@common/constants/env';
 import Database from 'better-sqlite3';
 import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
+import { insertFolderRow } from './repository/folder';
+import { insertListRow } from './repository/list';
+import { insertTaskRow } from './repository/task';
 import { getListRowsCount } from './service/list';
 
 // Create a connection to the DB. If the database file does not exist, it is created.
@@ -56,32 +59,20 @@ export function init() {
     }
 
     // INSERT OR IGNORE: Insert a row into a table if the primary key doesn't exist, otherwise simply ignore the statement.
-    const insertFolder = db.prepare(
-      `INSERT OR IGNORE INTO folders VALUES (@id, @title, @order, @createdAt, @updatedAt)`
-    );
-    const insertList = db.prepare(
-      `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @order, @folderOrder, @createdAt, @updatedAt)`
-    );
-    const insertTask = db.prepare(
-      `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
-    );
+    // const insertFolder = db.prepare(
+    //   `INSERT OR IGNORE INTO folders VALUES (@id, @title, @order, @createdAt, @updatedAt)`
+    // );
+    // const insertList = db.prepare(
+    //   `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @order, @folderOrder, @createdAt, @updatedAt)`
+    // );
+    // const insertTask = db.prepare(
+    //   `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
+    // );
 
     const insertAll = db.transaction(() => {
-      for (const f of FOLDER_ROWS) insertFolder.run(f);
-      for (const l of LIST_ROWS)
-        insertList.run({
-          ...l,
-          folderId: l.folderId ?? null,
-          order: l.order ?? null,
-          folderOrder: l.folderOrder ?? null
-        });
-      for (const t of TASK_ROWS)
-        insertTask.run({
-          ...t,
-          note: t.note ?? null,
-          dueDate: t.dueDate ?? null,
-          completedAt: t.completedAt ?? null
-        });
+      for (const f of FOLDER_ROWS) insertFolderRow(f);
+      for (const l of LIST_ROWS) insertListRow(l);
+      for (const t of TASK_ROWS) insertTaskRow(t);
     });
 
     insertAll();

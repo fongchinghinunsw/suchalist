@@ -9,6 +9,7 @@ export default function useInit() {
   const initialize = async () => {
     try {
       const initialState = await getTasksState();
+      console.log({ initialState });
       store.dispatch(tasksActions.hydrate(initialState));
       console.log('hydrated');
     } catch (error) {

@@ -26,3 +26,19 @@ export function getListRowById(id: string): ListRow | null {
 export function getListsByFolderId(id: string): ListRow[] {
   return db.prepare<string, ListRow>('SELECT * FROM lists WHERE folderId = ?').all(id);
 }
+
+export function insertListRow(list: ListRow) {
+  db.prepare<ListRow>(
+    `
+    INSERT INTO lists VALUES (
+      @id,
+      @folderId,
+      @title,
+      @order,
+      @folderOrder,
+      @createdAt,
+      @updatedAt
+    )
+  `
+  ).run(list);
+}
