@@ -7,7 +7,8 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
     resolve: {
       alias: {
-        '@common': resolve('src/common')
+        '@common': resolve('src/common'),
+        '@/database': resolve('src/main/database')
       }
     },
     build: {

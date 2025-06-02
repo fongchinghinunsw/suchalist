@@ -50,7 +50,8 @@ export function init() {
   if (ENV === 'development') {
     // Check if at least one list exists (DEFAULT list should always exist if the app has been initialized).
     const listRowsCount = getListRowsCount();
-    if (listRowsCount === 0) {
+    console.log({ listRowsCount });
+    if (listRowsCount !== 0) {
       return;
     }
 
