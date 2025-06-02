@@ -8,6 +8,7 @@ import {
 } from '@common/types/task';
 import Spacer from '@renderer/components/base/Spacer';
 import AddTaskItem from './internal/AddTaskItem';
+import CompletedTaskItemList from './internal/lists/CompletedTaskItemList';
 import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
 import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
 
@@ -43,6 +44,7 @@ export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }
   completedTasks.sort(
     (l1, l2) => new Date(l2.completedAt).getTime() - new Date(l1.completedAt).getTime()
   );
+  console.log(tasksWithoutDueDate.length, tasksWithDueDate.length, completedTasks.length);
 
   return (
     <section className="w-full">
@@ -50,6 +52,7 @@ export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }
       <Spacer size={2} />
       <TaskItemUngroupedList tasks={tasksWithoutDueDate} />
       <TaskItemGroupedList tasks={tasksWithDueDate} />
+      <CompletedTaskItemList tasks={completedTasks} />
     </section>
   );
 }
