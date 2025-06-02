@@ -6,12 +6,13 @@ import {
 } from '@common/constants/list';
 import { isFolder } from '@common/types/folder';
 import { isList, List } from '@common/types/list';
-import { Resource } from '@common/types/resource';
 import { Task } from '@common/types/task';
 import { toFolderHeader, toListHeader } from '@renderer/components/task/HeaderList/utils';
 import { TasksState } from '../tasks';
 
-export async function getTasksState(resources: Resource[]): Promise<TasksState> {
+export async function getTasksState(): Promise<TasksState> {
+  const resources = await window.database.getResources();
+
   const state: TasksState = {
     resources,
     currentTaskListId: DEFAULT_LIST_ID,

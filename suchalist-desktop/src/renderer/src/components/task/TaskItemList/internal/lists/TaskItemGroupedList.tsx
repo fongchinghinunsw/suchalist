@@ -25,7 +25,7 @@ export default function TaskItemGroupedList({ tasks }: Props) {
     }));
   }, [tasks]);
 
-  const renderItem = (task: TaskWithDueDate) => <TaskItem task={task} />;
+  const renderItem = (task: TaskWithDueDate) => <TaskItem key={task.id} task={task} />;
 
   return (
     <div>
