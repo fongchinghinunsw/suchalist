@@ -44,7 +44,6 @@ export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }
   completedTasks.sort(
     (l1, l2) => new Date(l2.completedAt).getTime() - new Date(l1.completedAt).getTime()
   );
-  console.log(tasksWithoutDueDate.length, tasksWithDueDate.length, completedTasks.length);
 
   return (
     <section className="w-full">

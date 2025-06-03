@@ -18,7 +18,7 @@ export default function CompletedTaskItemList(props: Props) {
   };
 
   const buttonText = isTasksVisible ? 'Hide Completed Tasks' : 'Show Completed Tasks';
-  console.log({ props });
+
   return (
     <>
       <div>

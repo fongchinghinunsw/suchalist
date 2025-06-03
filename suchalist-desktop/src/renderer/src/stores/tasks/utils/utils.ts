@@ -49,7 +49,11 @@ export async function getTasksState(): Promise<TasksState> {
 
   resources.forEach((resource) => {
     if (isFolder(resource)) {
-      resource.lists.forEach((list) => {
+      const folder = resource;
+
+      state.folderMap[folder.id] = folder;
+
+      folder.lists.forEach((list) => {
         state.listMap[list.id] = list;
 
         list.tasks.forEach((task) => {
@@ -67,13 +71,16 @@ export async function getTasksState(): Promise<TasksState> {
         });
       });
 
-      state.folderMap[resource.id] = resource;
-      state.headers.push(toFolderHeader(resource));
+      state.headers.push(toFolderHeader(folder));
       return;
     }
 
     if (isList(resource)) {
-      resource.tasks.forEach((task) => {
+      const list = resource;
+
+      state.listMap[list.id] = list;
+
+      list.tasks.forEach((task) => {
         if (task.isStarred) {
           starredList.tasks.push(task);
         }
@@ -87,8 +94,10 @@ export async function getTasksState(): Promise<TasksState> {
         }
       });
 
-      state.listMap[resource.id] = resource;
-      state.headers.push(toListHeader(resource));
+      if (list.id !== DEFAULT_LIST_ID) {
+        state.headers.push(toListHeader(list));
+      }
+
       return;
     }
 
@@ -96,22 +105,8 @@ export async function getTasksState(): Promise<TasksState> {
   });
 
   state.listMap[STARRED_LIST_ID] = starredList;
-  state.headers.push({
-    type: 'LIST',
-    id: STARRED_LIST_ID
-  });
-
   state.listMap[TODAY_LIST_ID] = todayList;
-  state.headers.push({
-    type: 'LIST',
-    id: TODAY_LIST_ID
-  });
-
   state.listMap[NEXT_SEVEN_DAYS_LIST_ID] = nextSevenDaysList;
-  state.headers.push({
-    type: 'LIST',
-    id: NEXT_SEVEN_DAYS_LIST_ID
-  });
 
   return state;
 }
