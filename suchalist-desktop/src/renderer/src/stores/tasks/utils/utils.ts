@@ -7,7 +7,7 @@ import {
 import { isFolder } from '@common/types/folder';
 import { isList, List } from '@common/types/list';
 import { Task } from '@common/types/task';
-import { toFolderHeader, toListHeader } from '@renderer/components/task/HeaderList/utils';
+import { toFolderHeader, toListHeader } from '@renderer/components/Layout/SideBar/Headers/utils';
 import { TasksState } from '../tasks';
 
 export async function getTasksState(): Promise<TasksState> {

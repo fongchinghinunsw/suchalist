@@ -9,7 +9,7 @@ import { List } from '@common/types/list';
 import { Resource } from '@common/types/resource';
 import { Task } from '@common/types/task';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Header, ListHeader } from '@renderer/components/task/HeaderList/types';
+import { Header, ListHeader } from '@renderer/components/Layout/SideBar/Headers/types';
 import { RootState } from '..';
 import addFolder from './reducers/folder/add_folder';
 import deleteFolder from './reducers/folder/delete_folder';

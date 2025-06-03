@@ -2,7 +2,7 @@ import { isFolder } from '@common/types/folder';
 import { List } from '@common/types/list';
 import { getId } from '@common/utils/id';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { isFolderHeader, ListHeader } from '@renderer/components/task/HeaderList/types';
+import { isFolderHeader, ListHeader } from '@renderer/components/Layout/SideBar/Headers/types';
 import { TasksState } from '../../tasks';
 
 export default function addList(

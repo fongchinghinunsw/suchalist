@@ -49,7 +49,7 @@ export default function AddTaskItem({ onAddTask }: Props) {
       <input
         value={title}
         onChange={onTitleChange}
-        placeholder="Add a task..."
+        placeholder="Type here to add a task..."
         className="focus-visible:outline-none w-full"
       />
     </div>

@@ -25,7 +25,7 @@ export default function Layout(): React.JSX.Element {
         backgroundPosition: 'center'
       }}
     >
-      <SideBar>SideBar</SideBar>
+      <SideBar />
       <Outlet />
       <Footer />
     </main>

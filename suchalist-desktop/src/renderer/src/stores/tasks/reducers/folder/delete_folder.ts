@@ -1,6 +1,6 @@
 import { DEFAULT_LIST_ID } from '@common/constants/list';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { isFolderHeader } from '@renderer/components/task/HeaderList/types';
+import { isFolderHeader } from '@renderer/components/Layout/SideBar/Headers/types';
 import { TasksState } from '../../tasks';
 
 export default function deleteFolder(state: TasksState, action: PayloadAction<string>) {

@@ -1,7 +1,7 @@
 import { DEFAULT_LIST_ID } from '@common/constants/list';
 import { isList } from '@common/types/list';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { isFolderHeader } from '@renderer/components/task/HeaderList/types';
+import { isFolderHeader } from '@renderer/components/Layout/SideBar/Headers/types';
 import { TasksState } from '../../tasks';
 import { getListFromResources } from '../../utils/get_list';
 
