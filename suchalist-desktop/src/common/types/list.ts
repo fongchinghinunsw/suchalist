@@ -1,3 +1,4 @@
+import { DEFAULT_LIST_ID } from '@common/constants/list';
 import { Folder } from './folder';
 import { Task } from './task';
 
@@ -21,6 +22,10 @@ export type ListWithFolderOrder = List & { folderOrder: number };
  */
 export function isList(resource: List | Folder): resource is List {
   return Array.isArray((resource as List).tasks);
+}
+
+export function isDefaultList(list: List) {
+  return list.id === DEFAULT_LIST_ID;
 }
 
 export function isListWithOrder(list: List): list is ListWithOrder {

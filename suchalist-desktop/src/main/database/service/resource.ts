@@ -1,5 +1,5 @@
 import { Folder } from '@common/types/folder';
-import { isListWithOrder, List, ListWithOrder } from '@common/types/list';
+import { isDefaultList, isListWithOrder, List } from '@common/types/list';
 import { Resource } from '@common/types/resource';
 import { getAllFolderRows } from '../repository/folder';
 import { getAllListRows } from '../repository/list';
@@ -11,11 +11,13 @@ export function getResources(): Resource[] {
   const listRows = getAllListRows();
 
   const folders: Folder[] = [];
-  const topLevelLists: ListWithOrder[] = [];
+  const topLevelLists: List[] = [];
 
   const folderMap = new Map<string, Folder>();
   const listMap = new Map<string, List>();
   const listsInFolderMap = new Map<string, List[]>();
+  console.log('getResources');
+  console.log({ listRows });
 
   listRows.forEach((listRow) => {
     const { id, folderId } = listRow;
@@ -38,7 +40,7 @@ export function getResources(): Resource[] {
         listsInFolderMap.set(folderId, [list]);
       }
     } else {
-      if (isListWithOrder(list)) {
+      if (isDefaultList(list) || isListWithOrder(list)) {
         topLevelLists.push(list);
       }
     }
@@ -60,7 +62,6 @@ export function getResources(): Resource[] {
   });
 
   const resources = [...folders, ...topLevelLists];
-  resources.sort((a, b) => a.order - b.order);
 
   return resources;
 }

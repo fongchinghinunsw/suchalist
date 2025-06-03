@@ -1,7 +1,7 @@
+import { DEFAULT_LIST_ID } from '@common/constants/list';
 import { Task } from '@common/types/task';
 import { getId } from '@common/utils/id';
 import {
-  DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,
   GROCERY_LIST_ID,
   MOVIE_LIST_ID,

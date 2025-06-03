@@ -1,5 +1,5 @@
+import { DEFAULT_LIST_ID } from '@common/constants/list';
 import {
-  DEFAULT_LIST_ID,
   EXERCISE_LIST_ID,
   GROCERY_LIST_ID,
   LEISURE_FOLDER_ID,
