@@ -13,7 +13,7 @@ type Props = {
 export default function BaseHeaderItem({ icon, title, onClick }: Props) {
   const { Icon, size } = icon;
   return (
-    <div className="flex justify-between items-center p-2" onClick={onClick}>
+    <div className="flex justify-between items-center p-2 cursor-pointer" onClick={onClick}>
       <div className="flex items-center gap-2">
         <Icon size={size} />
         <Text size="medium">{title}</Text>

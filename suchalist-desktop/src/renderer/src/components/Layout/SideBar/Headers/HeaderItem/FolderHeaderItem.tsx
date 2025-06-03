@@ -1,4 +1,5 @@
 import { selectFolderMap } from '@renderer/stores/tasks/tasks';
+import { useState } from 'react';
 import { IoFolderOpenOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { FolderHeader } from '../types';
@@ -17,18 +18,26 @@ export default function FolderHeaderItem({
   const folderMap = useSelector(selectFolderMap);
   const folder = folderMap[id];
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const onToggleListItems = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
     <>
       <BaseHeaderItem
         icon={{ Icon: IoFolderOpenOutline, size: 16 }}
         title={folder.title}
-        onClick={() => {}}
+        onClick={onToggleListItems}
       />
-      <div className="pl-3">
-        {lists.map((list) => (
-          <ListHeaderItem key={list.id} listHeader={list} onListHeaderClick={onListHeaderClick} />
-        ))}
-      </div>
+      {isExpanded && (
+        <div className="pl-3">
+          {lists.map((list) => (
+            <ListHeaderItem key={list.id} listHeader={list} onListHeaderClick={onListHeaderClick} />
+          ))}
+        </div>
+      )}
     </>
   );
 }

@@ -7,6 +7,7 @@ import {
 import Divider from '@renderer/components/base/Divider';
 import { selectHeaders, tasksActions } from '@renderer/stores/tasks/tasks';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router';
 import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
 import ListHeaderItem from './HeaderItem/ListHeaderItem';
 import { isFolderHeader } from './types';
@@ -17,9 +18,14 @@ export default function Headers() {
   const headers = useSelector(selectHeaders);
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const onListHeaderClick = (taskListId: string) => {
     dispatch(tasksActions.setCurrentTaskListId(taskListId));
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
   };
 
   return (
