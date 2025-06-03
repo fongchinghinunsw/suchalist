@@ -4,6 +4,7 @@ import {
   STARRED_LIST_ID,
   TODAY_LIST_ID
 } from '@common/constants/list';
+import Divider from '@renderer/components/base/Divider';
 import { selectHeaders, tasksActions } from '@renderer/stores/tasks/tasks';
 import { useDispatch, useSelector } from 'react-redux';
 import FolderHeaderItem from './HeaderItem/FolderHeaderItem';
@@ -35,6 +36,7 @@ export default function Headers() {
           />
         );
       })}
+      <Divider className="my-2" />
       {headers.map((header) => {
         if (isFolderHeader(header)) {
           return (
