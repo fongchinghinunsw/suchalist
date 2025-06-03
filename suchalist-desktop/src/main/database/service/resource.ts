@@ -16,8 +16,6 @@ export function getResources(): Resource[] {
   const folderMap = new Map<string, Folder>();
   const listMap = new Map<string, List>();
   const listsInFolderMap = new Map<string, List[]>();
-  console.log('getResources');
-  console.log({ listRows });
 
   listRows.forEach((listRow) => {
     const { id, folderId } = listRow;

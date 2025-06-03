@@ -1,20 +1,11 @@
 import { Provider as ReduxStoreProvider } from 'react-redux';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
-import { Layout, SideBar } from './components/Layout';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import Layout from './components/Layout/Layout';
 import TopBar from './components/TopBar';
 import useInit from './hooks/useInit';
 import HomePage from './pages/home/HomePage';
 import SettingsPage from './pages/settings/SettingsPage';
 import store from './stores';
-
-function RootLayout(): React.JSX.Element {
-  return (
-    <Layout>
-      <SideBar>SideBar</SideBar>
-      <Outlet />
-    </Layout>
-  );
-}
 
 function App(): React.JSX.Element {
   const { isLoading } = useInit();
@@ -27,7 +18,7 @@ function App(): React.JSX.Element {
     <BrowserRouter>
       <ReduxStoreProvider store={store}>
         <Routes>
-          <Route element={<RootLayout />}>
+          <Route element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Route>
