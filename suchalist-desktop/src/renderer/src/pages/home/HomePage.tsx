@@ -17,7 +17,7 @@ export default function HomePage() {
     [dispatch]
   );
   return (
-    <main className="px-2 py-3">
+    <main className="px-2 py-3 flex-1">
       {currentList && <TaskItemList list={currentList} onAddTask={addTask} />}
     </main>
   );
