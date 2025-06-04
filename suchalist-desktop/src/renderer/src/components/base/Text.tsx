@@ -4,6 +4,7 @@ import { UnreachableError } from '@/utils/UnreachableError';
 import { getTextColorClassName } from '@/utils/styles/textColor';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
+import { twMerge } from 'tailwind-merge';
 
 type TextSize = 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
 
@@ -18,11 +19,13 @@ export default function Text({ size, shade = 400, className, children }: Props) 
   const theme = useSelector(selectTheme);
 
   return (
-    <span
-      className={clsx(getFontSizeClassName(size), getTextColorClassName(theme, shade), className)}
+    <div
+      className={twMerge(
+        clsx(getFontSizeClassName(size), getTextColorClassName(theme, shade), className)
+      )}
     >
       {children}
-    </span>
+    </div>
   );
 }
 
