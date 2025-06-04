@@ -1,20 +1,17 @@
-import { default as blurredBgImage } from '@/assets/images/blue-paint-blur.jpg';
-import { default as bgImage } from '@/assets/images/blue-paint.jpg';
-import { useEffect, useState } from 'react';
+import { selectBackgroundImage } from '@renderer/stores/theme';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import { SideBar } from './SideBar';
 import Footer from './SideBar/Footer';
 
 export default function Layout(): React.JSX.Element {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const backgroundImage = useSelector(selectBackgroundImage);
 
   useEffect(() => {
     const img = new Image();
-    img.src = bgImage;
-    img.onload = () => setIsLoaded(true);
-  }, []);
-
-  const backgroundImage = isLoaded ? bgImage : blurredBgImage;
+    img.src = backgroundImage;
+  }, [backgroundImage]);
 
   return (
     <main
