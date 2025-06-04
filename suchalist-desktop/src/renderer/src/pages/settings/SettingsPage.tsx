@@ -1,7 +1,16 @@
 import Text from '@/components/base/Text';
-import Button from '@renderer/components/base/Button';
+import ColorBox from '@renderer/components/ColorBox';
+import { THEMES } from '@renderer/constants/styles';
+import { Theme, themeActions } from '@renderer/stores/theme';
+import { useDispatch } from 'react-redux';
 
 export default function SettingsPage() {
+  const dispatch = useDispatch();
+
+  const setTheme = (theme: Theme) => {
+    dispatch(themeActions.setTheme(theme));
+  };
+
   return (
     <main className="flex-1 p-10">
       <div className="p-10 bg-white/50 rounded-xl">
@@ -11,9 +20,11 @@ export default function SettingsPage() {
         <Text size="small" className="text-black">
           Set the color and background for your TODO list.
         </Text>
-        <Button mode="contained" onClick={() => {}} className="mt-4">
-          Change App Appearance
-        </Button>
+        <div className="flex gap-3 mt-4">
+          {THEMES.map((theme) => (
+            <ColorBox key={theme} color={theme} onClick={() => setTheme(theme)} />
+          ))}
+        </div>
       </div>
     </main>
   );
