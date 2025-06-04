@@ -11,7 +11,7 @@ export default function SettingsPage() {
         <Text size="small" className="text-black">
           Set the color and background for your TODO list.
         </Text>
-        <Button mode="contained" onClick={() => {}}>
+        <Button mode="contained" onClick={() => {}} className="mt-4">
           Change App Appearance
         </Button>
       </div>
