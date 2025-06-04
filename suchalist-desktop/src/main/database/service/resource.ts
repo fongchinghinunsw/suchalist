@@ -3,7 +3,7 @@ import { isDefaultList, isListWithOrder, List } from '@common/types/list';
 import { Resource } from '@common/types/resource';
 import { getAllFolderRows } from '../repository/folder';
 import { getAllListRows } from '../repository/list';
-import { ListSchema } from '../types/list';
+import { toList } from '../types/list';
 import { getTasksByListId } from './task';
 
 export function getResources(): Resource[] {
@@ -23,7 +23,7 @@ export function getResources(): Resource[] {
     const tasks = getTasksByListId(id);
 
     const list: List = {
-      ...ListSchema.parse(listRow),
+      ...toList(listRow),
       tasks
     };
 

@@ -1,20 +1,21 @@
 import { Folder } from '@common/types/folder';
 import { getFolderRowById, insertFolderRow } from '../repository/folder';
 import { getListsByFolderId } from '../repository/list';
-import { ListSchema } from '../types/list';
+import { toFolder } from '../types/folder';
+import { toList } from '../types/list';
 import { getTasksByListId } from './task';
 
 export function getFolderById(id: string): Folder | null {
-  const folder = getFolderRowById(id);
+  const folderRow = getFolderRowById(id);
 
-  if (!folder) {
+  if (!folderRow) {
     return null;
   }
 
   return {
-    ...folder,
+    ...toFolder(folderRow),
     lists: getListsByFolderId(id).map((listRow) => ({
-      ...ListSchema.parse(listRow),
+      ...toList(listRow),
       tasks: getTasksByListId(listRow.id)
     }))
   };

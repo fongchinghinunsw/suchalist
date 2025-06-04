@@ -1,34 +1,29 @@
-import { z } from 'zod';
+import { List } from '@common/types/list';
 
-export const ListRowSchema = z.object({
-  id: z.string(),
-  folderId: z.union([z.string(), z.undefined(), z.null()]).transform((val) => val ?? null),
-  title: z.string(),
-  order: z.union([z.number(), z.undefined(), z.null()]).transform((val) => val ?? null),
-  folderOrder: z.union([z.number(), z.undefined(), z.null()]).transform((val) => val ?? null),
-  createdAt: z.string(),
-  updatedAt: z.string()
-});
+export type ListRow = {
+  id: string;
+  folderId: string | null;
+  title: string;
+  order: number | null;
+  folderOrder: number | null;
+  createdAt: string;
+  updatedAt: string;
+};
 
-export type ListRow = z.infer<typeof ListRowSchema>;
+export function toListRow(list: List): ListRow {
+  return {
+    ...list,
+    folderId: list.folderId === undefined ? null : list.folderId,
+    order: list.order === undefined ? null : list.order,
+    folderOrder: list.folderOrder === undefined ? null : list.folderOrder
+  };
+}
 
-export const ListSchema = z.object({
-  id: z.string(),
-  folderId: z
-    .string()
-    .nullable()
-    .transform((val) => val ?? undefined),
-  title: z.string(),
-  order: z
-    .number()
-    .nullable()
-    .transform((val) => val ?? undefined),
-  folderOrder: z
-    .number()
-    .nullable()
-    .transform((val) => val ?? undefined),
-  createdAt: z.string(),
-  updatedAt: z.string()
-});
-
-export type List = z.infer<typeof ListSchema>;
+export function toList(listRow: ListRow): Omit<List, 'tasks'> {
+  return {
+    ...listRow,
+    folderId: listRow.folderId === null ? undefined : listRow.folderId,
+    order: listRow.order === null ? undefined : listRow.order,
+    folderOrder: listRow.folderOrder === null ? undefined : listRow.folderOrder
+  };
+}

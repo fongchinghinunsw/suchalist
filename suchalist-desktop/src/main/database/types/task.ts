@@ -1,40 +1,36 @@
-import { z } from 'zod';
+import { Task } from '@common/types/task';
 
-export const TaskRowSchema = z.object({
-  id: z.string(),
-  listId: z.string(),
-  title: z.string(),
-  note: z.union([z.string(), z.undefined(), z.null()]).transform((val) => val ?? null),
-  dueDate: z.union([z.string(), z.undefined(), z.null()]).transform((val) => val ?? null),
-  isCompleted: z.boolean().transform((val) => (val ? 1 : 0)),
-  isStarred: z.boolean().transform((val) => (val ? 1 : 0)),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  completedAt: z.union([z.string(), z.undefined(), z.null()]).transform((val) => val ?? null)
-});
+export type TaskRow = {
+  id: string;
+  listId: string;
+  title: string;
+  note: string | null;
+  dueDate: string | null;
+  isCompleted: 1 | 0;
+  isStarred: 1 | 0;
+  createdAt: string;
+  updatedAt: string;
+  completedAt: string | null;
+};
 
-export type TaskRow = z.infer<typeof TaskRowSchema>;
+export function toTaskRow(task: Task): TaskRow {
+  return {
+    ...task,
+    note: task.note === undefined ? null : task.note,
+    dueDate: task.dueDate === undefined ? null : task.dueDate,
+    isCompleted: task.isCompleted ? 1 : 0,
+    isStarred: task.isStarred ? 1 : 0,
+    completedAt: task.completedAt === undefined ? null : task.completedAt
+  };
+}
 
-export const TaskSchema = z.object({
-  id: z.string(),
-  listId: z.string(),
-  title: z.string(),
-  note: z
-    .string()
-    .nullable()
-    .transform((val) => val ?? undefined),
-  dueDate: z
-    .string()
-    .nullable()
-    .transform((val) => val ?? undefined),
-  isCompleted: z.number().transform((n) => n === 1),
-  isStarred: z.number().transform((n) => n === 1),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  completedAt: z
-    .string()
-    .nullable()
-    .transform((val) => val ?? undefined)
-});
-
-export type Task = z.infer<typeof TaskRowSchema>;
+export function toTask(taskRow: TaskRow): Task {
+  return {
+    ...taskRow,
+    note: taskRow.note === null ? undefined : taskRow.note,
+    dueDate: taskRow.dueDate === null ? undefined : taskRow.dueDate,
+    isCompleted: taskRow.isCompleted === 1,
+    isStarred: taskRow.isStarred === 1,
+    completedAt: taskRow.completedAt === null ? undefined : taskRow.completedAt
+  };
+}

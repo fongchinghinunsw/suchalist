@@ -24,7 +24,7 @@ export function isList(resource: List | Folder): resource is List {
   return Array.isArray((resource as List).tasks);
 }
 
-export function isDefaultList(list: List) {
+export function isDefaultList(list: List): list is List & { id: typeof DEFAULT_LIST_ID } {
   return list.id === DEFAULT_LIST_ID;
 }
 

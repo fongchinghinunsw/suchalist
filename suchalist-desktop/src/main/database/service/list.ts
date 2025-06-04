@@ -4,7 +4,7 @@ import {
   getListRowsCount as getListRowsCountObject,
   insertListRow
 } from '../repository/list';
-import { ListRow, ListSchema } from '../types/list';
+import { ListRow, toList } from '../types/list';
 import { normalize } from '../utils/normalize';
 import { getTasksByListId } from './task';
 
@@ -20,7 +20,7 @@ export function getListById(id: string): List | null {
   }
 
   return {
-    ...ListSchema.parse(list),
+    ...toList(list),
     tasks: getTasksByListId(list.id)
   };
 }

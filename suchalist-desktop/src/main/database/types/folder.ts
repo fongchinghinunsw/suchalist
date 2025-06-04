@@ -1,11 +1,21 @@
-import { z } from 'zod';
+import { Folder } from '@common/types/folder';
 
-export const FolderRowSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  order: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string()
-});
+export type FolderRow = {
+  id: string;
+  title: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+};
 
-export type FolderRow = z.infer<typeof FolderRowSchema>;
+export function toFolderRow(folder: Folder): FolderRow {
+  return {
+    ...folder
+  };
+}
+
+export function toFolder(folderRow: FolderRow): Omit<Folder, 'lists'> {
+  return {
+    ...folderRow
+  };
+}
