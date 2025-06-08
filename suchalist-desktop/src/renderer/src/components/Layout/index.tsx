@@ -7,6 +7,7 @@ import Footer from './SideBar/Footer';
 
 export default function Layout(): React.JSX.Element {
   const backgroundImage = useSelector(selectBackgroundImage);
+  console.log({ backgroundImage });
 
   useEffect(() => {
     const img = new Image();

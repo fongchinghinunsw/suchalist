@@ -8,5 +8,8 @@ declare global {
       getResources: () => Promise<Resource[]>;
       getList: (listId: string) => Promise<List | null>;
     };
+    api: {
+      selectAndSavePhoto: () => Promise<string>;
+    };
   }
 }

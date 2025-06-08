@@ -12,6 +12,11 @@ export default function AppAppearanceSection() {
     dispatch(themeActions.setTheme(theme));
   };
 
+  const onSelectImage = async (image: string) => {
+    console.log({ image });
+    dispatch(themeActions.setBackgroundImage(image));
+  };
+
   return (
     <div className="p-10 bg-white/50 rounded-xl">
       <Text size="large" className="text-black font-bold">
@@ -25,7 +30,7 @@ export default function AppAppearanceSection() {
           <ColorBox key={theme} color={theme} onClick={() => setTheme(theme)} />
         ))}
       </div>
-      <BackgroundImagePicker />
+      <BackgroundImagePicker onSelectImage={onSelectImage} />
     </div>
   );
 }

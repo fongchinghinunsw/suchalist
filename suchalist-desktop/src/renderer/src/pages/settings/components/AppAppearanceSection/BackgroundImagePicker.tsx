@@ -10,10 +10,10 @@ import { default as redSand } from '@/assets/images/red-sand.jpg';
 import { default as waterPaint } from '@/assets/images/water-paint.jpg';
 import { default as yellowWall } from '@/assets/images/yellow-wall.jpg';
 import Text from '@/components/base/Text';
-import { selectTheme, themeActions } from '@renderer/stores/theme';
+import { selectTheme } from '@renderer/stores/theme';
 import { getBackgroundColorClassName } from '@renderer/utils/styles/backgroundColor';
 import clsx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const IMAGES = [
   waterPaint,
@@ -29,12 +29,20 @@ const IMAGES = [
   yellowWall
 ];
 
-export default function BackgroundImagePicker() {
-  const theme = useSelector(selectTheme);
-  const dispatch = useDispatch();
+type Props = {
+  onSelectImage: (image: string) => void;
+};
 
-  const setBackgroundImage = (image: string) => {
-    dispatch(themeActions.setBackgroundImage(image));
+export default function BackgroundImagePicker({ onSelectImage }: Props) {
+  const theme = useSelector(selectTheme);
+
+  const onOpenBackgroundPicker = async () => {
+    const path = await window.api.selectAndSavePhoto();
+
+    if (path !== null) {
+      console.log({ path });
+      onSelectImage(path);
+    }
   };
 
   return (
@@ -50,7 +58,7 @@ export default function BackgroundImagePicker() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
               }}
-              onClick={() => setBackgroundImage(image)}
+              onClick={() => onSelectImage(image)}
             />
           );
         })}
@@ -59,7 +67,7 @@ export default function BackgroundImagePicker() {
             'h-30 w-20 rounded-xl overflow-hidden shrink-0 p-2 flex justify-center items-center text-center cursor-pointer',
             getBackgroundColorClassName(theme, 400)
           )}
-          onClick={() => console.log('select from device')}
+          onClick={onOpenBackgroundPicker}
         >
           <Text size="xsmall" className="text-white">
             Add From Device
