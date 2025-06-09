@@ -1,4 +1,4 @@
-import { selectBackgroundImage } from '@renderer/stores/theme';
+import { getImagePath, selectBackgroundImage } from '@renderer/stores/theme';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
@@ -24,16 +24,13 @@ export default function Layout(): React.JSX.Element {
   // }, [backgroundImageObject]);
 
   useEffect(() => {
-    const path =
-      backgroundImageObject.type === 'builtin'
-        ? backgroundImageObject.uri
-        : `media://${backgroundImageObject.uri}`;
+    const path = getImagePath(backgroundImageObject);
 
     setBackgroundImage(path);
 
     const img = new Image();
     img.src = path;
-  }, [backgroundImageObject.type, backgroundImageObject.uri]);
+  }, [backgroundImageObject]);
 
   return (
     <main className="flex flex-row w-full min-h-screen pt-11 relative">

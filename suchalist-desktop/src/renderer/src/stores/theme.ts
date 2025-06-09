@@ -51,6 +51,32 @@ const themeSlice = createSlice({
     },
     setBackgroundImage(state, action: PayloadAction<BackgroundImage>) {
       state.backgroundImage = action.payload;
+    },
+    addBackgroundImage(state, action: PayloadAction<BackgroundImage>) {
+      const exists = state.backgroundImages.some((img) => {
+        if (img.type === 'custom' && action.payload.type === 'custom') {
+          return img.uri === action.payload.uri;
+        }
+        if (img.type === 'builtin' && action.payload.type === 'builtin') {
+          return img.uri === action.payload.uri;
+        }
+        return false;
+      });
+
+      if (!exists) {
+        state.backgroundImages.push(action.payload);
+      }
+    },
+    removeBackgroundImage(state, action: PayloadAction<BackgroundImage>) {
+      state.backgroundImages = state.backgroundImages.filter((img) => {
+        if (img.type === 'custom' && action.payload.type === 'custom') {
+          return img.uri !== action.payload.uri;
+        }
+        if (img.type === 'builtin' && action.payload.type === 'builtin') {
+          return img.uri !== action.payload.uri;
+        }
+        return true;
+      });
     }
   }
 });
@@ -63,3 +89,9 @@ export const selectBackgroundImages = (state: RootState): BackgroundImage[] =>
 
 export const themeActions = themeSlice.actions;
 export const themeReducer = themeSlice.reducer;
+
+export function getImagePath(backgroundImage: BackgroundImage) {
+  return backgroundImage.type === 'builtin'
+    ? backgroundImage.uri
+    : `media://${backgroundImage.uri}`;
+}

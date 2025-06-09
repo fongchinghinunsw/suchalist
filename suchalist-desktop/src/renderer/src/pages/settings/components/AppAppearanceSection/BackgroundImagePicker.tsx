@@ -1,14 +1,21 @@
 import Text from '@/components/base/Text';
-import { BackgroundImage, selectBackgroundImages, selectTheme } from '@renderer/stores/theme';
+import {
+  BackgroundImage,
+  getImagePath,
+  selectBackgroundImages,
+  selectTheme,
+  themeActions
+} from '@renderer/stores/theme';
 import { getBackgroundColorClassName } from '@renderer/utils/styles/backgroundColor';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
   onSelectImage: (image: BackgroundImage) => void;
 };
 
 export default function BackgroundImagePicker({ onSelectImage }: Props) {
+  const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
   const backgroundImages = useSelector(selectBackgroundImages);
 
@@ -23,6 +30,7 @@ export default function BackgroundImagePicker({ onSelectImage }: Props) {
     if (path !== null) {
       console.log({ path });
       onSelectImage(image);
+      dispatch(themeActions.addBackgroundImage(image));
     }
   };
 
@@ -34,13 +42,13 @@ export default function BackgroundImagePicker({ onSelectImage }: Props) {
             <div
               key={image.uri}
               className="h-30 w-20 rounded-xl overflow-hidden shrink-0 cursor-pointer"
-              style={{
-                backgroundImage: `url(${image.uri})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-              onClick={() => onSelectImage(image)}
-            />
+            >
+              <img
+                src={getImagePath(image)}
+                className="w-full h-full object-cover"
+                onClick={() => onSelectImage(image)}
+              />
+            </div>
           );
         })}
         <div
