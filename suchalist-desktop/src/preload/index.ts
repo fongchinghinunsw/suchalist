@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, nativeImage } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 
 // Custom APIs for renderer
 const database = {
@@ -8,18 +8,7 @@ const database = {
 
 const api = {
   selectAndSavePhoto: () => ipcRenderer.invoke('select-and-save-photo'),
-  getImageDataUrl: (filePath: string): string => {
-    try {
-      console.log({ filePath });
-      const image = nativeImage.createFromPath(filePath);
-      console.log({ image });
-      console.log(image.isEmpty());
-      return image.toDataURL();
-    } catch (error) {
-      console.error('Failed to convert image:', error);
-      return '';
-    }
-  }
+  removePhoto: (imageUri: string) => ipcRenderer.invoke('remove-photo', imageUri)
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to

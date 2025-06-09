@@ -90,7 +90,6 @@ app.whenReady().then(() => {
    */
   protocol.handle('media', (req) => {
     const pathToMedia = new URL(req.url).pathname;
-    console.log({ pathToMedia });
     return net.fetch(`file://${pathToMedia}`);
   });
 });

@@ -10,7 +10,7 @@ declare global {
     };
     api: {
       selectAndSavePhoto: () => Promise<string>;
-      getImageDataUrl: (filePath: string) => string;
+      removePhoto: (imageUri: string) => Promise<void>;
     };
   }
 }

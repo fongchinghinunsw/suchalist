@@ -8,6 +8,7 @@ import {
 } from '@renderer/stores/theme';
 import { getBackgroundColorClassName } from '@renderer/utils/styles/backgroundColor';
 import clsx from 'clsx';
+import { IoCloseCircle } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 
 type Props = {
@@ -34,15 +35,29 @@ export default function BackgroundImagePicker({ onSelectImage }: Props) {
     }
   };
 
+  const removeBackgroundImage = async (image: BackgroundImage) => {
+    window.api.removePhoto(image.uri);
+    dispatch(themeActions.removeBackgroundImage(image));
+  };
+
   return (
     <div className="w-full overflow-x-auto">
       <div className="flex flex-row gap-3">
         {backgroundImages.map((image) => {
+          const isCustomImage = image.type === 'custom';
           return (
             <div
               key={image.uri}
-              className="h-30 w-20 rounded-xl overflow-hidden shrink-0 cursor-pointer"
+              className="h-30 w-20 rounded-xl overflow-hidden shrink-0 cursor-pointer relative"
             >
+              {isCustomImage && (
+                <IoCloseCircle
+                  size={24}
+                  className="absolute top-1 right-1 text-red-500"
+                  // TODO: remove the image from file
+                  onClick={() => removeBackgroundImage(image)}
+                />
+              )}
               <img
                 src={getImagePath(image)}
                 className="w-full h-full object-cover"
