@@ -1,6 +1,6 @@
 import { Provider as ReduxStoreProvider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import Layout from './components/Layout';
+import Layout from './components/Layout/Layout';
 import TopBar from './components/TopBar';
 import useInit from './hooks/useInit';
 import HomePage from './pages/home/HomePage';

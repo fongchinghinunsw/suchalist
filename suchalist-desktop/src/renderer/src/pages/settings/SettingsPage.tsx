@@ -1,4 +1,4 @@
-import AppAppearanceSection from './components/AppAppearanceSection';
+import AppAppearanceSection from './components/AppAppearanceSection/AppAppearanceSection';
 
 export default function SettingsPage() {
   return (

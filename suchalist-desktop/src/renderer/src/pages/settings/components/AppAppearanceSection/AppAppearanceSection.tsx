@@ -1,7 +1,7 @@
 import Text from '@/components/base/Text';
 import ColorBox from '@renderer/components/ColorBox';
 import { THEMES } from '@renderer/constants/styles';
-import { Theme, themeActions } from '@renderer/stores/theme';
+import { BackgroundImage, Theme, themeActions } from '@renderer/stores/theme';
 import { useDispatch } from 'react-redux';
 import BackgroundImagePicker from './BackgroundImagePicker';
 
@@ -12,7 +12,7 @@ export default function AppAppearanceSection() {
     dispatch(themeActions.setTheme(theme));
   };
 
-  const onSelectImage = async (image: string) => {
+  const onSelectImage = async (image: BackgroundImage) => {
     console.log({ image });
     dispatch(themeActions.setBackgroundImage(image));
   };

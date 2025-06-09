@@ -1,5 +1,5 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
-import { app, BrowserWindow, screen, shell } from 'electron';
+import { app, BrowserWindow, net, protocol, screen, shell } from 'electron';
 import { join } from 'path';
 import icon from '../../resources/icon.png?asset';
 import { init } from './database/init';
@@ -47,6 +47,17 @@ function createWindow(): void {
   }
 }
 
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'media',
+    privileges: {
+      secure: true,
+      supportFetchAPI: true,
+      bypassCSP: true
+    }
+  }
+]);
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -71,6 +82,16 @@ app.whenReady().then(() => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+
+  /**
+   * If a request is made over the media protocol, you can hook it here.
+   * In my case, I'm creating a new request by switching to the file protocol to call a local file.
+   */
+  protocol.handle('media', (req) => {
+    const pathToMedia = new URL(req.url).pathname;
+    console.log({ pathToMedia });
+    return net.fetch(`file://${pathToMedia}`);
   });
 });
 

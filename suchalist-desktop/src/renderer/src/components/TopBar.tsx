@@ -9,7 +9,7 @@ export default function TopBar() {
   return (
     <header
       className={clsx(
-        'fixed top-0 left-0 right-0 h-11 [-webkit-app-region:drag]',
+        'fixed top-0 left-0 right-0 h-11 [-webkit-app-region:drag] z-100',
         getBackgroundColorClassName(theme, 300)
       )}
     />
