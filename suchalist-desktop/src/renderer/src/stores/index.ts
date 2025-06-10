@@ -1,7 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks/tasks';
 import { themeReducer } from './theme';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['theme', 'notification']
+};
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -10,8 +18,10 @@ const rootReducer = combineReducers({
 });
 
 const store = configureStore({
-  reducer: rootReducer
+  reducer: persistReducer(persistConfig, rootReducer)
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
