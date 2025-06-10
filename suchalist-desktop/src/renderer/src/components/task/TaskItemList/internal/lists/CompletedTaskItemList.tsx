@@ -1,7 +1,6 @@
 import { Task } from '@common/types/task';
-import { selectTheme } from '@renderer/stores/theme';
+import Button from '@renderer/components/base/Button';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
 
 type Props = {
@@ -10,8 +9,6 @@ type Props = {
 };
 
 export default function CompletedTaskItemList(props: Props) {
-  const theme = useSelector(selectTheme);
-
   const [isTasksVisible, setIsTasksVisible] = useState(false);
 
   const toggleTasks = () => {
@@ -21,13 +18,14 @@ export default function CompletedTaskItemList(props: Props) {
   const buttonText = isTasksVisible ? 'Hide Completed Tasks' : 'Show Completed Tasks';
 
   return (
-    <>
-      <div>
-        <button>{buttonText}</button>
+    <div className="py-4">
+      <div className="flex justify-center pb-3">
+        <Button mode="contained" onClick={toggleTasks}>
+          {buttonText}
+        </Button>
       </div>
-      <div>
-        <TaskItemUngroupedList {...props} />
-      </div>
-    </>
+
+      {isTasksVisible && <TaskItemUngroupedList {...props} />}
+    </div>
   );
 }
