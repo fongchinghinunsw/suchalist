@@ -1,5 +1,6 @@
 import { Task } from '@common/types/task';
 import Text from '@renderer/components/base/Text';
+import TextInput from '@renderer/components/base/TextInput';
 import { selectTheme } from '@renderer/stores/theme';
 import { getBorderColorClassName } from '@renderer/utils/styles/borderColor';
 import clsx from 'clsx';
@@ -20,6 +21,10 @@ export default function TaskDetails({ task }: Props) {
       )}
     >
       <Text size="large">{task.title}</Text>
+      <div className="flex flex-col gap-3">
+        <TextInput name="title" label="Title" />
+        <TextInput name="note" label="Note" />
+      </div>
     </div>
   );
 }
