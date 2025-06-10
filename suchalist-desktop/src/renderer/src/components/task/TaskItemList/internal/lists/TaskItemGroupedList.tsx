@@ -1,13 +1,14 @@
 import Text from '@/components/base/Text';
-import { TaskWithDueDate } from '@common/types/task';
+import { Task, TaskWithDueDate } from '@common/types/task';
 import { useMemo } from 'react';
 import TaskItem from '../TaskItem';
 
 type Props = {
   tasks: TaskWithDueDate[];
+  onSelectTask: (task: Task) => void;
 };
 
-export default function TaskItemGroupedList({ tasks }: Props) {
+export default function TaskItemGroupedList({ tasks, onSelectTask }: Props) {
   const sections = useMemo(() => {
     const grouped: Record<string, TaskWithDueDate[]> = {};
 
@@ -25,7 +26,9 @@ export default function TaskItemGroupedList({ tasks }: Props) {
     }));
   }, [tasks]);
 
-  const renderItem = (task: TaskWithDueDate) => <TaskItem key={task.id} task={task} />;
+  const renderItem = (task: TaskWithDueDate) => (
+    <TaskItem key={task.id} task={task} onSelectTask={onSelectTask} />
+  );
 
   return (
     <div>

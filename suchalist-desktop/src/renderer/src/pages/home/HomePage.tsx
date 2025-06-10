@@ -1,24 +1,32 @@
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
-import { NewTask } from '@common/types/task';
+import { NewTask, Task } from '@common/types/task';
 import { selectCurrentList, tasksActions } from '@renderer/stores/tasks/tasks';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import TaskDetails from './components/TaskDetails';
 
 export default function HomePage() {
   const currentList = useSelector(selectCurrentList);
-  console.log({ currentList });
+  const [currentTask, setCurrentTask] = useState<Task | null>(null);
+  console.log({ currentTask });
 
   const dispatch = useDispatch();
 
-  const addTask = useCallback(
+  const onAddTask = useCallback(
     (task: NewTask) => {
       dispatch(tasksActions.addTask(task));
     },
     [dispatch]
   );
+
+  const onSelectTask = (task: Task) => setCurrentTask(task);
+
   return (
-    <main className="px-2 py-3 flex-1">
-      {currentList && <TaskItemList list={currentList} onAddTask={addTask} />}
+    <main className="px-2 py-3 flex-1 flex flex-row gap-4">
+      {currentList && (
+        <TaskItemList list={currentList} onAddTask={onAddTask} onSelectTask={onSelectTask} />
+      )}
+      {currentTask && <TaskDetails task={currentTask} />}
     </main>
   );
 }

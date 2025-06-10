@@ -9,10 +9,13 @@ import { useSelector } from 'react-redux';
 
 type Props = {
   task: Task;
+  onSelectTask: (task: Task) => void;
 };
 
-export default function TaskItem({ task }: Props) {
+export default function TaskItem({ task, onSelectTask }: Props) {
   const theme = useSelector(selectTheme);
+
+  const onClick = () => onSelectTask(task);
 
   return (
     <div
@@ -20,6 +23,7 @@ export default function TaskItem({ task }: Props) {
         'border-2 rounded-lg bg-white p-2 flex justify-between items-center',
         getBorderColor(theme)
       )}
+      onClick={onClick}
     >
       <Text size="small">{task.title}</Text>
       {task.isStarred ? (

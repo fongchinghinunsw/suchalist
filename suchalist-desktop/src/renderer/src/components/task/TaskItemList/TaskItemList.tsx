@@ -16,9 +16,15 @@ type Props = {
   list: List;
   showAddTaskItem?: boolean;
   onAddTask: (task: { title: string }) => void;
+  onSelectTask: (task: Task) => void;
 };
 
-export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }: Props) {
+export default function TaskItemList({
+  list,
+  showAddTaskItem = true,
+  onAddTask,
+  onSelectTask
+}: Props) {
   const completedTasks: CompletedTask[] = [];
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
@@ -49,9 +55,9 @@ export default function TaskItemList({ list, showAddTaskItem = true, onAddTask }
     <section className="w-full">
       {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
       <Spacer size={2} />
-      <TaskItemUngroupedList tasks={tasksWithoutDueDate} />
-      <TaskItemGroupedList tasks={tasksWithDueDate} />
-      <CompletedTaskItemList tasks={completedTasks} />
+      <TaskItemUngroupedList tasks={tasksWithoutDueDate} onSelectTask={onSelectTask} />
+      <TaskItemGroupedList tasks={tasksWithDueDate} onSelectTask={onSelectTask} />
+      <CompletedTaskItemList tasks={completedTasks} onSelectTask={onSelectTask} />
     </section>
   );
 }
