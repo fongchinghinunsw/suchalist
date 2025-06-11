@@ -7,6 +7,7 @@ declare global {
     database: {
       getResources: () => Promise<Resource[]>;
       getList: (listId: string) => Promise<List | null>;
+      updateTaskIsCompleted: (id: string, isCompleted: boolean) => boolean;
       updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
     };
     api: {

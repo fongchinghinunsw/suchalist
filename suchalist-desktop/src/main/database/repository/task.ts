@@ -24,6 +24,23 @@ export function insertTaskRow(task: TaskRow) {
   ).run(task);
 }
 
+export function updateTaskRowIsCompleted(id: string, isCompleted: boolean) {
+  const stmt = db.prepare(`
+    UPDATE tasks
+    SET isCompleted = @isCompleted,
+        updatedAt = @updatedAt
+    WHERE id = @id
+  `);
+
+  const result = stmt.run({
+    id,
+    isCompleted: isCompleted ? 1 : 0,
+    updatedAt: new Date().toISOString()
+  });
+
+  return result.changes > 0;
+}
+
 export function updateTaskRowIsStarred(id: string, isStarred: boolean) {
   const stmt = db.prepare(`
     UPDATE tasks

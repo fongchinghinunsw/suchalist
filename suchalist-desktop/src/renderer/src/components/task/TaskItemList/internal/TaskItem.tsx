@@ -11,9 +11,15 @@ type Props = {
   task: Task;
   onSelectTask: (task: Task) => void;
   onStarTask: (task: Task, isStarred: boolean) => void;
+  onToggleTaskIsCompleted: (task: Task, isCompleted: boolean) => void;
 };
 
-export default function TaskItem({ task, onSelectTask, onStarTask }: Props) {
+export default function TaskItem({
+  task,
+  onSelectTask,
+  onStarTask,
+  onToggleTaskIsCompleted
+}: Props) {
   const theme = useSelector(selectTheme);
 
   const onClick = () => onSelectTask(task);

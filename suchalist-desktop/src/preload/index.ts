@@ -5,7 +5,9 @@ const database = {
   getResources: () => ipcRenderer.invoke('get-resources'),
   getListWithTasks: (listId: string) => ipcRenderer.invoke('get-list-with-tasks', listId),
   updateTaskIsStarred: (id: string, isStarred: boolean) =>
-    ipcRenderer.invoke('update-task-is-starred', id, isStarred)
+    ipcRenderer.invoke('update-task-is-starred', id, isStarred),
+  updateTaskIsCompleted: (id: string, isCompleted: boolean) =>
+    ipcRenderer.invoke('update-task-is-completed', id, isCompleted)
 };
 
 const api = {

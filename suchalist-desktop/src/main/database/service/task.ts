@@ -13,6 +13,10 @@ export function insertTask(task: Task) {
   insertTaskRow(taskRow);
 }
 
+export function updateTaskIsCompleted(id: string, isCompleted: boolean) {
+  return updateTaskIsCompleted(id, isCompleted);
+}
+
 export function updateTaskIsStarred(id: string, isStarred: boolean) {
   return updateTaskRowIsStarred(id, isStarred);
 }

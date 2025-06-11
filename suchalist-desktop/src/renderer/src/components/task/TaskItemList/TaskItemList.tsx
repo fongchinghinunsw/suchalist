@@ -60,6 +60,11 @@ export default function TaskItemList({
     window.database.updateTaskIsStarred(task.id, !task.isStarred);
   };
 
+  const onToggleTaskIsCompleted = (task: Task, isCompleted: boolean) => {
+    dispatch(tasksActions.setIsCompleted({ task, isCompleted }));
+    window.database.updateTaskIsCompleted(task.id, !task.isCompleted);
+  };
+
   return (
     <section className="w-full">
       {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
@@ -68,16 +73,19 @@ export default function TaskItemList({
         tasks={tasksWithoutDueDate}
         onSelectTask={onSelectTask}
         onStarTask={onStarTask}
+        onToggleTaskIsCompleted={onToggleTaskIsCompleted}
       />
       <TaskItemGroupedList
         tasks={tasksWithDueDate}
         onSelectTask={onSelectTask}
         onStarTask={onStarTask}
+        onToggleTaskIsCompleted={onToggleTaskIsCompleted}
       />
       <CompletedTaskItemList
         tasks={completedTasks}
         onSelectTask={onSelectTask}
         onStarTask={onStarTask}
+        onToggleTaskIsCompleted={onToggleTaskIsCompleted}
       />
     </section>
   );
