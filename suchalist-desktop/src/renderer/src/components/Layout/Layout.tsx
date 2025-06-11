@@ -9,20 +9,6 @@ export default function Layout(): React.JSX.Element {
   const backgroundImageObject = useSelector(selectBackgroundImage);
   const [backgroundImage, setBackgroundImage] = useState<string | undefined>();
 
-  // useEffect(() => {
-  //   if (!backgroundImageObject) return;
-
-  //   if (backgroundImageObject.type === 'builtin') {
-  //     setBackgroundImage(`url(${backgroundImageObject.uri})`);
-  //   } else {
-  //     const dataUrl = `media://${backgroundImageObject.uri}`;
-  //     if (dataUrl) {
-  //       console.log({ dataUrl });
-  //       setBackgroundImage(dataUrl);
-  //     }
-  //   }
-  // }, [backgroundImageObject]);
-
   useEffect(() => {
     const path = getImagePath(backgroundImageObject);
 

@@ -7,6 +7,8 @@ import {
   TaskWithDueDate
 } from '@common/types/task';
 import Spacer from '@renderer/components/base/Spacer';
+import { tasksActions } from '@renderer/stores/tasks/tasks';
+import { useDispatch } from 'react-redux';
 import AddTaskItem from './internal/AddTaskItem';
 import CompletedTaskItemList from './internal/lists/CompletedTaskItemList';
 import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
@@ -25,6 +27,8 @@ export default function TaskItemList({
   onAddTask,
   onSelectTask
 }: Props) {
+  const dispatch = useDispatch();
+
   const completedTasks: CompletedTask[] = [];
   const tasksWithoutDueDate: Task[] = [];
   const tasksWithDueDate: TaskWithDueDate[] = [];
@@ -51,13 +55,30 @@ export default function TaskItemList({
     (l1, l2) => new Date(l2.completedAt).getTime() - new Date(l1.completedAt).getTime()
   );
 
+  const onStarTask = (task: Task, isStarred: boolean) => {
+    dispatch(tasksActions.setIsStarred({ task, isStarred }));
+    window.database.updateTaskIsStarred(task.id, !task.isStarred);
+  };
+
   return (
     <section className="w-full">
       {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
       <Spacer size={2} />
-      <TaskItemUngroupedList tasks={tasksWithoutDueDate} onSelectTask={onSelectTask} />
-      <TaskItemGroupedList tasks={tasksWithDueDate} onSelectTask={onSelectTask} />
-      <CompletedTaskItemList tasks={completedTasks} onSelectTask={onSelectTask} />
+      <TaskItemUngroupedList
+        tasks={tasksWithoutDueDate}
+        onSelectTask={onSelectTask}
+        onStarTask={onStarTask}
+      />
+      <TaskItemGroupedList
+        tasks={tasksWithDueDate}
+        onSelectTask={onSelectTask}
+        onStarTask={onStarTask}
+      />
+      <CompletedTaskItemList
+        tasks={completedTasks}
+        onSelectTask={onSelectTask}
+        onStarTask={onStarTask}
+      />
     </section>
   );
 }

@@ -6,6 +6,7 @@ import TaskItemUngroupedList from './TaskItemUngroupedList';
 type Props = {
   tasks: Task[];
   onSelectTask: (task: Task) => void;
+  onStarTask: (task: Task, isStarred: boolean) => void;
 };
 
 export default function CompletedTaskItemList(props: Props) {

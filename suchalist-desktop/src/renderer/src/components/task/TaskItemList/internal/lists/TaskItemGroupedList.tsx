@@ -6,9 +6,10 @@ import TaskItem from '../TaskItem';
 type Props = {
   tasks: TaskWithDueDate[];
   onSelectTask: (task: Task) => void;
+  onStarTask: (task: Task, isStarred: boolean) => void;
 };
 
-export default function TaskItemGroupedList({ tasks, onSelectTask }: Props) {
+export default function TaskItemGroupedList({ tasks, onSelectTask, onStarTask }: Props) {
   const sections = useMemo(() => {
     const grouped: Record<string, TaskWithDueDate[]> = {};
 
@@ -27,7 +28,7 @@ export default function TaskItemGroupedList({ tasks, onSelectTask }: Props) {
   }, [tasks]);
 
   const renderItem = (task: TaskWithDueDate) => (
-    <TaskItem key={task.id} task={task} onSelectTask={onSelectTask} />
+    <TaskItem key={task.id} task={task} onSelectTask={onSelectTask} onStarTask={onStarTask} />
   );
 
   return (

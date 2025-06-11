@@ -7,6 +7,7 @@ declare global {
     database: {
       getResources: () => Promise<Resource[]>;
       getList: (listId: string) => Promise<List | null>;
+      updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
     };
     api: {
       selectAndSavePhoto: () => Promise<string>;

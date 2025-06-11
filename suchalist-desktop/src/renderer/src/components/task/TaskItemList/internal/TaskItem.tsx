@@ -10,12 +10,17 @@ import { useSelector } from 'react-redux';
 type Props = {
   task: Task;
   onSelectTask: (task: Task) => void;
+  onStarTask: (task: Task, isStarred: boolean) => void;
 };
 
-export default function TaskItem({ task, onSelectTask }: Props) {
+export default function TaskItem({ task, onSelectTask, onStarTask }: Props) {
   const theme = useSelector(selectTheme);
 
   const onClick = () => onSelectTask(task);
+
+  const toggleIsStarred = () => {
+    onStarTask(task, !task.isStarred);
+  };
 
   return (
     <div
@@ -27,9 +32,9 @@ export default function TaskItem({ task, onSelectTask }: Props) {
     >
       <Text size="small">{task.title}</Text>
       {task.isStarred ? (
-        <IoStar className={getTextColorClassName(theme, 600)} />
+        <IoStar className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
       ) : (
-        <IoStarOutline className={getTextColorClassName(theme, 600)} />
+        <IoStarOutline className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
       )}
     </div>
   );
