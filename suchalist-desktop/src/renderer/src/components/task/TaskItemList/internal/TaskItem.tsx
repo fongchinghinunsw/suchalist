@@ -29,6 +29,10 @@ export default function TaskItem({
     onStarTask(task, !task.isStarred);
   };
 
+  const toggleIsCompleted = () => {
+    onToggleTaskIsCompleted(task, !task.isCompleted);
+  };
+
   return (
     <div
       className={clsx(
@@ -44,7 +48,13 @@ export default function TaskItem({
         ) : (
           <IoStarOutline className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
         )}
-        <Checkbox id="name" name="name" label="Name" />
+        <Checkbox
+          id="name"
+          name="name"
+          label="Name"
+          isChecked={task.isCompleted}
+          onCheckedChange={toggleIsCompleted}
+        />
       </div>
     </div>
   );

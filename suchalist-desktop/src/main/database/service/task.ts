@@ -1,5 +1,10 @@
 import { Task } from '@common/types/task';
-import { getTaskRowsByListId, insertTaskRow, updateTaskRowIsStarred } from '../repository/task';
+import {
+  getTaskRowsByListId,
+  insertTaskRow,
+  updateTaskRowIsCompleted,
+  updateTaskRowIsStarred
+} from '../repository/task';
 import { TaskRow, toTask } from '../types/task';
 import { normalize } from '../utils/normalize';
 
@@ -14,7 +19,7 @@ export function insertTask(task: Task) {
 }
 
 export function updateTaskIsCompleted(id: string, isCompleted: boolean) {
-  return updateTaskIsCompleted(id, isCompleted);
+  return updateTaskRowIsCompleted(id, isCompleted);
 }
 
 export function updateTaskIsStarred(id: string, isStarred: boolean) {

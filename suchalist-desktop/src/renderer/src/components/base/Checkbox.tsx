@@ -10,9 +10,11 @@ type Props = {
   id: string;
   name: string;
   label: string;
+  isChecked: boolean;
+  onCheckedChange: () => void;
 };
 
-export default function Checkbox({ id, name, label }: Props) {
+export default function Checkbox({ id, name, label, isChecked, onCheckedChange }: Props) {
   const theme = useSelector(selectTheme);
 
   return (
@@ -22,6 +24,8 @@ export default function Checkbox({ id, name, label }: Props) {
         getCheckedBackgroundColor(theme),
         getBorderColorClassName(theme, 400)
       )}
+      checked={isChecked}
+      onCheckedChange={onCheckedChange}
     >
       <Indicator className="flex justify-center items-center">
         <FaCheck size={10} className="text-white" />
