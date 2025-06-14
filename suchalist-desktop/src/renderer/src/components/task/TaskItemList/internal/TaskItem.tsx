@@ -5,6 +5,7 @@ import Checkbox from '@renderer/components/base/Checkbox';
 import { getTextColorClassName } from '@renderer/utils/styles/textColor';
 import { UnreachableError } from '@renderer/utils/UnreachableError';
 import clsx from 'clsx';
+import { MouseEventHandler } from 'react';
 import { IoStar, IoStarOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 
@@ -25,11 +26,13 @@ export default function TaskItem({
 
   const onClick = () => onSelectTask(task);
 
-  const toggleIsStarred = () => {
+  const toggleIsStarred: MouseEventHandler = (event) => {
+    event.stopPropagation();
     onStarTask(task, !task.isStarred);
   };
 
-  const toggleIsCompleted = () => {
+  const toggleIsCompleted: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
     onToggleTaskIsCompleted(task, !task.isCompleted);
   };
 
@@ -53,7 +56,7 @@ export default function TaskItem({
           name="name"
           label="Name"
           isChecked={task.isCompleted}
-          onCheckedChange={toggleIsCompleted}
+          onClick={toggleIsCompleted}
         />
       </div>
     </div>

@@ -3,6 +3,7 @@ import { selectTheme, Theme } from '@renderer/stores/theme';
 import { getBorderColorClassName } from '@renderer/utils/styles/borderColor';
 import { UnreachableError } from '@renderer/utils/UnreachableError';
 import clsx from 'clsx';
+import { MouseEventHandler } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -11,10 +12,10 @@ type Props = {
   name: string;
   label: string;
   isChecked: boolean;
-  onCheckedChange: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function Checkbox({ id, name, label, isChecked, onCheckedChange }: Props) {
+export default function Checkbox({ id, name, label, isChecked, onClick }: Props) {
   const theme = useSelector(selectTheme);
 
   return (
@@ -25,7 +26,7 @@ export default function Checkbox({ id, name, label, isChecked, onCheckedChange }
         getBorderColorClassName(theme, 400)
       )}
       checked={isChecked}
-      onCheckedChange={onCheckedChange}
+      onClick={onClick}
     >
       <Indicator className="flex justify-center items-center">
         <FaCheck size={10} className="text-white" />
