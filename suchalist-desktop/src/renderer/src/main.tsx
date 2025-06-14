@@ -1,3 +1,4 @@
+import 'react-datepicker/dist/react-datepicker.css';
 import './assets/index.css';
 
 import { StrictMode } from 'react';

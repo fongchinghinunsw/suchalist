@@ -80,7 +80,8 @@ export const DEFAULT_TASKS: Task[] = [
     isCompleted: true,
     isStarred: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
-    updatedAt: new Date(2025, 3, 5).toISOString()
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+    completedAt: new Date(2025, 3, 12).toISOString()
   },
   {
     id: getId(),
@@ -90,7 +91,8 @@ export const DEFAULT_TASKS: Task[] = [
     isCompleted: true,
     isStarred: false,
     createdAt: new Date(2025, 3, 5).toISOString(),
-    updatedAt: new Date(2025, 3, 5).toISOString()
+    updatedAt: new Date(2025, 3, 5).toISOString(),
+    completedAt: new Date(2025, 3, 14).toISOString()
   },
   {
     id: getId(),
