@@ -1,5 +1,6 @@
 import { Task } from '@common/types/task';
 import Button from '@renderer/components/base/Button';
+import SoundPlayer from '@renderer/components/SoundPlayer';
 import { useState } from 'react';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
 
@@ -14,6 +15,7 @@ export default function CompletedTaskItemList(props: Props) {
   const [isTasksVisible, setIsTasksVisible] = useState(false);
 
   const toggleTasks = () => {
+    SoundPlayer.play('bubble_pop');
     setIsTasksVisible(!isTasksVisible);
   };
 

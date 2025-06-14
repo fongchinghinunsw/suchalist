@@ -1,5 +1,6 @@
 import { selectTheme } from '@/stores/theme';
 import { getBackgroundColorClassName } from '@/utils/styles/backgroundColor';
+import SoundPlayer from '@renderer/components/SoundPlayer';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { IoAddOutline } from 'react-icons/io5';
@@ -16,14 +17,13 @@ export default function AddTaskItem({ onAddTask }: Props) {
 
   const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
-    console.log({ text });
     setTitle(text);
   };
 
   const onPress = () => {
     const trimmedTitle = title.trim();
     if (trimmedTitle.length > 0) {
-      //   SoundPlayer.play('pop');
+      SoundPlayer.play('pop');
       onAddTask({ title: trimmedTitle });
       setTitle('');
     }

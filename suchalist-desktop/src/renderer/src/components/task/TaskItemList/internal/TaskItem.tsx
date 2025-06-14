@@ -2,6 +2,7 @@ import Text from '@/components/base/Text';
 import { selectTheme, Theme } from '@/stores/theme';
 import { Task } from '@common/types/task';
 import Checkbox from '@renderer/components/base/Checkbox';
+import SoundPlayer from '@renderer/components/SoundPlayer';
 import { getTextColorClassName } from '@renderer/utils/styles/textColor';
 import { UnreachableError } from '@renderer/utils/UnreachableError';
 import clsx from 'clsx';
@@ -33,6 +34,12 @@ export default function TaskItem({
 
   const toggleIsCompleted: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
+
+    if (task.isCompleted) {
+      SoundPlayer.play('pop');
+    } else {
+      SoundPlayer.play('ding');
+    }
     onToggleTaskIsCompleted(task, !task.isCompleted);
   };
 
