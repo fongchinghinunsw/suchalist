@@ -1,6 +1,7 @@
 import Text from '@/components/base/Text';
 import { selectTheme, Theme } from '@/stores/theme';
 import { Task } from '@common/types/task';
+import Checkbox from '@renderer/components/base/Checkbox';
 import { getTextColorClassName } from '@renderer/utils/styles/textColor';
 import { UnreachableError } from '@renderer/utils/UnreachableError';
 import clsx from 'clsx';
@@ -37,11 +38,14 @@ export default function TaskItem({
       onClick={onClick}
     >
       <Text size="small">{task.title}</Text>
-      {task.isStarred ? (
-        <IoStar className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
-      ) : (
-        <IoStarOutline className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
-      )}
+      <div className="flex gap-2">
+        {task.isStarred ? (
+          <IoStar className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
+        ) : (
+          <IoStarOutline className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
+        )}
+        <Checkbox id="name" name="name" label="Name" />
+      </div>
     </div>
   );
 }
