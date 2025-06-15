@@ -65,15 +65,15 @@ export default function TextInput({ ref, name, label, control, onClick, ...other
 function getInputStyles(theme: Theme) {
   switch (theme) {
     case 'blue':
-      return 'focus:border-blue-400 valid:border-blue-400';
+      return 'caret-blue-500 focus:border-blue-400 valid:border-blue-400';
     case 'green':
-      return 'focus:border-green-400 valid:border-green-400';
+      return 'caret-green-500 focus:border-green-400 valid:border-green-400';
     case 'red':
-      return 'focus:border-red-400 valid:border-red-400';
+      return 'caret-red-500 focus:border-red-400 valid:border-red-400';
     case 'yellow':
-      return 'focus:border-yellow-400 valid:border-yellow-400';
+      return 'caret-yellow-500 focus:border-yellow-400 valid:border-yellow-400';
     case 'purple':
-      return 'focus:border-purple-400 valid:border-purple-400';
+      return 'caret-purple-500 focus:border-purple-400 valid:border-purple-400';
     default:
       throw new UnreachableError(theme);
   }
