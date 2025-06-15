@@ -67,16 +67,6 @@ export default function TaskDetails({ task }: Props) {
     );
   };
 
-  // const toggleDeleteTaskModal = () => {
-  // setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
-  // };
-
-  // const onDeleteTask = (deletingTask: Task) => {
-  // dispatch(tasksActions.deleteTask({ task: deletingTask }));
-  // setIsDeleteTaskModalVisible(false);
-  // navigation.goBack();
-  // };
-
   const watchDueDateValue = watch('dueDate');
   console.log('watchDueDateValue', watchDueDateValue);
 
