@@ -25,34 +25,39 @@ export default function TextInput({ ref, name, label, control, onClick, ...other
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, onBlur, value } }) => (
-        <div
-          className="relative group flex h-10 flex-col justify-center items-start"
-          ref={ref}
-          onClick={onClick}
-        >
-          <input
-            type="text"
-            className={clsx(
-              'z-10 peer absolute w-full outline-none leading-8 border rounded-md px-3 py-1 transition ease-in duration-100 bg-transparent',
-              getInputStyles(theme)
-            )}
-            value={value}
-            onBlur={onBlur}
-            onChange={onChange}
-            required
-            {...otherProps}
-          />
-          <label
-            className={clsx(
-              'relative text-md mx-3 transition ease-in duration-200 peer-focus:z-10 peer-valid:z-10 peer-focus:px-1 peer-valid:px-1 peer-focus:bg-white peer-valid:bg-white peer-focus:leading-2 peer-valid:leading-2 peer-focus:-translate-x-2.5 peer-valid:-translate-x-2.5 peer-focus:-translate-y-5 peer-valid:-translate-y-5 peer-focus:scale-80 peer-valid:scale-80',
-              getLabelStyles(theme)
-            )}
+      render={({ field: { onChange, onBlur, value } }) => {
+        console.log({ value });
+        return (
+          <div
+            ref={ref}
+            className="relative group flex h-10 flex-col justify-center items-start"
+            onClick={onClick}
           >
-            {label}
-          </label>
-        </div>
-      )}
+            <input
+              type="text"
+              className={clsx(
+                'z-10 peer absolute w-full outline-none leading-8 border rounded-md px-3 py-1 transition ease-in duration-100 bg-transparent',
+                getInputStyles(theme)
+              )}
+              // this ensures the input value UI gets updated when the new value is undefined
+              // https://stackoverflow.com/questions/68488356/input-value-is-not-getting-updated-when-state-object-is-set-to-undefined
+              value={value ?? ''}
+              onBlur={onBlur}
+              onChange={onChange}
+              required
+              {...otherProps}
+            />
+            <label
+              className={clsx(
+                'relative text-md mx-3 transition ease-in duration-200 peer-focus:z-10 peer-valid:z-10 peer-focus:px-1 peer-valid:px-1 peer-focus:bg-white peer-valid:bg-white peer-focus:leading-2 peer-valid:leading-2 peer-focus:-translate-x-2.5 peer-valid:-translate-x-2.5 peer-focus:-translate-y-5 peer-valid:-translate-y-5 peer-focus:scale-80 peer-valid:scale-80',
+                getLabelStyles(theme)
+              )}
+            >
+              {label}
+            </label>
+          </div>
+        );
+      }}
     />
   );
 }

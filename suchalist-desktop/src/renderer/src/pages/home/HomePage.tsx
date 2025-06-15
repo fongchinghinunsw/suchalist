@@ -26,7 +26,7 @@ export default function HomePage() {
       {currentList && (
         <TaskItemList list={currentList} onAddTask={onAddTask} onSelectTask={onSelectTask} />
       )}
-      {currentTask && <TaskDetails task={currentTask} />}
+      {currentTask && <TaskDetails key={currentTask.id} task={currentTask} />}
     </main>
   );
 }

@@ -41,17 +41,12 @@ export default function TaskDetails({ task }: Props) {
     schema,
     defaultValues: getDefaultFormValues(task)
   });
-  console.log('value', getValues());
+  console.log('form values', getValues());
 
   useEffect(() => {
-    // react-hook-form doesn't reinitialize the form every time props change,
-    // this forces it to update form values when the `task` prop changes
-    reset(getDefaultFormValues(task));
-  }, [task, reset]);
-
-  useEffect(() => {
-    trigger(); // triggers all form validations when component is mounted
-  }, [trigger]);
+    // triggers all form validations when component is mounted
+    trigger();
+  }, [task, trigger, reset]);
 
   const onSaveTask = (data: Schema) => {
     const { title, note, dueDate } = data;
