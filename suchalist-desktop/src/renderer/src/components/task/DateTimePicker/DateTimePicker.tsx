@@ -1,25 +1,55 @@
 import TextInput from '@renderer/components/base/TextInput';
-import { useState } from 'react';
+import { HookFormFieldProps } from '@renderer/hooks/useForm';
+import { formatDate } from '@renderer/utils/format';
+import { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
 
-export default function DateTimePicker() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isOpen, setIsOpen] = useState(false);
+interface Props extends HookFormFieldProps {
+  name: string;
+  value: Date | undefined;
+  onChange: (date: Date) => void;
+}
 
-  const handleChange = (e) => {
-    setIsOpen(!isOpen);
-    setSelectedDate(e);
+export default function DateTimePicker({ name, value, control, onChange }: Props) {
+  console.log('DateTimePicker', name);
+  const handleChange = (date: Date | null) => {
+    if (date) {
+      onChange(date);
+    }
   };
 
   const handleClick = (e) => {
     e.preventDefault();
-    setIsOpen(!isOpen);
   };
 
   return (
-    <>
-      <TextInput name="dateTime" label="Date / Time" onClick={handleClick} />
-      {isOpen && <DatePicker selected={selectedDate} onChange={handleChange} inline />}
-    </>
+    <DatePicker
+      selected={value}
+      onChange={handleChange}
+      customInput={
+        <DateTimePickerInput
+          name={name}
+          control={control}
+          value={value ? formatDate(value, 'date') : ''}
+          onClick={handleClick}
+        />
+      }
+    />
   );
 }
+
+interface DateTimePickerInputProps extends HookFormFieldProps {
+  name: string;
+  value: string;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
+}
+
+// Using forwardRef because we want custom input for DatePicker
+const DateTimePickerInput = forwardRef<HTMLDivElement, DateTimePickerInputProps>(
+  function DateTimePickerInput({ name, control, onClick }, ref) {
+    console.log('DateTimePickerInput', name);
+    return (
+      <TextInput ref={ref} name={name} label="Date / Time" control={control} onClick={onClick} />
+    );
+  }
+);

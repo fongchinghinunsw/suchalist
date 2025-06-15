@@ -8,7 +8,6 @@ import TaskDetails from './components/TaskDetails';
 export default function HomePage() {
   const currentList = useSelector(selectCurrentList);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
-  console.log({ currentTask });
 
   const dispatch = useDispatch();
 
