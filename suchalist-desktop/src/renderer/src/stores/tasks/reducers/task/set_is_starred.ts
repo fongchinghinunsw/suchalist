@@ -13,6 +13,7 @@ export default function setIsStarred(
     isStarred: boolean;
   }>
 ) {
+  // UPDATE REDUX STORE
   const { task, isStarred } = action.payload;
   const listId = task.listId;
   const taskId = task.id;
@@ -31,6 +32,9 @@ export default function setIsStarred(
     updateGeneratedList(state, newTask);
 
     store(state, listId, taskId, isStarred);
+
+    // PERSIST LOCALLY
+    window.database.updateTaskIsStarred(task.id, !task.isStarred);
   }
 }
 

@@ -45,7 +45,7 @@ export default function addTask(state: TasksState, action: PayloadAction<NewTask
   }
 
   // PERSIST LOCALLY
-  window.database.insertTask(newTask);
+  window.database.addTask(newTask);
 }
 
 function updateGeneratedList(state: TasksState, task: Task) {

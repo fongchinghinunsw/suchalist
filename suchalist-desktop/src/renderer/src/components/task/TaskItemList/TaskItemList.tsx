@@ -57,12 +57,10 @@ export default function TaskItemList({
 
   const onStarTask = (task: Task, isStarred: boolean) => {
     dispatch(tasksActions.setIsStarred({ task, isStarred }));
-    window.database.updateTaskIsStarred(task.id, !task.isStarred);
   };
 
   const onToggleTaskIsCompleted = (task: Task, isCompleted: boolean) => {
     dispatch(tasksActions.setIsCompleted({ task, isCompleted }));
-    window.database.updateTaskIsCompleted(task.id, !task.isCompleted);
   };
 
   return (

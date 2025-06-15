@@ -24,6 +24,36 @@ export function insertTaskRow(task: TaskRow) {
   ).run(task);
 }
 
+export function replaceTaskRow(task: TaskRow) {
+  db.prepare<TaskRow>(
+    `
+      INSERT OR REPLACE INTO tasks (
+        id,
+        listId,
+        title,
+        note,
+        dueDate,
+        isCompleted,
+        isStarred,
+        createdAt,
+        updatedAt,
+        completedAt
+      ) VALUES (
+        @id,
+        @listId,
+        @title,
+        @note,
+        @dueDate,
+        @isCompleted,
+        @isStarred,
+        @createdAt,
+        @updatedAt,
+        @completedAt
+      )
+    `
+  ).run(task);
+}
+
 export function updateTaskRowIsCompleted(id: string, isCompleted: boolean) {
   const stmt = db.prepare(`
     UPDATE tasks

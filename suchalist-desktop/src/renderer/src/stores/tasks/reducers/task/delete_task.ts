@@ -12,7 +12,6 @@ export default function deleteTask(
     task: Task;
   }>
 ) {
-  console.log('update');
   // UPDATE REDUX STORE
   const task = action.payload.task;
   const { listId, id: taskId } = task;

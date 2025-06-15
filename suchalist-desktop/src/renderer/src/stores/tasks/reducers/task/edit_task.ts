@@ -13,6 +13,7 @@ export default function editTask(
     editTask: EditTask;
   }>
 ) {
+  // UPDATE REDUX STORE
   const task = action.payload.task;
   const { listId, id: taskId } = task;
 
@@ -21,11 +22,6 @@ export default function editTask(
   const now = new Date().toISOString();
 
   const index = currentTasks.findIndex((t) => t.id === taskId);
-
-  console.log('editing task', {
-    ...currentTasks[index],
-    ...action.payload.editTask
-  });
 
   const newTask = {
     ...currentTasks[index],
@@ -37,7 +33,16 @@ export default function editTask(
 
   updateGeneratedList(state, task, newTask);
 
-  store(state, listId, taskId, newTask);
+  const result = getListFromResources(listId, state.resources);
+  if (result) {
+    const index = result.list.tasks.findIndex((t) => t.id === taskId);
+    if (index !== -1) {
+      result.list.tasks[index] = newTask;
+    }
+  }
+
+  // PERSIST LOCALLY
+  window.database.editTask(newTask);
 }
 
 function updateGeneratedList(state: TasksState, oldTask: Task, newTask: Task) {
@@ -90,15 +95,5 @@ function updateGeneratedList(state: TasksState, oldTask: Task, newTask: Task) {
   } else if (isNewTaskDueWithin7Days) {
     // the new task is due today, add to the list
     state.listMap[NEXT_SEVEN_DAYS_LIST_ID].tasks.push(newTask);
-  }
-}
-
-function store(state: TasksState, listId: string, taskId: string, updatedTask: Task) {
-  const result = getListFromResources(listId, state.resources);
-  if (result) {
-    const index = result.list.tasks.findIndex((t) => t.id === taskId);
-    if (index !== -1) {
-      result.list.tasks[index] = updatedTask;
-    }
   }
 }

@@ -13,6 +13,7 @@ export default function setIsCompleted(
     isCompleted: boolean;
   }>
 ) {
+  // UPDATE REDUX STORE
   const { task, isCompleted } = action.payload;
   const listId = task.listId;
   const taskId = task.id;
@@ -35,7 +36,16 @@ export default function setIsCompleted(
 
     updateGeneratedList(state, newTask);
 
-    store(state, listId, taskId, isCompleted, now);
+    const result = getListFromResources(listId, state.resources);
+    if (result !== undefined) {
+      const taskFromResources = result.list.tasks.find((t) => t.id === taskId);
+      if (taskFromResources) {
+        taskFromResources.isCompleted = isCompleted;
+        taskFromResources.completedAt = isCompleted ? now : undefined;
+      }
+    }
+
+    window.database.updateTaskIsCompleted(task.id, !task.isCompleted);
   }
 }
 
@@ -62,23 +72,6 @@ function updateGeneratedList(state: TasksState, newTask: Task) {
 
     if (index !== -1) {
       state.listMap[NEXT_SEVEN_DAYS_LIST_ID].tasks[index] = newTask;
-    }
-  }
-}
-
-function store(
-  state: TasksState,
-  listId: string,
-  taskId: string,
-  isCompleted: boolean,
-  now: string
-) {
-  const result = getListFromResources(listId, state.resources);
-  if (result !== undefined) {
-    const taskFromResources = result.list.tasks.find((t) => t.id === taskId);
-    if (taskFromResources) {
-      taskFromResources.isCompleted = isCompleted;
-      taskFromResources.completedAt = isCompleted ? now : undefined;
     }
   }
 }

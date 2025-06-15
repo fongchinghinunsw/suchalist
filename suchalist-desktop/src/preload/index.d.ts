@@ -8,8 +8,9 @@ declare global {
     database: {
       getResources: () => Promise<Resource[]>;
       getList: (listId: string) => Promise<List | null>;
-      insertTask: (task: Task) => Promise<void>;
+      addTask: (task: Task) => Promise<void>;
       deleteTask: (id: string) => Promise<void>;
+      editTask: (task: Task) => Promise<Task | null>;
       updateTaskIsCompleted: (id: string, isCompleted: boolean) => boolean;
       updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
     };

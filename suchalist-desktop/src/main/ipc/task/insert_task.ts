@@ -1,7 +1,7 @@
-import { insertTask } from '@/database/service/task/task';
+import { addTask } from '@/database/service/task/add_task';
 import { Task } from '@common/types/task';
 import { ipcMain } from 'electron';
 
-export function registerInsertTaskHandler() {
-  ipcMain.handle('insert-task', (_event, task: Task) => insertTask(task));
+export function registerAddTaskHandler() {
+  ipcMain.handle('add-task', (_event, task: Task) => addTask(task));
 }
