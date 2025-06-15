@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '@renderer/components/base/Button';
 import Text from '@renderer/components/base/Text';
 import TextInput from '@renderer/components/base/TextInput';
-import DateTimePicker from '@renderer/components/task/DateTimePicker/DateTimePicker';
 import { selectTheme } from '@renderer/stores/theme';
 import { getBorderColorClassName } from '@renderer/utils/styles/borderColor';
 import clsx from 'clsx';
@@ -91,12 +90,13 @@ export default function TaskDetails({ task }: Props) {
       <div className="flex flex-col gap-3">
         <TextInput name="title" label="Title" control={control} />
         <TextInput name="note" label="Note" control={control} />
-        <DateTimePicker
+        {/* <DateTimePicker
           name="dueDate"
+          label="Due Date"
           value={watchDueDateValue}
           control={control}
           onChange={onDateTimePickerConfirm}
-        />
+        /> */}
       </div>
       <div className="flex gap-3">
         <Button mode="contained" disabled={isSaveTaskButtonDisabled} onClick={() => {}}>
