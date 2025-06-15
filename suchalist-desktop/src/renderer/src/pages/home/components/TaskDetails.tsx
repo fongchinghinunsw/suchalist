@@ -1,14 +1,14 @@
 import { Task } from '@common/types/task';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '@renderer/components/base/Button';
 import Text from '@renderer/components/base/Text';
 import TextInput from '@renderer/components/base/TextInput';
+import useForm from '@renderer/hooks/useForm';
+import { tasksActions } from '@renderer/stores/tasks/tasks';
 import { selectTheme } from '@renderer/stores/theme';
 import { getBorderColorClassName } from '@renderer/utils/styles/borderColor';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as z from 'zod';
 
 const schema = z.object({
@@ -24,58 +24,63 @@ type Props = {
 };
 
 export default function TaskDetails({ task }: Props) {
+  const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
 
+  console.log(task);
   const {
     watch,
     control,
     handleSubmit,
-    setValue,
+    // setValue,
+    getValues,
     trigger,
+    reset,
     formState: { isValid, isLoading }
   } = useForm<Schema>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: task.title,
-      note: task.note,
-      dueDate: task.dueDate ? new Date(task.dueDate) : undefined
-    }
+    schema,
+    defaultValues: getDefaultFormValues(task)
   });
-  console.log('dueDate:', task.dueDate ? new Date(task.dueDate) : undefined);
+  console.log('value', getValues());
+
+  useEffect(() => {
+    // react-hook-form doesn't reinitialize the form every time props change,
+    // this forces it to update form values when the `task` prop changes
+    reset(getDefaultFormValues(task));
+  }, [task, reset]);
 
   useEffect(() => {
     trigger(); // triggers all form validations when component is mounted
   }, [trigger]);
 
-  // const onSaveTask = (data: Schema) => {
-  //   const { title, note, dueDate } = data;
-  //   dispatch(
-  //     tasksActions.editTask({
-  //       task,
-  //       editTask: {
-  //         title,
-  //         note,
-  //         dueDate: dueDate?.toISOString()
-  //       }
-  //     })
-  //   );
-  //   navigation.pop();
+  const onSaveTask = (data: Schema) => {
+    const { title, note, dueDate } = data;
+    dispatch(
+      tasksActions.editTask({
+        task,
+        editTask: {
+          title,
+          note,
+          dueDate: dueDate?.toISOString()
+        }
+      })
+    );
+  };
+
+  // const toggleDeleteTaskModal = () => {
+  // setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
   // };
 
-  const toggleDeleteTaskModal = () => {
-    // setIsDeleteTaskModalVisible(!isDeleteTaskModalVisible);
-  };
-
-  const onDeleteTask = (deletingTask: Task) => {
-    // dispatch(tasksActions.deleteTask({ task: deletingTask }));
-    // setIsDeleteTaskModalVisible(false);
-    // navigation.goBack();
-  };
+  // const onDeleteTask = (deletingTask: Task) => {
+  // dispatch(tasksActions.deleteTask({ task: deletingTask }));
+  // setIsDeleteTaskModalVisible(false);
+  // navigation.goBack();
+  // };
 
   const watchDueDateValue = watch('dueDate');
   console.log('watchDueDateValue', watchDueDateValue);
 
-  const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
+  // const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
 
   const isSaveTaskButtonDisabled = !isValid || isLoading;
 
@@ -99,7 +104,11 @@ export default function TaskDetails({ task }: Props) {
         /> */}
       </div>
       <div className="flex gap-3">
-        <Button mode="contained" disabled={isSaveTaskButtonDisabled} onClick={() => {}}>
+        <Button
+          mode="contained"
+          disabled={isSaveTaskButtonDisabled}
+          onClick={handleSubmit(onSaveTask)}
+        >
           Save task
         </Button>
         <Button mode="contained" tone="danger" onClick={() => {}}>
@@ -108,4 +117,12 @@ export default function TaskDetails({ task }: Props) {
       </div>
     </div>
   );
+}
+
+function getDefaultFormValues(task: Task) {
+  return {
+    title: task.title,
+    note: task.note,
+    dueDate: task.dueDate ? new Date(task.dueDate) : undefined
+  };
 }

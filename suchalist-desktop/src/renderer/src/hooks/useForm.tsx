@@ -8,6 +8,7 @@ import {
 import * as z from 'zod';
 
 export interface HookFormFieldProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, any>;
 }
 
@@ -18,9 +19,10 @@ interface UseHookFormProps<TFieldValues extends FieldValues> extends UseFormProp
 export default function useForm<FormFields extends FieldValues>(
   props: UseHookFormProps<FormFields> = {}
 ) {
+  console.log('useForm');
   const { schema, resolver, ...otherProps } = props;
   const form = useHookForm<FormFields>({
-    resolver: resolver ? zodResolver(schema) : resolver,
+    resolver: schema ? zodResolver(schema) : resolver,
     ...otherProps
   });
 
