@@ -1,6 +1,11 @@
 import { selectFolderMap } from '@renderer/stores/tasks/tasks';
+import { motion } from 'motion/react';
 import { useState } from 'react';
-import { IoFolderOpenOutline } from 'react-icons/io5';
+import {
+  IoChevronBackOutline,
+  IoEllipsisHorizontalOutline,
+  IoFolderOpenOutline
+} from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { FolderHeader } from '../types';
 import BaseHeaderItem from './BaseHeaderItem';
@@ -29,6 +34,18 @@ export default function FolderHeaderItem({
       <BaseHeaderItem
         icon={{ Icon: IoFolderOpenOutline, size: 16 }}
         title={folder.title}
+        rightSection={
+          <div className="flex gap-2">
+            <IoEllipsisHorizontalOutline />
+            <motion.div
+              animate={{ rotate: isExpanded ? -90 : 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center"
+            >
+              <IoChevronBackOutline />
+            </motion.div>
+          </div>
+        }
         onClick={onToggleListItems}
       />
       {isExpanded && (
