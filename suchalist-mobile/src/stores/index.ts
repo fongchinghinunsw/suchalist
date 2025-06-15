@@ -4,13 +4,13 @@ import {
   FLUSH,
   PAUSE,
   PERSIST,
+  persistStore,
   persistReducer,
   PURGE,
   REGISTER,
   REHYDRATE,
 } from 'redux-persist';
 import {tasksReducer} from './tasks/tasks';
-import persistStore from 'redux-persist/es/persistStore';
 import {notificationReducer} from './notification';
 import {themeReducer} from './theme';
 

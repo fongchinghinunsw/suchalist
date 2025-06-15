@@ -29,7 +29,6 @@ import HeaderDrawerLayout from './components/HeaderDrawer/HeaderDrawerLayout';
 
 export default function HomeScreen() {
   const currentList = useSelector(selectCurrentList);
-  console.log('HomeScreen', {currentList: currentList.title});
   const dispatch = useDispatch();
 
   const isCurrentListGenerated = useSelector(selectIsCurrentListGenerated);
@@ -95,17 +94,19 @@ export default function HomeScreen() {
         style={styles.background}>
         <ForceAppUpdateModal />
 
-        <TaskItemList
-          list={currentList}
-          showAddTaskItem={!isCurrentListGenerated}
-          showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
-          onTaskItemPress={(task: Task) =>
-            navigation.push('TaskDetails', {task})
-          }
-          onAddTask={addTask}
-          onDeleteTask={deleteTask}
-          onScroll={onScroll}
-        />
+        {currentList && (
+          <TaskItemList
+            list={currentList}
+            showAddTaskItem={!isCurrentListGenerated}
+            showAddTaskDrawer={(date: Date) => onAddTaskForDate(date)}
+            onTaskItemPress={(task: Task) =>
+              navigation.push('TaskDetails', {task})
+            }
+            onAddTask={addTask}
+            onDeleteTask={deleteTask}
+            onScroll={onScroll}
+          />
+        )}
 
         {!isCurrentListGenerated && (
           <>

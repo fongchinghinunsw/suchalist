@@ -73,7 +73,7 @@ export default function FolderHeaderItem({
     dispatch(tasksActions.deleteFolder(id));
   };
 
-  const onToggleListItem = () => {
+  const onToggleListItems = () => {
     setIsExpanded(!isExpanded);
   };
 
@@ -135,7 +135,7 @@ export default function FolderHeaderItem({
             <Icon name={folderItemIconName} size={16} />
           </View>
         }
-        onPress={onToggleListItem}
+        onPress={onToggleListItems}
         onLongPress={onDrag}
       />
       {isExpanded && (

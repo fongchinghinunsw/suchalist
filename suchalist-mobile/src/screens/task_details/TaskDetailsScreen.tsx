@@ -38,7 +38,6 @@ export default function TaskDetailsScreen() {
     handleSubmit,
     setValue,
     trigger,
-    getValues,
     formState: {isValid, isLoading},
   } = useForm<Schema>({
     schema,
@@ -52,7 +51,7 @@ export default function TaskDetailsScreen() {
 
   useEffect(() => {
     trigger(); // triggers all form validations when component is mounted
-  }, [getValues, trigger]);
+  }, [trigger]);
 
   const onSaveTask = (data: Schema) => {
     const {title, note, dueDate} = data;
