@@ -3,7 +3,7 @@ import { getFolderRowById, insertFolderRow } from '../repository/folder';
 import { getListsByFolderId } from '../repository/list';
 import { toFolder } from '../types/folder';
 import { toList } from '../types/list';
-import { getTasksByListId } from './task';
+import { getTasksByListId } from './task/task';
 
 export function getFolderById(id: string): Folder | null {
   const folderRow = getFolderRowById(id);

@@ -8,8 +8,8 @@ import { getCurrentTasksFromListMap } from '../../utils/get_task';
 import { isDueToday, isDueWithin7Days } from '../../utils/utils';
 
 export default function addTask(state: TasksState, action: PayloadAction<NewTask>) {
+  // UPDATE REDUX STORE
   const currentTasks = getCurrentTasksFromListMap(state, state.currentTaskListId);
-  console.log('payload', action.payload);
 
   const taskId = getId();
 
@@ -39,7 +39,13 @@ export default function addTask(state: TasksState, action: PayloadAction<NewTask
 
   updateGeneratedList(state, newTask);
 
-  store(state, state.currentTaskListId, newTask);
+  const result = getListFromResources(state.currentTaskListId, state.resources);
+  if (result !== undefined) {
+    result.list.tasks.push(newTask);
+  }
+
+  // PERSIST LOCALLY
+  window.database.insertTask(newTask);
 }
 
 function updateGeneratedList(state: TasksState, task: Task) {
@@ -49,12 +55,5 @@ function updateGeneratedList(state: TasksState, task: Task) {
 
   if (isDueWithin7Days(task)) {
     state.listMap[NEXT_SEVEN_DAYS_LIST_ID].tasks.push(task);
-  }
-}
-
-function store(state: TasksState, listId: string, newTask: Task) {
-  const result = getListFromResources(listId, state.resources);
-  if (result !== undefined) {
-    result.list.tasks.push(newTask);
   }
 }

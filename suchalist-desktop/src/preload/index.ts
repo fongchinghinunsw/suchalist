@@ -1,9 +1,12 @@
+import { Task } from '@common/types/task';
 import { contextBridge, ipcRenderer } from 'electron';
 
 // Custom APIs for renderer
 const database = {
   getResources: () => ipcRenderer.invoke('get-resources'),
   getListWithTasks: (listId: string) => ipcRenderer.invoke('get-list-with-tasks', listId),
+  insertTask: (task: Task) => ipcRenderer.invoke('insert-task', task),
+  deleteTask: (id: string) => ipcRenderer.invoke('delete-task', id),
   updateTaskIsStarred: (id: string, isStarred: boolean) =>
     ipcRenderer.invoke('update-task-is-starred', id, isStarred),
   updateTaskIsCompleted: (id: string, isCompleted: boolean) =>

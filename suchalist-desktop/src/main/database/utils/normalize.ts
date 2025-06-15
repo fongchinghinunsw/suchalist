@@ -1,3 +1,6 @@
+import { Task } from '@common/types/task';
+import { TaskRow } from '../types/task';
+
 type Row = Record<string, string | number | null>;
 type Data = Record<string, unknown>;
 
@@ -20,4 +23,19 @@ export function normalize<I extends Data, O extends Row>(input: I): O {
   }
 
   return output as O;
+}
+
+export function normalizeTask(task: Task): TaskRow {
+  return {
+    id: task.id,
+    listId: task.listId,
+    title: task.title,
+    note: task.note ?? null,
+    dueDate: task.dueDate ?? null,
+    isCompleted: task.isCompleted ? 1 : 0,
+    isStarred: task.isStarred ? 1 : 0,
+    createdAt: task.createdAt,
+    updatedAt: task.updatedAt,
+    completedAt: task.completedAt ?? null
+  };
 }

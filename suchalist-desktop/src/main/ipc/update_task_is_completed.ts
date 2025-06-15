@@ -1,4 +1,4 @@
-import { updateTaskIsCompleted } from '@/database/service/task';
+import { updateTaskIsCompleted } from '@/database/service/task/task';
 import { ipcMain } from 'electron';
 
 export function registerUpdateTaskIsCompletedHandler() {

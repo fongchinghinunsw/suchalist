@@ -4,7 +4,7 @@ import { Resource } from '@common/types/resource';
 import { getAllFolderRows } from '../repository/folder';
 import { getAllListRows } from '../repository/list';
 import { toList } from '../types/list';
-import { getTasksByListId } from './task';
+import { getTasksByListId } from './task/task';
 
 export function getResources(): Resource[] {
   const folderRows = getAllFolderRows();

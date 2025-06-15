@@ -1,4 +1,4 @@
-import { updateTaskIsStarred } from '@/database/service/task';
+import { updateTaskIsStarred } from '@/database/service/task/task';
 import { ipcMain } from 'electron';
 
 export function registerUpdateTaskIsStarredHandler() {

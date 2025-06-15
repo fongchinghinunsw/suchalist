@@ -4,9 +4,9 @@ import {
   insertTaskRow,
   updateTaskRowIsCompleted,
   updateTaskRowIsStarred
-} from '../repository/task';
-import { TaskRow, toTask } from '../types/task';
-import { normalize } from '../utils/normalize';
+} from '../../repository/task';
+import { toTask } from '../../types/task';
+import { normalizeTask } from '../../utils/normalize';
 
 export function getTasksByListId(id: string): Task[] {
   const taskRows = getTaskRowsByListId(id);
@@ -14,7 +14,7 @@ export function getTasksByListId(id: string): Task[] {
 }
 
 export function insertTask(task: Task) {
-  const taskRow = normalize<Task, TaskRow>(task);
+  const taskRow = normalizeTask(task);
   insertTaskRow(taskRow);
 }
 

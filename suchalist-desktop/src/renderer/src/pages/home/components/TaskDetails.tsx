@@ -21,9 +21,10 @@ type Schema = z.infer<typeof schema>;
 
 type Props = {
   task: Task;
+  onDeleteTask: (task: Task) => void;
 };
 
-export default function TaskDetails({ task }: Props) {
+export default function TaskDetails({ task, onDeleteTask }: Props) {
   const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
 
@@ -96,7 +97,7 @@ export default function TaskDetails({ task }: Props) {
         >
           Save task
         </Button>
-        <Button mode="contained" tone="danger" onClick={() => {}}>
+        <Button mode="contained" tone="danger" onClick={() => onDeleteTask(task)}>
           Delete task
         </Button>
       </div>

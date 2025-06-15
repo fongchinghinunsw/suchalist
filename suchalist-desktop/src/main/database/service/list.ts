@@ -6,7 +6,7 @@ import {
 } from '../repository/list';
 import { ListRow, toList } from '../types/list';
 import { normalize } from '../utils/normalize';
-import { getTasksByListId } from './task';
+import { getTasksByListId } from './task/task';
 
 export function getListRowsCount() {
   return getListRowsCountObject().count;

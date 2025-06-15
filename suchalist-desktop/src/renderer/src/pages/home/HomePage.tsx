@@ -18,6 +18,11 @@ export default function HomePage() {
     [dispatch]
   );
 
+  const onDeleteTask = (task: Task) => {
+    setCurrentTask(null);
+    dispatch(tasksActions.deleteTask({ task }));
+  };
+
   const onSelectTask = (task: Task) => setCurrentTask(task);
   console.log('currentTask', currentTask);
 
@@ -26,7 +31,9 @@ export default function HomePage() {
       {currentList && (
         <TaskItemList list={currentList} onAddTask={onAddTask} onSelectTask={onSelectTask} />
       )}
-      {currentTask && <TaskDetails key={currentTask.id} task={currentTask} />}
+      {currentTask && (
+        <TaskDetails key={currentTask.id} task={currentTask} onDeleteTask={onDeleteTask} />
+      )}
     </main>
   );
 }

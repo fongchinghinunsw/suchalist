@@ -12,6 +12,8 @@ export default function deleteTask(
     task: Task;
   }>
 ) {
+  console.log('update');
+  // UPDATE REDUX STORE
   const task = action.payload.task;
   const { listId, id: taskId } = task;
 
@@ -23,7 +25,13 @@ export default function deleteTask(
 
   updateGeneratedList(state, task);
 
-  store(state, listId, taskId);
+  const result = getListFromResources(listId, state.resources);
+  if (result) {
+    result.list.tasks = result.list.tasks.filter((task) => task.id !== taskId);
+  }
+
+  // PERSIST LOCALLY
+  window.database.deleteTask(task.id);
 }
 
 function updateGeneratedList(state: TasksState, task: Task) {
@@ -48,12 +56,5 @@ function updateGeneratedList(state: TasksState, task: Task) {
     if (index !== -1) {
       state.listMap[NEXT_SEVEN_DAYS_LIST_ID].tasks.splice(index, 1);
     }
-  }
-}
-
-function store(state: TasksState, listId: string, taskId: string) {
-  const result = getListFromResources(listId, state.resources);
-  if (result) {
-    result.list.tasks = result.list.tasks.filter((task) => task.id !== taskId);
   }
 }
