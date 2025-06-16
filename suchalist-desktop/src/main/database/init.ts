@@ -1,8 +1,8 @@
 import { ENV } from '@common/constants/env';
 import Database from 'better-sqlite3';
 import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
-import { insertFolderRow } from './repository/folder';
-import { insertListRow } from './repository/list';
+import { insertFolderRow } from './repository/folder/insert_folder_row';
+import { insertListRow } from './repository/list/insert_list_row';
 import { insertTaskRow } from './repository/task';
 import { getListRowsCount } from './service/list';
 
@@ -57,17 +57,6 @@ export function init() {
     if (listRowsCount !== 0) {
       return;
     }
-
-    // INSERT OR IGNORE: Insert a row into a table if the primary key doesn't exist, otherwise simply ignore the statement.
-    // const insertFolder = db.prepare(
-    //   `INSERT OR IGNORE INTO folders VALUES (@id, @title, @order, @createdAt, @updatedAt)`
-    // );
-    // const insertList = db.prepare(
-    //   `INSERT OR IGNORE INTO lists VALUES (@id, @folderId, @title, @order, @folderOrder, @createdAt, @updatedAt)`
-    // );
-    // const insertTask = db.prepare(
-    //   `INSERT OR IGNORE INTO tasks VALUES (@id, @listId, @title, @note, @dueDate, @isCompleted, @isStarred, @createdAt, @updatedAt, @completedAt)`
-    // );
 
     const insertAll = db.transaction(() => {
       for (const f of FOLDER_ROWS) insertFolderRow(f);

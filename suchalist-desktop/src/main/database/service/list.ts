@@ -1,12 +1,10 @@
 import { List } from '@common/types/list';
-import {
-  getListRowById,
-  getListRowsCount as getListRowsCountObject,
-  insertListRow
-} from '../repository/list';
+import { getListRowById } from '../repository/list/get_list_by_id';
+import { getListRowsCount as getListRowsCountObject } from '../repository/list/get_list_rows_count';
+import { insertListRow } from '../repository/list/insert_list_row';
 import { ListRow, toList } from '../types/list';
 import { normalize } from '../utils/normalize';
-import { getTasksByListId } from './task/task';
+import { getTasksByListId } from './task/get_tasks_by_list_id';
 
 export function getListRowsCount() {
   return getListRowsCountObject().count;

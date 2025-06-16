@@ -1,10 +1,10 @@
 import { Folder } from '@common/types/folder';
 import { isDefaultList, isListWithOrder, List } from '@common/types/list';
 import { Resource } from '@common/types/resource';
-import { getAllFolderRows } from '../repository/folder';
-import { getAllListRows } from '../repository/list';
+import { getAllFolderRows } from '../repository/folder/get_all_folder_rows';
+import { getAllListRows } from '../repository/list/get_all_list_rows';
 import { toList } from '../types/list';
-import { getTasksByListId } from './task/task';
+import { getTasksByListId } from './task/get_tasks_by_list_id';
 
 export function getResources(): Resource[] {
   const folderRows = getAllFolderRows();
