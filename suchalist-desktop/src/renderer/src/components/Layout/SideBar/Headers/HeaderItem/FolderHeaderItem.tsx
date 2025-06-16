@@ -51,7 +51,12 @@ export default function FolderHeaderItem({
       {isExpanded && (
         <div className="pl-3">
           {lists.map((list) => (
-            <ListHeaderItem key={list.id} listHeader={list} onListHeaderClick={onListHeaderClick} />
+            <ListHeaderItem
+              key={list.id}
+              listHeader={list}
+              hasOption={true}
+              onListHeaderClick={onListHeaderClick}
+            />
           ))}
         </div>
       )}

@@ -38,6 +38,7 @@ export default function Headers() {
               type: 'LIST',
               id
             }}
+            hasOption={false}
             onListHeaderClick={onListHeaderClick}
           />
         );
@@ -58,6 +59,7 @@ export default function Headers() {
           <ListHeaderItem
             key={header.id}
             listHeader={header}
+            hasOption={true}
             onListHeaderClick={onListHeaderClick}
           />
         );
