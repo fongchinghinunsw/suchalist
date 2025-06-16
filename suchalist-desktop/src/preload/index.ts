@@ -5,7 +5,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 const database = {
   getResources: () => ipcRenderer.invoke('get-resources'),
   getListWithTasks: (listId: string) => ipcRenderer.invoke('get-list-with-tasks', listId),
-  addTask: (task: Task) => ipcRenderer.invoke('insert-task', task),
+  addTask: (task: Task) => ipcRenderer.invoke('add-task', task),
   deleteTask: (id: string) => ipcRenderer.invoke('delete-task', id),
   editTask: (task: Task) => ipcRenderer.invoke('edit-task', task),
   updateTaskIsStarred: (id: string, isStarred: boolean) =>

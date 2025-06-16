@@ -3,8 +3,8 @@ import Database from 'better-sqlite3';
 import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
 import { insertFolderRow } from './repository/folder/insert_folder_row';
 import { insertListRow } from './repository/list/insert_list_row';
-import { insertTaskRow } from './repository/task';
-import { getListRowsCount } from './service/list';
+import { insertOrReplaceTaskRow } from './repository/task/insert_or_replace_task_row';
+import { getListRowsCount } from './service/list/get_list_rows_count';
 
 // Create a connection to the DB. If the database file does not exist, it is created.
 export const db: InstanceType<typeof Database> = new Database('suchalist.db');
@@ -61,7 +61,7 @@ export function init() {
     const insertAll = db.transaction(() => {
       for (const f of FOLDER_ROWS) insertFolderRow(f);
       for (const l of LIST_ROWS) insertListRow(l);
-      for (const t of TASK_ROWS) insertTaskRow(t);
+      for (const t of TASK_ROWS) insertOrReplaceTaskRow(t);
     });
 
     insertAll();

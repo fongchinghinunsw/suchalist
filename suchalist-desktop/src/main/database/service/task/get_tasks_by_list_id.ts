@@ -1,4 +1,4 @@
-import { getTaskRowsByListId } from '@/database/repository/task';
+import { getTaskRowsByListId } from '@/database/repository/task/get_task_rows_by_list_id';
 import { toTask } from '@/database/types/task';
 import { Task } from '@common/types/task';
 

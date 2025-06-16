@@ -1,8 +1,8 @@
-import { insertTaskRow } from '@/database/repository/task';
+import { insertOrReplaceTaskRow } from '@/database/repository/task/insert_or_replace_task_row';
 import { normalizeTask } from '@/database/utils/normalize';
 import { Task } from '@common/types/task';
 
 export function addTask(task: Task) {
   const taskRow = normalizeTask(task);
-  insertTaskRow(taskRow);
+  insertOrReplaceTaskRow(taskRow);
 }
