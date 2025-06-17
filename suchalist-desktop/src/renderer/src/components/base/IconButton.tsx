@@ -5,7 +5,7 @@ type Props = {
   Icon: IconType;
   size: number;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export default function IconButton({ Icon, size, onClick, className }: Props) {

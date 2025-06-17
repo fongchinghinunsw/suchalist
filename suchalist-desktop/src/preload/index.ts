@@ -1,3 +1,4 @@
+import { List } from '@common/types/list';
 import { Task } from '@common/types/task';
 import { contextBridge, ipcRenderer } from 'electron';
 
@@ -11,7 +12,8 @@ const database = {
   updateTaskIsStarred: (id: string, isStarred: boolean) =>
     ipcRenderer.invoke('update-task-is-starred', id, isStarred),
   updateTaskIsCompleted: (id: string, isCompleted: boolean) =>
-    ipcRenderer.invoke('update-task-is-completed', id, isCompleted)
+    ipcRenderer.invoke('update-task-is-completed', id, isCompleted),
+  addList: (list: List) => ipcRenderer.invoke('add-list', list)
 };
 
 const api = {

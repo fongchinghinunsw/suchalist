@@ -1,5 +1,6 @@
 import { registerGetListHandler } from './get_list';
 import { registerGetResourcesHandler } from './get_resources';
+import { registerAddListHandler } from './list/add_list';
 import registerRemovePhotoHandler from './remove_photo';
 import { registerSelectAndSavePhotoHandler } from './select_and_save_photo';
 import { registerDeleteTaskHandler } from './task/delete_task';
@@ -19,4 +20,6 @@ export function registerIpcHandlers() {
   registerEditTaskHandler();
   registerUpdateTaskIsCompletedHandler();
   registerUpdateTaskIsStarredHandler();
+
+  registerAddListHandler();
 }

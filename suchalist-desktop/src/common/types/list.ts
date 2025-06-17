@@ -6,7 +6,9 @@ export type List = {
   id: string;
   folderId?: string;
   title: string;
+  // top-level order (if it's not inside a folder)
   order?: number;
+  // order within the folder
   folderOrder?: number;
   tasks: Task[];
   createdAt: string;

@@ -13,6 +13,8 @@ declare global {
       editTask: (task: Task) => Promise<Task | null>;
       updateTaskIsCompleted: (id: string, isCompleted: boolean) => boolean;
       updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
+      // List
+      addList: (list: List) => Promise<void>;
     };
     api: {
       selectAndSavePhoto: () => Promise<string>;

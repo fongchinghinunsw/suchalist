@@ -20,6 +20,7 @@ export default function addList(
     id: listId,
     folderId,
     title,
+    order: folderId === undefined ? state.headers.length : undefined,
     tasks: [],
     createdAt: now,
     updatedAt: now
@@ -49,6 +50,8 @@ export default function addList(
   }
 
   store(state, folderId, newList);
+
+  window.database.addList(newList);
 }
 
 function store(state: TasksState, folderId: string | undefined, newList: List) {

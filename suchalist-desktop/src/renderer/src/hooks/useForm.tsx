@@ -19,7 +19,6 @@ interface UseHookFormProps<TFieldValues extends FieldValues> extends UseFormProp
 export default function useForm<FormFields extends FieldValues>(
   props: UseHookFormProps<FormFields> = {}
 ) {
-  console.log('useForm');
   const { schema, resolver, ...otherProps } = props;
   const form = useHookForm<FormFields>({
     resolver: schema ? zodResolver(schema) : resolver,

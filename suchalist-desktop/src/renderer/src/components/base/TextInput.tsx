@@ -19,14 +19,12 @@ interface Props extends HookFormFieldProps {
 
 export default function TextInput({ ref, name, label, control, onClick, ...otherProps }: Props) {
   const theme = useSelector(selectTheme);
-  console.log('TextInput', name);
 
   return (
     <Controller
       name={name}
       control={control}
       render={({ field: { onChange, onBlur, value } }) => {
-        console.log({ value });
         return (
           <div
             ref={ref}
