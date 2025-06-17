@@ -3,33 +3,33 @@ import * as z from 'zod';
 import Modal from '../../base/Modal';
 import Content from './Content';
 
-const addListSchema = z.object({
+const addFolderSchema = z.object({
   title: z.string().trim().min(1)
 });
 
-type AddListSchema = z.infer<typeof addListSchema>;
+type AddFolderSchema = z.infer<typeof addFolderSchema>;
 
 type Props = {
   isOpen: boolean;
-  onAddList: (title: string) => void;
+  onAddFolder: (title: string) => void;
   onClose: () => void;
 };
 
-export default function AddListModal({ isOpen, onAddList, onClose }: Props) {
+export default function AddFolderModal({ isOpen, onAddFolder, onClose }: Props) {
   const {
     control,
     handleSubmit,
     setValue,
     formState: { isValid }
-  } = useForm<AddListSchema>({
-    schema: addListSchema,
+  } = useForm<AddFolderSchema>({
+    schema: addFolderSchema,
     defaultValues: {
       title: ''
     }
   });
 
-  const onConfirm = (data: AddListSchema) => {
-    onAddList(data.title);
+  const onConfirm = (data: AddFolderSchema) => {
+    onAddFolder(data.title);
     setValue('title', '');
   };
 
@@ -40,7 +40,7 @@ export default function AddListModal({ isOpen, onAddList, onClose }: Props) {
 
   return (
     <Modal
-      title="Add a new list"
+      title="Add a new folder"
       isOpen={isOpen}
       Content={
         <Content

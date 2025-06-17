@@ -5,7 +5,8 @@ import {
   TODAY_LIST_ID
 } from '@common/constants/list';
 import { isFolder } from '@common/types/folder';
-import { isList, List } from '@common/types/list';
+import { isList, isListWithOrder, List } from '@common/types/list';
+import { TopLevelResource } from '@common/types/resource';
 import { Task } from '@common/types/task';
 import { toFolderHeader, toListHeader } from '@renderer/components/Layout/SideBar/Headers/utils';
 import { TasksState } from '../tasks';
@@ -20,6 +21,8 @@ export async function getTasksState(): Promise<TasksState> {
     folderMap: {},
     headers: []
   };
+
+  const topLevelResources: TopLevelResource[] = [];
 
   const now = new Date().toISOString();
 
@@ -71,7 +74,7 @@ export async function getTasksState(): Promise<TasksState> {
         });
       });
 
-      state.headers.push(toFolderHeader(folder));
+      topLevelResources.push(folder);
       return;
     }
 
@@ -94,8 +97,8 @@ export async function getTasksState(): Promise<TasksState> {
         }
       });
 
-      if (list.id !== DEFAULT_LIST_ID) {
-        state.headers.push(toListHeader(list));
+      if (list.id !== DEFAULT_LIST_ID && isListWithOrder(list)) {
+        topLevelResources.push(list);
       }
 
       return;
@@ -107,6 +110,15 @@ export async function getTasksState(): Promise<TasksState> {
   state.listMap[STARRED_LIST_ID] = starredList;
   state.listMap[TODAY_LIST_ID] = todayList;
   state.listMap[NEXT_SEVEN_DAYS_LIST_ID] = nextSevenDaysList;
+
+  topLevelResources.sort((r1, r2) => r1.order - r2.order);
+  state.headers = topLevelResources.map((resource) => {
+    if (isFolder(resource)) {
+      return toFolderHeader(resource);
+    }
+
+    return toListHeader(resource);
+  });
 
   return state;
 }

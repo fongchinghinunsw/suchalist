@@ -11,7 +11,7 @@ export default function addFolder(state: TasksState, action: PayloadAction<strin
   const newFolder: Folder = {
     id: folderId,
     title,
-    order: 0, // TODO
+    order: state.headers.length,
     lists: [],
     createdAt: now,
     updatedAt: now
@@ -26,6 +26,8 @@ export default function addFolder(state: TasksState, action: PayloadAction<strin
   });
 
   store(state, newFolder);
+
+  window.database.addFolder(newFolder);
 }
 
 function store(state: TasksState, newFolder: Folder) {

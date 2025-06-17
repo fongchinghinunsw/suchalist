@@ -1,4 +1,6 @@
 import { Folder } from './folder';
-import { List } from './list';
+import { List, ListWithOrder } from './list';
 
 export type Resource = List | Folder;
+
+export type TopLevelResource = ListWithOrder | Folder;

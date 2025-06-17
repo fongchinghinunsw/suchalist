@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import IconButton from '@renderer/components/base/IconButton';
+import AddFolderModal from '@renderer/components/modal/AddFolderModal/AddFolderModal';
 import AddListModal from '@renderer/components/modal/AddListModal/AddListModal';
 import { tasksActions } from '@renderer/stores/tasks/tasks';
 import { useState } from 'react';
@@ -17,9 +18,9 @@ export default function Footer() {
   const dispatch = useDispatch();
 
   const [isAddListModalOpen, setIsAddListModalOpen] = useState(false);
+  const [isAddFolderModalOpen, setIsAddFolderModalOpen] = useState(false);
 
   const onShowAddListModal = () => {
-    console.log('show');
     setIsAddListModalOpen(true);
   };
 
@@ -28,9 +29,21 @@ export default function Footer() {
   };
 
   const onAddList = (title: string) => {
-    console.log('onAddList');
     dispatch(tasksActions.addList({ title }));
     onCloseAddListModal();
+  };
+
+  const onShowAddFolderModal = () => {
+    setIsAddFolderModalOpen(true);
+  };
+
+  const onCloseAddFolderModal = () => {
+    setIsAddFolderModalOpen(false);
+  };
+
+  const onAddFolder = (title: string) => {
+    dispatch(tasksActions.addFolder(title));
+    onCloseAddFolderModal();
   };
 
   const goToSettings = () => {
@@ -51,7 +64,7 @@ export default function Footer() {
             </div>
           </MenuItem>
           <MenuItem>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" onClick={onShowAddFolderModal}>
               <IoFolderOpenOutline />
               <div>Add Folder</div>
             </div>
@@ -63,6 +76,11 @@ export default function Footer() {
         isOpen={isAddListModalOpen}
         onAddList={onAddList}
         onClose={onCloseAddListModal}
+      />
+      <AddFolderModal
+        isOpen={isAddFolderModalOpen}
+        onAddFolder={onAddFolder}
+        onClose={onCloseAddFolderModal}
       />
     </div>
   );

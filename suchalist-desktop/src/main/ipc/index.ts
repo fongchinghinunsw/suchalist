@@ -1,3 +1,4 @@
+import { registerAddFolderHandler } from './folder/add_folder';
 import { registerGetListHandler } from './get_list';
 import { registerGetResourcesHandler } from './get_resources';
 import { registerAddListHandler } from './list/add_list';
@@ -22,4 +23,6 @@ export function registerIpcHandlers() {
   registerUpdateTaskIsStarredHandler();
 
   registerAddListHandler();
+
+  registerAddFolderHandler();
 }

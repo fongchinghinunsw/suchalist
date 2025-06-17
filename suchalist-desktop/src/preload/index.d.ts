@@ -1,3 +1,4 @@
+import { Folder } from '@common/types/folder';
 import { List } from '@common/types/list';
 import { Resource } from '@common/types/resource';
 import { Task } from '@common/types/task';
@@ -15,6 +16,8 @@ declare global {
       updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
       // List
       addList: (list: List) => Promise<void>;
+      // Folder
+      addFolder: (folder: Folder) => Promise<void>;
     };
     api: {
       selectAndSavePhoto: () => Promise<string>;
