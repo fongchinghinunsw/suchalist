@@ -1,5 +1,5 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
-import { selectListMap } from '@renderer/stores/tasks/tasks';
+import { selectListMap, tasksActions } from '@renderer/stores/tasks/tasks';
 import { ReactNode } from 'react';
 import {
   IoCreateOutline,
@@ -7,7 +7,7 @@ import {
   IoListOutline,
   IoTrashOutline
 } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListHeader } from '../types';
 import BaseHeaderItem from './BaseHeaderItem';
 
@@ -28,6 +28,7 @@ export default function ListHeaderItem({
   hasOption,
   onListHeaderClick
 }: Props) {
+  const dispatch = useDispatch();
   const listMap = useSelector(selectListMap);
   const list = listMap[id];
 
@@ -42,7 +43,7 @@ export default function ListHeaderItem({
     menuOptions.push({
       title: 'Delete List',
       icon: <IoTrashOutline className="text-red-500" />,
-      onClick: () => {}
+      onClick: () => dispatch(tasksActions.deleteList(id))
     });
   }
 
@@ -62,7 +63,11 @@ export default function ListHeaderItem({
             className="z-10 border border-gray-300 rounded-md p-1 bg-white"
           >
             {menuOptions.map((option) => (
-              <div key={option.title} className="flex items-center p-1 gap-2">
+              <div
+                key={option.title}
+                className="flex items-center p-1 gap-2"
+                onClick={option.onClick}
+              >
                 {option.icon}
                 <div>{option.title}</div>
               </div>

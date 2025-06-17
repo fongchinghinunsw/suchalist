@@ -6,7 +6,7 @@ import {
   IoEllipsisHorizontalOutline,
   IoFolderOpenOutline
 } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FolderHeader } from '../types';
 import BaseHeaderItem from './BaseHeaderItem';
 import ListHeaderItem from './ListHeaderItem';
@@ -20,6 +20,7 @@ export default function FolderHeaderItem({
   folderHeader: { id, lists },
   onListHeaderClick
 }: Props) {
+  const dispatch = useDispatch();
   const folderMap = useSelector(selectFolderMap);
   const folder = folderMap[id];
 

@@ -31,6 +31,8 @@ export default function deleteList(state: TasksState, action: PayloadAction<stri
   }
 
   store(state, listId);
+
+  window.database.deleteList(listId);
 }
 
 function store(state: TasksState, listId: string) {

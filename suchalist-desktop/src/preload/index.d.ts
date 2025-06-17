@@ -16,8 +16,10 @@ declare global {
       updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
       // List
       addList: (list: List) => Promise<void>;
+      deleteList: (id: string) => Promise<void>;
       // Folder
       addFolder: (folder: Folder) => Promise<void>;
+      deleteFolder: (id: string) => Promise<void>;
     };
     api: {
       selectAndSavePhoto: () => Promise<string>;
