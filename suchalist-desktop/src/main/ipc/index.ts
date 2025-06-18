@@ -1,5 +1,6 @@
 import { registerAddFolderHandler } from './folder/add_folder';
 import { registerDeleteFolderHandler } from './folder/delete_folder';
+import { registerRenameFolderHandler } from './folder/rename_folder';
 import { registerGetListHandler } from './get_list';
 import { registerGetResourcesHandler } from './get_resources';
 import { registerAddListHandler } from './list/add_list';
@@ -30,5 +31,6 @@ export function registerIpcHandlers() {
   registerDeleteListHandler();
 
   registerAddFolderHandler();
+  registerRenameFolderHandler();
   registerDeleteFolderHandler();
 }

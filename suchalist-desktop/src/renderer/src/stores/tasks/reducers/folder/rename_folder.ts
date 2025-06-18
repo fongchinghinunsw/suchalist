@@ -14,6 +14,8 @@ export default function renameFolder(
   state.folderMap[folder.id].title = newTitle;
 
   store(state, folder.id, newTitle);
+
+  window.database.renameFolder(folder.id, newTitle);
 }
 
 function store(state: TasksState, folderId: string, newTitle: string) {

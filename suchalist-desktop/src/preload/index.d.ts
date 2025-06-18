@@ -20,6 +20,7 @@ declare global {
       deleteList: (id: string) => Promise<void>;
       // Folder
       addFolder: (folder: Folder) => Promise<void>;
+      renameFolder: (id: string, newTitle: string) => Promise<void>;
       deleteFolder: (id: string) => Promise<void>;
     };
     api: {

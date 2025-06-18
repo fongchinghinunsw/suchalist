@@ -18,6 +18,7 @@ const database = {
   renameList: (id: string, newTitle: string) => ipcRenderer.invoke('rename-list', id, newTitle),
   deleteList: (id: string) => ipcRenderer.invoke('delete-list', id),
   addFolder: (folder: Folder) => ipcRenderer.invoke('add-folder', folder),
+  renameFolder: (id: string, newTitle: string) => ipcRenderer.invoke('rename-folder', id, newTitle),
   deleteFolder: (id: string) => ipcRenderer.invoke('delete-folder', id)
 };
 

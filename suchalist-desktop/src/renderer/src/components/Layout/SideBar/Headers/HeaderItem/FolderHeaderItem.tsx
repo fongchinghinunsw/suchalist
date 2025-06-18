@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import AddListModal from '@renderer/components/modal/AddListModal/AddListModal';
+import RenameFolderModal from '@renderer/components/modal/RenameFolderModal/RenameFolderModal';
 import { selectFolderMap, tasksActions } from '@renderer/stores/tasks/tasks';
 import { motion } from 'motion/react';
 import { useState } from 'react';
@@ -31,6 +32,7 @@ export default function FolderHeaderItem({
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddListModalOpen, setIsAddListModalOpen] = useState(false);
+  const [isRenameFolderModalOpen, setIsRenameFolderModalOpen] = useState(false);
 
   const onShowAddListModal = () => {
     setIsAddListModalOpen(true);
@@ -40,9 +42,18 @@ export default function FolderHeaderItem({
     setIsAddListModalOpen(false);
   };
 
+  const toggleRenameFolderModal = () => {
+    setIsRenameFolderModalOpen(!isRenameFolderModalOpen);
+  };
+
   const onAddList = (title: string) => {
     dispatch(tasksActions.addList({ title, folderId: id }));
     onCloseAddListModal();
+  };
+
+  const onRenameFolder = (newTitle: string) => {
+    dispatch(tasksActions.renameFolder({ folder, newTitle }));
+    toggleRenameFolderModal();
   };
 
   const onToggleListItems = () => {
@@ -58,10 +69,10 @@ export default function FolderHeaderItem({
     {
       title: 'Rename Folder',
       icon: <IoCreateOutline />,
-      onClick: () => {}
+      onClick: toggleRenameFolderModal
     },
     {
-      title: 'Delete List',
+      title: 'Delete Folder',
       icon: <IoTrashOutline className="text-red-500" />,
       onClick: () => {}
     }
@@ -121,6 +132,12 @@ export default function FolderHeaderItem({
         isOpen={isAddListModalOpen}
         onAddList={onAddList}
         onClose={onCloseAddListModal}
+      />
+      <RenameFolderModal
+        defaultTitle={folder.title}
+        isOpen={isRenameFolderModalOpen}
+        onRenameFolder={onRenameFolder}
+        onClose={toggleRenameFolderModal}
       />
     </>
   );

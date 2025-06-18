@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import DeleteListModal from '@renderer/components/modal/DeleteListModal/DeleteListModal';
-import RenameListModal from '@renderer/components/modal/RenameListModal.tsx/RenameListModal';
+import RenameListModal from '@renderer/components/modal/RenameListModal/RenameListModal';
 import { selectListMap, tasksActions } from '@renderer/stores/tasks/tasks';
 import { useState } from 'react';
 import {
