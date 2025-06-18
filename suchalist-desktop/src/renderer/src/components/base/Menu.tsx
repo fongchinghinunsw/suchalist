@@ -15,9 +15,13 @@ type Props = {
 };
 
 export default function Menu({ Button, options, anchor }: Props) {
+  const onMenuButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+  };
+
   return (
     <HeadlessMenu>
-      <MenuButton>
+      <MenuButton onClick={onMenuButtonClick}>
         <Button />
       </MenuButton>
       <MenuItems
