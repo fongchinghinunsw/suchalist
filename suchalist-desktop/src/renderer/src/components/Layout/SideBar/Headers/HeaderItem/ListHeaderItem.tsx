@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import DeleteListModal from '@renderer/components/modal/DeleteListModal/DeleteListModal';
 import { selectListMap, tasksActions } from '@renderer/stores/tasks/tasks';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import {
   IoCreateOutline,
   IoEllipsisHorizontalOutline,
@@ -10,13 +10,7 @@ import {
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListHeader } from '../types';
-import BaseHeaderItem from './BaseHeaderItem';
-
-type Option = {
-  title: string;
-  icon: ReactNode;
-  onClick: () => void;
-};
+import BaseHeaderItem, { MenuOption } from './BaseHeaderItem';
 
 type Props = {
   listHeader: ListHeader;
@@ -43,7 +37,7 @@ export default function ListHeaderItem({
     dispatch(tasksActions.deleteList(id));
   };
 
-  const menuOptions: Option[] = [];
+  const menuOptions: MenuOption[] = [];
   if (hasOption) {
     menuOptions.push({
       title: 'Rename List',

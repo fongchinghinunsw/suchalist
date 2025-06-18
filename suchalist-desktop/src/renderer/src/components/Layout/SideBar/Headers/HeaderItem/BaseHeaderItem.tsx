@@ -2,6 +2,12 @@ import Text from '@renderer/components/base/Text';
 import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
 
+export type MenuOption = {
+  title: string;
+  icon: ReactNode;
+  onClick: () => void;
+};
+
 type Props = {
   icon: {
     Icon: IconType;

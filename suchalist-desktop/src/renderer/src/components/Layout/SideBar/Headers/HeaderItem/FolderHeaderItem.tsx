@@ -1,14 +1,19 @@
-import { selectFolderMap } from '@renderer/stores/tasks/tasks';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import AddListModal from '@renderer/components/modal/AddListModal/AddListModal';
+import { selectFolderMap, tasksActions } from '@renderer/stores/tasks/tasks';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import {
   IoChevronBackOutline,
+  IoCreateOutline,
   IoEllipsisHorizontalOutline,
-  IoFolderOpenOutline
+  IoFolderOpenOutline,
+  IoListOutline,
+  IoTrashOutline
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { FolderHeader } from '../types';
-import BaseHeaderItem from './BaseHeaderItem';
+import BaseHeaderItem, { MenuOption } from './BaseHeaderItem';
 import ListHeaderItem from './ListHeaderItem';
 
 type Props = {
@@ -25,10 +30,42 @@ export default function FolderHeaderItem({
   const folder = folderMap[id];
 
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isAddListModalOpen, setIsAddListModalOpen] = useState(false);
+
+  const onShowAddListModal = () => {
+    setIsAddListModalOpen(true);
+  };
+
+  const onCloseAddListModal = () => {
+    setIsAddListModalOpen(false);
+  };
+
+  const onAddList = (title: string) => {
+    dispatch(tasksActions.addList({ title, folderId: id }));
+    onCloseAddListModal();
+  };
 
   const onToggleListItems = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const menuOptions: MenuOption[] = [
+    {
+      title: 'Add List',
+      icon: <IoListOutline />,
+      onClick: onShowAddListModal
+    },
+    {
+      title: 'Rename Folder',
+      icon: <IoCreateOutline />,
+      onClick: () => {}
+    },
+    {
+      title: 'Delete List',
+      icon: <IoTrashOutline className="text-red-500" />,
+      onClick: () => {}
+    }
+  ];
 
   return (
     <>
@@ -37,7 +74,26 @@ export default function FolderHeaderItem({
         title={folder.title}
         rightSection={
           <div className="flex gap-2">
-            <IoEllipsisHorizontalOutline />
+            <Menu>
+              <MenuButton>
+                <IoEllipsisHorizontalOutline />
+              </MenuButton>
+              <MenuItems
+                transition
+                anchor="bottom start"
+                className="z-10 border border-gray-300 rounded-md p-1 bg-white"
+              >
+                {menuOptions.map((option) => (
+                  <MenuItem key={option.title}>
+                    <div className="flex items-center p-1 gap-2" onClick={option.onClick}>
+                      {option.icon}
+                      <div>{option.title}</div>
+                    </div>
+                  </MenuItem>
+                ))}
+              </MenuItems>
+            </Menu>
+
             <motion.div
               animate={{ rotate: isExpanded ? -90 : 0 }}
               transition={{ duration: 0.2 }}
@@ -61,6 +117,11 @@ export default function FolderHeaderItem({
           ))}
         </div>
       )}
+      <AddListModal
+        isOpen={isAddListModalOpen}
+        onAddList={onAddList}
+        onClose={onCloseAddListModal}
+      />
     </>
   );
 }
