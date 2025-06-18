@@ -70,25 +70,27 @@ export default function ListHeaderItem({
         title={list.title}
         onClick={() => onListHeaderClick(id)}
         rightSection={
-          <Menu>
-            <MenuButton>
-              <IoEllipsisHorizontalOutline />
-            </MenuButton>
-            <MenuItems
-              transition
-              anchor="bottom start"
-              className="z-10 border border-gray-300 rounded-md p-1 bg-white"
-            >
-              {menuOptions.map((option) => (
-                <MenuItem key={option.title}>
-                  <div className="flex items-center p-1 gap-2" onClick={option.onClick}>
-                    {option.icon}
-                    <div>{option.title}</div>
-                  </div>
-                </MenuItem>
-              ))}
-            </MenuItems>
-          </Menu>
+          menuOptions.length > 0 && (
+            <Menu>
+              <MenuButton>
+                <IoEllipsisHorizontalOutline />
+              </MenuButton>
+              <MenuItems
+                transition
+                anchor="bottom start"
+                className="z-10 border border-gray-300 rounded-md p-1 bg-white"
+              >
+                {menuOptions.map((option) => (
+                  <MenuItem key={option.title}>
+                    <div className="flex items-center p-1 gap-2" onClick={option.onClick}>
+                      {option.icon}
+                      <div>{option.title}</div>
+                    </div>
+                  </MenuItem>
+                ))}
+              </MenuItems>
+            </Menu>
+          )
         }
       />
       <RenameListModal
