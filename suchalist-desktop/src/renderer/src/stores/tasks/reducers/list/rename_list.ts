@@ -15,6 +15,8 @@ export default function renameList(
   state.listMap[list.id].title = newTitle;
 
   store(state, list.id, newTitle);
+
+  window.database.renameList(list.id, newTitle);
 }
 
 function store(state: TasksState, listId: string, newTitle: string) {

@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import DeleteListModal from '@renderer/components/modal/DeleteListModal/DeleteListModal';
+import RenameListModal from '@renderer/components/modal/RenameListModal.tsx/RenameListModal';
 import { selectListMap, tasksActions } from '@renderer/stores/tasks/tasks';
 import { useState } from 'react';
 import {
@@ -27,10 +28,20 @@ export default function ListHeaderItem({
   const listMap = useSelector(selectListMap);
   const list = listMap[id];
 
+  const [isRenameListModalVisible, setIsRenameListModalVisible] = useState(false);
   const [isDeleteListModalVisible, setIsDeleteListModalVisible] = useState(false);
+
+  const toggleRenameListModal = () => {
+    setIsRenameListModalVisible(!isRenameListModalVisible);
+  };
 
   const toggleDeleteListModal = () => {
     setIsDeleteListModalVisible(!isDeleteListModalVisible);
+  };
+
+  const onRenameList = (newTitle: string) => {
+    dispatch(tasksActions.renameList({ list, newTitle }));
+    toggleRenameListModal();
   };
 
   const onDeleteList = () => {
@@ -42,7 +53,7 @@ export default function ListHeaderItem({
     menuOptions.push({
       title: 'Rename List',
       icon: <IoCreateOutline />,
-      onClick: () => {}
+      onClick: toggleRenameListModal
     });
 
     menuOptions.push({
@@ -79,6 +90,12 @@ export default function ListHeaderItem({
             </MenuItems>
           </Menu>
         }
+      />
+      <RenameListModal
+        defaultTitle={list.title}
+        isOpen={isRenameListModalVisible}
+        onRenameList={onRenameList}
+        onClose={toggleRenameListModal}
       />
       <DeleteListModal
         listName={list.title}

@@ -15,6 +15,7 @@ const database = {
   updateTaskIsCompleted: (id: string, isCompleted: boolean) =>
     ipcRenderer.invoke('update-task-is-completed', id, isCompleted),
   addList: (list: List) => ipcRenderer.invoke('add-list', list),
+  renameList: (id: string, newTitle: string) => ipcRenderer.invoke('rename-list', id, newTitle),
   deleteList: (id: string) => ipcRenderer.invoke('delete-list', id),
   addFolder: (folder: Folder) => ipcRenderer.invoke('add-folder', folder),
   deleteFolder: (id: string) => ipcRenderer.invoke('delete-folder', id)

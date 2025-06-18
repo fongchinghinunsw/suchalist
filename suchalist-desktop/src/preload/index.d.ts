@@ -16,6 +16,7 @@ declare global {
       updateTaskIsStarred: (id: string, isStarred: boolean) => boolean;
       // List
       addList: (list: List) => Promise<void>;
+      renameList: (id: string, newTitle: string) => Promise<void>;
       deleteList: (id: string) => Promise<void>;
       // Folder
       addFolder: (folder: Folder) => Promise<void>;
