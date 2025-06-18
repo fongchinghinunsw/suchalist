@@ -1,4 +1,5 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import IconButton from '@renderer/components/base/IconButton';
+import Menu, { MenuOption } from '@renderer/components/base/Menu';
 import AddListModal from '@renderer/components/modal/AddListModal/AddListModal';
 import DeleteFolderModal from '@renderer/components/modal/DeleteFolderModal/DeleteFolderModal';
 import RenameFolderModal from '@renderer/components/modal/RenameFolderModal/RenameFolderModal';
@@ -15,7 +16,7 @@ import {
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { FolderHeader } from '../types';
-import BaseHeaderItem, { MenuOption } from './BaseHeaderItem';
+import BaseHeaderItem from './BaseHeaderItem';
 import ListHeaderItem from './ListHeaderItem';
 
 type Props = {
@@ -73,17 +74,17 @@ export default function FolderHeaderItem({
   const menuOptions: MenuOption[] = [
     {
       title: 'Add List',
-      icon: <IoListOutline />,
+      Icon: () => <IoListOutline />,
       onClick: onShowAddListModal
     },
     {
       title: 'Rename Folder',
-      icon: <IoCreateOutline />,
+      Icon: () => <IoCreateOutline />,
       onClick: toggleRenameFolderModal
     },
     {
       title: 'Delete Folder',
-      icon: <IoTrashOutline className="text-red-500" />,
+      Icon: () => <IoTrashOutline className="text-red-500" />,
       onClick: toggleDeleteFolderModal
     }
   ];
@@ -95,26 +96,11 @@ export default function FolderHeaderItem({
         title={folder.title}
         rightSection={
           <div className="flex gap-2">
-            <Menu>
-              <MenuButton>
-                <IoEllipsisHorizontalOutline />
-              </MenuButton>
-              <MenuItems
-                transition
-                anchor="bottom start"
-                className="z-10 border border-gray-300 rounded-md p-1 bg-white"
-              >
-                {menuOptions.map((option) => (
-                  <MenuItem key={option.title}>
-                    <div className="flex items-center p-1 gap-2" onClick={option.onClick}>
-                      {option.icon}
-                      <div>{option.title}</div>
-                    </div>
-                  </MenuItem>
-                ))}
-              </MenuItems>
-            </Menu>
-
+            <Menu
+              Button={() => <IconButton Icon={IoEllipsisHorizontalOutline} size={16} />}
+              options={menuOptions}
+              anchor="bottom start"
+            />
             <motion.div
               animate={{ rotate: isExpanded ? -90 : 0 }}
               transition={{ duration: 0.2 }}

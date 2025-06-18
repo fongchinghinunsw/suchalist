@@ -1,4 +1,5 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import IconButton from '@renderer/components/base/IconButton';
+import Menu, { MenuOption } from '@renderer/components/base/Menu';
 import DeleteListModal from '@renderer/components/modal/DeleteListModal/DeleteListModal';
 import RenameListModal from '@renderer/components/modal/RenameListModal/RenameListModal';
 import { selectListMap, tasksActions } from '@renderer/stores/tasks/tasks';
@@ -11,7 +12,7 @@ import {
 } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListHeader } from '../types';
-import BaseHeaderItem, { MenuOption } from './BaseHeaderItem';
+import BaseHeaderItem from './BaseHeaderItem';
 
 type Props = {
   listHeader: ListHeader;
@@ -52,13 +53,13 @@ export default function ListHeaderItem({
   if (hasOption) {
     menuOptions.push({
       title: 'Rename List',
-      icon: <IoCreateOutline />,
+      Icon: () => <IoCreateOutline />,
       onClick: toggleRenameListModal
     });
 
     menuOptions.push({
       title: 'Delete List',
-      icon: <IoTrashOutline className="text-red-500" />,
+      Icon: () => <IoTrashOutline className="text-red-500" />,
       onClick: toggleDeleteListModal
     });
   }
@@ -71,25 +72,11 @@ export default function ListHeaderItem({
         onClick={() => onListHeaderClick(id)}
         rightSection={
           menuOptions.length > 0 && (
-            <Menu>
-              <MenuButton>
-                <IoEllipsisHorizontalOutline />
-              </MenuButton>
-              <MenuItems
-                transition
-                anchor="bottom start"
-                className="z-10 border border-gray-300 rounded-md p-1 bg-white"
-              >
-                {menuOptions.map((option) => (
-                  <MenuItem key={option.title}>
-                    <div className="flex items-center p-1 gap-2" onClick={option.onClick}>
-                      {option.icon}
-                      <div>{option.title}</div>
-                    </div>
-                  </MenuItem>
-                ))}
-              </MenuItems>
-            </Menu>
+            <Menu
+              Button={() => <IconButton Icon={IoEllipsisHorizontalOutline} size={16} />}
+              options={menuOptions}
+              anchor="bottom start"
+            />
           )
         }
       />

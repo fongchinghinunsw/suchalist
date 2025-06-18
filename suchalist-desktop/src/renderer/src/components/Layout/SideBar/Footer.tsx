@@ -1,5 +1,5 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import IconButton from '@renderer/components/base/IconButton';
+import Menu, { MenuOption } from '@renderer/components/base/Menu';
 import AddFolderModal from '@renderer/components/modal/AddFolderModal/AddFolderModal';
 import AddListModal from '@renderer/components/modal/AddListModal/AddListModal';
 import { tasksActions } from '@renderer/stores/tasks/tasks';
@@ -50,27 +50,26 @@ export default function Footer() {
     navigate('/settings');
   };
 
+  const addMenuOptions: MenuOption[] = [
+    {
+      title: 'Add List',
+      Icon: () => <IoListOutline />,
+      onClick: onShowAddListModal
+    },
+    {
+      title: 'Add Folder',
+      Icon: () => <IoFolderOpenOutline />,
+      onClick: onShowAddFolderModal
+    }
+  ];
+
   return (
     <div className="fixed bottom-0 left-0 w-[25%] h-15 bg-gray-100 flex flex-row justify-between items-center overflow-auto px-4 py-2">
-      <Menu>
-        <MenuButton>
-          <IconButton Icon={IoAddOutline} size={32} />
-        </MenuButton>
-        <MenuItems anchor="top start" className="border border-gray-400 rounded-lg p-2 bg-white">
-          <MenuItem>
-            <div className="flex items-center gap-2" onClick={onShowAddListModal}>
-              <IoListOutline />
-              <div>Add List</div>
-            </div>
-          </MenuItem>
-          <MenuItem>
-            <div className="flex items-center gap-2" onClick={onShowAddFolderModal}>
-              <IoFolderOpenOutline />
-              <div>Add Folder</div>
-            </div>
-          </MenuItem>
-        </MenuItems>
-      </Menu>
+      <Menu
+        Button={() => <IconButton Icon={IoAddOutline} size={32} />}
+        options={addMenuOptions}
+        anchor="top start"
+      />
       <IconButton Icon={IoSettingsOutline} size={32} onClick={goToSettings} />
       <AddListModal
         isOpen={isAddListModalOpen}
