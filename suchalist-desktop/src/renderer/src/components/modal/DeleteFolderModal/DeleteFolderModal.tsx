@@ -2,16 +2,16 @@ import Modal from '../../base/Modal';
 import Content from './Content';
 
 type Props = {
-  listName: string;
+  folderName: string;
   isOpen: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 };
 
-export default function DeleteListModal({ listName, isOpen, onConfirm, onCancel }: Props) {
+export default function DeleteListModal({ folderName, isOpen, onConfirm, onCancel }: Props) {
   return (
     <Modal
-      title={`${listName} will be deleted forever.`}
+      title={`${folderName} will be deleted forever.`}
       isOpen={isOpen}
       Content={<Content onConfirm={onConfirm} onCancel={onCancel} />}
       onClose={onCancel}

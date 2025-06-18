@@ -27,6 +27,8 @@ export default function deleteFolder(state: TasksState, action: PayloadAction<st
   );
 
   store(state, folderId);
+
+  window.database.deleteFolder(folderId);
 }
 
 function store(state: TasksState, folderId: string) {

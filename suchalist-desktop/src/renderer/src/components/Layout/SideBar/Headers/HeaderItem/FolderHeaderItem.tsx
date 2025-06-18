@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import AddListModal from '@renderer/components/modal/AddListModal/AddListModal';
+import DeleteFolderModal from '@renderer/components/modal/DeleteFolderModal/DeleteFolderModal';
 import RenameFolderModal from '@renderer/components/modal/RenameFolderModal/RenameFolderModal';
 import { selectFolderMap, tasksActions } from '@renderer/stores/tasks/tasks';
 import { motion } from 'motion/react';
@@ -33,6 +34,7 @@ export default function FolderHeaderItem({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddListModalOpen, setIsAddListModalOpen] = useState(false);
   const [isRenameFolderModalOpen, setIsRenameFolderModalOpen] = useState(false);
+  const [isDeleteFolderModalOpen, setIsDeleteFolderModalOpen] = useState(false);
 
   const onShowAddListModal = () => {
     setIsAddListModalOpen(true);
@@ -46,6 +48,10 @@ export default function FolderHeaderItem({
     setIsRenameFolderModalOpen(!isRenameFolderModalOpen);
   };
 
+  const toggleDeleteFolderModal = () => {
+    setIsDeleteFolderModalOpen(!isDeleteFolderModalOpen);
+  };
+
   const onAddList = (title: string) => {
     dispatch(tasksActions.addList({ title, folderId: id }));
     onCloseAddListModal();
@@ -54,6 +60,10 @@ export default function FolderHeaderItem({
   const onRenameFolder = (newTitle: string) => {
     dispatch(tasksActions.renameFolder({ folder, newTitle }));
     toggleRenameFolderModal();
+  };
+
+  const onDeleteFolder = () => {
+    dispatch(tasksActions.deleteFolder(id));
   };
 
   const onToggleListItems = () => {
@@ -74,7 +84,7 @@ export default function FolderHeaderItem({
     {
       title: 'Delete Folder',
       icon: <IoTrashOutline className="text-red-500" />,
-      onClick: () => {}
+      onClick: toggleDeleteFolderModal
     }
   ];
 
@@ -138,6 +148,12 @@ export default function FolderHeaderItem({
         isOpen={isRenameFolderModalOpen}
         onRenameFolder={onRenameFolder}
         onClose={toggleRenameFolderModal}
+      />
+      <DeleteFolderModal
+        folderName={folder.title}
+        isOpen={isDeleteFolderModalOpen}
+        onConfirm={onDeleteFolder}
+        onCancel={toggleDeleteFolderModal}
       />
     </>
   );
