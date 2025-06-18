@@ -21,7 +21,7 @@ export default function Menu({ Button, options, anchor }: Props) {
 
   return (
     <HeadlessMenu>
-      <MenuButton onClick={onMenuButtonClick}>
+      <MenuButton tabIndex={-1} onClick={onMenuButtonClick}>
         <Button />
       </MenuButton>
       <MenuItems

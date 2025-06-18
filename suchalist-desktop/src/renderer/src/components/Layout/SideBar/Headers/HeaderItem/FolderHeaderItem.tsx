@@ -106,7 +106,7 @@ export default function FolderHeaderItem({
               transition={{ duration: 0.2 }}
               className="flex items-center"
             >
-              <IoChevronBackOutline />
+              <IconButton Icon={IoChevronBackOutline} size={16} />
             </motion.div>
           </div>
         }
