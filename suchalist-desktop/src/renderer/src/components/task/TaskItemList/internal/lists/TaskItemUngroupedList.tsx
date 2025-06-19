@@ -1,5 +1,4 @@
 import { Task } from '@common/types/task';
-import { sortTasks } from '@common/utils/task/sort';
 import TaskItem from '../TaskItem';
 
 type Props = {
@@ -15,11 +14,9 @@ export default function TaskItemUngroupedList({
   onStarTask,
   onToggleTaskIsCompleted
 }: Props) {
-  const sortedTasks = sortTasks(tasks);
-
   return (
     <div className="flex flex-col gap-2">
-      {sortedTasks.map((task) => (
+      {tasks.map((task) => (
         <TaskItem
           key={task.id}
           task={task}

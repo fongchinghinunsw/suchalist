@@ -1,11 +1,11 @@
-import { Task } from '@common/types/task';
+import { CompletedTask, Task } from '@common/types/task';
 import Button from '@renderer/components/base/Button';
 import SoundPlayer from '@renderer/components/SoundPlayer';
 import { useState } from 'react';
 import TaskItemUngroupedList from './TaskItemUngroupedList';
 
 type Props = {
-  tasks: Task[];
+  tasks: CompletedTask[];
   onSelectTask: (task: Task) => void;
   onStarTask: (task: Task, isStarred: boolean) => void;
   onToggleTaskIsCompleted: (task: Task, isCompleted: boolean) => void;

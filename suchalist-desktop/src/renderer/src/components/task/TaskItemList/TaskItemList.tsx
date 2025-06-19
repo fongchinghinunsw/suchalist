@@ -6,6 +6,7 @@ import {
   Task,
   TaskWithDueDate
 } from '@common/types/task';
+import { sortTasksByCompletedAt, sortTasksByCreatedAt } from '@common/utils/task/sort';
 import Spacer from '@renderer/components/base/Spacer';
 import { tasksActions } from '@renderer/stores/tasks/tasks';
 import { useDispatch } from 'react-redux';
@@ -68,19 +69,19 @@ export default function TaskItemList({
       {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
       <Spacer size={2} />
       <TaskItemUngroupedList
-        tasks={tasksWithoutDueDate}
+        tasks={sortTasksByCreatedAt(tasksWithoutDueDate)}
         onSelectTask={onSelectTask}
         onStarTask={onStarTask}
         onToggleTaskIsCompleted={onToggleTaskIsCompleted}
       />
       <TaskItemGroupedList
-        tasks={tasksWithDueDate}
+        tasks={sortTasksByCreatedAt(tasksWithDueDate)}
         onSelectTask={onSelectTask}
         onStarTask={onStarTask}
         onToggleTaskIsCompleted={onToggleTaskIsCompleted}
       />
       <CompletedTaskItemList
-        tasks={completedTasks}
+        tasks={sortTasksByCompletedAt(completedTasks)}
         onSelectTask={onSelectTask}
         onStarTask={onStarTask}
         onToggleTaskIsCompleted={onToggleTaskIsCompleted}
