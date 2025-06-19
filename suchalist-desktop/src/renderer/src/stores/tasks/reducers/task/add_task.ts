@@ -1,5 +1,5 @@
 import { NEXT_SEVEN_DAYS_LIST_ID, TODAY_LIST_ID } from '@common/constants/list';
-import { NewTask, Task } from '@common/types/task';
+import { Task, TaskWithEditableFields } from '@common/types/task';
 import { getId } from '@common/utils/id';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { TasksState } from '../../tasks';
@@ -7,7 +7,7 @@ import { getListFromResources } from '../../utils/get_list';
 import { getCurrentTasksFromListMap } from '../../utils/get_task';
 import { isDueToday, isDueWithin7Days } from '../../utils/utils';
 
-export default function addTask(state: TasksState, action: PayloadAction<NewTask>) {
+export default function addTask(state: TasksState, action: PayloadAction<TaskWithEditableFields>) {
   // UPDATE REDUX STORE
   const currentTasks = getCurrentTasksFromListMap(state, state.currentTaskListId);
 

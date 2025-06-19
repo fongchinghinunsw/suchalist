@@ -1,5 +1,5 @@
 import { NEXT_SEVEN_DAYS_LIST_ID, STARRED_LIST_ID, TODAY_LIST_ID } from '@common/constants/list';
-import { EditTask, Task } from '@common/types/task';
+import { Task, TaskWithEditableFields } from '@common/types/task';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { TasksState } from '../../tasks';
 import { getListFromResources } from '../../utils/get_list';
@@ -10,7 +10,7 @@ export default function editTask(
   state: TasksState,
   action: PayloadAction<{
     task: Task;
-    editTask: EditTask;
+    editTask: TaskWithEditableFields;
   }>
 ) {
   // UPDATE REDUX STORE

@@ -1,5 +1,5 @@
 import TaskItemList from '@/components/task/TaskItemList/TaskItemList';
-import { NewTask, Task } from '@common/types/task';
+import { Task, TaskWithEditableFields } from '@common/types/task';
 import { selectCurrentList, tasksActions } from '@renderer/stores/tasks/tasks';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ export default function HomePage() {
   const dispatch = useDispatch();
 
   const onAddTask = useCallback(
-    (task: NewTask) => {
+    (task: TaskWithEditableFields) => {
       dispatch(tasksActions.addTask(task));
     },
     [dispatch]

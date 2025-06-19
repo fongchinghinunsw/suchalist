@@ -4,12 +4,13 @@ import {
   STARRED_LIST_ID,
   TODAY_LIST_ID
 } from '@common/constants/list';
-import { isFolder } from '@common/types/folder';
-import { isList, isListWithOrder, List } from '@common/types/list';
-import { TopLevelResource } from '@common/types/resource';
+import { Folder, isFolder } from '@common/types/folder';
+import { isList, isListWithOrder, List, ListWithOrder } from '@common/types/list';
 import { Task } from '@common/types/task';
 import { toFolderHeader, toListHeader } from '@renderer/components/Layout/SideBar/Headers/utils';
 import { TasksState } from '../tasks';
+
+type TopLevelResource = ListWithOrder | Folder;
 
 export async function getTasksState(): Promise<TasksState> {
   const resources = await window.database.getResources();

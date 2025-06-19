@@ -15,25 +15,22 @@ export type List = {
   updatedAt: string;
 };
 
-export type ListWithOrder = List & { order: number };
-
-export type ListWithFolderOrder = List & { folderOrder: number };
-
-/**
- * Type guard to check if a resource is a List.
- */
 export function isList(resource: List | Folder): resource is List {
   return Array.isArray((resource as List).tasks);
 }
 
-export function isDefaultList(list: List): list is List & { id: typeof DEFAULT_LIST_ID } {
-  return list.id === DEFAULT_LIST_ID;
-}
+export type ListWithOrder = List & { order: number };
 
 export function isListWithOrder(list: List): list is ListWithOrder {
   return list.order !== undefined;
 }
 
+export type ListWithFolderOrder = List & { folderOrder: number };
+
 export function isListWithFolderOrder(list: List): list is ListWithFolderOrder {
   return list.folderOrder !== undefined;
+}
+
+export function isDefaultList(list: List): list is List & { id: typeof DEFAULT_LIST_ID } {
+  return list.id === DEFAULT_LIST_ID;
 }
