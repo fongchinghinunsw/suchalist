@@ -1,7 +1,7 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
 import { app, BrowserWindow, net, protocol, screen, shell } from 'electron';
 import { join } from 'path';
-import icon from '../../resources/icon.png?asset';
+import icon from '../../resources/icon.jpg?asset';
 import { init } from './database/init';
 import { registerIpcHandlers } from './ipc';
 
@@ -21,7 +21,7 @@ function createWindow(): void {
     trafficLightPosition: { x: 15, y: 15 },
     title: 'Suchalist',
     titleBarStyle: 'hidden',
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { icon } : { icon }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: true,
