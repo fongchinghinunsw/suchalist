@@ -1,4 +1,4 @@
-import { ENV } from '@common/constants/env';
+import { is } from '@electron-toolkit/utils';
 import Database from 'better-sqlite3';
 import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
 import { insertFolderRow } from './repository/folder/insert_folder_row';
@@ -10,8 +10,6 @@ import { getListRowsCount } from './service/list/get_list_rows_count';
 export const db: InstanceType<typeof Database> = new Database('suchalist.db');
 
 export function init() {
-  console.log('environment:', ENV);
-
   db.exec(`
     PRAGMA foreign_keys = ON;
 
@@ -50,13 +48,13 @@ export function init() {
     `);
 
   // Insert fake data in development build
-  if (ENV === 'development') {
+  if (is.dev) {
     // Check if at least one list exists (DEFAULT list should always exist if the app has been initialized).
     const listRowsCount = getListRowsCount();
-    console.log({ listRowsCount });
     if (listRowsCount !== 0) {
       return;
     }
+    console.log('Inserting fake data...');
 
     const insertAll = db.transaction(() => {
       for (const f of FOLDER_ROWS) insertFolderRow(f);
