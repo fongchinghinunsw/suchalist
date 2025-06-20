@@ -1,5 +1,4 @@
 import {Task} from '@/services/task-service/types';
-import {sortTasks} from '@/utils/task/sort';
 import React from 'react';
 import {View} from 'react-native';
 import TaskItem from '../TaskItem/TaskItem';
@@ -22,11 +21,9 @@ export default function TaskItemUngroupedList({
   onCompleteTask,
   onUncompleteTask,
 }: Props) {
-  const sortedTasks = sortTasks(tasks);
-
   return (
     <View style={styles.container}>
-      {sortedTasks.map(task => (
+      {tasks.map(task => (
         <TaskItem
           key={task.id}
           task={task}

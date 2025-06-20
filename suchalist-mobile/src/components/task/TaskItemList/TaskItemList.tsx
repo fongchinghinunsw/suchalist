@@ -19,6 +19,7 @@ import AddTaskItem from './internal/AddTaskItem';
 import CompletedTaskItemList from './internal/lists/CompletedTaskItemList';
 import TaskItemGroupedList from './internal/lists/TaskItemGroupedList';
 import TaskItemUngroupedList from './internal/lists/TaskItemUngroupedList';
+import {sortTasksByCompletedAt, sortTasksByCreatedAt} from '@/utils/task/sort';
 
 type Props = {
   list: List;
@@ -89,7 +90,7 @@ export default function TaskItemList({
     <ScrollView contentContainerStyle={styles.container} onScroll={onScroll}>
       {showAddTaskItem && <AddTaskItem onAddTask={onAddTask} />}
       <TaskItemUngroupedList
-        tasks={tasksWithoutDueDate}
+        tasks={sortTasksByCreatedAt(tasksWithoutDueDate)}
         onTaskItemPress={onTaskItemPress}
         onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}
@@ -97,7 +98,7 @@ export default function TaskItemList({
         onUncompleteTask={onUncompleteTask}
       />
       <TaskItemGroupedList
-        tasks={tasksWithDueDate}
+        tasks={sortTasksByCreatedAt(tasksWithDueDate)}
         showAddTaskDrawer={showAddTaskDrawer}
         showAddTaskButton={showAddTaskItem}
         onTaskItemPress={onTaskItemPress}
@@ -108,7 +109,7 @@ export default function TaskItemList({
       />
       <Divider />
       <CompletedTaskItemList
-        tasks={completedTasks}
+        tasks={sortTasksByCompletedAt(completedTasks)}
         onTaskItemPress={onTaskItemPress}
         onStarTask={onStarTask}
         onDeleteTask={onDeleteTask}
