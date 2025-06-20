@@ -1,7 +1,6 @@
 import { registerAddFolderHandler } from './folder/add_folder';
 import { registerDeleteFolderHandler } from './folder/delete_folder';
 import { registerRenameFolderHandler } from './folder/rename_folder';
-import { registerGetListHandler } from './get_list';
 import { registerGetResourcesHandler } from './get_resources';
 import { registerAddListHandler } from './list/add_list';
 import { registerDeleteListHandler } from './list/delete_list';
@@ -15,7 +14,6 @@ import { registerUpdateTaskIsCompletedHandler } from './update_task_is_completed
 import { registerUpdateTaskIsStarredHandler } from './update_task_is_starred';
 
 export function registerIpcHandlers() {
-  registerGetListHandler();
   registerGetResourcesHandler();
   registerSelectAndSavePhotoHandler();
   registerRemovePhotoHandler();
