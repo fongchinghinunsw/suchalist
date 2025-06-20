@@ -18,7 +18,12 @@ export default defineConfig({
     }
   },
   preload: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    resolve: {
+      alias: {
+        '@common': resolve('src/common')
+      }
+    }
   },
   renderer: {
     assetsInclude: 'src/renderer/assets/**',

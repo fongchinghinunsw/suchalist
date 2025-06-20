@@ -1,12 +1,12 @@
 import { Folder } from '@common/types/folder';
 import { List } from '@common/types/list';
 import { Task } from '@common/types/task';
+import { ipcRendererInvoke } from '@common/utils/ipc/wrappers';
 import { contextBridge, ipcRenderer } from 'electron';
 
 // Custom APIs for renderer
 const database = {
-  getResources: () => ipcRenderer.invoke('get-resources'),
-  getListWithTasks: (listId: string) => ipcRenderer.invoke('get-list-with-tasks', listId),
+  getResources: () => ipcRendererInvoke('getResources'),
   addTask: (task: Task) => ipcRenderer.invoke('add-task', task),
   deleteTask: (id: string) => ipcRenderer.invoke('delete-task', id),
   editTask: (task: Task) => ipcRenderer.invoke('edit-task', task),

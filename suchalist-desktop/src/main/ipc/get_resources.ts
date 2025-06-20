@@ -1,6 +1,6 @@
 import { getResources } from '@/database/service/resource';
-import { ipcMain } from 'electron';
+import { ipcMainHandle } from '../../common/utils/ipc/wrappers';
 
 export function registerGetResourcesHandler() {
-  ipcMain.handle('get-resources', () => getResources());
+  ipcMainHandle('getResources', () => getResources());
 }

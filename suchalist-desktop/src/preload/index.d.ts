@@ -8,7 +8,6 @@ declare global {
     electron: ElectronAPI;
     database: {
       getResources: () => Promise<Resource[]>;
-      getList: (listId: string) => Promise<List | null>;
       addTask: (task: Task) => Promise<void>;
       deleteTask: (id: string) => Promise<void>;
       editTask: (task: Task) => Promise<Task | null>;
