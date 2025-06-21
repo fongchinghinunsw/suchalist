@@ -5,6 +5,7 @@ import { Task } from '@common/types/task';
 
 export type DatabaseApi = {
   getResources: () => Promise<Resource[]>;
+  // Task
   addTask: (task: Task) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   editTask: (task: Task) => Promise<Task | null>;

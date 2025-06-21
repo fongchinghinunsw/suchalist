@@ -4,17 +4,4 @@
 }
 
 @layer base {
-  #root {
-    @apply h-full;
-  }
-
-  html,
-  body {
-    @apply h-full;
-  }
-
-  header {
-    /* Allow the header component to be dragged around */
-    /* -webkit-app-region: drag; */
-  }
 }
