@@ -1,4 +1,4 @@
-import TextInput from '@renderer/components/base/TextInput';
+import TextInput from '@renderer/components/base/form/TextInput';
 import { HookFormFieldProps } from '@renderer/hooks/useForm';
 import { formatDate } from '@renderer/utils/format';
 import { forwardRef } from 'react';

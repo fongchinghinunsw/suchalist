@@ -1,6 +1,6 @@
 import { useClose } from '@headlessui/react';
 import Button from '@renderer/components/base/Button';
-import TextInput from '@renderer/components/base/TextInput';
+import TextInput from '@renderer/components/base/form/TextInput';
 import { HookFormFieldProps } from '@renderer/hooks/useForm';
 
 interface Props extends HookFormFieldProps {

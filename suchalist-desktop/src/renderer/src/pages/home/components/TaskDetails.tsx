@@ -1,7 +1,7 @@
 import { Task } from '@common/types/task';
 import Button from '@renderer/components/base/Button';
 import Text from '@renderer/components/base/Text';
-import TextInput from '@renderer/components/base/TextInput';
+import TextInput from '@renderer/components/base/form/TextInput';
 import useForm from '@renderer/hooks/useForm';
 import { tasksActions } from '@renderer/stores/tasks/tasks';
 import { selectTheme } from '@renderer/stores/theme';
