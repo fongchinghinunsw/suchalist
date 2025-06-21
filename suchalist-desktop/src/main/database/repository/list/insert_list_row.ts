@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 import { ListRow } from '@/database/types/list';
 
 export function insertListRow(list: ListRow) {

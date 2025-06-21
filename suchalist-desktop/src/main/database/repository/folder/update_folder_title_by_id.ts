@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 
 export function updateFolderTitleById(id: string, newTitle: string) {
   const stmt = db.prepare(`

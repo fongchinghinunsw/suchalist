@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 import { FolderRow } from '@/database/types/folder';
 
 export function insertFolderRow(folder: FolderRow) {

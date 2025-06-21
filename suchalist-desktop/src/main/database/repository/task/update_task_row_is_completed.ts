@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 
 export function updateTaskRowIsCompleted(id: string, isCompleted: boolean) {
   const stmt = db.prepare(`

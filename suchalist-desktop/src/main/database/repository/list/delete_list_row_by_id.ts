@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 
 export function deleteListRowById(id: string) {
   const stmt = db.prepare(`

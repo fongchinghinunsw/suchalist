@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 
 export function updateTaskRowIsStarred(id: string, isStarred: boolean) {
   const stmt = db.prepare(`

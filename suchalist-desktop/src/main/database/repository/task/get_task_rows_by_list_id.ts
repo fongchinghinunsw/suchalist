@@ -1,4 +1,4 @@
-import { db } from '@/database/init';
+import { db } from '@/database/db';
 import { TaskRow } from '@/database/types/task';
 
 export function getTaskRowsByListId(id: string): TaskRow[] {

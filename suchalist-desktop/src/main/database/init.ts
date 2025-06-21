@@ -1,13 +1,10 @@
 import { is } from '@electron-toolkit/utils';
-import Database from 'better-sqlite3';
+import { db } from './db';
 import { FOLDER_ROWS, LIST_ROWS, TASK_ROWS } from './fake';
 import { insertFolderRow } from './repository/folder/insert_folder_row';
 import { insertListRow } from './repository/list/insert_list_row';
 import { insertOrReplaceTaskRow } from './repository/task/insert_or_replace_task_row';
 import { getListRowsCount } from './service/list/get_list_rows_count';
-
-// Create a connection to the DB. If the database file does not exist, it is created.
-export const db: InstanceType<typeof Database> = new Database('suchalist.db');
 
 export function init() {
   db.exec(`
