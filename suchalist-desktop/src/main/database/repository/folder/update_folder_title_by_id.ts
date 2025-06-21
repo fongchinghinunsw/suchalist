@@ -1,6 +1,6 @@
 import { db } from '@/database/init';
 
-export function updateFolderTitleById(id: string, newTitle: string): boolean {
+export function updateFolderTitleById(id: string, newTitle: string) {
   const stmt = db.prepare(`
       UPDATE folders
       SET title = @title,
@@ -8,11 +8,9 @@ export function updateFolderTitleById(id: string, newTitle: string): boolean {
       WHERE id = @id
     `);
 
-  const result = stmt.run({
+  stmt.run({
     id,
     title: newTitle,
     updatedAt: new Date().toISOString()
   });
-
-  return result.changes > 0;
 }

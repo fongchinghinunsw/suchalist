@@ -1,11 +1,5 @@
-import { db } from '@/database/init';
+import { deleteTaskRow } from '@/database/repository/task/delete_task_row';
 
 export function deleteTask(id: string) {
-  const stmt = db.prepare(`
-        DELETE FROM tasks WHERE id = ?
-      `);
-
-  const result = stmt.run(id);
-
-  return result.changes > 0;
+  return deleteTaskRow(id);
 }

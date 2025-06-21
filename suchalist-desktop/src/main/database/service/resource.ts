@@ -13,7 +13,6 @@ export function getResources(): Resource[] {
   const folders: Folder[] = [];
   const topLevelLists: List[] = [];
 
-  const folderMap = new Map<string, Folder>();
   const listMap = new Map<string, List>();
   const listsInFolderMap = new Map<string, List[]>();
 
@@ -45,16 +44,12 @@ export function getResources(): Resource[] {
   });
 
   folderRows.forEach((folderRow) => {
-    const { id } = folderRow;
-
     const listsInFolder = listsInFolderMap.get(folderRow.id) ?? [];
 
     const folder: Folder = {
       ...folderRow,
       lists: listsInFolder
     };
-
-    folderMap.set(id, folder);
 
     folders.push(folder);
   });

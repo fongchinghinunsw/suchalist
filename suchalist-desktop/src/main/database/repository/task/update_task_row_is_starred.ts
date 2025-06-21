@@ -8,11 +8,9 @@ export function updateTaskRowIsStarred(id: string, isStarred: boolean) {
     WHERE id = @id
   `);
 
-  const result = stmt.run({
+  stmt.run({
     id,
     isStarred: isStarred ? 1 : 0,
     updatedAt: new Date().toISOString()
   });
-
-  return result.changes > 0;
 }

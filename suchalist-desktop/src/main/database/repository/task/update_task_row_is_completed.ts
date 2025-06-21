@@ -8,11 +8,9 @@ export function updateTaskRowIsCompleted(id: string, isCompleted: boolean) {
     WHERE id = @id
   `);
 
-  const result = stmt.run({
+  stmt.run({
     id,
     isCompleted: isCompleted ? 1 : 0,
     updatedAt: new Date().toISOString()
   });
-
-  return result.changes > 0;
 }
