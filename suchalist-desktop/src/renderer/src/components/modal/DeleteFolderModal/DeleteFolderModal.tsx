@@ -1,5 +1,4 @@
-import Modal from '../../base/Modal';
-import Content from './Content';
+import SimpleModal from '@renderer/components/base/SimpleModal';
 
 type Props = {
   folderName: string;
@@ -10,10 +9,12 @@ type Props = {
 
 export default function DeleteListModal({ folderName, isOpen, onConfirm, onCancel }: Props) {
   return (
-    <Modal
+    <SimpleModal
       title={`${folderName} will be deleted forever.`}
       isOpen={isOpen}
-      Content={<Content onConfirm={onConfirm} onCancel={onCancel} />}
+      Content={<div>You will not be able to undo this action.</div>}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
       onClose={onCancel}
     />
   );

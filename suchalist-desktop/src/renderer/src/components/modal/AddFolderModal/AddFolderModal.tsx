@@ -1,7 +1,7 @@
+import TextInput from '@renderer/components/base/form/TextInput';
+import SimpleModal from '@renderer/components/base/SimpleModal';
 import useForm from '@renderer/hooks/useForm';
 import * as z from 'zod';
-import Modal from '../../base/Modal';
-import Content from './Content';
 
 const addFolderSchema = z.object({
   title: z.string().trim().min(1)
@@ -39,17 +39,13 @@ export default function AddFolderModal({ isOpen, onAddFolder, onClose }: Props) 
   };
 
   return (
-    <Modal
+    <SimpleModal
       title="Add a new folder"
       isOpen={isOpen}
-      Content={
-        <Content
-          isConfirmDisabled={!isValid}
-          control={control}
-          onConfirm={handleSubmit(onConfirm)}
-          onCancel={onCloseModal}
-        />
-      }
+      isConfirmButtonDisabled={!isValid}
+      Content={<TextInput name="title" label="Folder Title" control={control} />}
+      onConfirm={handleSubmit(onConfirm)}
+      onCancel={onCloseModal}
       onClose={onCloseModal}
     />
   );

@@ -1,14 +1,15 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { ReactNode } from 'react';
 
-type Props = {
+export type ModalProps = {
   title: string;
   isOpen: boolean;
   Content: ReactNode;
+  Footer?: ReactNode;
   onClose: () => void;
 };
 
-export default function Modal({ title, isOpen, Content, onClose }: Props) {
+export default function Modal({ title, isOpen, Content, Footer, onClose }: ModalProps) {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-100">
       <DialogBackdrop
@@ -20,6 +21,7 @@ export default function Modal({ title, isOpen, Content, onClose }: Props) {
           <div className="rounded-xl min-w-100 bg-white p-4">
             <DialogTitle className="font-bold text-2xl flex justify-center">{title}</DialogTitle>
             {Content}
+            {Footer}
           </div>
         </DialogPanel>
       </div>

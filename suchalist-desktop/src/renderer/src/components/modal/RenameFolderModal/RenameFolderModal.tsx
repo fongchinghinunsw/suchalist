@@ -1,7 +1,7 @@
+import SimpleModal from '@renderer/components/base/SimpleModal';
+import TextInput from '@renderer/components/base/form/TextInput';
 import useForm from '@renderer/hooks/useForm';
 import * as z from 'zod';
-import Modal from '../../base/Modal';
-import Content from './Content';
 
 const renameFolderSchema = z.object({
   title: z.string().trim().min(1)
@@ -45,17 +45,13 @@ export default function RenameFolderModal({
   };
 
   return (
-    <Modal
+    <SimpleModal
       title="Rename the list"
       isOpen={isOpen}
-      Content={
-        <Content
-          isConfirmDisabled={!isValid}
-          control={control}
-          onConfirm={handleSubmit(onConfirm)}
-          onCancel={onCloseModal}
-        />
-      }
+      isConfirmButtonDisabled={!isValid}
+      Content={<TextInput name="title" label="List Title" control={control} />}
+      onConfirm={handleSubmit(onConfirm)}
+      onCancel={onCloseModal}
       onClose={onCloseModal}
     />
   );
