@@ -2,11 +2,7 @@ import { useClose } from '@headlessui/react';
 import Button from './Button';
 import Modal, { ModalProps } from './Modal';
 
-type Props = Omit<ModalProps, 'Footer'> & {
-  isConfirmButtonDisabled?: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
-};
+type Props = Omit<ModalProps, 'Footer'> & FooterProps;
 
 export default function SimpleModal({
   isConfirmButtonDisabled = false,
@@ -30,12 +26,12 @@ export default function SimpleModal({
 }
 
 type FooterProps = {
-  isConfirmButtonDisabled: boolean;
+  isConfirmButtonDisabled?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 };
 
-function Footer({ isConfirmButtonDisabled, onConfirm, onCancel }: FooterProps) {
+function Footer({ isConfirmButtonDisabled = false, onConfirm, onCancel }: FooterProps) {
   const closeDialog = useClose();
 
   const onConfirmButtonClick = () => {

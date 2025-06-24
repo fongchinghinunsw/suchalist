@@ -1,11 +1,11 @@
 import { getImagePath, selectBackgroundImage } from '@renderer/stores/theme';
-import { useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router';
 import Footer from './SideBar/Footer';
 import { SideBar } from './SideBar/SideBar';
 
-export default function Layout(): React.JSX.Element {
+export default function Layout(): JSX.Element {
   const backgroundImageObject = useSelector(selectBackgroundImage);
   const [backgroundImage, setBackgroundImage] = useState<string | undefined>();
 
