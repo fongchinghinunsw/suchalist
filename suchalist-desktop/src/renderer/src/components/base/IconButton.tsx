@@ -5,7 +5,7 @@ type Props = {
   Icon: IconType;
   size: number;
   className?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
 };
 
 export default function IconButton({ Icon, size, onClick, className }: Props) {

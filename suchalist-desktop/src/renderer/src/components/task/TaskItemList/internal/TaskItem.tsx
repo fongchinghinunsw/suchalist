@@ -2,6 +2,7 @@ import Text from '@/components/base/Text';
 import { selectTheme, Theme } from '@/stores/theme';
 import { Task } from '@common/types/task';
 import Checkbox from '@renderer/components/base/form/Checkbox';
+import IconButton from '@renderer/components/base/IconButton';
 import SoundPlayer from '@renderer/components/SoundPlayer';
 import { getTextColorClassName } from '@renderer/utils/styles/textColor';
 import { UnreachableError } from '@renderer/utils/UnreachableError';
@@ -27,7 +28,7 @@ export default function TaskItem({
 
   const onClick = () => onSelectTask(task);
 
-  const toggleIsStarred: MouseEventHandler = (event) => {
+  const toggleIsStarred = (event: React.MouseEvent) => {
     event.stopPropagation();
     onStarTask(task, !task.isStarred);
   };
@@ -54,17 +55,21 @@ export default function TaskItem({
       <Text size="small">{task.title}</Text>
       <div className="flex gap-2">
         {task.isStarred ? (
-          <IoStar className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
+          <IconButton
+            Icon={IoStar}
+            size={16}
+            className={getTextColorClassName(theme, 600)}
+            onClick={toggleIsStarred}
+          />
         ) : (
-          <IoStarOutline className={getTextColorClassName(theme, 600)} onClick={toggleIsStarred} />
+          <IconButton
+            Icon={IoStarOutline}
+            size={16}
+            className={getTextColorClassName(theme, 600)}
+            onClick={toggleIsStarred}
+          />
         )}
-        <Checkbox
-          id="name"
-          name="name"
-          label="Name"
-          isChecked={task.isCompleted}
-          onClick={toggleIsCompleted}
-        />
+        <Checkbox isChecked={task.isCompleted} onClick={toggleIsCompleted} />
       </div>
     </div>
   );

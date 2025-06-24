@@ -8,20 +8,17 @@ import { FaCheck } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 type Props = {
-  id: string;
-  name: string;
-  label: string;
   isChecked: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-export default function Checkbox({ id, name, label, isChecked, onClick }: Props) {
+export default function Checkbox({ isChecked, onClick }: Props) {
   const theme = useSelector(selectTheme);
 
   return (
     <Root
       className={clsx(
-        'h-4 w-4 border rounded-sm',
+        'h-4 w-4 border rounded-sm cursor-pointer',
         getCheckedBackgroundColor(theme),
         getBorderColorClassName(theme, 400)
       )}
