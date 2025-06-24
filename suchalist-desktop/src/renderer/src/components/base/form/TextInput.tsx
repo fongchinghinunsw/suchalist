@@ -25,6 +25,7 @@ export default function TextInput({ ref, name, label, control, onClick, ...other
       name={name}
       control={control}
       render={({ field: { onChange, onBlur, value } }) => {
+        console.log('value', value);
         return (
           <div
             ref={ref}

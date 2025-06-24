@@ -49,7 +49,7 @@ interface DateTimePickerInputProps extends HookFormFieldProps {
 
 // Using forwardRef because we want custom input for DatePicker
 const DateTimePickerInput = forwardRef<HTMLInputElement, DateTimePickerInputProps>(
-  function DateTimePickerInput({ name, value, label, control, onClick }, ref) {
+  function InnerDateTimePickerInput({ name, value, label, control, onClick }, ref) {
     console.log('DateTimePickerInput', name, label, value);
     return <TextInput ref={ref} name="" label={label} control={control} onClick={onClick} />;
   }
