@@ -29,7 +29,6 @@ export default function BackgroundImagePicker({ onSelectImage }: Props) {
     };
 
     if (path !== null) {
-      console.log({ path });
       onSelectImage(image);
       dispatch(themeActions.addBackgroundImage(image));
     }

@@ -13,7 +13,6 @@ export default function AppAppearanceSection() {
   };
 
   const onSelectImage = async (image: BackgroundImage) => {
-    console.log({ image });
     dispatch(themeActions.setBackgroundImage(image));
   };
 

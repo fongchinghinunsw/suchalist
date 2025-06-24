@@ -11,7 +11,7 @@ interface Props extends HookFormFieldProps {
   onChange: (date: Date) => void;
 }
 
-export default function DateTimePicker({ name, value, control, onChange }: Props) {
+export default function DateTimePicker({ name, label, value, control, onChange }: Props) {
   const handleChange = (date: Date | null) => {
     if (date) {
       onChange(date);
@@ -30,6 +30,7 @@ export default function DateTimePicker({ name, value, control, onChange }: Props
       customInput={
         <DateTimePickerInput
           name={name}
+          label={label}
           control={control}
           value={value ? formatDate(value, 'date') : ''}
           onClick={handleClick}
@@ -42,15 +43,14 @@ export default function DateTimePicker({ name, value, control, onChange }: Props
 interface DateTimePickerInputProps extends HookFormFieldProps {
   name: string;
   value: string;
+  label: string;
   onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
 // Using forwardRef because we want custom input for DatePicker
 const DateTimePickerInput = forwardRef<HTMLInputElement, DateTimePickerInputProps>(
-  function DateTimePickerInput({ name, value, control, onClick }, ref) {
-    console.log('DateTimePickerInput', name);
-    return (
-      <TextInput ref={ref} name="dueDate" label="Date / Time" control={control} onClick={onClick} />
-    );
+  function DateTimePickerInput({ name, value, label, control, onClick }, ref) {
+    console.log('DateTimePickerInput', name, label, value);
+    return <TextInput ref={ref} name="" label={label} control={control} onClick={onClick} />;
   }
 );

@@ -1,20 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { notificationReducer } from './notification';
 import { tasksReducer } from './tasks/tasks';
 import { themeReducer } from './theme';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['theme', 'notification']
+  whitelist: ['theme']
 };
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
-  theme: themeReducer,
-  notification: notificationReducer
+  theme: themeReducer
 });
 
 const store = configureStore({

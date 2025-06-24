@@ -24,7 +24,6 @@ export default function HomePage() {
   };
 
   const onSelectTask = (task: Task) => setCurrentTask(task);
-  console.log('currentTask', currentTask);
 
   return (
     <main className="px-2 py-3 flex-1 flex flex-row gap-4">

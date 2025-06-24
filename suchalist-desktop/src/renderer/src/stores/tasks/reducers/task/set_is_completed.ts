@@ -18,8 +18,6 @@ export default function setIsCompleted(
   const listId = task.listId;
   const taskId = task.id;
 
-  console.log({ listId, taskId, isCompleted });
-
   const tasksFromListMap = getCurrentTasksFromListMap(state, listId);
 
   const now = new Date().toISOString();

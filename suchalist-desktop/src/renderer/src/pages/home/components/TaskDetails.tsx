@@ -2,6 +2,7 @@ import { Task } from '@common/types/task';
 import Button from '@renderer/components/base/Button';
 import Text from '@renderer/components/base/Text';
 import TextInput from '@renderer/components/base/form/TextInput';
+import DateTimePicker from '@renderer/components/task/DateTimePicker/DateTimePicker';
 import useForm from '@renderer/hooks/useForm';
 import { tasksActions } from '@renderer/stores/tasks/tasks';
 import { selectTheme } from '@renderer/stores/theme';
@@ -28,12 +29,11 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
   const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
 
-  console.log(task);
   const {
     watch,
     control,
     handleSubmit,
-    // setValue,
+    setValue,
     getValues,
     trigger,
     reset,
@@ -66,7 +66,7 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
   const watchDueDateValue = watch('dueDate');
   console.log('watchDueDateValue', watchDueDateValue);
 
-  // const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
+  const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
 
   const isSaveTaskButtonDisabled = !isValid || isLoading;
 
@@ -81,13 +81,13 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
       <div className="flex flex-col gap-3">
         <TextInput name="title" label="Title" control={control} />
         <TextInput name="note" label="Note" control={control} />
-        {/* <DateTimePicker
+        <DateTimePicker
           name="dueDate"
           label="Due Date"
           value={watchDueDateValue}
           control={control}
           onChange={onDateTimePickerConfirm}
-        /> */}
+        />
       </div>
       <div className="flex gap-3">
         <Button
