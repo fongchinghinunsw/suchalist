@@ -1,8 +1,9 @@
-import TextInput from '@renderer/components/base/form/TextInput';
+import { InternalTextInput } from '@renderer/components/base/form/TextInput';
 import { HookFormFieldProps } from '@renderer/hooks/useForm';
 import { formatDate } from '@renderer/utils/format';
 import { forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
+import { Controller } from 'react-hook-form';
 
 interface Props extends HookFormFieldProps {
   name: string;
@@ -31,7 +32,6 @@ export default function DateTimePicker({ name, label, value, control, onChange }
           fieldName={name}
           label={label}
           control={control}
-          value={value ? formatDate(value, 'date') : ''}
           onClick={handleClick}
         />
       }
@@ -41,7 +41,6 @@ export default function DateTimePicker({ name, label, value, control, onChange }
 
 interface DateTimePickerInputProps extends HookFormFieldProps {
   fieldName: string;
-  value: string;
   label: string;
   onClick: React.MouseEventHandler<HTMLDivElement>;
 }
@@ -49,7 +48,21 @@ interface DateTimePickerInputProps extends HookFormFieldProps {
 const DateTimePickerInput = forwardRef<HTMLInputElement, DateTimePickerInputProps>(
   function InnerDateTimePickerInput({ fieldName, label, control, onClick }, ref) {
     return (
-      <TextInput ref={ref} name={fieldName} label={label} control={control} onClick={onClick} />
+      <Controller
+        name={fieldName}
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <InternalTextInput
+            ref={ref}
+            name={fieldName}
+            label={label}
+            value={value ? formatDate(value, 'date') : ''}
+            onClick={onClick}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+      />
     );
   }
 );

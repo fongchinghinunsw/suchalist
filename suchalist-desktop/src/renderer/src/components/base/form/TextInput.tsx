@@ -51,7 +51,7 @@ export default function TextInput({
   );
 }
 
-function InternalTextInput({
+export function InternalTextInput({
   ref,
   name,
   label,
