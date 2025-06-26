@@ -14,6 +14,7 @@ interface InternalProps {
   label: string;
   value: string;
   disabled?: InputProps['disabled'];
+  readOnly?: InputProps['readOnly'];
   onClick?: InputProps['onClick'];
   onChange?: InputProps['onChange'];
   onBlur?: InputProps['onBlur'];
@@ -57,11 +58,14 @@ export function InternalTextInput({
   label,
   value,
   disabled,
+  readOnly = true,
   onClick,
   onChange,
   onBlur
 }: InternalProps) {
   const theme = useSelector(selectTheme);
+
+  const readOnlyAndNonEmpty = readOnly && value !== '' && value != null;
 
   return (
     <div
@@ -70,6 +74,7 @@ export function InternalTextInput({
       onClick={onClick}
     >
       <input
+        // tabIndex={0}
         type="text"
         name={name}
         // this ensures the input value UI gets updated when the new value is undefined
@@ -78,16 +83,19 @@ export function InternalTextInput({
         disabled={disabled}
         className={clsx(
           'z-10 peer absolute w-full outline-none leading-8 border rounded-md px-3 py-1 transition ease-in duration-100 bg-transparent',
-          getInputStyles(theme)
+          getInputStyles(theme),
+          readOnlyAndNonEmpty ? getReadOnlyAndNonEmptyInputStyles(theme) : ''
         )}
         onChange={onChange}
         onBlur={onBlur}
+        readOnly={readOnly}
         required
       />
       <label
         className={clsx(
           'relative text-md mx-3 transition ease-in duration-200 peer-focus:z-10 peer-valid:z-10 peer-focus:px-1 peer-valid:px-1 peer-focus:bg-white peer-valid:bg-white peer-focus:leading-2 peer-valid:leading-2 peer-focus:-translate-x-2.5 peer-valid:-translate-x-2.5 peer-focus:-translate-y-5 peer-valid:-translate-y-5 peer-focus:scale-80 peer-valid:scale-80',
-          getLabelStyles(theme)
+          getLabelStyles(theme),
+          readOnlyAndNonEmpty ? getReadOnlyAndNonEmptyLabelStyles(theme) : ''
         )}
       >
         {label}
@@ -113,6 +121,23 @@ function getInputStyles(theme: Theme) {
   }
 }
 
+function getReadOnlyAndNonEmptyInputStyles(theme: Theme) {
+  switch (theme) {
+    case 'blue':
+      return 'caret-blue-500 border-blue-400';
+    case 'green':
+      return 'caret-green-500 border-green-400';
+    case 'red':
+      return 'caret-red-500 border-red-400';
+    case 'yellow':
+      return 'caret-yellow-500 border-yellow-400';
+    case 'purple':
+      return 'caret-purple-500 border-purple-400';
+    default:
+      throw new UnreachableError(theme);
+  }
+}
+
 function getLabelStyles(theme: Theme) {
   switch (theme) {
     case 'blue':
@@ -125,6 +150,24 @@ function getLabelStyles(theme: Theme) {
       return 'peer-focus:text-yellow-400 peer-valid:text-yellow-400';
     case 'purple':
       return 'peer-focus:text-purple-400 peer-valid:text-purple-400';
+    default:
+      throw new UnreachableError(theme);
+  }
+}
+
+function getReadOnlyAndNonEmptyLabelStyles(theme: Theme) {
+  const commonStyle = 'z-10 px-1 bg-white leading-2 -translate-x-2.5 -translate-y-5 scale-80';
+  switch (theme) {
+    case 'blue':
+      return `${commonStyle} text-blue-400`;
+    case 'green':
+      return `${commonStyle} text-green-400`;
+    case 'red':
+      return `${commonStyle} text-red-400`;
+    case 'yellow':
+      return `${commonStyle} text-yellow-400`;
+    case 'purple':
+      return `${commonStyle} text-purple-400`;
     default:
       throw new UnreachableError(theme);
   }

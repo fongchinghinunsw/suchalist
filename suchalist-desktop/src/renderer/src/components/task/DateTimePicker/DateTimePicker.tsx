@@ -20,6 +20,7 @@ export default function DateTimePicker({ name, label, value, control, onChange }
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log('hihihi');
     e.preventDefault();
   };
 
