@@ -30,10 +30,9 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
   const theme = useSelector(selectTheme);
 
   const {
-    watch,
     control,
     handleSubmit,
-    setValue,
+    // setValue,
     getValues,
     trigger,
     reset,
@@ -63,10 +62,7 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
     );
   };
 
-  const watchDueDateValue = watch('dueDate');
-  console.log('watchDueDateValue', watchDueDateValue);
-
-  const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
+  // const onDateTimePickerConfirm = (date: Date) => setValue('dueDate', date);
 
   const isSaveTaskButtonDisabled = !isValid || isLoading;
 
@@ -84,9 +80,8 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
         <DateTimePicker
           name="dueDate"
           label="Due Date"
-          value={watchDueDateValue}
           control={control}
-          onChange={onDateTimePickerConfirm}
+          // onChange={onDateTimePickerConfirm}
         />
       </div>
       <div className="flex gap-3">
