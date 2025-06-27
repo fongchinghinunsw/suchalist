@@ -13,8 +13,7 @@ interface Props extends HookFormFieldProps {
 }
 
 export default function DateTimePicker({ name, label, control }: Props) {
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log('hihihi');
+  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
@@ -23,7 +22,6 @@ export default function DateTimePicker({ name, label, control }: Props) {
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => {
-        console.log('hi', formatDate(value, 'date'));
         return (
           <DatePicker
             selected={value}
@@ -33,7 +31,7 @@ export default function DateTimePicker({ name, label, control }: Props) {
                 fieldName={name}
                 label={label}
                 fieldValue={value ? formatDate(value, 'date') : ''}
-                onClick={handleClick}
+                onClick={onClick}
               />
             }
           />
