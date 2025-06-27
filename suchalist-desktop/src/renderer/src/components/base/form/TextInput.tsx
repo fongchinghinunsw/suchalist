@@ -17,6 +17,7 @@ interface InternalProps {
   readOnly?: InputProps['readOnly'];
   onClick?: InputProps['onClick'];
   onChange?: InputProps['onChange'];
+  onFocus?: InputProps['onFocus'];
   onBlur?: InputProps['onBlur'];
 }
 
@@ -61,6 +62,7 @@ export function InternalTextInput({
   readOnly = true,
   onClick,
   onChange,
+  onFocus,
   onBlur
 }: InternalProps) {
   const theme = useSelector(selectTheme);
@@ -88,6 +90,7 @@ export function InternalTextInput({
         )}
         onChange={onChange}
         onBlur={onBlur}
+        onFocus={onFocus}
         readOnly={readOnly}
         required
       />

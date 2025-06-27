@@ -33,6 +33,7 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
     control,
     handleSubmit,
     getValues,
+    setValue,
     trigger,
     reset,
     formState: { isValid, isLoading }
@@ -61,6 +62,11 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
     );
   };
 
+  const onClearDueDateInput = () => {
+    console.log('onClearDueDateInput');
+    setValue('dueDate', undefined);
+  };
+
   const isSaveTaskButtonDisabled = !isValid || isLoading;
 
   return (
@@ -74,7 +80,12 @@ export default function TaskDetails({ task, onDeleteTask }: Props) {
       <div className="flex flex-col gap-3">
         <TextInput name="title" label="Title" control={control} />
         <TextInput name="note" label="Note" control={control} />
-        <DateTimePicker name="dueDate" label="Due Date" control={control} />
+        <DateTimePicker
+          name="dueDate"
+          label="Due Date"
+          control={control}
+          onClearInput={onClearDueDateInput}
+        />
       </div>
       <div className="flex gap-3">
         <Button
